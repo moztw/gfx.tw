@@ -1,5 +1,6 @@
 1. Check out code
 2. Config base path at system/application/config/config.php and .htaccess
-3. Security: Remove $route['scaffolding_trigger'] = "tmd"; in system/application/config/routes.php
-4. Security: Remove system/scaffolding
+3. Config db at system/application/config/database.php
+4. sudo chown www-data:www-data useravatars system/cache (or chmod 777 if you cannot sudo)
 5. Create database and tables
+6. Security: Remove $route['scaffolding_trigger'] = "tmd"; in system/application/config/routes.php
