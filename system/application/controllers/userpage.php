@@ -38,14 +38,15 @@ class Userpage extends Controller {
 		$db = '';
 		if (!$body || !$head) {
 			$this->load->database();
-			if (is_numeric($id)) {
-				$user = $this->db->query('SELECT * FROM users WHERE `id` = ' . $this->db->escape($id) . ' LIMIT 1');
-				$features = $this->db->query('SELECT t1.name, t1.title, t1.description FROM features t1, u2f t2 WHERE t2.feature_id = t1.id AND t2.user_id = ' . $this->db->escape($id) . ' ORDER BY t2.order ASC;');
-			} else {
+			//if (is_numeric($id)) {
+			//	$user = $this->db->query('SELECT * FROM users WHERE `id` = ' . $this->db->escape($id) . ' LIMIT 1');
+			//	$features = $this->db->query('SELECT t1.name, t1.title, t1.description FROM features t1, u2f t2 WHERE t2.feature_id = t1.id AND t2.user_id = ' . $this->db->escape($id) . ' ORDER BY t2.order ASC;');
+			//} else {
 				$user = $this->db->query('SELECT * FROM users WHERE `name` = ' . $this->db->escape($id) . ' LIMIT 1');
 				$features = $this->db->query('SELECT t1.name, t1.title, t1.description FROM features t1, u2f t2, users t3 WHERE t2.feature_id = t1.id AND t2.user_id = t3.id AND t3.name = ' . $this->db->escape($id) . ' ORDER BY t2.order ASC;');
-			}
+			//}
 			if ($user->num_rows() === 0) {
+				//TBD: pretty error for userpages
 				show_404();
 			}
 			$F = array();
@@ -83,7 +84,7 @@ class Userpage extends Controller {
 			$this->cache->save($session_id, $header, 'header', 60);
 		}
 
-		/* Output coz everything should be ready by now*/
+		/* Output coz everything should be ready by now */
 		print $head;
 		print $header;
 		print $body;
