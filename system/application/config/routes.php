@@ -46,6 +46,8 @@ $route['scaffolding_trigger'] = "tmd";
 /* We must explicitly define all routes here because the last route will overwrite them all */
 
 if ($route['scaffolding_trigger']) {
+	$route['about/' . $route['scaffolding_trigger']] = "about/" . $route['scaffolding_trigger'];
+	$route['about/' . $route['scaffolding_trigger'] . '/(:any)'] = "about/" . $route['scaffolding_trigger'] . '/$1';
 	$route['editor/' . $route['scaffolding_trigger']] = "editor/" . $route['scaffolding_trigger'];
 	$route['editor/' . $route['scaffolding_trigger'] . '/(:any)'] = "editor/" . $route['scaffolding_trigger'] . '/$1';
 	$route['feature/' . $route['scaffolding_trigger']] = "feature/" . $route['scaffolding_trigger'];
@@ -53,7 +55,8 @@ if ($route['scaffolding_trigger']) {
 	$route['userpage/' . $route['scaffolding_trigger']] = "userpage/" . $route['scaffolding_trigger'];
 	$route['userpage/' . $route['scaffolding_trigger'] . '/(:any)'] = "userpage/" . $route['scaffolding_trigger'] . '/$1';
 }
-
+$route['about'] = "about";
+$route['about/(:any)'] = "about/view/$1";
 $route['editor'] = "editor";
 $route['editor/upload'] = "editor/upload";
 $route['editor/save'] = "editor/save";
