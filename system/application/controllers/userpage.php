@@ -34,7 +34,8 @@ class Userpage extends Controller {
 		}
 		$header = $this->cache->get($session_id, 'header');
 
-		/* Query Database */
+		/* Query Database and save views to cache */
+		$db = '';
 		if (!$body || !$head) {
 			$this->load->database();
 			if (is_numeric($id)) {
@@ -52,6 +53,17 @@ class Userpage extends Controller {
 				$F[] = $feature;
 			}
 			unset($features);
+			if (!$head) {
+				$db .= 'head ';
+				$head = $this->load->view('userpage/head.php', $user->row_array(), true);
+				$this->cache->save($user->row()->name, $head, 'userpage-head', 60);
+			}
+			if (!$body) {
+				$db .= 'body ';
+				$this->load->_ci_cached_vars = array(); //Clean up cached vars
+				$body = $this->load->view('userpage/body.php', array_merge($user->row_array(), array('features' => $F)), true);
+				$this->cache->save($user->row()->name, $body, 'userpage', 60);
+			}
 		}
 		if (!$header) {
 			$this->load->database();
@@ -65,26 +77,13 @@ class Userpage extends Controller {
 			} else {
 				$C = array();
 			}
-		}
-		/* Save views to cache */
-		$db = '';
-		if (!$head) {
-			$db .= 'head ';
-			$head = $this->load->view('userpage/head.php', $user->row_array(), true);
-			$this->cache->save($user->row()->name, $head, 'userpage-head', 60);
-		}
-		if (!$header) {
 			$db .= 'header ';
 			$this->load->_ci_cached_vars = array(); //Clean up cached vars
 			$header = $this->load->view('header.php', $C, true);
 			$this->cache->save($session_id, $header, 'header', 60);
 		}
-		if (!$body) {
-			$db .= 'body ';
-			$this->load->_ci_cached_vars = array(); //Clean up cached vars
-			$body = $this->load->view('userpage/body.php', array_merge($user->row_array(), array('features' => $F)), true);
-			$this->cache->save($user->row()->name, $body, 'userpage', 60);
-		}
+
+		/* Output coz everything should be ready by now*/
 		print $head;
 		print $header;
 		print $body;
