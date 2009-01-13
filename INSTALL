@@ -3,4 +3,7 @@
 3. Config db at system/application/config/database.php
 4. sudo chown www-data:www-data useravatars system/cache (or chmod 777 if you cannot sudo)
 5. Create database and tables
-6. Security: Remove $route['scaffolding_trigger'] = "tmd"; in system/application/config/routes.php
+
+In Production Site:
+1. Remove $route['scaffolding_trigger'] = "tmd"; in system/application/config/routes.php (change it to empty string)
+2. Change error_reporting(E_ALL) to error_reporting(E_ERROR) in ./index.php
