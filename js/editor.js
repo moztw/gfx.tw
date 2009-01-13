@@ -62,13 +62,13 @@ gfx.editor = {
 				'file_queue_error_handler' : function (file, error, msg) {
 					switch (error) {
 						case SWFUpload.QUEUE_ERROR.ZERO_BYTE_FILE:
-						window.alert(msg);
+						window.alert(T['SWFUPLOAD_ZERO_BYTE_FILE'] || msg);
 						break;
 						case SWFUpload.QUEUE_ERROR.FILE_EXCEEDS_SIZE_LIMIT:
-						window.alert(msg);
+						window.alert(T['SWFUPLOAD_FILE_EXCEEDS_SIZE_LIMIT'] || msg);
 						break;
 						case SWFUpload.QUEUE_ERROR.INVALID_FILETYPE:
-						window.alert(msg);
+						window.alert(T['SWFUPLOAD_INVALID_FILETYPE'] || msg);
 						break;
 						default:
 						window.alert(msg);
@@ -84,11 +84,11 @@ gfx.editor = {
 				},
 				'upload_success_handler' : function (file, result) {
 					this.setButtonDisabled(false);
-					result = JSON.decode(result);
+					result = JSON.decode(result, true);
 					if (!result) {
-						window.alert('E');
+						window.alert(T['EMPTY_ERROR'] + result);
 					} else if (result.error) {
-						window.alert(result.error);
+						window.alert(T[result.tag] || result.error);
 					} else {
 						gfx.editor.changeAvatar(result.img, './useravatars/' + result.img);
 					}
@@ -137,7 +137,7 @@ gfx.editor = {
 			}
 		);
 		if (s.length > 3) {
-			alert('E');
+			window.alert(T['EDITOR_TOO_MANY_FEATURES']);
 			return;
 		}
 		var Feature = function (name, title, description) {
@@ -205,6 +205,7 @@ gfx.editor = {
 	'savePage' : function () {
 		//Gather data
 		var d = {
+			'token' : $('token').value,
 			'title' : $('title-name').firstChild.nodeValue,
 			'name' : $('name').value
 		}
@@ -225,11 +226,11 @@ gfx.editor = {
 			window.alert('TITLE LENGTH');
 			return;
 		}
-		if (d.name.length > 24) {
+		if (d.name.length > 60) {
 			window.alert('NAME LENGTH');
 			return;
 		}
-		if (!d.name.test('[a-zA-Z0-9_\-]+')) {
+		if (!d.name.test('^[a-zA-Z0-9_\-]+$')) {
 			window.alert('NAME CONTENT');
 			return;
 		}

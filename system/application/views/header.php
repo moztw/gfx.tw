@@ -12,7 +12,7 @@ if (isset($id)) {
 	</div>
 	<div id="window_logout" class="window">
 		<form action="<?php print site_url('auth/logout'); ?>" method="post">
-			<input type="hidden" name="token" value="<?php print md5($id . '--check--logout') ?>" />
+			<input type="hidden" id="token" name="token" value="<?php print md5($id . '--secret-token-good-day-fx') ?>" />
 			<p><input type="submit" value="Logout" /></p>
 		</form>
 	</div>

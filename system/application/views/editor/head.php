@@ -13,6 +13,7 @@ print '<?xml version="1.0" encoding="UTF-8"?>';
 	<script type="text/javascript" src="<?php print site_url('js/mootools-1.2.1-core.js'); ?>"></script>
 	<script type="text/javascript" src="<?php print site_url('js/global.js'); ?>" charset="UTF-8"></script>
 	<script type="text/javascript" src="./js/editor.js" charset="UTF-8"></script>
+	<script type="text/javascript" src="./js/text.js" charset="UTF-8"></script>
 	<script type="text/javascript" src="./swfupload/swfupload-min.js" charset="UTF-8"></script>
 	<script type="text/javascript" src="./js/mootools-1.2-more.js"></script>
 </head>

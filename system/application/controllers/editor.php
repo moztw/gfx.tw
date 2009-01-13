@@ -62,12 +62,14 @@ class Editor extends Controller {
 	}
 	function save() {
 		if (!$this->session->userdata('id')) {
-			$this->json_error('No ID Provided', 'EDITOR_SAVE_NO_ID');
+			$this->json_error('Not Logged In.', 'EDITOR_NOT_LOGGED_IN');
 		}
 		if (!$this->input->post('name')) {
 			$this->json_error('No Name Provided', 'EDITOR_SAVE_NO_NAME');
 		}
-		//TBD: ajax request check
+		if ($this->input->post('token') !== md5($this->session->userdata('id') . '--secret-token-good-day-fx')) {
+			$this->json_error('Wrong Token', 'EDITOR_SAVE_ERROR_TOKEN');
+		}
 		$data = array();
 		if ($this->input->post('name')) $data['name'] = $this->input->post('name');
 		if ($this->input->post('title')) $data['title'] = $this->input->post('title');
@@ -79,6 +81,7 @@ class Editor extends Controller {
 			}
 		}
 		if (!preg_match('/^[a-zA-Z0-9_\-]+$/', $this->input->post('name'))
+			|| strlen($this->input->post('name')) > 200
 			|| substr($this->input->post('name'), 0, 8) === '__temp__'
 			|| in_array($this->input->post('name'), $this->badname)
 			|| $this->db->query('SELECT `id` FROM `users` '
@@ -98,7 +101,7 @@ class Editor extends Controller {
 					$this->json_error('Feature Content Error.', 'EDITOR_SAVE_FEATURE_ERROR');
 				}
 				if ($o > 3) {
-					$this->json_error('To Many Features?', 'EDITOR_SAVE_TOO_MANY_FEATURES');
+					$this->json_error('To Many Features?', 'EDITOR_TOO_MANY_FEATURES');
 				}
 				$query = $this->db->get_where('u2f', array('user_id' => $this->session->userdata('id'), 'order' => $o));
 				if ($query->num_rows() === 0) {
@@ -120,6 +123,7 @@ class Editor extends Controller {
 	/* Upload Avatar */
 	function upload() {
 		//Can't check session here becasue of Flash plugin bug.
+		//We do not and unable to verify user information, therefore we only process the image are return the filename; the actual submision of avatar is done by save() function.
 		$this->load->library(
 			'upload',
 			array(
