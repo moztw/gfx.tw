@@ -16,7 +16,7 @@ class Feature extends Controller {
 	function Feature() {
 		parent::Controller();
 		$this->load->scaffolding('features');
-		$this->load->database();
+		//$this->load->database();
 	}
 	function index() {
 		//TBD: a nice feature list.
@@ -94,7 +94,7 @@ class Feature extends Controller {
 		$footer = $this->load->view('footer.php', array('db' => $db));
 	}
 	/* Create */
-	function create() {
+	/*function create() {
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules($this->datarule);
@@ -112,9 +112,9 @@ class Feature extends Controller {
 			);
 			header('Location: ' . site_url('feature/' . $this->input->post('name')));
 		}
-	}
+	}*/
 	/* Edit */
-	function edit($id) {
+	/*function edit($id) {
 		if ($this->input->post('delete')) {
 			$this->db->delete('features', array('id' => $this->input->post('id')));
 			$this->db->delete('u2f', array('feature_id' => $this->input->post('id')));
@@ -143,7 +143,7 @@ class Feature extends Controller {
 			);
 			header('Location: ' . site_url('feature/' . $this->input->post('name')));
 		}
-	}
+	}*/
 	function name_check($name) {
 		if ($this->input->post('id')) $query = $this->db->query('SELECT `id` FROM `features` WHERE `name` = ' . $this->db->escape($name) . 'AND `id` != ' . $this->db->escape($name) . ' LIMIT 1;');
 		else $query = $this->db->query('SELECT `id` FROM `features` WHERE `name` = ' . $this->db->escape($name) .  'LIMIT 1;');
