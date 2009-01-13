@@ -5,5 +5,5 @@
 5. Create database and tables
 
 In Production Site:
-1. Remove $route['scaffolding_trigger'] = "tmd"; in system/application/config/routes.php (change it to empty string)
+1. Change $route['scaffolding_trigger']  to empty string in system/application/config/routes.php
 2. Change error_reporting(E_ALL) to error_reporting(E_ERROR) in ./index.php
