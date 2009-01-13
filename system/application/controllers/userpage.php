@@ -10,8 +10,18 @@ class Userpage extends Controller {
 		$this->view('foxmosa');
 	}
 	function view($id) {
+		/* Redirect numeric id instead of showing pages (below) */
+		if (is_numeric($id)) {
+			$this->load->database();
+			$user = $this->db->query('SELECT `name` FROM `users` WHERE `id` = ' $this->db->escape($id) . ';');
+			if ($user->num_rows() === 0 || substr($user->row()->name, 0, 8) === '__temp__') {
+				show_404();
+			} else {
+				header('Location: ' . site_url($user->row()->name));
+				exit();
+			}
+		}
 		$this->load->library('cache');
-		$this->benchmark->mark('code_start');
 		/* See if cache is available or not */
 		if ($this->session->userdata('id')) {
 			$session_id = $this->session->userdata('id');
@@ -26,6 +36,7 @@ class Userpage extends Controller {
 
 		/* Query Database */
 		if (!$body || !$head) {
+			$this->load->database();
 			if (is_numeric($id)) {
 				$user = $this->db->query('SELECT * FROM users WHERE `id` = ' . $this->db->escape($id) . ' LIMIT 1');
 				$features = $this->db->query('SELECT t1.name, t1.title, t1.description FROM features t1, u2f t2 WHERE t2.feature_id = t1.id AND t2.user_id = ' . $this->db->escape($id) . ' ORDER BY t2.order ASC;');
@@ -43,6 +54,7 @@ class Userpage extends Controller {
 			unset($features);
 		}
 		if (!$header) {
+			$this->load->database();
 			if (isset($user) && ($user->row()->id == $session_id)) {
 				$C = $user->row_array();
 				$C['session_id'] = $session_id;
@@ -76,7 +88,6 @@ class Userpage extends Controller {
 		print $head;
 		print $header;
 		print $body;
-		$this->benchmark->mark('code_end');
 		$footer = $this->load->view('footer.php', array('db' => $db));
 	}
 }

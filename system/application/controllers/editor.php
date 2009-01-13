@@ -36,8 +36,14 @@ class Editor extends Controller {
 			exit();
 		}
 		$this->load->helper('form');
-		
+		$this->load->database();
 		$user = $this->db->query('SELECT * FROM users WHERE `id` = ' . $this->session->userdata('id') . ' LIMIT 1');
+		if ($user->num_rows() === 0) {
+			//Rare cases where session exists but got deleted.
+			$this->session->sess_destroy();
+			header('Location: ' . base_url());
+			exit();
+		}
 		$allfeatures = $this->db->query(
 			'SELECT features.id, features.name, features.title, features.description, G.user_id, G.order FROM features '
 			. 'LEFT OUTER JOIN '
@@ -47,7 +53,13 @@ class Editor extends Controller {
 		foreach ($allfeatures->result_array() as $feature) {
 			$A[] = $feature;
 		}
-		$this->load->view('editor', array_merge($user->row_array(), array('allfeatures' => $A, 'auth' => array_merge($user->row_array(), array('session_id' =>$this->session->userdata('session_id'))))));
+		$this->load->view('editor/head.php');
+		$this->load->_ci_cached_vars = array(); //Clean up cached vars
+		$this->load->view('header.php', $user->row_array()); //Can be fetched from cache but not worth the effort.
+		$this->load->_ci_cached_vars = array(); //Clean up cached vars
+		$this->load->view('editor/body.php', array_merge($user->row_array(), array('allfeatures' => $A)));
+		$this->load->_ci_cached_vars = array(); //Clean up cached vars
+		$this->load->view('footer.php', array('db' => 'everything'));
 	}
 	function save() {
 		if (!$this->session->userdata('id')) {
