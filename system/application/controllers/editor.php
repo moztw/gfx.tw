@@ -62,10 +62,10 @@ class Editor extends Controller {
 	}
 	function save() {
 		if (!$this->session->userdata('id')) {
-			$this->json_error('No ID');
+			$this->json_error('No ID Provided', 'EDITOR_SAVE_NO_ID');
 		}
 		if (!$this->input->post('name')) {
-			$this->json_error('No Name');
+			$this->json_error('No Name Provided', 'EDITOR_SAVE_NO_NAME');
 		}
 		//TBD: ajax request check
 		$data = array();
@@ -85,7 +85,7 @@ class Editor extends Controller {
 				. 'WHERE `name` = ' . $this->db->escape($this->input->post('name'))
 				. ' AND `id` != ' . $this->session->userdata('id'))
 				->num_rows() !== 0) {
-			$this->json_error('Bad Name');
+			$this->json_error('Bad Name', 'EDITOR_BAD_NAME');
 		}
 		$this->db->update('users', $data, array('id' => $this->session->userdata('id')));
 		//Won't work because affected rows is 0 when nothing is actually changed.
@@ -95,10 +95,10 @@ class Editor extends Controller {
 		if ($this->input->post('features')) {
 			foreach ($this->input->post('features') as $o => $f) {
 				if (!is_numeric($f) || !is_numeric($o)) {
-					$this->json_error('Feature Content Error.');
+					$this->json_error('Feature Content Error.', 'EDITOR_SAVE_FEATURE_ERROR');
 				}
 				if ($o > 3) {
-					$this->json_error('To Many Features?');
+					$this->json_error('To Many Features?', 'EDITOR_SAVE_TOO_MANY_FEATURES');
 				}
 				$query = $this->db->get_where('u2f', array('user_id' => $this->session->userdata('id'), 'order' => $o));
 				if ($query->num_rows() === 0) {
@@ -138,20 +138,21 @@ class Editor extends Controller {
 			list($width, $height, $type) = getimagesize($data['full_path']);
 			if (!in_array($type, array(IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG))) {
 				unlink($data['full_path']);
-				$this->json_error('Wrong file type.');
+				$this->json_error('Wrong file type.', 'EDITOR_AVATAR_WRONG_FILE_TYPE');
 			}
 			if ($width > 500 || $height > 500) {
 				unlink($data['full_path']);
-				$this->json_error('Image Size Too Large.');
+				$this->json_error('Image Size Too Large.', 'EDITOR_AVATAR_SIZE_TOO_LARGE');
 			}
 			//Success!
 			header('Content-Type: text/javascript');
 			print json_encode(array('img' => $data['file_name']));
 		}
 	}
-	function json_error($msg) {
+	function json_error($msg, $tag = false) {
 		header('Content-Type: text/javascript');
-		print json_encode(array('error' => $msg));
+		if ($tag) print json_encode(array('error' => $msg, 'tag' => $tag));
+		else print json_encode(array('error' => $msg));
 		exit();
 	}
 }
