@@ -11,7 +11,7 @@
 |	http://example.com/
 |
 */
-$config['base_url']	= "http://your-site.com/";
+$config['base_url']	= "http://share.timc.idv.tw/gfx/";
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +23,7 @@ $config['base_url']	= "http://your-site.com/";
 | variable so that it is blank.
 |
 */
-$config['index_page'] = "index.php";
+$config['index_page'] = "";
 
 /*
 |--------------------------------------------------------------------------
@@ -66,7 +66,7 @@ $config['url_suffix'] = "";
 | than english.
 |
 */
-$config['language']	= "english";
+$config['language']	= "traditional_chinese";
 
 /*
 |--------------------------------------------------------------------------
@@ -231,7 +231,7 @@ $config['encryption_key'] = "";
 | 'time_to_update'		= how many seconds between CI refreshing Session Information
 |
 */
-$config['sess_cookie_name']		= 'ci_session';
+$config['sess_cookie_name']		= 'gfx_session';
 $config['sess_expiration']		= 7200;
 $config['sess_encrypt_cookie']	= FALSE;
 $config['sess_use_database']	= FALSE;

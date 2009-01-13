@@ -40,9 +40,32 @@
 |
 */
 
-$route['default_controller'] = "welcome";
-$route['scaffolding_trigger'] = "";
+$route['default_controller'] = "userpage";
+$route['scaffolding_trigger'] = "tmd";
 
+/* We must explicitly define all routes here because the last route will overwrite them all */
+
+if ($route['scaffolding_trigger']) {
+	$route['editor/' . $route['scaffolding_trigger']] = "editor/" . $route['scaffolding_trigger'];
+	$route['editor/' . $route['scaffolding_trigger'] . '/(:any)'] = "editor/" . $route['scaffolding_trigger'] . '/$1';
+	$route['feature/' . $route['scaffolding_trigger']] = "feature/" . $route['scaffolding_trigger'];
+	$route['feature/' . $route['scaffolding_trigger'] . '/(:any)'] = "feature/" . $route['scaffolding_trigger'] . '/$1';
+	$route['userpage/' . $route['scaffolding_trigger']] = "userpage/" . $route['scaffolding_trigger'];
+	$route['userpage/' . $route['scaffolding_trigger'] . '/(:any)'] = "userpage/" . $route['scaffolding_trigger'] . '/$1';
+}
+
+$route['editor'] = "editor";
+$route['editor/upload'] = "editor/upload";
+$route['editor/save'] = "editor/save";
+$route['feature'] = "feature";
+$route['feature/edit'] = "feature/create";
+$route['feature/edit/(:any)'] = "feature/edit/$1";
+$route['feature/(:any)'] = "feature/view/$1";
+$route['auth/login'] = "auth/login";
+$route['auth/logout'] = "auth/logout";
+$route['auth/check'] = "auth/check";
+
+$route['(:any)'] = "userpage/view/$1";
 
 /* End of file routes.php */
 /* Location: ./system/application/config/routes.php */

@@ -1,0 +1,148 @@
+@charset "UTF-8";
+
+html {
+	overflow: auto;
+	border: none;
+}
+body {
+	width: 900px;
+	margin: 0 auto; padding: 0;
+	font: 0.92em '微軟正黑體', sans-serif;
+}
+.window {
+	display: none;
+	position: absolute;
+	top: 10%; left: 10%; z-index: 2; width: 80%; height: 80%;
+	border: 2px dashed #999999;
+	background-color: #ffffff;
+}
+.window .close {
+	position: absolute;
+	top: 0.2em; right: 0.2em;
+	margin: 0; padding: 0;
+}
+
+.window .window_content {
+	border: 1px dashed #999999;
+	margin: 1em;
+}
+#header {
+	margin: 0; padding: 0;
+	border: 1px dashed #999999;
+	height: 2.5em;
+}
+#header p {
+	margin: 0; padding: 0.5em;
+}
+#header #header_top_link {
+	float: left;
+}
+#header #header_user_functions, #header #header_login {
+	float: right;
+}
+
+#titleblock {
+	border: 1px dashed #999999;
+	height: 320px;
+	position: relative;
+}
+#titleblock h1 {
+	font-size: 1em;
+}
+#titleblock #title-avatar {
+	position: absolute;
+	top: 50px; left: 300px;
+	height: 60px; width: 60px;
+	overflow: hidden;
+	border: 1px dashed #999999;
+}
+#titleblock #title-avatar img {
+	width: 60px;
+}
+#titleblock #title-name, #titleblock #title-name-edit input {
+	position: absolute;
+	top: 50px; left: 370px;
+	height: 40px; width: 230px;
+	font-size: 40px; line-height: 40px;
+	white-space: nowrap;
+}
+#titleblock #title-name-edit input {
+	display: none;
+}
+#titleblock #title-1 {
+	position: absolute;
+	top: 90px; left: 370px;
+	height: 20px; width: 230px;
+	font-size: 20px; line-height: 20px;
+	white-space: nowrap;
+}
+#titleblock #title-2 {
+	position: absolute;
+	top: 120px; left: 300px;
+	height: 100px; width: 500px;
+	font-size: 100px; line-height: 100px;
+	white-space: nowrap;
+}
+#titleblock #title-3 {
+	position: absolute;
+	top: 190px; left: 650px;
+	height: 30px; width: 100px;
+	font-size: 30px; line-height: 30px;
+	white-space: nowrap;
+}
+#titleblock .download {
+	position: absolute;
+	top: 20px; left: 550px;
+	height: 100px; width: 350px;
+	border: 1px dashed #999999;
+}
+#titleblock .desc {
+	position: absolute;
+	top: 230px; left: 300px;
+	height: 100px; width: 550px;
+}
+#features {
+	border: 1px dashed #999999;
+}
+#features .feature {
+	float: left; width: 33%; height: 10em;
+	border: 1px dashed #999999;
+}
+#featureselection {
+	border: 1px dashed #999999;
+}
+#featureselection ul {
+}
+#featureselection li {
+	float: left;
+	list-style: none;
+}
+
+#featureselection #featureselection_save {
+	clear: both;
+	text-align: right;
+}
+
+#window_avatar .window_content {
+	height: 100%;
+}
+#window_avatar .avatar_selection {
+	float: left;
+	width: 30%; height: 100%; overflow: hidden;
+	border: 1px dashed #999999;
+	text-align: center;
+}
+#window_avatar .avatar_selection .avatar_icon {
+	height: 60px; width: 60px;
+	margin: 0.5em auto;
+}
+
+#window_avatar .avatar_selection #avatar_spfupload {
+	background-color: #990000;
+}
+.editable {
+	cursor: pointer;
+}
+.sortable {
+	cursor: move;
+}
