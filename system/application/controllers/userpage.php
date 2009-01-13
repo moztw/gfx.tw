@@ -13,7 +13,7 @@ class Userpage extends Controller {
 		/* Redirect numeric id instead of showing pages (below) */
 		if (is_numeric($id)) {
 			$this->load->database();
-			$user = $this->db->query('SELECT `name` FROM `users` WHERE `id` = ' $this->db->escape($id) . ';');
+			$user = $this->db->query('SELECT `name` FROM `users` WHERE `id` = ' . $this->db->escape($id) . ';');
 			if ($user->num_rows() === 0 || substr($user->row()->name, 0, 8) === '__temp__') {
 				show_404();
 			} else {
