@@ -36,7 +36,6 @@ class Editor extends Controller {
 			exit();
 		}
 		$this->load->helper('form');
-		$this->load->database();
 		$user = $this->db->query('SELECT * FROM users WHERE `id` = ' . $this->session->userdata('id') . ' LIMIT 1');
 		if ($user->num_rows() === 0) {
 			//Rare cases where session exists but got deleted.
@@ -63,14 +62,12 @@ class Editor extends Controller {
 	}
 	function save() {
 		if (!$this->session->userdata('id')) {
-			header('Location: ' . base_url());
-			exit();
+			$this->json_error('No ID');
 		}
 		if (!$this->input->post('name')) {
-			header('Content-Type: text/javascript');
-			print json_encode(array('error' => 'NO NAME'));
-			exit();
+			$this->json_error('No Name');
 		}
+		//TBD: ajax request check
 		$data = array();
 		if ($this->input->post('name')) $data['name'] = $this->input->post('name');
 		if ($this->input->post('title')) $data['title'] = $this->input->post('title');
@@ -81,21 +78,35 @@ class Editor extends Controller {
 				$data['avatar'] = $a;
 			}
 		}
-		$query = $this->db->query('SELECT `id` FROM `users` '
-			. 'WHERE `name` = ' . $this->db->escape($this->input->post('name')) . ' AND `id` != ' . $this->session->userdata('id'));
-		if (in_array($this->input->post('name'), $this->badname) || $query->num_rows() !== 0) {
-			header('Content-Type: text/javascript');
-			print json_encode(array('error' => 'BAD NAME'));
-			exit();
+		if (!preg_match('/^[a-zA-Z0-9_\-]+$/', $this->input->post('name'))
+			|| substr($this->input->post('name'), 0, 8) === '__temp__'
+			|| in_array($this->input->post('name'), $this->badname)
+			|| $this->db->query('SELECT `id` FROM `users` '
+				. 'WHERE `name` = ' . $this->db->escape($this->input->post('name'))
+				. ' AND `id` != ' . $this->session->userdata('id'))
+				->num_rows() !== 0) {
+			$this->json_error('Bad Name');
 		}
 		$this->db->update('users', $data, array('id' => $this->session->userdata('id')));
+		//Won't work because affected rows is 0 when nothing is actually changed.
+		//if ($data && $this->db->affected_rows() !== 1) {
+		//	$this->json_error('error' . $this->db->affected_rows());
+		//}
 		if ($this->input->post('features')) {
 			foreach ($this->input->post('features') as $o => $f) {
-				//TBD: check # of features selected.
+				if (!is_numeric($f) || !is_numeric($o)) {
+					$this->json_error('Feature Content Error.');
+				}
+				if ($o > 3) {
+					$this->json_error('To Many Features?');
+				}
 				$query = $this->db->get_where('u2f', array('user_id' => $this->session->userdata('id'), 'order' => $o));
-				if ($query->row()->feature_id !== $f) {
-					$this->db->delete('u2f', array('id' => $query->row()->id));
+				if ($query->num_rows() === 0) {
 					$this->db->insert('u2f', array('feature_id' => $f, 'order' => $o, 'user_id' => $this->session->userdata('id')));
+				} elseif ($query->row()->feature_id !== $f) {
+					$this->db->update('u2f', array('feature_id' => $f), array('id' => $query->row()->id));
+					//$this->db->delete('u2f', array('id' => $query->row()->id));
+					//$this->db->insert('u2f', array('feature_id' => $f, 'order' => $o, 'user_id' => $this->session->userdata('id')));
 				}
 			}
 		}
@@ -113,30 +124,35 @@ class Editor extends Controller {
 			'upload',
 			array(
 				'upload_path' => './useravatars/',
-				'allowed_types' => 'exe|jpg|gif|png', //Flash bug reported by SWFUpload (Flash always send mime_types as application/octet-stream)
+				'allowed_types' => 'exe|jpg|gif|png', //'exe' due to Flash bug reported by SWFUpload (Flash always send mime_types as application/octet-stream)
 				'max_size' => 1024,
 				'encrypt_name' => true
 			)
 		);
-
-		header('Content-Type: text/javascript');
-
 		if (!$this->upload->do_upload('Filedata')) {
 			print json_encode(array('error' => $this->upload->display_errors('','')));
 //			print json_encode(array('error' => json_encode($this->upload->data())));
 		} else {
 			$data = $this->upload->data();
-			//Check is image of not ourselves
+			//Check is image or not ourselves
 			list($width, $height, $type) = getimagesize($data['full_path']);
 			if (!in_array($type, array(IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG))) {
-				print json_encode(array('error' => 'Wrong Type.'));
-			} elseif ($width > 500 || $height > 500) {
-				print json_encode(array('error' => 'Too Large.'));
-			} else {
-				//Success!
-				print json_encode(array('img' => $data['file_name']));
+				unlink($data['full_path']);
+				$this->json_error('Wrong file type.');
 			}
+			if ($width > 500 || $height > 500) {
+				unlink($data['full_path']);
+				$this->json_error('Image Size Too Large.');
+			}
+			//Success!
+			header('Content-Type: text/javascript');
+			print json_encode(array('img' => $data['file_name']));
 		}
+	}
+	function json_error($msg) {
+		header('Content-Type: text/javascript');
+		print json_encode(array('error' => $msg));
+		exit();
 	}
 }
 
