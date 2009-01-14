@@ -54,7 +54,7 @@ class Userpage extends Controller {
 			foreach ($features->result_array() as $feature) {
 				$F[] = $feature;
 			}
-			unset($features);
+			unset($features, $feature);
 			$groups = $this->db->query('SELECT t1.id, t1.name, t1.title, t1.description FROM groups t1, u2g t2 WHERE t2.group_id = t1.id AND t2.user_id = ' . $user->row()->id . ' ORDER BY t2.order ASC;');
 			$G = array();
 			$A = array();
@@ -68,8 +68,7 @@ class Userpage extends Controller {
 					$A[$group['id']][] = $addon;
 				}
 			}
-			unset($groups);
-			unset($addons);
+			unset($groups, $group, $addons, $addon);
 			if (!$head) {
 				$db .= 'head ';
 				$head = $this->load->view('userpage/head.php', $user->row_array(), true);

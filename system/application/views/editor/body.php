@@ -114,3 +114,71 @@ while(isset($features[$i])) {
 }
 ?>
 	</div>
+	<div id="userinfo">
+	<h2>關於<span class="title-placeholder">(您的名字)</span></h2>
+	<p><button>編輯</button></p>
+	<ul>
+		<li><span class="item">抓火狐網址</span> <a class="gfxurl value" href="<?php print site_url($name); ?>"><?php print site_url($name); ?></a></li>
+<?php if ($web)  { ?>
+		<li><span class="item">網站</span> <a class="web value" href="<?php print htmlspecialchars($web); ?>"><?php print htmlspecialchars($web); ?></a></li>
+<?php } ?>
+<?php if ($blog)  { ?>
+		<li><span class="item">部落格</span> <a class="blog value" href="<?php print htmlspecialchars($blog); ?>"><?php print htmlspecialchars($blog); ?></a></li>
+<?php } ?>
+<?php if ($forum_username)  { ?>
+		<li><span class="item"><a href="http://forum.moztw.org/">MozTW 討論區</a>ID</span> <span class="forum-username value"><?php print htmlspecialchars($forum_username); ?></span></li>
+<?php } ?>
+<?php if ($bio)  { ?>
+		<li><span class="item">一行自介</span> <span class="bio value"><?php print htmlspecialchars($bio); ?></span></li>
+<?php } ?>
+	</ul>
+	</div>
+	<h2 id="groups-title"><span class="title-placeholder">(您的名字)</span>的火狐屬性</h2>
+	<p>請在下方選擇符合您網際活動的屬性，並加入您推薦的附加元件：</p>
+	<div id="groups">
+<?php
+/* put it into a function scope */
+function addon($addon) {
+	extract($addon);
+	if (!isset($icon_url)) $icon_url = '';
+	if (!isset($url) && $addon_id) $url = 'https://addons.mozilla.org/zh-TW/firefox/addon/' . $addon_id;
+	elseif (!isset($url) && !$addon_id) return;
+?>
+			<p><a href="<?php print htmlspecialchars($url); ?>"><img src="<? print htmlspecialchars($icon_url) ?>" alt="" /><span><?php print htmlspecialchars($title); ?></span></a></p>
+<?php
+}
+function group($group, $addons) {
+	extract($group);
+?>
+
+		<div class="group<?php print (isset($user_id))?'':' not-selected'; ?> sortable" id="<?php print $name ?>">
+			<div class="group-title" id="g_<?php print $id ?>">
+				<h3><?php print htmlspecialchars($title) ?></h3>
+				<p class="group-add-addon"><a href="#">新增元件</a></p>
+				<p><?php print htmlspecialchars($description) ?></p>
+			</div>
+			<div class="group-addon">
+<?php
+		foreach ($addons as $addon) {
+			if ($addon) addon($addon);
+		}
+?>
+			</div>
+		</div>
+<?php
+}
+foreach ($allgroups as $group) {
+	group($group, $addons[$group['id']]);
+}
+?>
+	</div>
+	<div id="window_addons" class="window">
+		<p class="close"><a href="#">關閉</a></p>
+		<div class="window_content">
+			<h2>新增附加元件</h2>
+			<p>搜尋名稱或是輸入<a href="https://addons.mozilla.org">Mozilla Add-ons</a>元件編號: <?php print form_input(array('id' =>'addon_query', 'value' => '')); ?></p>
+			<p><button id="addon_query_ok">確定</button></p>
+			<p id="addon_query_result"></p>
+			<p>名稱搜尋僅適用曾被新增過的附加元件；未曾新增的元件一定要輸入 AMO 編號。</p>
+		</div>
+	</div>

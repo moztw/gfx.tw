@@ -1,3 +1,18 @@
+/*
+
+How does editor work?
+First, onload function inject all the control or callback into buttons on pages.
+The information is almost entirely store on the DOM itself, execpt some bools that indicate "things were changed".
+
+savePage() grab all the information before making the final submission via ajax.
+
+Meaning, nothing is going to send to the users table unless s/he save the page.
+
+Avatars and addons does upload/send to the server for processing and checking vaildity,
+but one still have to save the page in order to keep avatars s/he uploaded and addons s/he included.
+
+*/
+
 gfx.editor = {
 	'movingFeature' : null,
 	'onload' : function () {
@@ -107,13 +122,40 @@ gfx.editor = {
 				gfx.editor.changeAvatar('(default)', './images/keyhole.gif');
 			}
 		);
-		gfx.editor.sortable = new Sortables(
+		gfx.editor.featureSortable = new Sortables(
 			'features',
 			{
 				onComplete : function () {
 					gfx.editor.featureChanged = true;
 				}
 			}
+		);
+		gfx.editor.groupSortable = new Sortables(
+			'groups',
+			{
+				onComplete : function () {
+					gfx.editor.groupChanged = true;
+				}
+			}
+		);
+		$$('#groups .group').addEvent(
+			'click',
+			function () {
+				//TDB: sorting detection.
+				this.toggleClass('not-selected');
+			}
+		);
+		$$('#groups .group-add-addon a').addEvent(
+			'click',
+			function () {
+				gfx.editor.currentGroup = this.parentNode.parentNode.id.substr(2);
+				gfx.openWindow('addons');
+				return false;
+			}
+		);
+		$('addon_query_ok').addEvent(
+			'click',
+			gfx.editor.queryAddon
 		);
 		$('editor_save_button').addEvent(
 			'click',
@@ -175,7 +217,7 @@ gfx.editor = {
 		}
 		$$('.feature').each(
 			function (o) {
-				if (!$('fs_' + o.id).checked) gfx.editor.sortable.removeItems(o).destroy();
+				if (!$('fs_' + o.id).checked) gfx.editor.featureSortable.removeItems(o).destroy();
 			}
 		);
 		var f = $('features');
@@ -184,7 +226,7 @@ gfx.editor = {
 			function (o) {
 				if (!$(o.id.substr(3))) {
 					f.adopt(new Feature(o.id.substr(3), o.getNext().firstChild.nodeValue, o.getNext().getProperty('title')));
-					gfx.editor.sortable.addItems(f.lastChild);
+					gfx.editor.featureSortable.addItems(f.lastChild);
 				}
 			}
 		);
@@ -215,7 +257,7 @@ gfx.editor = {
 		if (gfx.editor.featureChanged) {
 			d.features = {};
 			$each(
-				gfx.editor.sortable.serialize(),
+				gfx.editor.featureSortable.serialize(),
 				function (f, i) {
 					d.features[i+1] = $('fs_' + f).name.substr(3);
 				}
@@ -267,6 +309,71 @@ gfx.editor = {
 				}
 			}
 		).send();
+	},
+	'Addon' : function (id, title, url, imgurl, addlink, dellink) {
+		var o = new Element(
+			'p',
+			{
+				'id' : 'addon_' + id
+			}
+		).adopt(
+			new Element(
+				'a',
+				{
+					'href' : url
+				}
+			).adopt(
+				new Element(
+					'img',
+					{
+						'src' : imgurl,
+						'alt' : ''
+					}
+				),
+				new Element(
+					'span',
+					{
+						'text' : title
+					}
+				)
+			)
+		);
+		if (addlink) {
+			o.adopt(
+				new Element(
+					'a',
+					{
+						'href' : '#',
+						'text' : 'Add',
+						'class' : 'add_addon',
+						'events' : {
+							'click' : function () {
+								$('g_' + gfx.editor.currentGroup).getNext().adopt(
+									new gfx.editor.Addon(id, title, url, imgurl, false, true)
+								);
+								gfx.closeWindow('addons');
+								return false;
+							}
+						}
+					}
+				)
+			);
+		}
+		return o;
+	},
+	'queryAddon' : function () {
+		var q = $('addon_query').value;
+		window.alert('TBD');
+		var r = $('addon_query_result');
+		while (r.getFirst()) {
+			r.getFirst().destroy();
+		}
+		r.adopt(
+			new gfx.editor.Addon(2, 'NicoFox', 
+			'https://addons.mozilla.org/zh-TW/firefox/addon/8888', 
+			'https://addons.mozilla.org/en-US/firefox/images/addon_icon/8888/1230481928',
+			true, false)
+		);
 	}
 };
 $extend(

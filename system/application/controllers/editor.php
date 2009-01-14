@@ -48,15 +48,35 @@ class Editor extends Controller {
 			. 'LEFT OUTER JOIN '
 			. '( SELECT S.id, K.user_id, K.order FROM features AS S, u2f AS K WHERE S.id = K.feature_id AND K.user_id = ' . $this->session->userdata('id') . ' ) AS G '
 			. 'ON features.id = G.id ORDER BY features.order ASC;');
-		$A = array();
+		$F = array();
 		foreach ($allfeatures->result_array() as $feature) {
-			$A[] = $feature;
+			$F[] = $feature;
 		}
+		unset($allfeatures, $feature);
+		$groups = $this->db->query(
+			'SELECT t1.id, t1.name, t1.title, t1.description, G.user_id, G.order FROM groups t1 '
+			. 'LEFT OUTER JOIN '
+			. '( SELECT S.id, K.user_id, K.order FROM groups AS S, u2g AS K ' 
+			. 'WHERE S.id = K.group_id AND K.user_id = ' . $this->session->userdata('id') . ') AS G '
+			. 'ON t1.id = G.id ORDER BY G.user_id DESC, G.order ASC, t1.order ASC;');
+		$G = array();
+		$A = array();
+		foreach ($groups->result_array() as $group) {
+			$G[] = $group;
+			$addons = $this->db->query('SELECT t1.* FROM addons t1, u2a t2 '
+			. 'WHERE t2.addons_id = t1.id AND t2.group_id = ' . $group['id'] . 
+			' AND t2.user_id = ' . $user->row()->id . ' ORDER BY t1.title ASC;');
+			$A[$group['id']] = array();
+			foreach ($addons->result_array() as $addon) {
+				$A[$group['id']][] = $addon;
+			}
+		}
+		unset($groups, $group, $addons, $addon);
 		$this->load->view('editor/head.php');
 		$this->load->_ci_cached_vars = array(); //Clean up cached vars
 		$this->load->view('header.php', $user->row_array()); //Can be fetched from cache but not worth the effort.
 		$this->load->_ci_cached_vars = array(); //Clean up cached vars
-		$this->load->view('editor/body.php', array_merge($user->row_array(), array('allfeatures' => $A)));
+		$this->load->view('editor/body.php', array_merge($user->row_array(), array('allfeatures' => $F, 'allgroups' => $G, 'addons' => $A)));
 		$this->load->_ci_cached_vars = array(); //Clean up cached vars
 		$this->load->view('footer.php', array('db' => 'everything'));
 	}

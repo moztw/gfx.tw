@@ -67,8 +67,8 @@ foreach ($features as $feature) {
 function addon($addon) {
 	extract($addon);
 	if (!isset($icon_url)) $icon_url = '';
-	if (!isset($url) && $addon_id) $url = 'https://addons.mozilla.org/zh-TW/firefox/addon/' . $addon_id;
-	elseif (!isset($url) && !$addon_id) return;
+	if ($url === '' && $amo_id !== '') $url = 'https://addons.mozilla.org/zh-TW/firefox/addon/' . $amo_id;
+	elseif ($url === '' && $amo_id === '') return;
 ?>
 			<p><a href="<?php print htmlspecialchars($url); ?>"><img src="<? print htmlspecialchars($icon_url) ?>" alt="" /><span><?php print htmlspecialchars($title); ?></span></a></p>
 <?php

@@ -141,32 +141,45 @@ img {
 	clear: both;
 }
 
+#groups .not-selected {
+	color: #999999;
+}
+
 #groups .group .group-title {
 	border: 1px dashed #999999;
 }
 
 #groups .group .group-title h3 {
 	font-size: 1.2em; font-weight: bold;
+	margin: 0; padding: 0;
 	width: 6em;
 	float: left;
 }
 
-#groups .group .group-addon {
+#groups .group p {
+	margin: 0; padding: 0;
+}
+
+#groups .group .group-add-addon {
+	float: right;
+}
+
+#groups .group .group-addon, #addon_query_result {
 	clear: both;
 	border: 1px dashed #999999;
 }
-#groups .group .group-addon p {
+#groups .group .group-addon p, #addon_query_result p {
 	float: left; width: 155px; height: 70px;
 	border: 1px dashed #999999;
 }
 
-#groups .group .group-addon p img {
+#groups .group .group-addon p img, #addon_query_result p img {
 	display: block; margin: 3px 61px;
 	border: 1px dashed #999999;
 	width: 32px; height: 32px;
 }
 
-#groups .group .group-addon p span {
+#groups .group .group-addon p span, #addon_query_result p span {
 	display: block; width: 100%;
 	text-align: center;
 }
