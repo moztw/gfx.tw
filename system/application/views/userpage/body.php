@@ -42,3 +42,64 @@ foreach ($features as $feature) {
 }
 ?>
 	</div>
+	<div id="userinfo">
+	<h2>關於<?php print htmlspecialchars($title) ?></h2>
+	<ul>
+		<li><span class="item">抓火狐網址</span> <a class="gfxurl value" href="<?php print site_url($name); ?>"><?php print site_url($name); ?></a></li>
+<?php if ($web)  { ?>
+		<li><span class="item">網站</span> <a class="web value" href="<?php print htmlspecialchars($web); ?>"><?php print htmlspecialchars($web); ?></a></li>
+<?php } ?>
+<?php if ($blog)  { ?>
+		<li><span class="item">部落格</span> <a class="blog value" href="<?php print htmlspecialchars($blog); ?>"><?php print htmlspecialchars($blog); ?></a></li>
+<?php } ?>
+<?php if ($forum_username)  { ?>
+		<li><span class="item"><a href="http://forum.moztw.org/">MozTW 討論區</a>ID</span> <span class="forum-username value"><?php print htmlspecialchars($forum_username); ?></span></li>
+<?php } ?>
+<?php if ($bio)  { ?>
+		<li><span class="item">一行自介</span> <span class="bio value"><?php print htmlspecialchars($bio); ?></span></li>
+<?php } ?>
+	</ul>
+	</div>
+	<h2 id="groups-title"><?php print htmlspecialchars($title) ?>的火狐屬性</h2>
+	<div id="groups">
+<?php
+/* put it into a function scope */
+function addon($addon) {
+	extract($addon);
+	if (!isset($icon_url)) $icon_url = '';
+	if (!isset($url) && $addon_id) $url = 'https://addons.mozilla.org/zh-TW/firefox/addon/' . $addon_id;
+	elseif (!isset($url) && !$addon_id) return;
+?>
+			<p><a href="<?php print htmlspecialchars($url); ?>"><img src="<? print htmlspecialchars($icon_url) ?>" alt="" /><span><?php print htmlspecialchars($title); ?></span></a></p>
+<?php
+}
+function group($group, $addons) {
+	extract($group);
+?>
+
+		<div class="group" id="<?php print $name ?>">
+			<div class="group-title">
+				<h3><?php print htmlspecialchars($title) ?></h3>
+				<p><?php print htmlspecialchars($description) ?></p>
+			</div>
+<?php
+	if ($addons) {
+?>
+			<div class="group-addon">
+<?php
+		foreach ($addons as $addon) {
+			if ($addon) addon($addon);
+		}
+?>
+			</div>
+<?php
+	}
+?>
+		</div>
+<?php
+}
+foreach ($groups as $group) {
+	group($group, $addons[$group['id']]);
+}
+?>
+	</div>
