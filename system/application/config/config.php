@@ -11,7 +11,7 @@
 |	http://example.com/
 |
 */
-$config['base_url']	= "http://share.timc.idv.tw/gfx/";
+$config['base_url']	= "http://stage.gfx.tw/";
 
 /*
 |--------------------------------------------------------------------------

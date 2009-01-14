@@ -2,7 +2,7 @@ RewriteEngine On
 
 #Don't to do the other way around coz lots of POST will get redirected.
 RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^(.*)/$ http://share.timc.idv.tw/gfx/$1 [R,L]
+	RewriteRule ^(.*)/$ http://stage.gfx.tw/$1 [R,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
