@@ -82,9 +82,11 @@ class Auth extends Controller {
     }
     function logout() {
     	if ($this->input->post('session_id') === $this->session->userdata('session_id')) {
+    		header('X-Session: destroyed.');
 			$this->session->sess_destroy();
-		} elseif ($this->input->post('token') === md5($this->session->userdata('id') . '--check--logout')) {
-			$this->session->sess_destroy();
+		} elseif ($this->input->post('token') === md5($this->session->userdata('id') . '--secret-token-good-day-fx')) {
+    		header('X-Session: destroyed.');
+   			$this->session->sess_destroy();
 		}
 		
 		header('Location: ' . base_url());

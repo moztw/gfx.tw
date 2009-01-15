@@ -16,57 +16,66 @@ but one still have to save the page in order to keep avatars s/he uploaded and a
 gfx.editor = {
 	'movingFeature' : null,
 	'onload' : function () {
-		$('title-name').addEvent(
-			'click',
-			function () {
-				this.setStyle('display', 'none');
-				$('title-name-edit')
-					.getFirst()
-					.setStyle('display', 'block')
-					.focus();
-				$('title-name-edit').getFirst().value = this.firstChild.nodeValue;
+		$.extend(
+			gfx.bind.click,
+			{
+				'#editor_save_button' : function () {
+					gfx.openWindow('savepage');
+				},
+				'#save_page' : gfx.editor.savePage,
+				'#title-name' : function () {
+					var t = $(this);
+					t.css('display', 'none');
+					$('#title-name-edit input')
+					.css('display', 'block')
+					.val(t.text()).focus();
+				},
+				'#featureselection_save button:only-child' : gfx.editor.changeFeatureSelection,
+				'#title-avatar' : function () {
+					gfx.openWindow('avatar');
+				},
+				'#avatar_glavatar' : function () {
+					gfx.editor.changeAvatar('(gravatar)', $(this).children()[0].src);
+				},
+				'#avatar_default' : function () {
+					gfx.editor.changeAvatar('(default)', './images/keyhole.gif');
+				},
+				'#groups .group' : function () {
+					$(this).toggleClass('not-selected');
+					gfx.editor.groupChanged = true;
+				},
+				'#groups .group-add-addon a' : function () {
+					gfx.editor.currentGroup = this.parentNode.parentNode.id.substr(2);
+					gfx.openWindow('addons');
+					return false;
+				},
+				'#addon_query_ok' : gfx.editor.queryAddon
 			}
 		);
-		$('title-name-edit').getFirst().addEvent(
-			'blur',
-			gfx.editor.changeTitle
-		);
-		$('featureselection_save').getFirst().addEvent(
-			'click',
-			gfx.editor.changeFeatureSelection
-		);
-		$('title-avatar').addEvent(
-			'click',
-			function () {
-				gfx.openWindow('avatar');
+		$.extend(
+			gfx.bind.blur,
+			{
+				'#title-name-edit input' : function () {
+					$('#title-name').text(this.value).css('display', null);
+					$(this).css('display', null);
+				}
 			}
 		);
 		gfx.editor.swfupload = new SWFUpload(
 			{
 				'upload_url': location.href + '/upload',
-				//'post_params' : { 'type' : 'upload' },
-
 				// File Upload Settings
-				'file_size_limit' : 1024,	// 1MB
-				'file_types' : '*.jpg;*.jpeg;*.gif;*.png',
-				'file_types_description' : 'Images',
-				'file_upload_limit' : '0',
-				// Button Settings
-				//button_image_url : '',	// Relative to the this file
+				file_size_limit : 1024,	// 1MB
+				file_types : '*.jpg;*.jpeg;*.gif;*.png',
+				file_types_description : 'Images',
+				file_upload_limit : '0',
 				button_placeholder_id : 'avatar_spfupload_replace',
 				button_width: 60,
 				button_height: 60,
-				//button_text : '<span class="button">上傳影像…</span>',
-				//button_text_style : '.button { font-family: 微軟正黑體, Verdana, sans-serif; font-size: 13; text-align: center}',
-					/* Adobe CSS subset  */
-				//button_text_top_padding: 2,
-				//button_text_left_padding: 20,
 				button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
 				button_cursor: SWFUpload.CURSOR.HAND,
-				// Flash Settings
-				'flash_url' : './swfupload/swfupload.swf',	// Relative to this file
-				// Debug Settings
-				'debug' : false,
+				flash_url : './swfupload/swfupload.swf',	// Relative to this file
+				debug : false,
 				// Event Handler Settings
 				'file_dialog_complete_handler' : function (n, q) {
 					if (n === 1 && q === 1) {
@@ -99,9 +108,15 @@ gfx.editor = {
 				},
 				'upload_success_handler' : function (file, result) {
 					this.setButtonDisabled(false);
-					result = JSON.decode(result, true);
+					//Great, jQuery doen't have a JSON.decode function w/o HTTP request.
+					//We get this from mootools source.
+					var JSONdecode = function (string) {
+						if (!(/^[,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t]*$/).test(string.replace(/\\./g, '@').replace(/"[^"\\\n\r]*"/g, ''))) return null;
+						return eval('(' + string + ')');
+					}
+					result = JSONdecode(result);
 					if (!result) {
-						window.alert(T['EMPTY_ERROR'] + result);
+						window.alert(T['EMPTY_ERROR']);
 					} else if (result.error) {
 						window.alert(T[result.tag] || result.error);
 					} else {
@@ -110,71 +125,44 @@ gfx.editor = {
 				}
 			}
 		);
-		$('avatar_glavatar').addEvent(
-			'click',
-			function () {
-				gfx.editor.changeAvatar('(gravatar)', this.getFirst().src);
-			}
-		);
-		$('avatar_default').addEvent(
-			'click',
-			function () {
-				gfx.editor.changeAvatar('(default)', './images/keyhole.gif');
-			}
-		);
-		gfx.editor.featureSortable = new Sortables(
-			'features',
+		$('#features').sortable(
 			{
-				onComplete : function () {
+				update: function () {
 					gfx.editor.featureChanged = true;
 				}
 			}
 		);
-		gfx.editor.groupSortable = new Sortables(
-			'groups',
+		$('#groups').sortable(
 			{
-				onComplete : function () {
+				update: function () {
 					gfx.editor.groupChanged = true;
 				}
 			}
 		);
-		$$('#groups .group').addEvent(
-			'click',
-			function () {
-				//TDB: sorting detection.
-				this.toggleClass('not-selected');
+		$.ajaxSetup(
+			{
+				type: 'POST',
+				timeout: 20000,
+				dataType: 'json',
+				error: function (xhr, status, error) {
+					//"timeout", "error", "notmodified" and "parsererror"
+				}
 			}
-		);
-		$$('#groups .group-add-addon a').addEvent(
-			'click',
-			function () {
-				gfx.editor.currentGroup = this.parentNode.parentNode.id.substr(2);
-				gfx.openWindow('addons');
-				return false;
-			}
-		);
-		$('addon_query_ok').addEvent(
-			'click',
-			gfx.editor.queryAddon
-		);
-		$('editor_save_button').addEvent(
-			'click',
-			function () {
-				gfx.openWindow('savepage');
-			}
-		);
-		$('save_page').addEvent(
-			'click',
-			gfx.editor.savePage
 		);
 	},
 	'changeFeatureSelection' : function () {
 		var s = [];
 		gfx.editor.featureChanged = true;
-		$$('#featureselection input').each(
-			function (o) {
-				if (o.checked) {
-					s[s.length] = o;
+		$('#featureselection input').each(
+			function (i) {
+				if (this.checked) {
+					var t = $(this);
+					s[s.length] = [
+						this.name.substr(3),
+						this.id.substr(3),
+						t.next().text(),
+						t.next().attr('title')
+					];
 				}
 			}
 		);
@@ -182,134 +170,104 @@ gfx.editor = {
 			window.alert(T['EDITOR_TOO_MANY_FEATURES']);
 			return;
 		}
-		var Feature = function (name, title, description) {
-			return new Element(
-				'div',
-				{
-					'id' : name,
-					'class' : 'feature sortable'
-				}
-			).adopt(
-				new Element(
-					'h2',
-					{
-						'text' : title
-					}
-				),
-				new Element(
-					'p',
-					{
-						'text' : description
-					}
-				),
-				new Element(
-					'p'
-				).adopt(
-					new Element(
-						'a',
-						{
-							'href' : './features/' + name,
-							'text' : 'More...'
-						}
-					)
+		var Feature = function (d) {
+			return $(document.createElement('div'))
+			.attr({
+				'id' : d[1],
+				'class' : 'feature sortable'
+			})
+			.append(
+				$(document.createElement('h2'))
+				.attr('id', 'featureid-' + d[0])
+				.text(d[2])
+			).append(
+				$(document.createElement('p'))
+				.text(d[3])
+			).append(
+				$(document.createElement('p'))
+				.append(
+					$(document.createElement('a'))
+					.attr('href', './features/' + d[1])
+					.text('More...')
 				)
 			);
 		}
-		$$('.feature').each(
-			function (o) {
-				if (!$('fs_' + o.id).checked) gfx.editor.featureSortable.removeItems(o).destroy();
-			}
-		);
-		var f = $('features');
-		$each(
-			s,
-			function (o) {
-				if (!$(o.id.substr(3))) {
-					f.adopt(new Feature(o.id.substr(3), o.getNext().firstChild.nodeValue, o.getNext().getProperty('title')));
-					gfx.editor.featureSortable.addItems(f.lastChild);
+		$('.feature').each(
+			function (i) {
+				if (!$('#fs_' + this.id).attr('checked')) {
+					$(this).remove();
 				}
 			}
 		);
+		var f = $('#features');
+		$.each(
+			s,
+			function (i, d) {
+				if (!$('#' + d[0]).length) {
+					f.append(new Feature(d));
+				}
+			}
+		);
+		f.sortable("refresh");
 		return false;
-	},
-	'changeTitle' : function () {
-		title = $('title-name-edit').getFirst().value;
-		$('title-name').firstChild.nodeValue = title;
-		//$('header_username').firstChild.nodeValue = title;
-		this.setStyle('display');
-		$('title-name').setStyle('display');
 	},
 	'changeAvatar' : function (avatar, url) {
 		gfx.editor.avatar = avatar;
-		$('title-avatar').getFirst().src = url;
+		$('#title-avatar img:only-child').attr('src', url);
 		gfx.closeWindow('avatar');
 	},
 	'savePage' : function () {
 		//Gather data
 		var d = {
-			'token' : $('token').value,
-			'title' : $('title-name').firstChild.nodeValue,
-			'name' : $('name').value
+			'token' : $('#token').val(),
+			'title' : $('#title-name').text(),
+			'name' : $('#name').val()
 		}
 		if (gfx.editor.avatar) {
 			d.avatar = gfx.editor.avatar;
 		}
 		if (gfx.editor.featureChanged) {
 			d.features = {};
-			$each(
-				gfx.editor.featureSortable.serialize(),
-				function (f, i) {
-					d.features[i+1] = $('fs_' + f).name.substr(3);
+			$('.feature h2').each(
+				function (i) {
+					d.features[i+1] = this.id.substr(10);
 				}
 			);
 		}
 		//check for errors
 		if (d.title.length > 128) {
-			window.alert('TITLE LENGTH');
+			window.alert(T['EDITOR_TITLE_LENGTH']);
 			return;
 		}
 		if (d.name.length > 60) {
-			window.alert('NAME LENGTH');
+			window.alert(T['EDITOR_NAME_LENGTH']);
 			return;
 		}
-		if (!d.name.test('^[a-zA-Z0-9_\-]+$')) {
-			window.alert('NAME CONTENT');
+		if (!/^[a-zA-Z0-9_\-]+$/.test(d.name)) {
+			window.alert(T['EDITOR_BAD_NAME']);
 			return;
 		}
 		//ajax send
-		gfx.editor.jsonRequest = new Request.JSON(
+		$.ajax(
 			{
 				url: './editor/save',
-				method: 'post',
 				data: d,
-				timeout: 20000,
-				onCancel : function (result) {
-					//
-				},
-				onFailure : function (xhr) {
-					if (xhr.readyState === 4) {
-						window.alert('failed');
-					}
-				},
-				onTimeout : function () {
-					window.alert('timeout');
-				},
-				onSuccess: function (result) {
+				success: function (result, status) {
 					if (!result) {
-						window.alert('EMPTY ERROR');
+						window.alert(T['EMPTY ERROR']);
 						return;
 					}
 					if (result.error) {
 						window.alert(result.error);
 						return;
 					}
-					$('window_userpage_url').href = './' + result.name;
+					$('#window_userpage_url').attr('href', './' + result.name);
 					gfx.closeWindow('savepage');
 					gfx.openWindow('editcomplete');
 				}
 			}
-		).send();
-	},
+		);
+	}/*,
 	'Addon' : function (id, title, url, imgurl, addlink, dellink) {
 		var o = new Element(
 			'p',
@@ -374,13 +332,5 @@ gfx.editor = {
 			'https://addons.mozilla.org/en-US/firefox/images/addon_icon/8888/1230481928',
 			true, false)
 		);
-	}
+	}*/
 };
-$extend(
-	gfx.windowSize,
-	{
-		'avatar' : [60, 30],
-		'savepage' : [60, 60],
-		'editcomplete': [40, 50]
-	}
-);

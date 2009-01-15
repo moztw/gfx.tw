@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import url('http://ui.jquery.com/latest/themes/flora/flora.dialog.css');
 
 html {
 	overflow: auto;
@@ -14,23 +15,6 @@ img {
 	border: none; vertical-align: middle;
 }
 
-.window {
-	display: none;
-	position: absolute;
-	top: 10%; left: 10%; z-index: 2; width: 80%; height: 80%;
-	border: 2px dashed #999999;
-	background-color: #ffffff;
-}
-.window .close {
-	position: absolute;
-	top: 0.2em; right: 0.2em;
-	margin: 0; padding: 0;
-}
-
-.window .window_content {
-	border: 1px dashed #999999;
-	margin: 1em;
-}
 #header {
 	margin: 0; padding: 0;
 	border: 1px dashed #999999;
@@ -53,6 +37,10 @@ img {
 	font-size: 0.72em;
 	clear: both;
 	text-align: center;
+}
+
+#logout_form {
+	display: none;
 }
 
 #titleblock {

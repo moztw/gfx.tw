@@ -12,21 +12,13 @@ if (!$avatar) {
 	<div id="editor_save">
 		<p><button id="editor_save_button">編輯完畢，選擇網址、儲存、領取宣傳貼紙！</button></p>
 	</div>
-	<div id="window_savepage" class="window">
-		<p class="close"><a href="#">關閉</a></p>
-		<div class="window_content">
-			<h2>快完成了...</h2>
-			<p>URL: <?php print base_url() . form_input(array('id' =>'name', 'value' => (substr($name, 0, 8) === '__temp__')?'':$name)); ?></p>
-			<p><button id="save_page">確定</button></p>
-		</div>
+	<div id="window_savepage" class="window" title="快完成了...">
+		<p>URL: <?php print base_url() . form_input(array('id' =>'name', 'value' => (substr($name, 0, 8) === '__temp__')?'':$name)); ?></p>
+		<p><button id="save_page">確定</button></p>
 	</div>
-	<div id="window_editcomplete" class="window">
-		<p class="close"><a href="#">關閉</a></p>
-		<div class="window_content">
-			<h2>完成！</h2>
-			<p><a id="window_userpage_url" href="#">我的個人宣傳頁面</a></p>
-			<p><a href="./stickers">領取宣傳貼紙</a></p>
-		</div>
+	<div id="window_editcomplete" class="window" title="完成！">
+		<p><a id="window_userpage_url" href="#">我的個人宣傳頁面</a></p>
+		<p><a href="./stickers">領取宣傳貼紙</a></p>
 	</div>
 	<div id="titleblock">
 		<h1>
@@ -44,26 +36,23 @@ if (!$avatar) {
 		<p class="desc">您的網際生活將因........///面放為！知利空國看動。者以目該當；聽工龍年影……清實工球能！清像童難喜回下，照獲風時接一！展下停然事漸其歡與態，王親然體分，問象讓它個球作陽的能加球起政活業。大德師但！達是性因，於影通身興師片保原二愛式政由來手紙庭世，獨北見維能本痛半有情當不給福公中！</p>
 	</div>
 	<div id="window_avatar" class="window">
-		<p class="close"><a href="#">關閉</a></p>
-		<div class="window_content">
-			<div class="avatar_selection">
-				<div id="avatar_spfupload" class="avatar_icon">
-					<div id="avatar_spfupload_replace">&nbsp;</div>
-				</div>
-				<p>上傳圖片</p>
+		<div class="avatar_selection">
+			<div id="avatar_spfupload" class="avatar_icon">
+				<div id="avatar_spfupload_replace">&nbsp;</div>
 			</div>
-			<div class="avatar_selection">
-				<div id="avatar_glavatar" class="avatar_icon">
-					<img src="<? print 'http://www.gravatar.com/avatar/' . md5($email) . '?s=60&amp;r=g&amp;d=' . urlencode(site_url('images/keyhole_edit.gif')); ?>" alt="Gravatar" />
-				</div>
-				<p><a href="http://www.gravatar.com/">Gravatar</a>上的圖示</p>
+			<p>上傳圖片</p>
+		</div>
+		<div class="avatar_selection">
+			<div id="avatar_glavatar" class="avatar_icon">
+				<img src="<? print 'http://www.gravatar.com/avatar/' . md5($email) . '?s=60&amp;r=g&amp;d=' . urlencode(site_url('images/keyhole_edit.gif')); ?>" alt="Gravatar" />
 			</div>
-			<div class="avatar_selection">
-				<div id="avatar_default" class="avatar_icon">
-					<img src="./images/keyhole_edit.gif" alt="鑰匙孔小人" />
-				</div>
-				<p>預設圖示</p>
+			<p><a href="http://www.gravatar.com/">Gravatar</a>上的圖示</p>
+		</div>
+		<div class="avatar_selection">
+			<div id="avatar_default" class="avatar_icon">
+				<img src="./images/keyhole_edit.gif" alt="鑰匙孔小人" />
 			</div>
+			<p>預設圖示</p>
 		</div>
 	</div>
 	<div id="featureselection">
