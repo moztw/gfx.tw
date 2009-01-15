@@ -49,26 +49,29 @@ class Userpage extends Controller {
 				//TBD: pretty error for userpages
 				show_404();
 			}
-			$features = $this->db->query('SELECT t1.name, t1.title, t1.description FROM features t1, u2f t2 WHERE t2.feature_id = t1.id AND t2.user_id = ' . $user->row()->id . ' ORDER BY t2.order ASC;');
+			$features = $this->db->query('SELECT t1.name, t1.title, t1.description FROM features t1, u2f t2 ' 
+			. 'WHERE t2.feature_id = t1.id AND t2.user_id = ' . $user->row()->id . ' ORDER BY t2.order ASC;');
 			$F = array();
 			foreach ($features->result_array() as $feature) {
 				$F[] = $feature;
 			}
 			unset($features, $feature);
-			$groups = $this->db->query('SELECT t1.id, t1.name, t1.title, t1.description FROM groups t1, u2g t2 WHERE t2.group_id = t1.id AND t2.user_id = ' . $user->row()->id . ' ORDER BY t2.order ASC;');
-			$G = array();
+			$addons = $this->db->query('SELECT t1.*, t2.group_id FROM addons t1, u2a t2 '
+			. 'WHERE t2.addons_id = t1.id AND t2.user_id = ' . $user->row()->id . ' ORDER BY t1.title ASC;');
 			$A = array();
-			foreach ($groups->result_array() as $group) {
-				$G[] = $group;
-				$addons = $this->db->query('SELECT t1.* FROM addons t1, u2a t2 '
-				. 'WHERE t2.addons_id = t1.id AND t2.group_id = ' . $group['id'] . 
-				' AND t2.user_id = ' . $user->row()->id . ' ORDER BY t1.title ASC;');
-				$A[$group['id']] = array();
-				foreach ($addons->result_array() as $addon) {
-					$A[$group['id']][] = $addon;
-				}
+			foreach ($addons->result_array() as $addon) {
+				if (!isset($A[$addon['group_id']])) $A[$addon['group_id']] = array();
+				$A[$addon['group_id']][] = $addon;
 			}
-			unset($groups, $group, $addons, $addon);
+			unset($addons, $addon);
+			$groups = $this->db->query('SELECT t1.id, t1.name, t1.title, t1.description FROM groups t1, u2g t2 ' 
+			. 'WHERE t2.group_id = t1.id AND t2.user_id = ' . $user->row()->id . ' ORDER BY t2.order ASC;');
+			$G = array();
+			foreach ($groups->result_array() as $group) {
+				if (!isset($A[$group['id']])) $A[$group['id']] = array();
+				$G[] = $group;
+			}
+			unset($groups, $group);
 			if (!$head) {
 				$db .= 'head ';
 				$head = $this->load->view('userpage/head.php', $user->row_array(), true);

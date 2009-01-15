@@ -53,6 +53,14 @@ class Editor extends Controller {
 			$F[] = $feature;
 		}
 		unset($allfeatures, $feature);
+		$addons = $this->db->query('SELECT t1.*, t2.group_id FROM addons t1, u2a t2 '
+		. 'WHERE t2.addons_id = t1.id AND t2.user_id = ' . $user->row()->id . ' ORDER BY t1.title ASC;');
+		$A = array();
+		foreach ($addons->result_array() as $addon) {
+			if (!isset($A[$addon['group_id']])) $A[$addon['group_id']] = array();
+			$A[$addon['group_id']][] = $addon;
+		}
+		unset($addons, $addon);
 		$groups = $this->db->query(
 			'SELECT t1.id, t1.name, t1.title, t1.description, G.user_id, G.order FROM groups t1 '
 			. 'LEFT OUTER JOIN '
@@ -60,18 +68,11 @@ class Editor extends Controller {
 			. 'WHERE S.id = K.group_id AND K.user_id = ' . $this->session->userdata('id') . ') AS G '
 			. 'ON t1.id = G.id ORDER BY G.user_id DESC, G.order ASC, t1.order ASC;');
 		$G = array();
-		$A = array();
 		foreach ($groups->result_array() as $group) {
 			$G[] = $group;
-			$addons = $this->db->query('SELECT t1.* FROM addons t1, u2a t2 '
-			. 'WHERE t2.addons_id = t1.id AND t2.group_id = ' . $group['id'] . 
-			' AND t2.user_id = ' . $user->row()->id . ' ORDER BY t1.title ASC;');
-			$A[$group['id']] = array();
-			foreach ($addons->result_array() as $addon) {
-				$A[$group['id']][] = $addon;
-			}
+			if (!isset($A[$group['id']])) $A[$group['id']] = array();
 		}
-		unset($groups, $group, $addons, $addon);
+		unset($groups, $group);
 		$this->load->view('editor/head.php');
 		$this->load->_ci_cached_vars = array(); //Clean up cached vars
 		$this->load->view('header.php', $user->row_array()); //Can be fetched from cache but not worth the effort.
