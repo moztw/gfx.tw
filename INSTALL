@@ -1,9 +1,10 @@
 1. Check out code
 2. Config base path at system/application/config/config.php and .htaccess
 3. Config db at system/application/config/database.php
-4. sudo chown www-data:www-data useravatars system/cache (or chmod 777 if you cannot sudo)
-5. Create database and tables
+4. Create database and tables by import gfx.sql.gz
+5. INSERT INTO `users` SET `name` = 'foxmosa', `id` = 1;
+6. sudo chown www-data:www-data useravatars system/cache (or chmod 777 if you cannot sudo)
 
-In Production Site:
+On Production Site:
 1. Change $route['scaffolding_trigger']  to empty string in system/application/config/routes.php
 2. Change error_reporting(E_ALL) to error_reporting(E_ERROR) in ./index.php
