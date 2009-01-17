@@ -135,6 +135,7 @@ function addon($addon) {
 ?>
 		<div class="addon" id="a_<?php print $id ?>">
 			<p><a href="<?php print htmlspecialchars($url); ?>"><img src="<? print htmlspecialchars($icon_url) ?>" alt="" /><span><?php print htmlspecialchars($title); ?></span></a></p>
+			<p class="del-addon">Del</p>
 		</div>
 <?php
 }

@@ -119,57 +119,69 @@ class Editor extends Controller {
 		//}
 		if ($this->input->post('features')) {
 			$query = $this->db->query('SELECT `id` FROM `u2f` WHERE `user_id` = ' . $this->session->userdata('id') . ' ORDER BY `order` ASC;');
-			$i = 1;
+			$i = 0;
 			foreach ($this->input->post('features') as $f) { // don't care about the keys
 				if (!is_numeric($f)) {
 					$this->json_error('Feature Content Error.', 'EDITOR_SAVE_FEATURE_ERROR');
 				}
-				if ($row = $query->next_row('array')) {
-					$this->db->update('u2f', array('feature_id' => $f, 'order' => $i), array('id' => $row['id']));
+				if ($i < $query->num_rows()) {
+					$row = $query->row_array($i);
+					$this->db->update('u2f', array('feature_id' => $f, 'order' => $i+1), array('id' => $row['id']));
 				} else {
-					$this->db->insert('u2f', array('feature_id' => $f, 'order' => $i, 'user_id' => $this->session->userdata('id')));
+					$this->db->insert('u2f', array('feature_id' => $f, 'order' => $i+1, 'user_id' => $this->session->userdata('id')));
 				}
-				if ($i === 3) break;
 				$i++;
+				if ($i === 3) break;
 			}
-			while ($row = $query->next_row('array')) {
-				$this->db->delete('u2f', array('id' => $row['id']));
+			while ($i < $query->num_rows()) {
+				if ($row = $query->row_array($i)) {
+					$this->db->delete('u2f', array('id' => $row['id']));
+				}
+				$i++;
 			}
 		}
 		if ($this->input->post('groups')) {
 			$query = $this->db->query('SELECT `id` FROM `u2g` WHERE `user_id` = ' . $this->session->userdata('id') . ' ORDER BY `order` ASC;');
-			$i = 1;
+			$i = 0;
 			foreach ($this->input->post('groups') as $g) { // don't care about the keys
 				if (!is_numeric($g)) {
 					$this->json_error('Feature Content Error.', 'EDITOR_SAVE_FEATURE_ERROR');
 				}
-				if ($row = $query->next_row('array')) {
-					$this->db->update('u2g', array('group_id' => $g, 'order' => $i), array('id' => $row['id']));
+				if ($i < $query->num_rows()) {
+					$row = $query->row_array($i);
+					$this->db->update('u2g', array('group_id' => $g, 'order' => $i+1), array('id' => $row['id']));
 				} else {
-					$this->db->insert('u2g', array('group_id' => $g, 'order' => $i, 'user_id' => $this->session->userdata('id')));
+					$this->db->insert('u2g', array('group_id' => $g, 'order' => $i+1, 'user_id' => $this->session->userdata('id')));
 				}
 				$i++;
 			}
-			while ($row = $query->next_row('array')) {
-				$this->db->delete('u2g', array('id' => $row['id']));
+			while ($i < $query->num_rows()) {
+				if ($row = $query->row_array($i)) {
+					$this->db->delete('u2g', array('id' => $row['id']));
+				}
+				$i++;
 			}
 		}
 		if ($this->input->post('addons')) {
 			$query = $this->db->query('SELECT `id` FROM `u2a` WHERE `user_id` = ' . $this->session->userdata('id') . ' ORDER BY `order` ASC;');
-			$i = 1;
+			$i = 0;
 			foreach ($this->input->post('addons') as $a) { // don't care about the keys
 				if (!is_numeric($a['id'])) {
 					$this->json_error('Feature Content Error.', 'EDITOR_SAVE_FEATURE_ERROR');
 				}
-				if ($row = $query->next_row('array')) {
-					$this->db->update('u2a', array('addon_id' => $a['id'], 'group_id' => $a['group'], 'order' => $i, ), array('id' => $row['id']));
+				if ($i < $query->num_rows()) {
+					$row = $query->row_array($i);
+					$this->db->update('u2a', array('addon_id' => $a['id'], 'group_id' => $a['group'], 'order' => $i+1), array('id' => $row['id']));
 				} else {
-					$this->db->insert('u2a', array('addon_id' => $a['id'], 'group_id' => $a['group'], 'order' => $i, 'user_id' => $this->session->userdata('id')));
+					$this->db->insert('u2a', array('addon_id' => $a['id'], 'group_id' => $a['group'], 'order' => $i+1, 'user_id' => $this->session->userdata('id')));
 				}
 				$i++;
 			}
-			while ($row = $query->next_row('array')) {
-				$this->db->delete('u2a', array('id' => $row['id']));
+			while ($i < $query->num_rows()) {
+				if ($row = $query->row_array($i)) {
+					$this->db->delete('u2a', array('id' => $row['id']));
+				}
+				$i++;
 			}
 		}
 		$this->load->library('cache');

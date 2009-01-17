@@ -51,8 +51,13 @@ gfx.editor = {
 					return false;
 				},
 				'#addon_query_ok' : gfx.editor.queryAddon,
-				'.addon a' : function () {
+				'.addon p > a' : function () {
 					window.open(this.href);
+					return false;
+				},
+				'.del-addon' : function () {
+					$(this).parent('.addon').remove();
+					gfx.editor.addonChanged = true;
 					return false;
 				}
 			}
@@ -175,7 +180,7 @@ gfx.editor = {
 			{
 				containment: 'document',
 				revert: 250,
-				handle: 'a',
+				//handle: 'p > a',
 				connectWith: ['#groups .group-addons'],
 				update: function () {
 					gfx.editor.addonChanged = true;
@@ -338,7 +343,7 @@ gfx.editor = {
 			}
 		);
 	},
-	'Addon' : function (d, addlink, dellink) {
+	'Addon' : function (d, add, del) {
 		var o = $(document.createElement('div'))
 			.attr(
 				{
@@ -382,12 +387,11 @@ gfx.editor = {
 					$('#groups').sortable('enable');
 				}
 			);
-		if (addlink) {
+		if (add) {
 			o.append(
-				$(document.createElement('a')).attr(
+				$(document.createElement('p')).attr(
 					{
-						'href' : '#',
-						'class' : 'add_addon'
+						'class' : 'add-addon'
 					}
 				).text(
 					'Add'
@@ -398,6 +402,24 @@ gfx.editor = {
 							new gfx.editor.Addon(d, false, true)
 						).sortable('refresh');
 						gfx.closeWindow('addons');
+						gfx.editor.addonChanged = true;
+						return false;
+					}
+				)
+			);
+		}
+		if (del) {
+			o.append(
+				$(document.createElement('p')).attr(
+					{
+						'class' : 'del-addon'
+					}
+				).text(
+					'Del'
+				).bind(
+					'click',
+					function () {
+						$(this).parent('.addon').remove();
 						gfx.editor.addonChanged = true;
 						return false;
 					}
