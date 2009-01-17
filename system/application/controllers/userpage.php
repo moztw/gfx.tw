@@ -57,7 +57,7 @@ class Userpage extends Controller {
 			}
 			unset($features, $feature);
 			$addons = $this->db->query('SELECT t1.*, t2.group_id FROM addons t1, u2a t2 '
-			. 'WHERE t2.addons_id = t1.id AND t2.user_id = ' . $user->row()->id . ' ORDER BY t1.title ASC;');
+			. 'WHERE t2.addon_id = t1.id AND t2.user_id = ' . $user->row()->id . ' ORDER BY t2.order ASC;');
 			$A = array();
 			foreach ($addons->result_array() as $addon) {
 				if (!isset($A[$addon['group_id']])) $A[$addon['group_id']] = array();

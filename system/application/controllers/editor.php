@@ -55,7 +55,7 @@ class Editor extends Controller {
 		}
 		unset($allfeatures, $feature);
 		$addons = $this->db->query('SELECT t1.*, t2.group_id FROM addons t1, u2a t2 '
-		. 'WHERE t2.addons_id = t1.id AND t2.user_id = ' . $user->row()->id . ' ORDER BY t1.title ASC;');
+		. 'WHERE t2.addon_id = t1.id AND t2.user_id = ' . $user->row()->id . ' ORDER BY t2.order ASC;');
 		$A = array();
 		foreach ($addons->result_array() as $addon) {
 			if (!isset($A[$addon['group_id']])) $A[$addon['group_id']] = array();
@@ -134,6 +134,42 @@ class Editor extends Controller {
 			}
 			while ($row = $query->next_row('array')) {
 				$this->db->delete('u2f', array('id' => $row['id']));
+			}
+		}
+		if ($this->input->post('groups')) {
+			$query = $this->db->query('SELECT `id` FROM `u2g` WHERE `user_id` = ' . $this->session->userdata('id') . ' ORDER BY `order` ASC;');
+			$i = 1;
+			foreach ($this->input->post('groups') as $g) { // don't care about the keys
+				if (!is_numeric($g)) {
+					$this->json_error('Feature Content Error.', 'EDITOR_SAVE_FEATURE_ERROR');
+				}
+				if ($row = $query->next_row('array')) {
+					$this->db->update('u2g', array('group_id' => $g, 'order' => $i), array('id' => $row['id']));
+				} else {
+					$this->db->insert('u2g', array('group_id' => $g, 'order' => $i, 'user_id' => $this->session->userdata('id')));
+				}
+				$i++;
+			}
+			while ($row = $query->next_row('array')) {
+				$this->db->delete('u2g', array('id' => $row['id']));
+			}
+		}
+		if ($this->input->post('addons')) {
+			$query = $this->db->query('SELECT `id` FROM `u2a` WHERE `user_id` = ' . $this->session->userdata('id') . ' ORDER BY `order` ASC;');
+			$i = 1;
+			foreach ($this->input->post('addons') as $a) { // don't care about the keys
+				if (!is_numeric($a['id'])) {
+					$this->json_error('Feature Content Error.', 'EDITOR_SAVE_FEATURE_ERROR');
+				}
+				if ($row = $query->next_row('array')) {
+					$this->db->update('u2a', array('addon_id' => $a['id'], 'group_id' => $a['group'], 'order' => $i, ), array('id' => $row['id']));
+				} else {
+					$this->db->insert('u2a', array('addon_id' => $a['id'], 'group_id' => $a['group'], 'order' => $i, 'user_id' => $this->session->userdata('id')));
+				}
+				$i++;
+			}
+			while ($row = $query->next_row('array')) {
+				$this->db->delete('u2a', array('id' => $row['id']));
 			}
 		}
 		$this->load->library('cache');

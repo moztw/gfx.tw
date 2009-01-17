@@ -288,7 +288,7 @@ gfx.editor = {
 			);
 		}
 		if (gfx.editor.groupChanged) {
-			$('.group-title index').each(
+			$('.group-title input').each(
 				function (i) {
 					if (this.checked) {
 						d['groups[' + (i+1) + ']'] = $(this).parent().attr('id').substr(2);
@@ -398,6 +398,7 @@ gfx.editor = {
 							new gfx.editor.Addon(d, false, true)
 						).sortable('refresh');
 						gfx.closeWindow('addons');
+						gfx.editor.addonChanged = true;
 						return false;
 					}
 				)
