@@ -39,6 +39,7 @@ CREATE TABLE `addons` (
   `icon_url` varchar(1024) NOT NULL,
   `description` text NOT NULL,
   `xpi_url` varchar(1024) NOT NULL,
+  `fetched` timestamp NOT NULL default '0000-00-00 00:00:00',
   `modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;

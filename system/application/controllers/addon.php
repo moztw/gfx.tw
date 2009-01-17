@@ -40,7 +40,19 @@ class Addon extends Controller {
 				),
 				$data
 			);
-//		} elseif ($addons->row()->modified) {
+		} elseif (strtotime($addons->row()->fetched) < time()-7*24*60*60) {
+			//re-fetch data from amo every week if someone query this addon
+			$data = $this->get_amo_content($this->input->post('q'));
+			$A = $addons->row_array();
+			if ($data) {
+				$A = array_merge(
+					array(
+						'id' => $A['id']
+					),
+					$data
+				);
+				$this->db->update('addons', $data, array('id' => $A['id']));
+			}// else { /* Fail? */ }
 		} else {
 			$A = $addons->row_array();
 		}
@@ -62,7 +74,8 @@ class Addon extends Controller {
 			'amo_id' => $this->input->post('q'),
 			'icon_url' => ($M[1] === '/img/default_icon.png')?'':'https://addons.mozilla.org' . $M[1],
 			'xpi_url' =>  (isset($X[1]))?'https://addons.mozilla.org' . $X[1]:'',
-			'description' => (isset($D[1]))?html_entity_decode($D[1], ENT_NOQUOTES, 'UTF-8'):''
+			'description' => (isset($D[1]))?html_entity_decode($D[1], ENT_NOQUOTES, 'UTF-8'):'',
+			'fetched' => date('Y-m-d H:m:s')
 		);
 	}
 	function json_error($msg, $tag = false) {
