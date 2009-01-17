@@ -6,6 +6,7 @@ class Editor extends Controller {
 		'userpage', 
 		'feature', 
 		'auth', 
+		'addons',
 		'about', 
 		'lobby', 
 		'view', 
@@ -117,21 +118,22 @@ class Editor extends Controller {
 		//	$this->json_error('error' . $this->db->affected_rows());
 		//}
 		if ($this->input->post('features')) {
-			foreach ($this->input->post('features') as $o => $f) {
-				if (!is_numeric($f) || !is_numeric($o)) {
+			$query = $this->db->query('SELECT `id` FROM `u2f` WHERE `user_id` = ' . $this->session->userdata('id') . ' ORDER BY `order` ASC;');
+			$i = 1;
+			foreach ($this->input->post('features') as $f) { // don't care about the keys
+				if (!is_numeric($f)) {
 					$this->json_error('Feature Content Error.', 'EDITOR_SAVE_FEATURE_ERROR');
 				}
-				if ($o > 3) {
-					$this->json_error('To Many Features?', 'EDITOR_TOO_MANY_FEATURES');
+				if ($row = $query->next_row('array')) {
+					$this->db->update('u2f', array('feature_id' => $f, 'order' => $i), array('id' => $row['id']));
+				} else {
+					$this->db->insert('u2f', array('feature_id' => $f, 'order' => $i, 'user_id' => $this->session->userdata('id')));
 				}
-				$query = $this->db->get_where('u2f', array('user_id' => $this->session->userdata('id'), 'order' => $o));
-				if ($query->num_rows() === 0) {
-					$this->db->insert('u2f', array('feature_id' => $f, 'order' => $o, 'user_id' => $this->session->userdata('id')));
-				} elseif ($query->row()->feature_id !== $f) {
-					$this->db->update('u2f', array('feature_id' => $f), array('id' => $query->row()->id));
-					//$this->db->delete('u2f', array('id' => $query->row()->id));
-					//$this->db->insert('u2f', array('feature_id' => $f, 'order' => $o, 'user_id' => $this->session->userdata('id')));
-				}
+				if ($i === 3) break;
+				$i++;
+			}
+			while ($row = $query->next_row('array')) {
+				$this->db->delete('u2f', array('id' => $row['id']));
 			}
 		}
 		$this->load->library('cache');

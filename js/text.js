@@ -1,5 +1,8 @@
 var T = {
 'EMPTY_ERROR' : '傳回不明訊息，請再試一次。',
+'ERROR' : '伺服器錯誤，請通知管理員。',
+'TIMEOUT' : '連線逾時，請檢查網路連線並再試一次。',
+'ADDON_NOT_FOUND' : '沒有找到任何附加元件。',
 'SWFUPLOAD_ZERO_BYTE_FILE' : '檔案的大小為 0 。',
 'SWFUPLOAD_FILE_EXCEEDS_SIZE_LIMIT' : '檔案超過限制大小。',
 'SWFUPLOAD_INVALID_FILETYPE' : '無法接受此檔案格式。',

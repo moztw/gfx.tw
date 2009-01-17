@@ -10,7 +10,7 @@ if (!$avatar) {
 
 ?>
 	<div id="editor_save">
-		<p><button id="editor_save_button">編輯完畢，選擇網址、儲存、領取宣傳貼紙！</button></p>
+		<p>編輯完畢，選擇網址、儲存、領取宣傳貼紙！<button id="editor_save_button">儲存您的頁面</button></p>
 	</div>
 	<div id="window_savepage" class="window" title="快完成了...">
 		<p>URL: <?php print base_url() . form_input(array('id' =>'name', 'value' => (substr($name, 0, 8) === '__temp__')?'':$name)); ?></p>
@@ -89,7 +89,7 @@ function feature($feature) {
 ?>
 
 		<div class="feature sortable" id="<?php print $name ?>">
-			<h2><?php print htmlspecialchars($title) ?></h2>
+			<h2 id="featureid-<?php print $id ?>"><?php print htmlspecialchars($title) ?></h2>
 			<p><?php print htmlspecialchars($description) ?></p>
 			<p><a href="<?php print site_url('feature/' . $name); ?>">More ...</a></p>
 		</div>
@@ -130,23 +130,26 @@ while(isset($features[$i])) {
 function addon($addon) {
 	extract($addon);
 	if (!isset($icon_url)) $icon_url = '';
-	if (!isset($url) && $addon_id) $url = 'https://addons.mozilla.org/zh-TW/firefox/addon/' . $addon_id;
-	elseif (!isset($url) && !$addon_id) return;
+	if ($url === '' && $amo_id !== '') $url = 'https://addons.mozilla.org/zh-TW/firefox/addon/' . $amo_id;
+	elseif ($url === '' && $amo_id === '') return;
 ?>
+		<div class="addon" id="a_<?php print $id ?>">
 			<p><a href="<?php print htmlspecialchars($url); ?>"><img src="<? print htmlspecialchars($icon_url) ?>" alt="" /><span><?php print htmlspecialchars($title); ?></span></a></p>
+		</div>
 <?php
 }
 function group($group, $addons) {
 	extract($group);
 ?>
 
-		<div class="group<?php print (isset($user_id))?'':' not-selected'; ?> sortable" id="<?php print $name ?>">
-			<div class="group-title" id="g_<?php print $id ?>">
+		<div class="group" id="<?php print $name ?>">
+			<div class="group-title sortable<?php print (isset($user_id))?'':' not-selected'; ?>" id="g_<?php print $id ?>">
+				<input type="checkbox" <?php print (isset($user_id))?'checked="checked"':''; ?>/>
 				<h3><?php print htmlspecialchars($title) ?></h3>
 				<p class="group-add-addon"><a href="#">新增元件</a></p>
 				<p><?php print htmlspecialchars($description) ?></p>
 			</div>
-			<div class="group-addon">
+			<div class="group-addons">
 <?php
 		foreach ($addons as $addon) {
 			if ($addon) addon($addon);
@@ -162,12 +165,9 @@ foreach ($allgroups as $group) {
 ?>
 	</div>
 	<div id="window_addons" class="window">
-		<p class="close"><a href="#">關閉</a></p>
-		<div class="window_content">
-			<h2>新增附加元件</h2>
-			<p>搜尋名稱或是輸入<a href="https://addons.mozilla.org">Mozilla Add-ons</a>元件編號: <?php print form_input(array('id' =>'addon_query', 'value' => '')); ?></p>
-			<p><button id="addon_query_ok">確定</button></p>
-			<p id="addon_query_result"></p>
-			<p>名稱搜尋僅適用曾被新增過的附加元件；未曾新增的元件一定要輸入 AMO 編號。</p>
-		</div>
+		<h2>新增附加元件</h2>
+		<p>搜尋名稱或是輸入<a href="https://addons.mozilla.org">Mozilla Add-ons</a>元件編號: <?php print form_input(array('id' =>'addon_query', 'value' => '')); ?></p>
+		<p><button id="addon_query_ok">確定</button></p>
+		<p id="addon_query_result" class="detailed"></p>
+		<p>名稱搜尋僅適用曾被新增過的附加元件；未曾新增的元件一定要輸入 AMO 編號。</p>
 	</div>

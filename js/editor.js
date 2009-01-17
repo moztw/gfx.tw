@@ -40,8 +40,9 @@ gfx.editor = {
 				'#avatar_default' : function () {
 					gfx.editor.changeAvatar('(default)', './images/keyhole.gif');
 				},
-				'#groups .group' : function () {
-					$(this).toggleClass('not-selected');
+				'#groups input' : function () {
+					if (this.checked) $(this).parent().removeClass('not-selected');
+					else $(this).parent().addClass('not-selected');
 					gfx.editor.groupChanged = true;
 				},
 				'#groups .group-add-addon a' : function () {
@@ -49,7 +50,11 @@ gfx.editor = {
 					gfx.openWindow('addons');
 					return false;
 				},
-				'#addon_query_ok' : gfx.editor.queryAddon
+				'#addon_query_ok' : gfx.editor.queryAddon,
+				'.addon a' : function () {
+					window.open(this.href);
+					return false;
+				}
 			}
 		);
 		$.extend(
@@ -59,6 +64,28 @@ gfx.editor = {
 					$('#title-name').text(this.value).css('display', null);
 					$(this).css('display', null);
 				}
+			}
+		);
+		$.extend(
+			gfx.bind.mousedown,
+			{
+				'.addon' : function () {
+					$('#groups').sortable('disable');
+				}
+			}
+		);
+		$.extend(
+			gfx.bind.mouseup,
+			{
+				'.addon' : function () {
+					$('#groups').sortable('enable');
+				}
+			}
+		);
+		$('#groups input').each(
+			function (i) {
+				if (this.checked) $(this).parent().removeClass('not-selected');
+				else $(this).parent().addClass('not-selected');
 			}
 		);
 		gfx.editor.swfupload = new SWFUpload(
@@ -127,15 +154,31 @@ gfx.editor = {
 		);
 		$('#features').sortable(
 			{
-				update: function () {
+				containment: 'document',
+				revert: 250,
+				update: function (e, ui) {
 					gfx.editor.featureChanged = true;
 				}
 			}
 		);
 		$('#groups').sortable(
 			{
+				handle: '.group-title',
+				containment: 'document',
+				revert: 250,
 				update: function () {
 					gfx.editor.groupChanged = true;
+				}
+			}
+		);
+		$('#groups .group-addons').sortable(
+			{
+				containment: 'document',
+				revert: 250,
+				handle: 'a',
+				connectWith: ['#groups .group-addons'],
+				update: function () {
+					gfx.editor.addonChanged = true;
 				}
 			}
 		);
@@ -145,7 +188,18 @@ gfx.editor = {
 				timeout: 20000,
 				dataType: 'json',
 				error: function (xhr, status, error) {
-					//"timeout", "error", "notmodified" and "parsererror"
+					switch (status) {
+						case 'timeout':
+						window.alert(T['TIMEOUT']);
+						break;
+						case 'error':
+						window.alert(T['ERROR']);
+						break;
+						//TBD: seems wont fire on parseerror
+						case 'parseerror':
+						window.alert(T['EMPTY_ERROR']);
+						break;
+					}
 				}
 			}
 		);
@@ -203,7 +257,7 @@ gfx.editor = {
 		$.each(
 			s,
 			function (i, d) {
-				if (!$('#' + d[0]).length) {
+				if (!$('#' + d[1]).length) {
 					f.append(new Feature(d));
 				}
 			}
@@ -227,10 +281,26 @@ gfx.editor = {
 			d.avatar = gfx.editor.avatar;
 		}
 		if (gfx.editor.featureChanged) {
-			d.features = {};
 			$('.feature h2').each(
 				function (i) {
-					d.features[i+1] = this.id.substr(10);
+					d['features[' + (i+1) + ']'] = this.id.substr(10);
+				}
+			);
+		}
+		if (gfx.editor.groupChanged) {
+			$('.group-title index').each(
+				function (i) {
+					if (this.checked) {
+						d['groups[' + (i+1) + ']'] = $(this).parent().attr('id').substr(2);
+					}
+				}
+			);
+		}
+		if (gfx.editor.addonChanged) {
+			$('#groups .addon').each(
+				function (i) {
+					d['addons[' + (i+1) + '][id]'] = this.id.substr(2);
+					d['addons[' + (i+1) + '][group]'] = $(this).parent().prev().attr('id').substr(2);
 				}
 			);
 		}
@@ -254,7 +324,7 @@ gfx.editor = {
 				data: d,
 				success: function (result, status) {
 					if (!result) {
-						window.alert(T['EMPTY ERROR']);
+						window.alert(T['EMPTY_ERROR']);
 						return;
 					}
 					if (result.error) {
@@ -267,52 +337,68 @@ gfx.editor = {
 				}
 			}
 		);
-	}/*,
-	'Addon' : function (id, title, url, imgurl, addlink, dellink) {
-		var o = new Element(
-			'p',
-			{
-				'id' : 'addon_' + id
-			}
-		).adopt(
-			new Element(
-				'a',
+	},
+	'Addon' : function (d, addlink, dellink) {
+		var o = $(document.createElement('div'))
+			.attr(
 				{
-					'href' : url
+					'class' : 'addon',
+					'id' : 'a_' + d['id']
 				}
-			).adopt(
-				new Element(
-					'img',
-					{
-						'src' : imgurl,
-						'alt' : ''
-					}
-				),
-				new Element(
-					'span',
-					{
-						'text' : title
-					}
+			).append(
+				$(document.createElement('p'))
+				.append(
+					$(document.createElement('a'))
+					.attr('href', d['url']).append(
+						$(document.createElement('img')).attr(
+							{
+								'src' : d['icon_url'],
+								'alt' : ''
+							}
+						)
+					).bind(
+						'click',
+						function () {
+							window.open(this.href);
+							return false;
+						}
+					).append(
+						$(document.createElement('span')).text(d['title'])
+					)
 				)
+			.append(
+				$(document.createElement('p'))
+				.attr('class', 'desc')
+				.text(d['description'])
 			)
-		);
+			).bind(
+				'mousedown',
+				function () {
+					$('#groups').sortable('disable');
+				}
+			).bind(
+				'mouseup',
+				function () {
+					$('#groups').sortable('enable');
+				}
+			);
 		if (addlink) {
-			o.adopt(
-				new Element(
-					'a',
+			o.append(
+				$(document.createElement('a')).attr(
 					{
 						'href' : '#',
-						'text' : 'Add',
-						'class' : 'add_addon',
-						'events' : {
-							'click' : function () {
-								$('g_' + gfx.editor.currentGroup).getNext().adopt(
-									new gfx.editor.Addon(id, title, url, imgurl, false, true)
-								);
-								gfx.closeWindow('addons');
-								return false;
-							}
-						}
+						'class' : 'add_addon'
+					}
+				).text(
+					'Add'
+				).bind(
+					'click',
+					function () {
+						$('#g_' + gfx.editor.currentGroup + ' + div.group-addons').append(
+							new gfx.editor.Addon(d, false, true)
+						).sortable('refresh');
+						gfx.closeWindow('addons');
+						return false;
 					}
 				)
 			);
@@ -320,17 +406,36 @@ gfx.editor = {
 		return o;
 	},
 	'queryAddon' : function () {
-		var q = $('addon_query').value;
-		window.alert('TBD');
-		var r = $('addon_query_result');
-		while (r.getFirst()) {
-			r.getFirst().destroy();
-		}
-		r.adopt(
-			new gfx.editor.Addon(2, 'NicoFox', 
-			'https://addons.mozilla.org/zh-TW/firefox/addon/8888', 
-			'https://addons.mozilla.org/en-US/firefox/images/addon_icon/8888/1230481928',
-			true, false)
+		$.ajax(
+			{
+				url: './addon/query',
+				data: {
+					'q' : $('#addon_query').val()
+				},
+				success: function (result, status) {
+					if (!result) {
+						window.alert(T['EMPTY_ERROR']);
+						return;
+					}
+					if (result.error) {
+						window.alert(result.error);
+						return;
+					}
+					if (!result.addons.length) {
+						window.alert(T['ADDON_NOT_FOUND']);
+						return;
+					}
+					var r = $('#addon_query_result').empty();
+					$.each(
+						result.addons,
+						function (i, d) {
+							r.append(
+								new gfx.editor.Addon(d, true, false)
+							);
+						}
+					);
+				}
+			}
 		);
-	}*/
+	}
 };

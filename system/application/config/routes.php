@@ -48,6 +48,8 @@ $route['scaffolding_trigger'] = "tmd";
 if ($route['scaffolding_trigger']) {
 	$route['about/' . $route['scaffolding_trigger']] = "about/" . $route['scaffolding_trigger'];
 	$route['about/' . $route['scaffolding_trigger'] . '/(:any)'] = "about/" . $route['scaffolding_trigger'] . '/$1';
+	$route['addon/' . $route['scaffolding_trigger']] = "addon/" . $route['scaffolding_trigger'];
+	$route['addon/' . $route['scaffolding_trigger'] . '/(:any)'] = "addon/" . $route['scaffolding_trigger'] . '/$1';
 	$route['editor/' . $route['scaffolding_trigger']] = "editor/" . $route['scaffolding_trigger'];
 	$route['editor/' . $route['scaffolding_trigger'] . '/(:any)'] = "editor/" . $route['scaffolding_trigger'] . '/$1';
 	$route['feature/' . $route['scaffolding_trigger']] = "feature/" . $route['scaffolding_trigger'];
@@ -57,9 +59,10 @@ if ($route['scaffolding_trigger']) {
 }
 $route['about'] = "about";
 $route['about/(:any)'] = "about/view/$1";
+$route['addon'] = "addon";
+$route['addon/(:any)'] = "addon/$1";
 $route['editor'] = "editor";
-$route['editor/upload'] = "editor/upload";
-$route['editor/save'] = "editor/save";
+$route['editor/(:any)'] = "editor/$1";
 $route['feature'] = "feature";
 $route['feature/edit'] = "feature/create";
 $route['feature/edit/(:any)'] = "feature/edit/$1";

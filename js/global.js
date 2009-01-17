@@ -8,9 +8,15 @@ var gfx = {
 			'#link_logout' : function () {
 				$('#logout_form').submit();
 				return false;
+			},
+			'#groups-show-detail-box' : function () {
+				$('#groups').toggleClass('detailed');
 			}
 		},
-		'blur' : {}
+		/* Don't remove them coz editor.js will extend them */
+		'blur' : {},
+		'mousedown' : {},
+		'mouseup' : {}
 	},
 	'windowSize' : {
 		'login' : [40, 30]

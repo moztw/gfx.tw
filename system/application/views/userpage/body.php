@@ -60,17 +60,30 @@ foreach ($features as $feature) {
 <?php } ?>
 	</ul>
 	</div>
+	<p id="groups-show-detail"><input type="checkbox" id="groups-show-detail-box" /> <label for="groups-show-detail-box">顯示細節與快速安裝</label></p>
 	<h2 id="groups-title"><?php print htmlspecialchars($title) ?>的火狐屬性</h2>
+	<p>火狐帶有強大的擴充功能....（descriptive text on addons for new- and non-fx users）</p>
 	<div id="groups">
 <?php
 /* put it into a function scope */
 function addon($addon) {
 	extract($addon);
 	if (!isset($icon_url)) $icon_url = '';
+	if (!isset($xpi_url)) $xpi_url = '';
 	if ($url === '' && $amo_id !== '') $url = 'https://addons.mozilla.org/zh-TW/firefox/addon/' . $amo_id;
 	elseif ($url === '' && $amo_id === '') return;
 ?>
+		<div class="addon">
 			<p><a href="<?php print htmlspecialchars($url); ?>"><img src="<? print htmlspecialchars($icon_url) ?>" alt="" /><span><?php print htmlspecialchars($title); ?></span></a></p>
+<?php
+	if (isset($description)) {
+?>
+			<p class="desc"><?php print htmlspecialchars($description); ?></p>
+<?php
+	}
+?>
+			<p class="install"><input type="checkbox" value="<?php print htmlspecialchars($xpi_url); ?>"<?php if (!$xpi_url) print ' disabled="disabled" title="請至套件網站安裝"' ?>/>列入安裝清單</p>
+		</div>
 <?php
 }
 function group($group, $addons) {
@@ -78,14 +91,14 @@ function group($group, $addons) {
 ?>
 
 		<div class="group" id="<?php print $name ?>">
-			<div class="group-title">
+			<div class="group-title" id="g_<?php print $id ?>">
 				<h3><?php print htmlspecialchars($title) ?></h3>
 				<p><?php print htmlspecialchars($description) ?></p>
 			</div>
 <?php
 	if ($addons) {
 ?>
-			<div class="group-addon">
+			<div class="group-addons">
 <?php
 		foreach ($addons as $addon) {
 			if ($addon) addon($addon);

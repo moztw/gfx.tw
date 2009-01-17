@@ -120,6 +120,10 @@ img {
 	border: 1px dashed #999999;
 }
 
+#groups-show-detail {
+	float: right;
+}
+
 #groups-title {
 	float: right; width: 628px;
 	border: 1px dashed #999999;
@@ -137,6 +141,10 @@ img {
 	border: 1px dashed #999999;
 }
 
+#groups .group .group-title input {
+	float: left;
+}
+
 #groups .group .group-title h3 {
 	font-size: 1.2em; font-weight: bold;
 	margin: 0; padding: 0;
@@ -152,24 +160,59 @@ img {
 	float: right;
 }
 
-#groups .group .group-addon, #addon_query_result {
+#groups .group .group-addons {
 	clear: both;
 	border: 1px dashed #999999;
+	min-height: 1em;
+	height: 100%;
+	overflow: auto;
 }
-#groups .group .group-addon p, #addon_query_result p {
-	float: left; width: 155px; height: 70px;
+#addon_query_result {
+	border: 1px dashed #999999;
+}
+.addon {
+	float: left; width: 153px; height: 70px;
 	border: 1px dashed #999999;
 }
 
-#groups .group .group-addon p img, #addon_query_result p img {
+.addon p {
+	margin: 0; padding: 0;
+}
+
+.addon img {
 	display: block; margin: 3px 61px;
 	border: 1px dashed #999999;
 	width: 32px; height: 32px;
 }
 
-#groups .group .group-addon p span, #addon_query_result p span {
+.addon span {
 	display: block; width: 100%;
 	text-align: center;
+}
+
+.addon .desc, .addon .install {
+	display: none;
+}
+
+.detailed .addon {
+	float: none; width: auto; height: auto;
+}
+
+.detailed .addon img {
+	float: left; margin: 3px 10px;
+}
+
+.detailed span {
+	font-weight: bold; font-size: 1.2em;
+	text-align: left;
+}
+
+.detailed .addon .desc, .detailed .addon .install {
+	display: block;
+}
+
+.detailed .addon .install {
+	text-align: right;
 }
 
 #featureselection {

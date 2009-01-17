@@ -19,10 +19,10 @@ if (isset($id)) {
 	</div>
 	<div id="window_login" class="window" title="登入">
 		<form action="<?php print site_url('auth/login'); ?>" method="post">
-			<p>OpenID: <input type="text" name="openid_identifier" value="" /> <input type="submit" /></p>
+			<p>OpenID: <input type="text" name="openid_identifier" value="" /> <input type="submit" value="登入" /></p>
 			<h3>What is OpenID?</h3>
-			<p>balhj... </p>
-			<p><a href="http://myid.tw/">Here you go if you really don't have one.</a></p>
+			<p>(Some description about openid, maybe helper control for famous BSP openids.)</p>
+			<p>(if your .... you can get one at <a href="http://myid.tw/">myID.tw</a>.</p>
 		</form>
 	</div>
 <?php
