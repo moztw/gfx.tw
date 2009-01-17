@@ -135,7 +135,7 @@ CREATE TABLE `u2f` (
 INSERT INTO `u2f` (`id`, `user_id`, `feature_id`, `order`) VALUES 
 (1, 1, 1, 1),
 (2, 1, 2, 2),
-(3, 1, 3, 3),
+(3, 1, 3, 3);
 
 -- --------------------------------------------------------
 
@@ -158,7 +158,7 @@ CREATE TABLE `u2g` (
 INSERT INTO `u2g` (`id`, `user_id`, `group_id`, `order`) VALUES 
 (1, 1, 1, 1),
 (2, 1, 2, 2),
-(3, 1, 3, 3),
+(3, 1, 3, 3);
 
 -- --------------------------------------------------------
 
@@ -191,4 +191,4 @@ CREATE TABLE `users` (
 -- 
 
 INSERT INTO `users` (`id`, `login`, `name`, `title`, `avatar`, `email`, `bio`, `web`, `blog`, `blog_rss`, `forum_username`, `count`, `visited`, `modified`) VALUES 
-(1, '', 'foxmosa', '狐耳摩莎', '52501aaf2bcbb9c35696b076bd3b11b8.gif', '', '我是伴隨台灣的火狐愛好者遊山玩水、遨遊網際的狐耳摩莎！', 'http://www.moztw.org/events/foxmosa-tour/', '', '', '', 1, 1, '0000-00-00 00:00:00'),
+(1, '', 'foxmosa', '狐耳摩莎', '52501aaf2bcbb9c35696b076bd3b11b8.gif', '', '我是伴隨台灣的火狐愛好者遊山玩水、遨遊網際的狐耳摩莎！', 'http://www.moztw.org/events/foxmosa-tour/', '', '', '', 1, 1, '0000-00-00 00:00:00');
