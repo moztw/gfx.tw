@@ -8,7 +8,7 @@ html {
 body {
 	width: 900px;
 	margin: 0 auto; padding: 0;
-	font: 0.92em '微軟正黑體', sans-serif;
+	font: 0.92em '文泉驛正黑', sans-serif;
 }
 
 img {
@@ -31,12 +31,18 @@ img {
 }
 
 #footer {
-	margin: 0; padding: 0;
-	border: 1px dashed #999999;
-	height: 5em;
-	font-size: 0.72em;
-	clear: both;
-	text-align: center;
+	border-top:1px solid #999999;
+	margin:2em 0;
+	padding:1em 0;
+	text-align:center;
+	clear:both;
+	margin-top:1em;
+	color:#000000;
+}
+
+#footer p, #footer p a {
+	color:#666666;
+	font-size:small;
 }
 
 #logout_form {
@@ -47,6 +53,7 @@ img {
 	border: 1px dashed #999999;
 	height: 320px;
 	position: relative;
+	margin-top: 50px;
 }
 #titleblock h1 {
 	font-size: 1em;
@@ -92,10 +99,19 @@ img {
 	font-size: 30px; line-height: 30px;
 	white-space: nowrap;
 }
-#titleblock .download {
+#titleblock .downloadframeborder {
 	position: absolute;
-	top: 20px; left: 550px;
-	height: 100px; width: 350px;
+	top: -40px; left: 600px;
+	background-color: #94B2BC;
+}
+#titleblock .downloadframeborder .downloadframe {
+	height: 160px; width: 325px;
+	background-color: #FFFFFF;
+}
+#titleblock .downloadframeborder .downloadframe .download {
+	margin-left: 10px; margin-top: 20px;
+	height: 100px; width: 300px;
+	background-color: #C4EFA1;
 	border: 1px dashed #999999;
 }
 #titleblock .desc {
