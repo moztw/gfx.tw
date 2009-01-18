@@ -59,24 +59,31 @@ class Auth extends Controller {
 						'users',
 						array(
 							'login' => $open_id,
-							'avatar' => (isset($sreg['email']))?'(gravatar)':'', //TBD: Gravatar fetcher
 							'name' => '__temp__' . md5($sreg['nickname']), /* require unique */
 							'title' => (isset($sreg['fullname']))?$sreg['fullname']:$sreg['nickname'],
+							'avatar' => (isset($sreg['email']))?'(gravatar)':'',
 							'email' => (isset($sreg['email']))?$sreg['email']:'',
-							'count' => 1
+							'bio' => '',
+							'web' => $open_id,
+							'blog' => $open_id,
+							'blog_rss' => '',
+							'forum_username' => '',
+							'count' => 1,
+							'visited' => 0
 						)
 					);
-					$user = $this->db->get_where('users', array('login' => $open_id));
-					$data = $user->row_array();
-					$this->db->insert('u2f', array('user_id' => $data['id'], 'feature_id' => '1', 'order' => '1'));
-					$this->db->insert('u2f', array('user_id' => $data['id'], 'feature_id' => '2', 'order' => '2'));
-					$this->db->insert('u2f', array('user_id' => $data['id'], 'feature_id' => '3', 'order' => '3'));
+					$this->db->insert('u2f', array('user_id' => $this->db->insert_id(), 'feature_id' => '1', 'order' => '1'));
+					$this->db->insert('u2f', array('user_id' => $this->db->insert_id(), 'feature_id' => '2', 'order' => '2'));
+					$this->db->insert('u2f', array('user_id' => $this->db->insert_id(), 'feature_id' => '3', 'order' => '3'));
+					$this->db->insert('u2g', array('user_id' => $this->db->insert_id(), 'group_id' => '1', 'order' => '1'));
+					$this->db->insert('u2g', array('user_id' => $this->db->insert_id(), 'group_id' => '2', 'order' => '2'));
 				}
 				$this->session->set_userdata(array('id' => $data['id']));
 					/*
 						We grab anything else from database coz user might open up two session at two places
 						Also, you really can't save much thing in the cookie.
 					 */
+					 //TBD: hide user id in cookie (if we don't want ppl to know number of users on site)
 				header('Location: ' . site_url('editor'));
 		}
     }
