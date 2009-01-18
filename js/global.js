@@ -22,6 +22,24 @@ var gfx = {
 		'login' : [40, 30]
 	},
 	'onload' : function () {
+		//cornerizing
+		$('.downloadframe').corner("round 8px").parent().css('padding', '2px').corner("round 9px");
+		$('#titleblock').corner("top");
+
+		
+		//gradienting
+		$('#titleblock').addClass("gradient B4D5E6 FFFFFF vertical");
+		
+		//dialoging
+		/*$('.download').dialog(
+			{  
+				bgiframe: true,
+				dialogClass: 'download',
+			}
+		); */                                                                                          
+		
+		
+		
 		if (gfx.editor) gfx.editor.onload();
 		$('.window').dialog(
 			{
@@ -51,6 +69,6 @@ var gfx = {
 	},
 	'closeWindow' : function (id) {
 		$('#window_' + id).dialog("close");
-	}
+	},
 }
 $(document).ready(gfx.onload);
