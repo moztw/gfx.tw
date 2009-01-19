@@ -22,14 +22,16 @@ var gfx = {
 		'login' : [40, 30]
 	},
 	'onload' : function () {
+
+		if (gfx.editor) gfx.editor.onload();
+
 		//cornerizing
 		$('.downloadframe').corner("round 8px").parent().css('padding', '2px').corner("round 9px");
 		$('#titleblock').corner("top");
 
-		
 		//gradienting
 		$('#titleblock').addClass("gradient B4D5E6 FFFFFF vertical");
-		
+
 		//dialoging
 		/*$('.download').dialog(
 			{  
@@ -37,10 +39,7 @@ var gfx = {
 				dialogClass: 'download',
 			}
 		); */                                                                                          
-		
-		
-		
-		if (gfx.editor) gfx.editor.onload();
+
 		$('.window').dialog(
 			{
 				autoOpen: false,
