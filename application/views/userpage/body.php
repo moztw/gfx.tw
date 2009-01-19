@@ -22,7 +22,7 @@ if (!$avatar) {
 			<p class="version">3.0.x .....</p>
 		</div>
 		<p class="count"><?php print htmlspecialchars($title) ?>已經推薦<?php print $count ?>人使用了！</p>
-		<p class="desc">您的網際生活將因........///面放為！知利空國看動。者以目該當；聽工龍年影……作陽的能加球起政活業。大德師但！達是性因，於影通身興師片保原二愛式政由來手紙庭世，獨北見維能本痛半有情當不給福公中！</p>
+		<p class="desc">您的網際生活將因 Firefox 更加豐富有趣！Firefox 有許多特色，協助您完成工作、找到資訊。正因為它如此實用，王劍明願意推薦您改用 Firefox！以下是王劍明最喜歡 Firefox 的三大特點：</p>
 	</div>
 	<div id="features">
 <?php

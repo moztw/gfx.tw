@@ -33,8 +33,8 @@ if (!$avatar) {
 			<p class="link"><a href="#">免費下載</a></p>
 			<p class="version">3.0.x .....</p>
 		</div>
-		<p class="count">(您的推薦指數會在這裡出現)</p>
-		<p class="desc">您的網際生活將因........///面放為！知利空國看動。者以目該當；聽工龍年影……作陽的能加球起政活業。大德師但！達是性因，於影通身興師片保原二愛式政由來手紙庭世，獨北見維能本痛半有情當不給福公中！</p>
+		<p class="count">{您的推薦指數會在這裡出現}</p>
+		<p class="desc">您的網際生活將因 Firefox 更加豐富有趣！Firefox 有許多特色，協助您完成工作、找到資訊。正因為它如此實用，<span class="title-placeholder">{您的名字}</span>願意推薦您改用 Firefox！以下是<span class="title-placeholder">{您的名字}</span>最喜歡 Firefox 的三大特點：</p>
 	</div>
 	<div id="window_avatar" class="window">
 		<div class="avatar_selection">
@@ -105,7 +105,7 @@ while(isset($features[$i])) {
 ?>
 	</div>
 	<div id="userinfo">
-	<h2>關於<span class="title-placeholder">(您的名字)</span></h2>
+	<h2>關於<span class="title-placeholder">{您的名字}</span></h2>
 	<p><button>編輯</button></p>
 	<ul>
 		<li><span class="item">抓火狐網址</span> <a class="gfxurl value" href="<?php print site_url($name); ?>"><?php print site_url($name); ?></a></li>
@@ -123,7 +123,7 @@ while(isset($features[$i])) {
 <?php } ?>
 	</ul>
 	</div>
-	<h2 id="groups-title"><span class="title-placeholder">(您的名字)</span>的火狐屬性</h2>
+	<h2 id="groups-title"><span class="title-placeholder">{您的名字}</span>的火狐屬性</h2>
 	<p>請在下方選擇符合您網際活動的屬性，並加入您推薦的附加元件：</p>
 	<div id="groups">
 <?php
