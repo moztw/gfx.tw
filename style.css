@@ -199,12 +199,19 @@ img {
 	width: 240px; height: 125px;
 }
 
+
 #features .feature .link {
 	position: absolute;
 	margin: 0; padding: 0;
-	top: 220px; left: 30px;
-	width: 240px; height: 30px;
-	text-align: right;
+	top: 220px; left: 210px;
+	width: 61px; height: 25px;
+	font-size: 15px; text-indent: -10000px;
+	background: transparent url('images/feature-more.gif') top center no-repeat;
+}
+
+#features .feature .link a {
+	display: block;
+	width: 61px; height: 25px;
 }
 
 #userinfo {
