@@ -83,7 +83,7 @@ img {
 #titleblock #title-name, #titleblock #title-name-edit input {
 	position: absolute;
 	top: 87px; left: 343px;
-	height: 40px; width: 230px;
+	height: 40px; width: 270px;
 	font-size: 36px; line-height: 40px;
 	white-space: nowrap;
 }
@@ -116,18 +116,17 @@ img {
 
 #titleblock .download {
 	position: absolute;
-	top: 37px; left: 600px;
-	width: 260px; height: 85px;
-	border: 1px dashed #999999;
+	top: 28px; left: 640px;
+	width: 230px; height: 70px;
 }
 #titleblock .download p {
 	margin: 0; padding: 0;
 }
 #titleblock .download .link {
 	position: absolute;
-	top: 15px; left: 70px;
-	height: 30px; width: 148px;
-	font-size: 30px; line-height: 30px;
+	top: 15px; left: 65px;
+	height: 26px; width: 148px;
+	font-size: 26px; line-height: 26px;
 }
 
 #titleblock .download .link a {
@@ -141,19 +140,18 @@ img {
 
 #titleblock .download .version {
 	position: absolute;
-	top: 55px; left: 70px;
+	top: 50px; left: 65px;
 	height: 15px; width: 180px;
 	font-size: 15px; line-height: 15px;
 	white-space: nowrap;
 }
 #titleblock .count {
 	position: absolute;
-	top: 110px; left: 600px;
-	width: 260px; height: 16px;
-	font-size: 16px; line-height: 16px;
+	top: 94px; left: 640px;
+	width: 230px; height: 14px;
+	font-size: 14px; line-height: 14px;
 	text-align: right;
 	white-space: nowrap;
-	border: 1px dashed #999999;
 }
 
 #titleblock .desc {
