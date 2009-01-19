@@ -30,10 +30,11 @@ if (!$avatar) {
 			<span id="title-3">看網頁！</span>
 		</h1>
 		<div class="download">
-			<p>免費下載</p>
-			<p>(您的推薦指數會在這裡出現)</p>
+			<p class="link"><a href="#">免費下載</a></p>
+			<p class="version">3.0.x .....</p>
 		</div>
-		<p class="desc">您的網際生活將因........///面放為！知利空國看動。者以目該當；聽工龍年影……清實工球能！清像童難喜回下，照獲風時接一！展下停然事漸其歡與態，王親然體分，問象讓它個球作陽的能加球起政活業。大德師但！達是性因，於影通身興師片保原二愛式政由來手紙庭世，獨北見維能本痛半有情當不給福公中！</p>
+		<p class="count">(您的推薦指數會在這裡出現)</p>
+		<p class="desc">您的網際生活將因........///面放為！知利空國看動。者以目該當；聽工龍年影……作陽的能加球起政活業。大德師但！達是性因，於影通身興師片保原二愛式政由來手紙庭世，獨北見維能本痛半有情當不給福公中！</p>
 	</div>
 	<div id="window_avatar" class="window">
 		<div class="avatar_selection">
@@ -91,7 +92,7 @@ function feature($feature) {
 		<div class="feature sortable" id="<?php print $name ?>">
 			<h2 id="featureid-<?php print $id ?>"><?php print htmlspecialchars($title) ?></h2>
 			<p><?php print htmlspecialchars($description) ?></p>
-			<p><a href="<?php print site_url('feature/' . $name); ?>">More ...</a></p>
+			<p class="link"><a href="<?php print site_url('feature/' . $name); ?>">More ...</a></p>
 		</div>
 <?php
 }

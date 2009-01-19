@@ -34,7 +34,7 @@ function feature($feature) {
 		<div class="feature" id="<?php print $name ?>">
 			<h2><?php print htmlspecialchars($title) ?></h2>
 			<p><?php print htmlspecialchars($description) ?></p>
-			<p><a href="<?php print site_url('feature/' . $name); ?>">More ...</a></p>
+			<p class="link"><a href="<?php print site_url('feature/' . $name); ?>">More ...</a></p>
 		</div>
 <?php
 }

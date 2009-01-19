@@ -139,10 +139,35 @@ img {
 	height: 75px; width: 490px;
 }
 #features {
+	width: 900px; height: 272px;
+	background: transparent url('images/features.jpg') center top no-repeat;
 }
 #features .feature {
-	float: left; width: 298px; height: 10em;
-	border: 1px dashed #999999;
+	float: left; width: 300px; height: 272px;
+	position: relative;
+	background: transparent url('images/feature-empty.gif') center top no-repeat;
+}
+
+#features .feature h2 {
+	position: absolute;
+	margin: 0; padding: 0;
+	top: 30px; left: 100px;
+	font-size: 35px; line-height: 35px;
+}
+
+#features .feature p {
+	position: absolute;
+	margin: 0; padding: 0;
+	top: 100px; left: 30px;
+	width: 240px; height: 125px;
+}
+
+#features .feature .link {
+	position: absolute;
+	margin: 0; padding: 0;
+	top: 220px; left: 30px;
+	width: 240px; height: 30px;
+	text-align: right;
 }
 
 #userinfo {

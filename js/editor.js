@@ -244,6 +244,7 @@ gfx.editor = {
 				.text(d[3])
 			).append(
 				$(document.createElement('p'))
+				.addClass('link')
 				.append(
 					$(document.createElement('a'))
 					.attr('href', './features/' + d[1])
