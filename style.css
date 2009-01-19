@@ -17,14 +17,27 @@ img {
 
 #header {
 	margin: 0; padding: 0;
-	border: 1px dashed #999999;
+	background: transparent url('/images/header.jpg') center bottom no-repeat;
 	height: 2.5em;
+	color: #cccccc;
 }
 #header p {
 	margin: 0; padding: 0.5em;
 }
+
+#header p a {
+	color: #ffffff;
+	text-decoration: none;
+}
+
+#header p a:hover {
+	text-decoration: underline;
+}
+
 #header #header_top_link {
 	float: left;
+	font-weight: bold;
+	font-size: 1.2em;
 }
 #header #header_user_functions, #header #header_login {
 	float: right;
@@ -116,6 +129,16 @@ img {
 	height: 30px; width: 148px;
 	font-size: 30px; line-height: 30px;
 }
+
+#titleblock .download .link a {
+	color: #000099;
+	font-weight: bold;
+}
+
+#titleblock .download .link a:hover {
+	background-color: #ddffbb;
+}
+
 #titleblock .download .version {
 	position: absolute;
 	top: 55px; left: 70px;
