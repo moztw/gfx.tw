@@ -17,15 +17,12 @@ if (!$avatar) {
 			<span id="title-2">Firefox</span>
 			<span id="title-3">看網頁！</span>
 		</h1>
-		<div class="downloadframeborder">
-			<div class="downloadframe">
-				<div class="download">
-					<p>免費下載</p>
-					<p><?php print htmlspecialchars($title) ?>已經推薦<?php print $count ?>人使用了！</p>
-				</div>
-			</div>
+		<div class="download">
+			<p class="link"><a href="#">免費下載</a></p>
+			<p class="version">3.0.x .....</p>
 		</div>
-		<p class="desc">您的網際生活將因........///面放為！知利空國看動。者以目該當；聽工龍年影……清實工球能！清像童難喜回下，照獲風時接一！展下停然事漸其歡與態，王親然體分，問象讓它個球作陽的能加球起政活業。大德師但！達是性因，於影通身興師片保原二愛式政由來手紙庭世，獨北見維能本痛半有情當不給福公中！</p>
+		<p class="count"><?php print htmlspecialchars($title) ?>已經推薦<?php print $count ?>人使用了！</p>
+		<p class="desc">您的網際生活將因........///面放為！知利空國看動。者以目該當；聽工龍年影……作陽的能加球起政活業。大德師但！達是性因，於影通身興師片保原二愛式政由來手紙庭世，獨北見維能本痛半有情當不給福公中！</p>
 	</div>
 	<div id="features">
 <?php
