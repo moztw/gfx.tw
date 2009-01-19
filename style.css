@@ -140,12 +140,17 @@ img {
 }
 #features {
 	width: 900px; height: 272px;
-	background: transparent url('images/features.jpg') center top no-repeat;
+	background: transparent url('images/userpage-block-bg.jpg') center top repeat-y;
 }
 #features .feature {
 	float: left; width: 300px; height: 272px;
 	position: relative;
 	background: transparent url('images/feature-empty.gif') center top no-repeat;
+}
+
+#features .ui-sortable-placeholder {
+	visibility: visible!important;
+	background: transparent url('images/feature-dragbox.gif') center top no-repeat;
 }
 
 #features .feature h2 {
