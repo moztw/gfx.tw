@@ -59,7 +59,7 @@ img {
 }
 #titleblock #title-avatar {
 	position: absolute;
-	top: 87px; left: 323px;
+	top: 87px; left: 270px;
 	height: 65px; width: 65px;
 	overflow: hidden;
 	border: 1px dashed #999999;
@@ -69,7 +69,7 @@ img {
 }
 #titleblock #title-name, #titleblock #title-name-edit input {
 	position: absolute;
-	top: 87px; left: 396px;
+	top: 87px; left: 343px;
 	height: 40px; width: 230px;
 	font-size: 36px; line-height: 40px;
 	white-space: nowrap;
@@ -79,7 +79,7 @@ img {
 }
 #titleblock #title-1 {
 	position: absolute;
-	top: 135px; left: 396px;
+	top: 135px; left: 343px;
 	height: 20px; width: 230px;
 	font-size: 18px; line-height: 20px;
 	white-space: nowrap;
@@ -87,7 +87,7 @@ img {
 #titleblock #title-2 {
 	position: absolute;
 	background: transparent url('/images/title-2.jpg') center top no-repeat;
-	top: 163px; left: 321px;
+	top: 163px; left: 268px;
 	height: 77px; width: 273px;
 	font-size: 77px; line-height: 77px; color: #ff9900;
 	text-indent: -100000px;
@@ -95,7 +95,7 @@ img {
 }
 #titleblock #title-3 {
 	position: absolute;
-	top: 205px; left: 600px;
+	top: 205px; left: 547px;
 	height: 30px; width: 100px;
 	font-size: 30px; line-height: 30px;
 	white-space: nowrap;
@@ -135,8 +135,8 @@ img {
 
 #titleblock .desc {
 	position: absolute;
-	top: 246px; left: 321px;
-	height: 75px; width: 490px;
+	top: 246px; left: 268px;
+	height: 75px; width: 540px;
 }
 #features {
 	width: 900px; height: 272px;
