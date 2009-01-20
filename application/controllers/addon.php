@@ -17,7 +17,13 @@ class Addon extends Controller {
 			$this->fetch();
 			return;
 		}
-		$this->json_error('TBD');
+		$addons = $this->db->query('SELECT * FROM `addons` WHERE MATCH (`title`,`description`) AGAINST (' . $this->db->escape($this->input->post('q')) . ' WITH QUERY EXPANSION);');
+		if (!$addons->num_rows()) $this->json_error('Not found.');
+		$A = array();
+		foreach ($addons->result_array() as $addon) {
+			$A[] = $addon;
+		}
+		print json_encode(array('addons' => $A));
 	}
 	function fetch() {
 		if (!$this->session->userdata('id')) {

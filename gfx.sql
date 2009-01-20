@@ -23,7 +23,7 @@ CREATE TABLE `aboutpages` (
   `content` text NOT NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -41,8 +41,9 @@ CREATE TABLE `addons` (
   `xpi_url` varchar(1024) NOT NULL,
   `fetched` timestamp NOT NULL default '0000-00-00 00:00:00',
   `modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
+  PRIMARY KEY  (`id`),
+  FULLTEXT (`title`, `description`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -61,7 +62,7 @@ CREATE TABLE `features` (
   PRIMARY KEY  (`id`),
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `order` (`order`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- 
 -- 列出以下資料庫的數據： `features`
@@ -87,7 +88,7 @@ CREATE TABLE `groups` (
   `description` text NOT NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `name` (`name`,`order`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- 
 -- 列出以下資料庫的數據： `groups`
@@ -113,7 +114,7 @@ CREATE TABLE `u2a` (
   `group_id` int(3) unsigned NOT NULL,
   `order` bigint(20) NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -127,7 +128,7 @@ CREATE TABLE `u2f` (
   `feature_id` int(2) unsigned NOT NULL,
   `order` int(2) unsigned NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- 
 -- 列出以下資料庫的數據： `u2f`
@@ -150,7 +151,7 @@ CREATE TABLE `u2g` (
   `group_id` int(3) unsigned NOT NULL,
   `order` int(3) unsigned NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- 
 -- 列出以下資料庫的數據： `u2g`
@@ -185,7 +186,7 @@ CREATE TABLE `users` (
   PRIMARY KEY  (`id`),
   UNIQUE KEY `login` (`login`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- 
 -- 列出以下資料庫的數據： `users`

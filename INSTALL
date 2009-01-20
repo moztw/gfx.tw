@@ -1,6 +1,16 @@
 Enviroment:
 * apache2 mod_rewrite php5(?)
 * lighttpd should be ok but you have to set up rewrite rule yourself.
+* MySQL > 4.1 with fulltext search ability.
+  * You Must turn ft_min_word_len =1 in order to search Chinese characters.
+  To do so, drop this file as /etc/mysql/conf.d/fulltext.cnf
+{
+
+[mysqld]
+# enable chinese search (?)
+ft_min_word_len =1
+
+}
 
 Install:
 1. Check out code from svn
