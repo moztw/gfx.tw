@@ -89,7 +89,7 @@ img {
 	top: 87px; left: 343px;
 	height: 40px; width: 270px;
 	font-size: 36px; line-height: 40px;
-	white-space: nowrap;
+	white-space: nowrap; overflow: hidden;
 }
 #titleblock #title-name-edit input {
 	display: none;
@@ -150,8 +150,9 @@ img {
 	white-space: nowrap;
 }
 #titleblock .count {
+	margin: 0; padding: 0;
 	position: absolute;
-	top: 94px; left: 640px;
+	top: 110px; left: 640px;
 	width: 230px; height: 14px;
 	font-size: 14px; line-height: 14px;
 	text-align: right;
