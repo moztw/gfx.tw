@@ -65,6 +65,7 @@ input, select, textarea, button {
 input#openid-identifier {
 	width: 340px;
 	background: #ffffff url('images/openid-logo-transparent.png') left center no-repeat;
+	padding-left: 20px;
 }
 
 #logout_form {
@@ -116,17 +117,21 @@ input#openid-identifier {
 	width: 65px;
 }
 #titleblock #title-name, #titleblock #title-name-edit input {
-	position: absolute;
-	top: 87px; left: 343px;
+	position: absolute; left: 343px;
 	height: 40px; width: 270px;
-	font-size: 36px; line-height: 40px;
+	font-size: 36px; line-height: 40px; font-weight: bold;
 	white-space: nowrap; overflow: hidden;
 }
+#titleblock #title-name {
+	top: 87px;
+}
 #titleblock #title-name-edit input {
+	top: 82px;
 	display: none;
 }
 #titleblock #title-name-edit input.empty {
 	color: #cccccc;
+	font-weight: normal;
 }
 #titleblock #title-1 {
 	position: absolute;
