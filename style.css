@@ -111,7 +111,6 @@ input#openid-identifier {
 	top: 87px; left: 270px;
 	height: 65px; width: 65px;
 	overflow: hidden;
-	border: 1px dashed #999999;
 }
 #titleblock #title-avatar img {
 	width: 65px;
@@ -381,6 +380,7 @@ input#openid-identifier {
 }
 #featureselection li {
 	float: left;
+	width: 118px; margin: 0; padding: 0;
 	list-style: none;
 }
 
@@ -409,13 +409,13 @@ input#openid-identifier {
 	text-align: center;
 }
 #window_avatar .avatar_selection .avatar_icon {
-	height: 60px; width: 60px;
+	height: 65px; width: 65px;
 	margin: 0.5em auto;
 	cursor: pointer;
 }
 
 #window_avatar .avatar_selection #avatar_spfupload {
-	background-color: #990000;
+	background: transparent url('images/keyhole_edit.gif') center center no-repeat;
 }
 .editable {
 	cursor: pointer;

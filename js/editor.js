@@ -169,8 +169,8 @@ gfx.editor = {
 				file_types_description : 'Images',
 				file_upload_limit : '0',
 				button_placeholder_id : 'avatar_spfupload_replace',
-				button_width: 60,
-				button_height: 60,
+				button_width: 65,
+				button_height: 65,
 				button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
 				button_cursor: SWFUpload.CURSOR.HAND,
 				flash_url : './swfupload/swfupload.swf',	// Relative to this file

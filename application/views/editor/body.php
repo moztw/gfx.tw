@@ -41,17 +41,17 @@ if (!$avatar) {
 			<div id="avatar_spfupload" class="avatar_icon">
 				<div id="avatar_spfupload_replace">&nbsp;</div>
 			</div>
-			<p>上傳圖片</p>
+			<p>上傳照片</p>
 		</div>
 		<div class="avatar_selection">
 			<div id="avatar_glavatar" class="avatar_icon">
-				<img src="<? print 'http://www.gravatar.com/avatar/' . md5($email) . '?s=60&amp;r=g&amp;d=' . urlencode(site_url('images/keyhole_edit.gif')); ?>" alt="Gravatar" />
+				<img src="<? print 'http://www.gravatar.com/avatar/' . md5($email) . '?s=60&amp;r=g&amp;d=' . urlencode(site_url('images/keyhole.gif')); ?>" alt="Gravatar" />
 			</div>
 			<p><a href="http://www.gravatar.com/" class="newwindow">Gravatar</a>上的圖示</p>
 		</div>
 		<div class="avatar_selection">
 			<div id="avatar_default" class="avatar_icon">
-				<img src="./images/keyhole_edit.gif" alt="鑰匙孔小人" />
+				<img src="./images/keyhole.gif" alt="鑰匙孔小人" />
 			</div>
 			<p>預設圖示</p>
 		</div>
