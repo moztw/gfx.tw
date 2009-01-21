@@ -10,15 +10,18 @@ if (!$avatar) {
 
 ?>
 	<div id="editor_save">
-		<p><button id="editor_save_button">儲存您的頁面</button>編輯完畢，選擇網址、儲存、領取宣傳貼紙！</p>
+		<p><button id="editor_save_button">儲存您的頁面</button>編輯完畢，儲存變更、領取宣傳貼紙！</p>
 	</div>
-	<div id="window_savepage" class="window" title="快完成了...">
-		<p>URL: <?php print base_url() . form_input(array('id' =>'name', 'value' => (substr($name, 0, 8) === '__temp__')?'':$name)); ?></p>
-		<p><button id="save_page">確定</button></p>
+	<div id="window_almostdone" class="window" title="快完成了...">
+		<p>請設定您的推薦網頁的專用網址，需使用英數字：</p>
+		<p><?php print base_url() . form_input(array('id' =>'name', 'value' => (substr($name, 0, 8) === '__temp__')?'':$name)); ?></p>
 	</div>
 	<div id="window_editcomplete" class="window" title="完成！">
-		<p><a id="window_userpage_url" href="#">我的個人宣傳頁面</a></p>
-		<p><a href="./stickers">領取宣傳貼紙</a></p>
+		<p>感謝您向大家推薦 Mozilla Firefox，接下來...</p>
+		<ul>
+			<li>看看<a id="window_userpage_url" href="#">我的個人推薦網頁</a></li>
+			<li>領取<a href="./stickers">宣傳貼紙</a>，在部落格、論壇宣傳！</li>
+		</ul>
 	</div>
 	<div id="titleblock">
 		<h1>
@@ -57,7 +60,7 @@ if (!$avatar) {
 		</div>
 	</div>
 	<div id="featureselection">
-		<p class="features-desc">請選三個你推薦別人使用 Firefox 的理由：</p>
+		<p class="features-desc">請選三個你推薦別人使用 Firefox 的理由（確定後可以拖曳改變順序）：</p>
 		<ul>
 <?php
 /* put it into a function scope */
@@ -167,10 +170,12 @@ foreach ($allgroups as $group) {
 }
 ?>
 	</div>
-	<div id="window_addons" class="window">
-		<h2>新增附加元件</h2>
+	<div id="window_addons" class="window" title="新增附加元件">
 		<p>搜尋名稱或是輸入<a href="https://addons.mozilla.org">Mozilla Add-ons</a>元件編號: <?php print form_input(array('id' =>'addon_query', 'value' => '')); ?></p>
 		<p><button id="addon_query_ok">確定</button></p>
 		<p id="addon_query_result" class="detailed"></p>
 		<p>名稱搜尋僅適用曾被新增過的附加元件；未曾新增的元件一定要輸入 AMO 編號。</p>
+	</div>
+	<div id="window_progress" class="window" title="與伺服器通訊中...">
+		<img src="images/ajax-progress.gif" alt="處理中..." />
 	</div>

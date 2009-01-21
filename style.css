@@ -17,6 +17,7 @@ img {
 
 input, select, textarea, button {
 	font: 0.92em '文泉驛正黑','微軟正黑體', sans-serif;
+	vertical-align: middle;
 }
 
 #header {
@@ -124,6 +125,11 @@ input#openid-identifier {
 #titleblock #title-name {
 	top: 87px;
 }
+
+#titleblock #title-name.bright {
+	background-color: #ccffff;
+}
+
 #titleblock #title-name-edit input {
 	top: 82px;
 	display: none;
@@ -397,6 +403,7 @@ input#openid-identifier {
 
 .ui-dialog .window {
 	display: block;
+	margin: 0; padding: 0.5em;
 	overflow: auto;
 }
 
@@ -417,6 +424,11 @@ input#openid-identifier {
 #window_avatar .avatar_selection #avatar_spfupload {
 	background: transparent url('images/keyhole_edit.gif') center center no-repeat;
 }
+
+#window_progress {
+	margin: 0; padding: 12px;
+}
+
 .editable {
 	cursor: pointer;
 }

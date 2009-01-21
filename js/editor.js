@@ -14,113 +14,144 @@ but one still have to save the page in order to keep avatars s/he uploaded and a
 */
 
 gfx.editor = {
-	'movingFeature' : null,
+	'bind' : {
+		'click' : {
+			'#editor_save_button' : function () {
+				//Dumb, but we cannot self-reference at this point.
+				gfx.editor.savePage();
+			},
+			'#save_page' : function () {
+				gfx.editor.savePage();
+			},
+			'#title-name' : function () {
+				var t = $(this);
+				t.css('display', 'none');
+				$('#title-name-edit input')
+				.css('display', 'block')
+				.val(t.text()).focus();
+			},
+			'#featureselection_save button:only-child' : function () {
+				gfx.editor.changeFeatureSelection();
+			},
+			'#title-avatar' : function () {
+				gfx.openWindow('avatar');
+			},
+			'#avatar_glavatar' : function () {
+				gfx.editor.changeAvatar('(gravatar)', $(this).children()[0].src);
+			},
+			'#avatar_default' : function () {
+				gfx.editor.changeAvatar('(default)', './images/keyhole.gif');
+			},
+			'#groups input' : function () {
+				if (this.checked) $(this).parent().removeClass('not-selected');
+				else $(this).parent().addClass('not-selected');
+				gfx.editor.groupChanged = true;
+			},
+			'#groups .group-add-addon a' : function () {
+				gfx.editor.currentGroup = this.parentNode.parentNode.id.substr(2);
+				gfx.openWindow('addons');
+				return false;
+			},
+			'#addon_query_ok' : function () {
+				gfx.editor.queryAddon
+			},
+			'.addon p > a' : function () {
+				window.open(this.href);
+				return false;
+			},
+			'.del-addon' : function () {
+				$(this).parent('.addon').remove();
+				gfx.editor.addonChanged = true;
+				return false;
+			}
+		},
+		'focus' : {
+			'#title-name-edit input' : function () {
+				if ($(this).hasClass('empty')) {
+					$(this).removeClass('empty').val('');
+				}
+			}
+		},
+		'blur' : {
+			'#title-name-edit input' : function () {
+				if (this.value !== '') {
+					$('#title-name').text(this.value).css('display', null);
+					$(this).css('display', null);
+				} else {
+					$('#title-name').text(this.value);
+					$(this).addClass('empty').addClass('empty').val(T['EDITOR_EMPTY_TITLE']);
+				}
+			}
+		},
+		'keyup' : {
+			'#title-name-edit input' : function (e) {
+				if (e.keyCode === 13) {
+					$(this).blur();
+				}
+			}
+		},
+		'mousedown' : {
+			'.addon' : function () {
+				$('#groups').sortable('disable');
+			}
+		},
+		'mouseup' : {
+			'.addon' : function () {
+				$('#groups').sortable('enable');
+			}
+		},
+		'mouseover' : {
+			'#title-name.editable' : function () {
+				$(this).addClass('bright');
+			}
+		},
+		'mouseout' : {
+			'#title-name.editable' : function () {
+				$(this).removeClass('bright');
+			}
+		}
+	},
 	'onload' : function () {
-		$.extend(
-			gfx.bind.click,
-			{
-				'#editor_save_button' : function () {
-					gfx.openWindow('savepage');
-				},
-				'#save_page' : gfx.editor.savePage,
-				'#title-name' : function () {
-					var t = $(this);
-					t.css('display', 'none');
-					$('#title-name-edit input')
-					.css('display', 'block')
-					.val(t.text()).focus();
-				},
-				'#featureselection_save button:only-child' : gfx.editor.changeFeatureSelection,
-				'#title-avatar' : function () {
-					gfx.openWindow('avatar');
-				},
-				'#avatar_glavatar' : function () {
-					gfx.editor.changeAvatar('(gravatar)', $(this).children()[0].src);
-				},
-				'#avatar_default' : function () {
-					gfx.editor.changeAvatar('(default)', './images/keyhole.gif');
-				},
-				'#groups input' : function () {
-					if (this.checked) $(this).parent().removeClass('not-selected');
-					else $(this).parent().addClass('not-selected');
-					gfx.editor.groupChanged = true;
-				},
-				'#groups .group-add-addon a' : function () {
-					gfx.editor.currentGroup = this.parentNode.parentNode.id.substr(2);
-					gfx.openWindow('addons');
-					return false;
-				},
-				'#addon_query_ok' : gfx.editor.queryAddon,
-				'.addon p > a' : function () {
-					window.open(this.href);
-					return false;
-				},
-				'.del-addon' : function () {
-					$(this).parent('.addon').remove();
-					gfx.editor.addonChanged = true;
-					return false;
-				}
+		$.each(
+			gfx.editor.bind,
+			function(e, o) {
+				$.extend(
+					gfx.bind[e] || (gfx.bind[e] = {}),
+					o
+				);
 			}
 		);
 		$.extend(
-			gfx.bind.focus,
-			{
-				'#title-name-edit input' : function () {
-					if ($(this).hasClass('empty')) {
-						$(this).removeClass('empty').val('');
-					}
-				}
-			}
-		);
-		$.extend(
-			gfx.bind.blur,
-			{
-				'#title-name-edit input' : function () {
-					if (this.value !== '') {
-						$('#title-name').text(this.value).css('display', null);
-						$(this).css('display', null);
-					} else {
-						$(this).addClass('empty').addClass('empty').val(T['EDITOR_EMPTY_TITLE']);
-					}
-				}
-			}
-		);
-		$.extend(
-			gfx.bind.keyup,
-			{
-				'#title-name-edit input' : function (e) {
-					if (e.keyCode === 13) {
-						$(this).blur();
-					}
-				}
-			}
-		);
-		$.extend(
-			gfx.bind.mousedown,
-			{
-				'.addon' : function () {
-					$('#groups').sortable('disable');
-				}
-			}
-		);
-		$.extend(
-			gfx.bind.mouseup,
-			{
-				'.addon' : function () {
-					$('#groups').sortable('enable');
-				}
-			}
-		);
-		$.extend(
-			gfx.windowOption,
+			gfx.windowOption || (gfx.windowOption = {}),
 			{
 				'avatar' : {
 					'width' : 500,
 					'height' : 200,
 					'position' : ['center', 150]
+				},
+				'progress' : {
+					'width' : 244,
+					'height' : 40,
+					'buttons' : {},
+					'position' : [100, 100]
+				},
+				'almostdone' : {
+					'width' : 350,
+					'height' : 250,
+					'buttons' : {},
+					'position' : ['center', 150]
+				},
+				'editcomplete' : {
+					'width' : 400,
+					'height' : 200,
+					'position' : ['center', 200]
 				}
 			}
 		);
+		//Javascript language structure bug?
+		gfx.windowOption.progress.buttons[T['PROGRESS_FORCESTOP']] = gfx.editor.forceStop;
+		gfx.windowOption.almostdone.buttons[T['ALMOSTDONE_OK']] = gfx.editor.savePage;
+
 		$(window).bind(
 			'scroll',
 			function (e) {
@@ -180,6 +211,14 @@ gfx.editor = {
 					if (n === 1 && q === 1) {
 						this.setButtonDisabled(true);
 						this.startUpload();
+						setTimeout(
+							function () {
+								if (gfx.xhr.readyState !== 4) {
+									gfx.openWindow('progress');
+								}
+							},
+							400
+						);
 					}
 				},
 				'file_queue_error_handler' : function (file, error, msg) {
@@ -199,14 +238,13 @@ gfx.editor = {
 					}
 				},
 				'upload_error_handler' : function (file, error, msg) {
-					if (error === SWFUpload.UPLOAD_ERROR.FILE_CANCELLED) {
-					} else {
+					if (error !== SWFUpload.UPLOAD_ERROR.FILE_CANCELLED) {
 						window.alert(msg);
 					}
 					this.setButtonDisabled(false);
+					gfx.closeWindow('progress');
 				},
 				'upload_success_handler' : function (file, result) {
-					this.setButtonDisabled(false);
 					//Great, jQuery doen't have a JSON.decode function w/o HTTP request.
 					//We get this from mootools source.
 					var JSONdecode = function (string) {
@@ -221,6 +259,8 @@ gfx.editor = {
 					} else {
 						gfx.editor.changeAvatar(result.img, './useravatars/' + result.img);
 					}
+					this.setButtonDisabled(false);
+					gfx.closeWindow('progress');
 				}
 			}
 		);
@@ -259,22 +299,43 @@ gfx.editor = {
 				type: 'POST',
 				timeout: 20000,
 				dataType: 'json',
+				beforeSend : function (xhr) {
+					setTimeout(
+						function () {
+							if (gfx.xhr.readyState !== 4) {
+								gfx.openWindow('progress');
+							}
+						},
+						400
+					);
+				},
+				complete : function (xhr, status) {
+					gfx.closeWindow('progress');
+				},
 				error: function (xhr, status, error) {
 					switch (status) {
 						case 'timeout':
 						window.alert(T['TIMEOUT']);
 						break;
-						case 'error':
-						window.alert(T['ERROR']);
-						break;
-						//TBD: seems wont fire on parseerror
-						case 'parseerror':
+						case 'parsererror':
 						window.alert(T['EMPTY_ERROR']);
 						break;
+						case 'error':
+						default:
+						window.alert(T['ERROR']);
 					}
 				}
 			}
 		);
+	},
+	'forceStop' : function () {
+		if (gfx.xhr) gfx.xhr.abort();
+		//because Flash object doesn't init before openwindow(avatar);
+		try {
+			gfx.editor.swfupload.cancelUpload();
+		} catch (e) {
+		}
+		gfx.closeWindow('progress');
 	},
 	'changeFeatureSelection' : function () {
 		var s = [];
@@ -292,8 +353,8 @@ gfx.editor = {
 				}
 			}
 		);
-		if (s.length > 3) {
-			window.alert(T['EDITOR_TOO_MANY_FEATURES']);
+		if (s.length !== 3) {
+			window.alert(T['EDITOR_FEATURES_COUNT']);
 			return;
 		}
 		var Feature = function (d) {
@@ -350,6 +411,16 @@ gfx.editor = {
 			'title' : $('#title-name').text(),
 			'name' : $('#name').val()
 		}
+		if (d['title'] === '') {
+			window.alert(T['EDITOR_NO_TITLE']);
+			$('#title-name-edit input').focus();
+			return;
+		}
+		if (d['name'] === '') {
+			gfx.openWindow('almostdone');
+			$('#name').focus();
+			return;
+		}
 		if (gfx.editor.avatar) {
 			d.avatar = gfx.editor.avatar;
 		}
@@ -391,21 +462,17 @@ gfx.editor = {
 			return;
 		}
 		//ajax send
-		$.ajax(
+		gfx.xhr = $.ajax(
 			{
 				url: './editor/save',
 				data: d,
 				success: function (result, status) {
-					if (!result) {
-						window.alert(T['EMPTY_ERROR']);
-						return;
-					}
 					if (result.error) {
 						window.alert(result.error);
 						return;
 					}
 					$('#window_userpage_url').attr('href', './' + result.name);
-					gfx.closeWindow('savepage');
+					gfx.closeWindow('almostdone');
 					gfx.openWindow('editcomplete');
 				}
 			}
@@ -497,17 +564,13 @@ gfx.editor = {
 		return o;
 	},
 	'queryAddon' : function () {
-		$.ajax(
+		gfx.xhr = $.ajax(
 			{
 				url: './addon/query',
 				data: {
 					'q' : $('#addon_query').val()
 				},
 				success: function (result, status) {
-					if (!result) {
-						window.alert(T['EMPTY_ERROR']);
-						return;
-					}
 					if (result.error) {
 						window.alert(result.error);
 						return;

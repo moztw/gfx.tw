@@ -1,5 +1,8 @@
 var T = {
 'EDITOR_EMPTY_TITLE' : '在這裡輸入暱稱',
+'PROGRESS_FORCESTOP' : '停止',
+'ALMOSTDONE_OK' : '確定',
+'EDITOR_NO_TITLE' : '請輸入暱稱。',
 'EMPTY_ERROR' : '傳回不明訊息，請再試一次。',
 'ERROR' : '伺服器錯誤，請通知管理員。',
 'TIMEOUT' : '連線逾時，請檢查網路連線並再試一次。',
@@ -14,7 +17,7 @@ var T = {
 'EDITOR_SAVE_ERROR_TOKEN' : '認證失敗。',
 'EDITOR_BAD_NAME' : '無法使用此網址作為您的推薦頁，請換一個。',
 'EDITOR_SAVE_FEATURE_ERROR' : '推薦功能不是數字，你又搞笑了。',
-'EDITOR_TOO_MANY_FEATURES' : '不能同時推薦這麼多功能。',
+'EDITOR_FEATURES_COUNT' : '請選三個你推薦別人使用 Firefox 的理由，三個就對了！',
 'EDITOR_AVATAR_WRONG_FILE_TYPE' : '上傳的不是圖檔，無法使用。',
 'EDITOR_AVATAR_SIZE_TOO_LARGE' : '上傳的檔案長寬太大了，請換小一點的圖片。'
 };

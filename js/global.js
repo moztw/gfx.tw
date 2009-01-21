@@ -22,13 +22,7 @@ var gfx = {
 			'#openid_sp' : function () {
 				$('#openid-identifier').val(this.value);
 			}
-		},
-		/* Don't remove them coz editor.js will extend them */
-		'focus' : {},
-		'blur' : {},
-		'keyup' : {},
-		'mousedown' : {},
-		'mouseup' : {}
+		}
 	},
 	'windowOption' : {
 		'login' : {
