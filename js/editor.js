@@ -87,6 +87,35 @@ gfx.editor = {
 				}
 			}
 		);
+		$(window).bind(
+			'scroll',
+			function (e) {
+				offset = $(document).scrollTop();
+				if (offset > 50) {
+					if (!$('#editor_save_placeholder').length) {
+						$('#editor_save').after(
+							$(document.createElement('div'))
+							.attr('id', 'editor_save_placeholder')
+							.css('height', $('#editor_save').height())
+						);
+					}
+					$('#editor_save').css(
+						{
+							'position' : 'absolute',
+							'top' : offset
+						}
+					);
+				} else {
+					$('#editor_save').css(
+						{
+							'position' : null,
+							'top' : null
+						}
+					);
+					$('#editor_save_placeholder').remove();
+				}
+			}
+		).scroll();
 		$('#groups input').each(
 			function (i) {
 				if (this.checked) $(this).parent().removeClass('not-selected');
