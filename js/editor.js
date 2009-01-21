@@ -87,6 +87,16 @@ gfx.editor = {
 				}
 			}
 		);
+		$.extend(
+			gfx.windowOption,
+			{
+				'avatar' : {
+					'width' : 500,
+					'height' : 150,
+					'position' : ['center', 150]
+				}
+			}
+		);
 		$(window).bind(
 			'scroll',
 			function (e) {

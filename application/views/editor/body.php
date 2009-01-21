@@ -10,7 +10,7 @@ if (!$avatar) {
 
 ?>
 	<div id="editor_save">
-		<p>編輯完畢，選擇網址、儲存、領取宣傳貼紙！<button id="editor_save_button">儲存您的頁面</button></p>
+		<p><button id="editor_save_button">儲存您的頁面</button>編輯完畢，選擇網址、儲存、領取宣傳貼紙！</p>
 	</div>
 	<div id="window_savepage" class="window" title="快完成了...">
 		<p>URL: <?php print base_url() . form_input(array('id' =>'name', 'value' => (substr($name, 0, 8) === '__temp__')?'':$name)); ?></p>
@@ -31,12 +31,12 @@ if (!$avatar) {
 		</h1>
 		<div class="download">
 			<p class="link"><a href="#">免費下載</a></p>
-			<p class="version">3.0.x .....</p>
+			<p class="version">3.0 系列</p>
 		</div>
 		<p class="count">{您的推薦指數會在這裡出現}</p>
 		<p class="desc">您的網際生活將因 Firefox 更加豐富有趣！Firefox 有許多特色，協助您完成工作、找到資訊。正因為它如此實用，<span class="title-placeholder">{您的名字}</span>願意推薦您改用 Firefox！以下是<span class="title-placeholder">{您的名字}</span>最喜歡 Firefox 的三大特點：</p>
 	</div>
-	<div id="window_avatar" class="window">
+	<div id="window_avatar" class="window" title="選擇個人圖示">
 		<div class="avatar_selection">
 			<div id="avatar_spfupload" class="avatar_icon">
 				<div id="avatar_spfupload_replace">&nbsp;</div>
@@ -47,7 +47,7 @@ if (!$avatar) {
 			<div id="avatar_glavatar" class="avatar_icon">
 				<img src="<? print 'http://www.gravatar.com/avatar/' . md5($email) . '?s=60&amp;r=g&amp;d=' . urlencode(site_url('images/keyhole_edit.gif')); ?>" alt="Gravatar" />
 			</div>
-			<p><a href="http://www.gravatar.com/">Gravatar</a>上的圖示</p>
+			<p><a href="http://www.gravatar.com/" class="newwindow">Gravatar</a>上的圖示</p>
 		</div>
 		<div class="avatar_selection">
 			<div id="avatar_default" class="avatar_icon">

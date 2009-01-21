@@ -363,13 +363,13 @@ img {
 }
 #window_avatar .avatar_selection {
 	float: left;
-	width: 30%; height: 100%; overflow: hidden;
-	border: 1px dashed #999999;
+	width: 33%; height: 100%; overflow: hidden;
 	text-align: center;
 }
 #window_avatar .avatar_selection .avatar_icon {
 	height: 60px; width: 60px;
 	margin: 0.5em auto;
+	cursor: pointer;
 }
 
 #window_avatar .avatar_selection #avatar_spfupload {

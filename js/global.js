@@ -11,6 +11,10 @@ var gfx = {
 			},
 			'#groups-show-detail-box' : function () {
 				$('#groups').toggleClass('detailed');
+			},
+			'a.newwindow' : function () {
+				window.open(this.href);
+				return false;
 			}
 		},
 		/* Don't remove them coz editor.js will extend them */
@@ -18,39 +22,40 @@ var gfx = {
 		'mousedown' : {},
 		'mouseup' : {}
 	},
-	'windowSize' : {
-		'login' : [40, 30]
+	'windowOption' : {
+		'login' : {
+			'width' : 400,
+			'height' : 300,
+			'position' : ['center', 100]
+		}
 	},
 	'onload' : function () {
 
-		if (gfx.editor) gfx.editor.onload();
+		if (gfx.editor) gfx.editor.onload();                                      
 
-		//cornerizing
-/*		$('.downloadframe').corner("round 8px").parent().css('padding', '2px').corner("round 9px");
-		$('#titleblock').corner("top"); */
+		$('.window').each(
+			function () {
+				var option = {
+					autoOpen: false,
+					dialogClass: 'flora',
+					modal: true,
+					overlay: {
+						backgroundColor: '#000000',
+						opacity: 0.5
+					},
+					position: ['center', 100]
+				};
 
-		//gradienting
-/*				$('#titleblock').addClass("gradient B4D5E6 FFFFFF vertical"); */
-
-		//dialoging
-		/*$('.download').dialog(
-			{  
-				bgiframe: true,
-				dialogClass: 'download',
-			}
-		); */                                                                                          
-
-		$('.window').dialog(
-			{
-				autoOpen: false,
-				dialogClass: 'flora',
-				modal: true,
-				overlay: {
-					backgroundColor: '#000',
-					opacity: 0.5
+				if (gfx.windowOption[this.id.substr(7)]) {
+					$.extend(
+						option,
+						gfx.windowOption[this.id.substr(7)]
+					);
 				}
+				$(this).dialog(option);
 			}
 		);
+
 		$.each(
 			gfx.bind,
 			function (e, o) {
