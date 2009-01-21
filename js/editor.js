@@ -92,7 +92,7 @@ gfx.editor = {
 			{
 				'avatar' : {
 					'width' : 500,
-					'height' : 150,
+					'height' : 200,
 					'position' : ['center', 150]
 				}
 			}

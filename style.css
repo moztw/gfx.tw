@@ -15,6 +15,10 @@ img {
 	border: none; vertical-align: middle;
 }
 
+input, select, textarea, button {
+	font: 0.92em '文泉驛正黑','微軟正黑體', sans-serif;
+}
+
 #header {
 	margin: 0; padding: 0;
 	background: transparent url('images/header.jpg') center bottom no-repeat;
@@ -58,6 +62,11 @@ img {
 	font-size:small;
 }
 
+input#openid-identifier {
+	width: 340px;
+	background: #ffffff url('images/openid-logo-transparent.png') left center no-repeat;
+}
+
 #logout_form {
 	display: none;
 }
@@ -77,6 +86,7 @@ img {
 	position: relative; top: 10px;
 	background: transparent url('images/editor-save.gif') center bottom no-repeat;
 	margin: 0; padding: 0 0.5em 10px 0.5em;
+	overflow: auto; clear: both;
 }
 
 #editor_save p button {
@@ -356,6 +366,15 @@ img {
 #featureselection #featureselection_save {
 	clear: both;
 	text-align: right;
+}
+
+.window {
+	display: none;
+}
+
+.ui-dialog .window {
+	display: block;
+	overflow: auto;
 }
 
 #window_avatar .window_content {

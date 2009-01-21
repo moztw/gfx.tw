@@ -10,7 +10,7 @@ class Auth extends Controller {
     	$this->login();
     }
     function login() {
-		if (!$this->input->post('openid_identifier')) {
+		if (!$this->input->post('openid-identifier')) {
 			//$this->session->set_flashdata('error', 'no post data');
 			header('Location: ' . base_url());
 			exit();
@@ -27,7 +27,7 @@ class Auth extends Controller {
         	site_url($this->config->item('openid_policy'))
        	);
         //$this->openid->set_pape(true, $pape_policy_uris);
-        $this->openid->authenticate($this->input->post('openid_identifier'));
+        $this->openid->authenticate($this->input->post('openid-identifier'));
     }
     function check() {
 		$this->config->load('openid');

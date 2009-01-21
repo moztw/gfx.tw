@@ -3,6 +3,7 @@ var gfx = {
 		'click' : {
 			'#link_login' : function () {
 				gfx.openWindow('login');
+				$('#openid-identifier').focus();
 				return false;
 			},
 			'#link_logout' : function () {
@@ -17,6 +18,11 @@ var gfx = {
 				return false;
 			}
 		},
+		'change' : {
+			'#openid_sp' : function () {
+				$('#openid-identifier').val(this.value);
+			}
+		},
 		/* Don't remove them coz editor.js will extend them */
 		'blur' : {},
 		'mousedown' : {},
@@ -24,9 +30,9 @@ var gfx = {
 	},
 	'windowOption' : {
 		'login' : {
-			'width' : 400,
-			'height' : 300,
-			'position' : ['center', 100]
+			'width' : 500,
+			'height' : 400,
+			'position' : ['center', 120]
 		}
 	},
 	'onload' : function () {

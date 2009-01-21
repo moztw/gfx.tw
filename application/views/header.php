@@ -16,10 +16,14 @@ if (isset($id)) {
 	</div>
 	<div id="window_login" class="window" title="登入">
 		<form action="<?php print site_url('auth/login'); ?>" method="post">
-			<p>OpenID: <input type="text" name="openid_identifier" value="" /> <input type="submit" value="登入" /></p>
-			<h3>What is OpenID?</h3>
-			<p>(Some description about openid, maybe helper control for famous BSP openids.)</p>
-			<p>(if your .... you can get one at <a href="http://myid.tw/">myID.tw</a>.</p>
+			<p><label for="openid-identifier">您的 OpenID 網址: </label><input type="text" name="openid-identifier" id="openid-identifier" value="" /> <input type="submit" value="登入" /></p>
+			<h3>OpenID 是什麼？</h3>
+			<p>OpenID 其他網站的帳號登入敝站，避免再次記憶帳號與輸入個人資訊的困擾。若您曾在下列網站註冊過，您可以選擇想要使用的 OpenID：</p>
+			<p><label for="openid_sp">OpenID 服務商: </label><select id="openid_sp">
+				<option value="" selected="selected">(選擇服務商)</option>
+				<option value="http://[帳號].wordpress.com/">WordPress.com</option>
+			</select></p>
+			<p>若您真的沒有任何 OpenID，或是不願意讓敝站帳號與之連結，您可以到 <a href="http://myid.tw/" class="newwindow">myID.tw</a> 申請一個屬於您的 OpenID。</p>
 		</form>
 	</div>
 <?php
