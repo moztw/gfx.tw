@@ -57,6 +57,7 @@ if (!$avatar) {
 		</div>
 	</div>
 	<div id="featureselection">
+		<p class="features-desc">請選三個你推薦別人使用 Firefox 的理由：</p>
 		<ul>
 <?php
 /* put it into a function scope */

@@ -204,7 +204,7 @@ input#openid-identifier {
 	height: 75px; width: 540px;
 }
 #features {
-	width: 900px; height: 272px;
+	width: 900px; height: 272px; margin: 0; padding: 10px 0;
 	background: transparent url('images/userpage-block-bg.jpg') center top repeat-y;
 }
 #features .feature {
@@ -362,9 +362,22 @@ input#openid-identifier {
 }
 
 #featureselection {
-	border: 1px dashed #999999;
+	width: 820px; margin: 0 40px; padding: 0;
+	background: #ccffcc url('images/featureselection-corner-top.gif') top center no-repeat;
 }
+#featureselection p, #featureselection ul {
+	margin: 0; padding: 0;
+}
+
+#featureselection .features-desc {
+	float: left;
+	width: 190px; margin: 10px;
+}
+
 #featureselection ul {
+	float: right;
+	width: 590px; margin: 10px;
+	list-style: none;
 }
 #featureselection li {
 	float: left;
@@ -374,6 +387,8 @@ input#openid-identifier {
 #featureselection #featureselection_save {
 	clear: both;
 	text-align: right;
+	padding: 0 10px 10px 10px;
+	background: #ccffcc url('images/featureselection-corner-bottom.gif') bottom center no-repeat;
 }
 
 .window {
