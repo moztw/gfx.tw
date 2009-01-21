@@ -51,32 +51,36 @@ class Auth extends Controller {
 					/* Create new user */
 					$sreg_resp = Auth_OpenID_SRegResponse::fromSuccessResponse($response);
 					$sreg = $sreg_resp->contents();
-					if (!isset($sreg['nickname'])) {
-						/* some buggy server that don't even provide data marked as 'required' */
-						$sreg['nickname'] = $open_id;
-					}
-					$this->db->insert(
-						'users',
-						array(
-							'login' => $open_id,
-							'name' => '__temp__' . md5($sreg['nickname']), /* require unique */
-							'title' => (isset($sreg['fullname']))?$sreg['fullname']:$sreg['nickname'],
-							'avatar' => (isset($sreg['email']))?'(gravatar)':'',
-							'email' => (isset($sreg['email']))?$sreg['email']:'',
-							'bio' => '',
-							'web' => $open_id,
-							'blog' => $open_id,
-							'blog_rss' => '',
-							'forum_username' => '',
-							'count' => 1,
-							'visited' => 0
-						)
+					$data = array(
+						'login' => $open_id,
+						'name' => '__temp__' . md5($open_id), /* require unique */
+						'title' => '',
+						'avatar' => '',
+						'email' => '',
+						'bio' => '',
+						'web' => $open_id,
+						'blog' => $open_id,
+						'blog_rss' => '',
+						'forum_username' => '',
+						'count' => 1,
+						'visited' => 0
 					);
-					$this->db->insert('u2f', array('user_id' => $this->db->insert_id(), 'feature_id' => '1', 'order' => '1'));
-					$this->db->insert('u2f', array('user_id' => $this->db->insert_id(), 'feature_id' => '2', 'order' => '2'));
-					$this->db->insert('u2f', array('user_id' => $this->db->insert_id(), 'feature_id' => '3', 'order' => '3'));
-					$this->db->insert('u2g', array('user_id' => $this->db->insert_id(), 'group_id' => '1', 'order' => '1'));
-					$this->db->insert('u2g', array('user_id' => $this->db->insert_id(), 'group_id' => '2', 'order' => '2'));
+					if (isset($sreg['fullname'])) {
+						$data['title'] = $sreg['fullname'];
+					} elseif (isset($sreg['nickname'])) {
+						$data['title'] = $sreg['nickname'];
+					}
+					if (isset($sreg['email'])) {
+						$data['avatar'] = '(gravatar)';
+						$data['email'] = $sreg['email'];
+					}
+					$this->db->insert('users', $data);
+					$data['id'] = $this->db->insert_id();
+					$this->db->insert('u2f', array('user_id' => $data['id'], 'feature_id' => '1', 'order' => '1'));
+					$this->db->insert('u2f', array('user_id' => $data['id'], 'feature_id' => '2', 'order' => '2'));
+					$this->db->insert('u2f', array('user_id' => $data['id'], 'feature_id' => '3', 'order' => '3'));
+					$this->db->insert('u2g', array('user_id' => $data['id'], 'group_id' => '1', 'order' => '1'));
+					$this->db->insert('u2g', array('user_id' => $data['id'], 'group_id' => '2', 'order' => '2'));
 				}
 				$this->session->set_userdata(array('id' => $data['id']));
 					/*

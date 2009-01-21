@@ -125,6 +125,9 @@ input#openid-identifier {
 #titleblock #title-name-edit input {
 	display: none;
 }
+#titleblock #title-name-edit input.empty {
+	color: #cccccc;
+}
 #titleblock #title-1 {
 	position: absolute;
 	top: 135px; left: 343px;

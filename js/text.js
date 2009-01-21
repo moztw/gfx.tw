@@ -1,4 +1,5 @@
 var T = {
+'EDITOR_EMPTY_TITLE' : '在這裡輸入暱稱',
 'EMPTY_ERROR' : '傳回不明訊息，請再試一次。',
 'ERROR' : '伺服器錯誤，請通知管理員。',
 'TIMEOUT' : '連線逾時，請檢查網路連線並再試一次。',

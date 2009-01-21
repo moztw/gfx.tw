@@ -24,7 +24,9 @@ var gfx = {
 			}
 		},
 		/* Don't remove them coz editor.js will extend them */
+		'focus' : {},
 		'blur' : {},
+		'keyup' : {},
 		'mousedown' : {},
 		'mouseup' : {}
 	},
