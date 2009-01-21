@@ -210,15 +210,15 @@ gfx.editor = {
 				'file_dialog_complete_handler' : function (n, q) {
 					if (n === 1 && q === 1) {
 						this.setButtonDisabled(true);
-						this.startUpload();
 						setTimeout(
 							function () {
-								if (gfx.xhr.readyState !== 4) {
+								if (gfx.editor.swfupload.getStats().in_progress !== 0) {
 									gfx.openWindow('progress');
 								}
 							},
 							400
 						);
+						this.startUpload();
 					}
 				},
 				'file_queue_error_handler' : function (file, error, msg) {
@@ -238,13 +238,15 @@ gfx.editor = {
 					}
 				},
 				'upload_error_handler' : function (file, error, msg) {
+					this.setButtonDisabled(false);
+					gfx.closeWindow('progress');
 					if (error !== SWFUpload.UPLOAD_ERROR.FILE_CANCELLED) {
 						window.alert(msg);
 					}
-					this.setButtonDisabled(false);
-					gfx.closeWindow('progress');
 				},
 				'upload_success_handler' : function (file, result) {
+					this.setButtonDisabled(false);
+					gfx.closeWindow('progress');
 					//Great, jQuery doen't have a JSON.decode function w/o HTTP request.
 					//We get this from mootools source.
 					var JSONdecode = function (string) {
@@ -259,8 +261,6 @@ gfx.editor = {
 					} else {
 						gfx.editor.changeAvatar(result.img, './useravatars/' + result.img);
 					}
-					this.setButtonDisabled(false);
-					gfx.closeWindow('progress');
 				}
 			}
 		);
@@ -313,6 +313,7 @@ gfx.editor = {
 					gfx.closeWindow('progress');
 				},
 				error: function (xhr, status, error) {
+					gfx.closeWindow('progress');
 					switch (status) {
 						case 'timeout':
 						window.alert(T['TIMEOUT']);
