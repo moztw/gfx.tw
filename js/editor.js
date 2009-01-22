@@ -341,17 +341,15 @@ gfx.editor = {
 	'changeFeatureSelection' : function () {
 		var s = [];
 		gfx.editor.featureChanged = true;
-		$('#featureselection input').each(
+		$('#featureselection input:checked').each(
 			function (i) {
-				if (this.checked) {
-					var t = $(this);
-					s[s.length] = [
-						this.name.substr(3),
-						this.id.substr(3),
-						t.next().text(),
-						t.next().attr('title')
-					];
-				}
+				var t = $(this);
+				s[s.length] = [
+					this.name.substr(3),
+					this.id.substr(3),
+					t.next().text(),
+					t.next().attr('title')
+				];
 			}
 		);
 		if (s.length !== 3) {
@@ -383,7 +381,7 @@ gfx.editor = {
 		}
 		$('.feature').each(
 			function (i) {
-				if (!$('#fs_' + this.id).attr('checked')) {
+				if (!$('#fs_' + this.id + ':checked').length) {
 					$(this).remove();
 				}
 			}
@@ -433,11 +431,9 @@ gfx.editor = {
 			);
 		}
 		if (gfx.editor.groupChanged) {
-			$('.group-title input').each(
+			$('.group-title input:checked').each(
 				function (i) {
-					if (this.checked) {
-						d['groups[' + (i+1) + ']'] = $(this).parent().attr('id').substr(2);
-					}
+					d['groups[' + (i+1) + ']'] = $(this).parent().attr('id').substr(2);
 				}
 			);
 		}
