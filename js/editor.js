@@ -164,16 +164,26 @@ gfx.editor = {
 							.css('height', $('#editor_save').height())
 						);
 					}
+					//This will break in IE6
+					$('#editor_save').css(
+						{
+							'position' : 'fixed',
+							'top' : '0'
+						}
+					);
+					//non position: fixed solution.
+					/*
 					$('#editor_save').css(
 						{
 							'position' : 'absolute',
 							'top' : offset
 						}
 					);
+					*/
 				} else {
 					$('#editor_save').css(
 						{
-							'position' : null,
+							'position' : null, //This breaks IE7 ('static' works but not null )
 							'top' : null
 						}
 					);

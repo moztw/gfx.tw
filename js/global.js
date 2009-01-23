@@ -75,6 +75,6 @@ var gfx = {
 	},
 	'closeWindow' : function (id) {
 		$('#window_' + id).dialog("close");
-	},
+	}
 }
 $(document).ready(gfx.onload);
