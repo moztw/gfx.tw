@@ -5,31 +5,31 @@ class Auth extends Controller {
 		parent::Controller();
 		$this->lang->load('openid', 'english');
 		$this->load->library('openid');
-    }
-    function index() {
-    	$this->login();
-    }
-    function login() {
+	}
+	function index() {
+		$this->login();
+	}
+	function login() {
 		if (!$this->input->post('openid-identifier')) {
 			//$this->session->set_flashdata('error', 'no post data');
 			header('Location: ' . base_url());
 			exit();
 		}
-        $this->config->load('openid');
+		$this->config->load('openid');
 
-        $this->openid->set_request_to(site_url($this->config->item('openid_request_to')));
-        $this->openid->set_trust_root(base_url());
-        $this->openid->set_args(null);
-        $this->openid->set_sreg(
-        	true,
-        	$this->config->item('openid_required'),
-        	$this->config->item('openid_optional'),
-        	site_url($this->config->item('openid_policy'))
-       	);
-        //$this->openid->set_pape(true, $pape_policy_uris);
-        $this->openid->authenticate($this->input->post('openid-identifier'));
-    }
-    function check() {
+		$this->openid->set_request_to(site_url($this->config->item('openid_request_to')));
+		$this->openid->set_trust_root(base_url());
+		$this->openid->set_args(null);
+		$this->openid->set_sreg(
+			true,
+			$this->config->item('openid_required'),
+			$this->config->item('openid_optional'),
+			site_url($this->config->item('openid_policy'))
+		);
+		//$this->openid->set_pape(true, $pape_policy_uris);
+		$this->openid->authenticate($this->input->post('openid-identifier'));
+	}
+	function check() {
 		$this->config->load('openid');
 
 		$this->openid->set_request_to(site_url($this->config->item('openid_request_to')));
@@ -90,18 +90,33 @@ class Auth extends Controller {
 					 //TBD: hide user id in cookie (if we don't want ppl to know number of users on site)
 				header('Location: ' . site_url('editor'));
 		}
-    }
-    function logout() {
-    	if ($this->input->post('session_id') === $this->session->userdata('session_id')) {
-    		header('X-Session: destroyed.');
+	}
+	function xrds() {
+		header('Content-Type: application/xrds+xml');
+		print '<?xml version="1.0" encoding="UTF-8"?>';
+?>
+
+<xrds:XRDS xmlns:xrds="xri://$xrds" xmlns:openid="http://openid.net/xmlns/1.0" xmlns="xri://$xrd*($v*2.0)">
+	<XRD>
+	<Service xmlns="xri://$xrd*($v*2.0)">
+		<Type>http://specs.openid.net/auth/2.0/return_to</Type>
+		<URI><?php print site_url('auth/check');?></URI>
+	</Service>
+	</XRD>
+</xrds:XRDS>
+<?php
+	}
+	function logout() {
+		if ($this->input->post('session_id') === $this->session->userdata('session_id')) {
+			header('X-Session: destroyed.');
 			$this->session->sess_destroy();
 		} elseif ($this->input->post('token') === md5($this->session->userdata('id') . '--secret-token-good-day-fx')) {
-    		header('X-Session: destroyed.');
-   			$this->session->sess_destroy();
+			header('X-Session: destroyed.');
+			$this->session->sess_destroy();
 		}
 		
 		header('Location: ' . base_url());
-    }
+	}
 }
 
 /* End of file auth.php */

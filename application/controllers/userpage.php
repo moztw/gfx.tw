@@ -102,6 +102,10 @@ class Userpage extends Controller {
 			$this->cache->save($session_id, $header, 'header', 60);
 		}
 
+		/* OpenID xrds auth */
+		header('X-XRDS-Location: ' . site_url('auth/xrds'));
+		//TBD: <meta http-equiv="X-XRDS-Location" content=""/>
+
 		/* Output coz everything should be ready by now */
 		print $head;
 		print $header;

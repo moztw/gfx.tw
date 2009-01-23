@@ -70,6 +70,7 @@ $route['feature/(:any)'] = "feature/view/$1";
 $route['auth/login'] = "auth/login";
 $route['auth/logout'] = "auth/logout";
 $route['auth/check'] = "auth/check";
+$route['auth/xrds'] = "auth/xrds";
 
 $route['(:any)'] = "userpage/view/$1";
 

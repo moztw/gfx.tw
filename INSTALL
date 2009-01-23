@@ -23,3 +23,9 @@ Install:
 On Production Site:
 1. Change $route['scaffolding_trigger']  to empty string in application/config/routes.php
 2. Change error_reporting(E_ALL) to error_reporting(E_ERROR) in ./index.php
+
+Known Issue:
+If your protect your setup with HTTP password (which may be seted in .htaccess),
+the following will break:
+* Avatar upload (due to inability of Flash plugin to share session with the browser)
+* OpenID 2.0 xrds authorization (the one that suppress Yahoo! login warning)
