@@ -19,7 +19,7 @@ if (!$avatar) {
 	<div id="window_editcomplete" class="window" title="完成！">
 		<p>感謝您向大家推薦 Mozilla Firefox，接下來...</p>
 		<ul>
-			<li>看看<a id="window_userpage_url" href="#">我的個人推薦網頁</a></li>
+			<li>看看<a id="window_userpage_url" href="#">您的個人推薦網頁</a></li>
 			<li>領取<a href="./stickers">宣傳貼紙</a>，在部落格、論壇宣傳！</li>
 		</ul>
 	</div>
