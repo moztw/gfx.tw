@@ -1,6 +1,7 @@
 Enviroment:
 * apache2 mod_rewrite php5(?)
 * lighttpd should be ok but you have to set up rewrite rule yourself.
+* writable /tmp (can be changed at application/config/openid.php
 * MySQL > 4.1 with fulltext search ability.
   * You Must turn ft_min_word_len =1 in order to search Chinese characters.
   To do so, drop this file as /etc/mysql/conf.d/fulltext.cnf
@@ -14,11 +15,11 @@ ft_min_word_len =1
 
 Install:
 1. Check out code from svn
-2. Config base path at system/application/config/config.php and .htaccess
-3. Config db at system/application/config/database.php
+2. Config base path at application/config/config.php and .htaccess
+3. Config db at application/config/database.php
 4. Create database and tables and inital data with importing gfx.sql
 5. sudo chown www-data:www-data useravatars system/cache (or chmod 777 if you cannot sudo)
 
 On Production Site:
-1. Change $route['scaffolding_trigger']  to empty string in system/application/config/routes.php
+1. Change $route['scaffolding_trigger']  to empty string in application/config/routes.php
 2. Change error_reporting(E_ALL) to error_reporting(E_ERROR) in ./index.php
