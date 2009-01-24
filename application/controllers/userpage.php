@@ -10,6 +10,15 @@ class Userpage extends Controller {
 		$this->view('foxmosa');
 	}
 	function view($id) {
+		/* xrds doc request, usually done by OpenID 2.0 op who checks "Relay Party" */
+		if (strpos($_SERVER['HTTP_ACCEPT'], 'application/xrds+xml') !== false) {
+			header('X-XRDS-Location: ' . site_url('auth/xrds'));
+			header('Content-Type: text/plain');
+			print 'You should find the location of xrds doc in the header. I could place a <meta> tag here but I am lazy and you are dumb.';
+			//TBD: <meta http-equiv="X-XRDS-Location" content=""/>
+			exit();
+		}
+
 		/* Redirect numeric id instead of showing pages (below) */
 		if (is_numeric($id)) {
 			$this->load->database();
@@ -101,10 +110,6 @@ class Userpage extends Controller {
 			$header = $this->load->view('header.php', $C, true);
 			$this->cache->save($session_id, $header, 'header', 60);
 		}
-
-		/* OpenID xrds auth */
-		header('X-XRDS-Location: ' . site_url('auth/xrds'));
-		//TBD: <meta http-equiv="X-XRDS-Location" content=""/>
 
 		/* Output coz everything should be ready by now */
 		print $head;

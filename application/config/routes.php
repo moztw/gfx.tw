@@ -67,10 +67,7 @@ $route['feature'] = "feature";
 $route['feature/edit'] = "feature/create";
 $route['feature/edit/(:any)'] = "feature/edit/$1";
 $route['feature/(:any)'] = "feature/view/$1";
-$route['auth/login'] = "auth/login";
-$route['auth/logout'] = "auth/logout";
-$route['auth/check'] = "auth/check";
-$route['auth/xrds'] = "auth/xrds";
+$route['auth/(:any)'] = "auth/$1";
 
 $route['(:any)'] = "userpage/view/$1";
 
