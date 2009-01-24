@@ -4,7 +4,11 @@
 <?php
 if (isset($id)) {
 ?>
-		<p id="header_user_functions">Hi, <span id="header_username"><?php if ($title !== '') print htmlspecialchars($title); else print htmlspecialchars($login); ?></span>
+		<p id="header_user_functions">Hi, <span id="header_username"><?php
+if ($title !== '') print htmlspecialchars($title);
+elseif (strlen($login) > 40) print htmlspecialchars(substr($login, strpos($login, '//', 5)+2, 40)) . '...';
+else print htmlspecialchars(substr($login, strpos($login, '//', 5)+2));
+ ?></span>
 		(<?php if (substr($name, 0, 8) !== '__temp__') { ?><a href="<?php print site_url($name) ?>">我的頁面</a> / <?php } ?><a href="<?php print site_url('editor') ?>">編輯</a> / <a href="#" id="link_logout">登出</a>)</p>
 	</div>
 	<form id="logout_form" action="<?php print site_url('auth/logout'); ?>" method="post">

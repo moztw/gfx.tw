@@ -124,7 +124,7 @@ input#openid-identifier {
 }
 #titleblock #title-name, #titleblock #title-name-edit input {
 	position: absolute; left: 343px;
-	height: 40px; width: 270px;
+	height: 40px; width: 260px;
 	font-size: 36px; line-height: 40px; font-weight: bold;
 	white-space: nowrap; overflow: hidden;
 }
