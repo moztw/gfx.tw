@@ -48,8 +48,16 @@ optgroup {
 #header #header_top_link {
 	float: left;
 	font-weight: bold;
-	font-size: 1.2em;
+	font-size: 1.2em; padding: 0.5em 0.6em;
 }
+
+#header #header_top_link a {
+	display: block;
+	background: transparent url('images/header-title.png') center center no-repeat;
+	width: 54px; height: 19px;
+	text-indent: -10000px;
+}
+
 #header #header_user_functions, #header #header_login {
 	float: right;
 }

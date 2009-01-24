@@ -1,13 +1,13 @@
 <body>
 	<div id="header">
-		<p id="header_top_link"><a href="<?php print base_url() ?>">抓火狐</a></p>
+		<p id="header_top_link"><a href="<?php print base_url() ?>" title="回首頁">抓火狐</a></p>
 <?php
 if (isset($id)) {
 ?>
 		<p id="header_user_functions">Hi, <span id="header_username"><?php
 if ($title !== '') print htmlspecialchars($title);
-elseif (strlen($login) > 40) print htmlspecialchars(substr($login, strpos($login, '//', 5)+2, 40)) . '...';
-else print htmlspecialchars(substr($login, strpos($login, '//', 5)+2));
+elseif (strlen($login) > 40) print htmlspecialchars(substr($login, strpos($login, '//', 5)+2, 30)) . '...';
+else print htmlspecialchars(rtrim(substr($login, strpos($login, '//', 5)+2), '/'));
  ?></span>
 		(<?php if (substr($name, 0, 8) !== '__temp__') { ?><a href="<?php print site_url($name) ?>">我的頁面</a> / <?php } ?><a href="<?php print site_url('editor') ?>">編輯</a> / <a href="#" id="link_logout">登出</a>)</p>
 	</div>
