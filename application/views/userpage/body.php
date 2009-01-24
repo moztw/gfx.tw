@@ -61,20 +61,31 @@ foreach ($features as $feature) {
 <?php } ?>
 	</ul>
 	</div>
-	<p id="groups-show-detail"><input type="checkbox" id="groups-show-detail-box" /> <label for="groups-show-detail-box">顯示細節與快速安裝</label></p>
-	<h2 id="groups-title"><?php print htmlspecialchars($title) ?>的火狐屬性</h2>
-	<p>火狐帶有強大的擴充功能....（descriptive text on addons for new- and non-fx users）</p>
+	<div id="groups-title">
+		<h2><?php print htmlspecialchars($title) ?>的火狐屬性</h2>
+		<p>火狐帶有強大的擴充功能....（descriptive text on addons for new- and non-fx users）</p>
+		<p id="groups-show-detail"><input type="checkbox" id="groups-show-detail-box" /> <label for="groups-show-detail-box">顯示細節與快速安裝</label></p>
+	</div>
 	<div id="groups">
 <?php
 /* put it into a function scope */
 function addon($addon) {
 	extract($addon);
-	if (!isset($icon_url)) $icon_url = '';
+	if (!$icon_url) $icon_url = site_url('images/addon_default_icon.png');
 	if (!isset($xpi_url)) $xpi_url = '';
-	if ($url === '' && $amo_id !== '') $url = 'https://addons.mozilla.org/zh-TW/firefox/addon/' . $amo_id;
-	elseif ($url === '' && $amo_id === '') return;
+	if (!$url && $amo_id) $url = 'https://addons.mozilla.org/zh-TW/firefox/addon/' . $amo_id;
+	elseif (!$url && !$amo_id) return;
 ?>
 		<div class="addon">
+<?php
+	if (!$xpi_url) { ?>
+		<p class="install"><input type="checkbox" value="<?php print htmlspecialchars($xpi_url); ?>" id="addon-install-<?php print $id ?>" /><label for="addon-install-<?php print $id ?>">列入安裝清單</label></p>
+<?php
+	} else { ?>
+		<p class="install"><input type="checkbox" value="<?php print htmlspecialchars($xpi_url); ?>" id="addon-install-<?php print $id ?>" disabled="disabled" /><label title="請至套件網站安裝" for="addon-install-<?php print $id ?>">列入安裝清單</label></p>
+<?php 
+	}
+?>
 			<p><a href="<?php print htmlspecialchars($url); ?>"><img src="<? print htmlspecialchars($icon_url) ?>" alt="" /><span><?php print htmlspecialchars($title); ?></span></a></p>
 <?php
 	if (isset($description)) {
@@ -83,7 +94,6 @@ function addon($addon) {
 <?php
 	}
 ?>
-			<p class="install"><input type="checkbox" value="<?php print htmlspecialchars($xpi_url); ?>"<?php if (!$xpi_url) print ' disabled="disabled" title="請至套件網站安裝"' ?>/>列入安裝清單</p>
 		</div>
 <?php
 }

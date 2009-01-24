@@ -49,16 +49,17 @@ gfx.editor = {
 			},
 			'#groups .group-add-addon a' : function () {
 				gfx.editor.currentGroup = this.parentNode.parentNode.id.substr(2);
+				$('#addon_query_result').empty();
+				$('#addon_query_desc').show().text(String.fromCharCode(160)); // &nbsp;
+				$('#addon_query_notfound').hide();
 				gfx.openWindow('addons');
+				$('#addon_query').val('').focus();
 				return false;
 			},
-			'#addon_query_ok' : function () {
-				gfx.editor.queryAddon
-			},
-			'.addon p > a' : function () {
+			/*'.addon p > a' : function () {
 				window.open(this.href);
 				return false;
-			},
+			},*/
 			'.del-addon' : function () {
 				$(this).parent('.addon').remove();
 				gfx.editor.addonChanged = true;
@@ -109,6 +110,12 @@ gfx.editor = {
 			'#title-name.editable' : function () {
 				$(this).removeClass('bright');
 			}
+		},
+		'submit' : {
+			'#addon_query_form' : function () {
+				gfx.editor.queryAddon();
+				return false;
+			}
 		}
 	},
 	'onload' : function () {
@@ -145,12 +152,19 @@ gfx.editor = {
 					'width' : 400,
 					'height' : 200,
 					'position' : ['center', 200]
+				},
+				'addons' : {
+					'width' : 800,
+					'height': 500,
+					'buttons' : {},
+					'position' : ['center', 50]
 				}
 			}
 		);
 		//Javascript language structure bug?
 		gfx.windowOption.progress.buttons[T['PROGRESS_FORCESTOP']] = gfx.editor.forceStop;
 		gfx.windowOption.almostdone.buttons[T['ALMOSTDONE_OK']] = gfx.editor.savePage;
+		gfx.windowOption.addons.buttons[T['ADDON_ADD_CONFIRM']] = gfx.editor.addAddon;
 
 		$(window).bind(
 			'scroll',
@@ -191,6 +205,13 @@ gfx.editor = {
 				}
 			}
 		).scroll();
+		window.onbeforeunload = function (e) {
+			e = e || window.event;
+			if (e) {
+				e.returnValue = T.EDITOR_CONFIRM_QUIT;
+			}
+			return T.EDITOR_CONFIRM_QUIT;
+		};
 		if ($('#title-name').text() === '') {
 			$('#title-name').css('display', 'none');
 			$('#title-name-edit input').css('display', 'block').addClass('empty').val(T['EDITOR_EMPTY_TITLE']);
@@ -370,7 +391,7 @@ gfx.editor = {
 			return $(document.createElement('div'))
 			.attr({
 				'id' : d[1],
-				'class' : 'feature sortable'
+				'class' : 'feature'
 			})
 			.append(
 				$(document.createElement('h2'))
@@ -499,16 +520,10 @@ gfx.editor = {
 					.attr('href', d['url']).append(
 						$(document.createElement('img')).attr(
 							{
-								'src' : d['icon_url'],
+								'src' : d['icon_url'] || 'images/addon_default_icon.png',
 								'alt' : ''
 							}
 						)
-					).bind(
-						'click',
-						function () {
-							window.open(this.href);
-							return false;
-						}
 					).append(
 						$(document.createElement('span')).text(d['title'])
 					)
@@ -530,34 +545,46 @@ gfx.editor = {
 				}
 			);
 		if (add) {
-			o.append(
-				$(document.createElement('p')).attr(
+			o.prepend(
+				$(document.createElement('p'))
+				.attr(
 					{
 						'class' : 'add-addon'
 					}
-				).text(
-					'Add'
-				).bind(
-					'click',
-					function () {
-						$('#g_' + gfx.editor.currentGroup + ' + div.group-addons').append(
-							new gfx.editor.Addon(d, false, true)
-						).sortable('refresh');
-						gfx.closeWindow('addons');
-						gfx.editor.addonChanged = true;
-						return false;
-					}
+				).append(
+					$(document.createElement('input')).attr(
+						{
+							'id' : 'addon_add_' + d['id'],
+							'type' : 'checkbox'
+						}
+					).data('addon', d)
+				).append(
+					$(document.createElement('label')).attr(
+						{
+							'for' : 'addon_add_' + d['id']
+						}
+					).text(T.ADDON_ADD)
 				)
 			);
+			o.find('a').bind(
+				'click',
+				function () {
+					window.open(this.href);
+					return false;
+				}
+			);
+			if ($('#a_' + d['id']).length) {
+				o.find('input').attr('disabled', 'disabled').next().attr('title', T.ADDON_CANNOT_ADD);
+			}
 		}
 		if (del) {
-			o.append(
+			o.prepend(
 				$(document.createElement('p')).attr(
 					{
 						'class' : 'del-addon'
 					}
 				).text(
-					'Del'
+					T.ADDON_DEL
 				).bind(
 					'click',
 					function () {
@@ -571,11 +598,14 @@ gfx.editor = {
 		return o;
 	},
 	'queryAddon' : function () {
+		var r = $('#addon_query_result').empty();
+		$('#addon_query_desc').show().text(String.fromCharCode(160)); // &nbsp;
+		$('#addon_query_notfound').hide();
 		gfx.xhr = $.ajax(
 			{
 				url: './addon/query',
 				data: {
-					'q' : $('#addon_query').val()
+					'q' : $('#addon_query').val().replace(/^https:\/\/addons.mozilla.org\/[\w-]{5}\/firefox\/addon\/(\d+)$/, '$1')
 				},
 				success: function (result, status) {
 					if (result.error) {
@@ -583,10 +613,11 @@ gfx.editor = {
 						return;
 					}
 					if (!result.addons.length) {
-						window.alert(T['ADDON_NOT_FOUND']);
+						$('#addon_query_notfound').show();
+						$('#addon_query_desc').hide();
 						return;
 					}
-					var r = $('#addon_query_result').empty();
+					$('#addon_query_desc').text(T['ADDON_SEARCH_RESULT']);
 					$.each(
 						result.addons,
 						function (i, d) {
@@ -598,5 +629,16 @@ gfx.editor = {
 				}
 			}
 		);
+	},
+	'addAddon' : function () {
+		$('#addon_query_result .add-addon input:checked').each(
+			function () {
+				$('#g_' + gfx.editor.currentGroup + ' + div.group-addons').append(
+					new gfx.editor.Addon($(this).data('addon'), false, true)
+				).sortable('refresh');
+			}
+		);
+		gfx.closeWindow('addons');
+		gfx.editor.addonChanged = true;
 	}
 };

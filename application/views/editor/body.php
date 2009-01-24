@@ -86,14 +86,14 @@ foreach ($allfeatures as $feature) {
 		</ul>
 		<p id="featureselection_save"><button>確定</button></p>
 	</div>
-	<div id="features">
+	<div id="features" class="sortable">
 <?php
 /* put it into a function scope */
 function feature($feature) {
 	extract($feature);
 ?>
 
-		<div class="feature sortable" id="<?php print $name ?>">
+		<div class="feature" id="<?php print $name ?>">
 			<h2 id="featureid-<?php print $id ?>"><?php print htmlspecialchars($title) ?></h2>
 			<p><?php print htmlspecialchars($description) ?></p>
 			<p class="link"><a href="<?php print site_url('feature/' . $name); ?>">More ...</a></p>
@@ -127,20 +127,23 @@ while(isset($features[$i])) {
 <?php } ?>
 	</ul>
 	</div>
-	<h2 id="groups-title"><span class="title-placeholder">{您的名字}</span>的火狐屬性</h2>
-	<p>請在下方選擇符合您網際活動的屬性，並加入您推薦的附加元件：</p>
-	<div id="groups">
+	<div id="groups-title">
+		<h2><span class="title-placeholder">{您的名字}</span>的火狐屬性</h2>
+		<p>請在下方選擇符合您網際活動的屬性，並加入您推薦的附加元件：</p>
+	</div>
+	<div id="groups" class="sortable">
 <?php
 /* put it into a function scope */
 function addon($addon) {
 	extract($addon);
-	if (!isset($icon_url)) $icon_url = '';
-	if ($url === '' && $amo_id !== '') $url = 'https://addons.mozilla.org/zh-TW/firefox/addon/' . $amo_id;
-	elseif ($url === '' && $amo_id === '') return;
+	if (!$icon_url) $icon_url = site_url('images/addon_default_icon.png');
+	if (!isset($xpi_url)) $xpi_url = '';
+	if (!$url && $amo_id) $url = 'https://addons.mozilla.org/zh-TW/firefox/addon/' . $amo_id;
+	elseif (!$url && !$amo_id) return;
 ?>
 		<div class="addon" id="a_<?php print $id ?>">
+			<p class="del-addon" title="刪除">刪除</p>
 			<p><a href="<?php print htmlspecialchars($url); ?>"><img src="<? print htmlspecialchars($icon_url) ?>" alt="" /><span><?php print htmlspecialchars($title); ?></span></a></p>
-			<p class="del-addon">Del</p>
 		</div>
 <?php
 }
@@ -149,7 +152,7 @@ function group($group, $addons) {
 ?>
 
 		<div class="group" id="<?php print $name ?>">
-			<div class="group-title sortable<?php print (isset($user_id))?'':' not-selected'; ?>" id="g_<?php print $id ?>">
+			<div class="group-title<?php print (isset($user_id))?'':' not-selected'; ?>" id="g_<?php print $id ?>">
 				<input type="checkbox" <?php print (isset($user_id))?'checked="checked"':''; ?>/>
 				<h3><?php print htmlspecialchars($title) ?></h3>
 				<p class="group-add-addon"><a href="#">新增元件</a></p>
@@ -171,10 +174,12 @@ foreach ($allgroups as $group) {
 ?>
 	</div>
 	<div id="window_addons" class="window" title="新增附加元件">
-		<p>搜尋名稱或是輸入<a href="https://addons.mozilla.org">Mozilla Add-ons</a>元件編號: <?php print form_input(array('id' =>'addon_query', 'value' => '')); ?></p>
-		<p><button id="addon_query_ok">確定</button></p>
-		<p id="addon_query_result" class="detailed"></p>
-		<p>名稱搜尋僅適用曾被新增過的附加元件；未曾新增的元件一定要輸入 AMO 編號。</p>
+		<form action="#" id="addon_query_form">
+			<p>搜尋: <?php print form_input(array('id' =>'addon_query', 'value' => '')); ?> <button type="submit">尋找附加元件</button></p>
+		</form>
+		<p id="addon_query_desc">&nbsp;</p>
+		<p id="addon_query_notfound">沒有找到任何附加元件，可能是因為您要找的附加元件從未被推薦過。您可以在搜尋攔貼上該附加元件在 <a href="https://addons.mozilla.org/" class="newwindow">Mozilla 附加元件</a>網站的網址直接推薦。</p>
+		<div id="addon_query_result" class="detailed">&nbsp;</div>
 	</div>
 	<div id="window_progress" class="window" title="與伺服器通訊中...">
 		<img src="images/ajax-progress.gif" alt="處理中..." />

@@ -17,7 +17,7 @@ img {
 
 input, select, textarea, button, option, optgroup {
 	font: 1em '文泉驛正黑','微軟正黑體', sans-serif;
-	vertical-align: middle;
+	vertical-align: baseline;
 }
 
 optgroup {
@@ -324,7 +324,7 @@ input#openid-identifier {
 	float: left;
 }
 
-#groups .group p {
+#groups .group .group-title p {
 	margin: 0; padding: 0;
 }
 
@@ -339,12 +339,31 @@ input#openid-identifier {
 	height: 100%;
 	overflow: auto;
 }
+
+#addon_query {
+	width: 60%;
+}
+
+#addon_query_notfound {
+	display: none;
+}
+
 #addon_query_result {
 	border: 1px dashed #999999;
+	height: 300px; overflow: auto;
 }
 .addon {
 	float: left; width: 153px; height: 70px;
 	border: 1px dashed #999999;
+}
+
+.addon a {
+	color: #000000;
+	text-decoration: none;
+}
+
+.addon a:hover span {
+	text-decoration: underline;
 }
 
 .addon p {
@@ -353,7 +372,6 @@ input#openid-identifier {
 
 .addon img {
 	display: block; margin: 3px 61px;
-	border: 1px dashed #999999;
 	width: 32px; height: 32px;
 }
 
@@ -364,6 +382,14 @@ input#openid-identifier {
 
 .addon .desc, .addon .install {
 	display: none;
+}
+
+.addon .add-addon {
+	float: right;
+}
+
+.addon .del-addon {
+	float: right;
 }
 
 .detailed .addon {
@@ -377,14 +403,16 @@ input#openid-identifier {
 .detailed span {
 	font-weight: bold; font-size: 1.2em;
 	text-align: left;
+	padding-left: 50px; width: auto;
 }
 
 .detailed .addon .desc, .detailed .addon .install {
 	display: block;
+	padding-left: 50px;
 }
 
 .detailed .addon .install {
-	text-align: right;
+	float: right;
 }
 
 #featureselection {
@@ -467,6 +495,6 @@ input#openid-identifier {
 .editable {
 	cursor: pointer;
 }
-.sortable {
+.sortable .feature, .sortable .group-title, .sortable .addon {
 	cursor: move;
 }

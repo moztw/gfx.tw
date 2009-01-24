@@ -11,7 +11,8 @@ var gfx = {
 				return false;
 			},
 			'#groups-show-detail-box' : function () {
-				$('#groups').toggleClass('detailed');
+				if (this.checked) $('#groups').addClass('detailed');
+				else $('#groups').removeClass('detailed');
 			},
 			'a.newwindow' : function () {
 				window.open(this.href);
@@ -33,7 +34,8 @@ var gfx = {
 	},
 	'onload' : function () {
 
-		if (gfx.editor) gfx.editor.onload();                                      
+		if (gfx.editor) gfx.editor.onload();
+		if ($('#groups-show-detail-box:checked').length) $('#groups').addClass('detailed');
 
 		$('.window').each(
 			function () {

@@ -17,10 +17,12 @@ class Addon extends Controller {
 			$this->fetch();
 			return;
 		}
-		$addons = $this->db->query('SELECT * FROM `addons` WHERE MATCH (`title`,`description`) AGAINST (' . $this->db->escape($this->input->post('q')) . ' WITH QUERY EXPANSION);');
-		if (!$addons->num_rows()) $this->json_error('Not found.');
+		$addons = $this->db->query('SELECT * FROM `addons` WHERE MATCH (`title`,`description`) AGAINST (' . $this->db->escape($this->input->post('q')) . ') ORDER BY `title` ASC;');
+		//if (!$addons->num_rows()) $this->json_error('Not found.');
 		$A = array();
 		foreach ($addons->result_array() as $addon) {
+			if ($addon['amo_id']) $addon['url'] = 'https://addons.mozilla.org/zh-TW/firefox/addon/' . $addon['amo_id'];
+			unset($addon['amo_id']);
 			$A[] = $addon;
 		}
 		print json_encode(array('addons' => $A));
@@ -62,7 +64,7 @@ class Addon extends Controller {
 		} else {
 			$A = $addons->row_array();
 		}
-		if (isset($A['amo_id'])) $A['url'] = 'https://addons.mozilla.org/zh-TW/firefox/addon/' . $A['amo_id'];
+		$A['url'] = 'https://addons.mozilla.org/zh-TW/firefox/addon/' . $A['amo_id'];
 		unset($A['amo_id']);
 		header('Content-Type: text/javascript');
 		print json_encode(array('addons' => array($A)));
@@ -73,7 +75,7 @@ class Addon extends Controller {
 		if (!preg_match('/<h3 class=\"name\"[^>]*><img src=\"([\w\.\/\-]+)\" class=\"addon-icon\" alt=\"\" \/>([^<]+) [\d\.]+<\/h3>/', $html, $M)) {
 			return false;
 		}
-		preg_match('/<p class=\"desc\"[^>]*>([^<]+)<\/p>/', $html, $D);
+		preg_match('/<p class=\"desc\"[^>]*>([^<]+)(<\/p>|<br \/>)/', $html, $D);
 		preg_match('/<a href=\"([\w\.\/\-]+\.xpi)\" id=\"installTrigger/', $html, $X);
 		return array(
 			'title' => html_entity_decode($M[2], ENT_NOQUOTES, 'UTF-8'),
