@@ -24,14 +24,16 @@ if (!$avatar) {
 		</ul>
 	</div>
 	<div id="titleblock">
-		<h1>
-			<span id="title-avatar" class="editable"><img src="<?php print $avatar ?>" alt="[個人小圖示]" /></span>
-			<span id="title-name" class="editable"><?php print htmlspecialchars($title) ?></span>
-			<span id="title-name-edit"><?php print form_input('title', $title); ?></span>
-			<span id="title-1">推薦您改用</span>
-			<span id="title-2">Firefox</span>
-			<span id="title-3">看網頁！</span>
-		</h1>
+		<form id="title-name-form" action="#">
+			<h1>
+				<span id="title-avatar" class="editable"><img src="<?php print $avatar ?>" alt="[個人小圖示]" /></span>
+				<span id="title-name" class="editable"><?php print htmlspecialchars($title) ?></span>
+				<span id="title-name-edit"><?php print form_input('title', $title); ?></span>
+				<span id="title-1">推薦您改用</span>
+				<span id="title-2">Firefox</span>
+				<span id="title-3">看網頁！</span>
+			</h1>
+		</form>
 		<div class="download">
 			<p class="link"><a href="#">免費下載</a></p>
 			<p class="version">3.0 系列</p>
