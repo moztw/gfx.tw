@@ -18,6 +18,7 @@ class Addon extends Controller {
 			$this->fetch($this->input->post('q'));
 			return;
 		}
+		$addons = $this->db->query('SELECT * FROM `addons` WHERE MATCH (`title`,`description`) AGAINST (' . $this->db->escape($this->input->post('q')) . ') ORDER BY `title` ASC;');
 		$A = array();
 		foreach ($addons->result_array() as $addon) {
 			if ($addon['amo_id']) $addon['url'] = 'https://addons.mozilla.org/zh-TW/firefox/addon/' . $addon['amo_id'];
@@ -26,7 +27,7 @@ class Addon extends Controller {
 		}
 		//Pick one of the addons found and send to to re-fetch if it's too old
 		$r = array_rand($A);
-		if ($A[$r]['amo_id'] || strtotime($A[$r]['fetched']) < time()-7*24*60*60) {
+		if (isset($A[$r]) && isset($A[$r]['amo_id']) && strtotime($A[$r]['fetched']) < time()-7*24*60*60) {
 			$data = $this->get_amo_content($A[$r]['amo_id']);
 			if ($data) {
 				$A[$r] = array_merge(
@@ -53,17 +54,19 @@ class Addon extends Controller {
 		$A = array();
 		foreach ($addons->result_array() as $addon) {
 			if ($addon['amo_id']) $addon['url'] = 'https://addons.mozilla.org/zh-TW/firefox/addon/' . $addon['amo_id'];
-			unset($addon['amo_id']);
+			//unset($addon['amo_id']);
 			$A[] = $addon;
 		}
 		//Pick one of the addons found and send to to re-fetch if it's too old
 		$r = array_rand($A);
-		if ($A[$r]['amo_id'] || strtotime($A[$r]['fetched']) < time()-7*24*60*60) {
+		if (isset($A[$r]['amo_id']) || strtotime($A[$r]['fetched']) < time()-7*24*60*60) {
 			$data = $this->get_amo_content($A[$r]['amo_id']);
 			if ($data) {
+				$this->db->update('addons', $data, array('id' => $A[$r]['id']));
 				$A[$r] = array_merge(
 					array(
-						'id' => $A[$r]['id']
+						'id' => $A[$r]['id'],
+						'url' => 'https://addons.mozilla.org/zh-TW/firefox/addon/' . $data['amo_id']
 					),
 					$data
 				);

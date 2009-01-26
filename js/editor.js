@@ -680,6 +680,10 @@ gfx.editor = {
 				data: {
 					'g' : gfx.editor.currentGroup
 				},
+				/* don't show progress window  */
+				beforeSend : function (xhr) { },
+				complete : function (xhr, status) { },
+				error: function (xhr, status, error) { },
 				success: function (result, status) {
 					/*if (result.error) {
 						window.alert(T[result.tag] || result.error);
