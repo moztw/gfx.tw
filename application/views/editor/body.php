@@ -14,7 +14,7 @@ if (!$avatar) {
 	</div>
 	<div id="window_almostdone" class="window" title="快完成了...">
 		<p>請設定您的推薦網頁的專用網址，需使用英數字：</p>
-		<p><?php print base_url() . form_input(array('id' =>'name', 'value' => (substr($name, 0, 8) === '__temp__')?'':$name)); ?></p>
+		<p><?php print base_url() . form_input(array('id' =>'name', 'value' => '')); ?></p>
 	</div>
 	<div id="window_editcomplete" class="window" title="完成！">
 		<p>感謝您向大家推薦 Mozilla Firefox，接下來...</p>
@@ -111,23 +111,23 @@ while(isset($features[$i])) {
 ?>
 	</div>
 	<div id="userinfo">
-	<h2>關於<span class="title-placeholder">{您的名字}</span></h2>
-	<p><button>編輯</button></p>
-	<ul>
-		<li><span class="item">抓火狐網址</span> <a class="gfxurl value" href="<?php print site_url($name); ?>"><?php print site_url($name); ?></a></li>
-<?php if ($web)  { ?>
-		<li><span class="item">網站</span> <a class="web value" href="<?php print htmlspecialchars($web); ?>"><?php print htmlspecialchars($web); ?></a></li>
-<?php } ?>
-<?php if ($blog)  { ?>
-		<li><span class="item">部落格</span> <a class="blog value" href="<?php print htmlspecialchars($blog); ?>"><?php print htmlspecialchars($blog); ?></a></li>
-<?php } ?>
-<?php if ($forum_username)  { ?>
-		<li><span class="item"><a href="http://forum.moztw.org/">MozTW 討論區</a>ID</span> <span class="forum-username value"><?php print htmlspecialchars($forum_username); ?></span></li>
-<?php } ?>
-<?php if ($bio)  { ?>
-		<li><span class="item">一行自介</span> <span class="bio value"><?php print htmlspecialchars($bio); ?></span></li>
-<?php } ?>
-	</ul>
+		<h2>關於<span class="title-placeholder">{您的名字}</span></h2>
+		<p>您的個人介紹會出現在此處。<button>編輯</button></p>
+	</div>
+	<div id="window_info" class="window" title="編輯個人介紹">
+		<form id="info_form" action="#">
+			<p><label for="info_name">推薦頁網址：</label> <span class="form-prepend"><?php print base_url() ?></span><?php print form_input(array('id' =>'info_name', 'value' => (substr($name, 0, 8) === '__temp__')?'':$name)); ?>
+			<span class="form-desc">您的推薦網頁的專用網址，需使用英數字。</span></p>
+			<p><label for="info_email">E-mail：</label> <?php print form_input(array('id' =>'info_email', 'value' => $email)); ?>
+			<span class="form-desc">不會公開。</span></p>
+			<p><label for="info_web">個人首頁：</label> <?php print form_input(array('id' =>'info_web', 'value' => $web)); ?></p>
+			<p><label for="info_blog">部落格：</label> <?php print form_input(array('id' =>'info_blog', 'value' => $blog)); ?></p>
+			<p><label for="info_forum">討論區 ID 認證：</label> <?php print form_password(array('id' =>'info_forum', 'value' => '')); ?>
+			<span class="form-desc">請貼<a href="http://forum.moztw.org/gfxcode.php" class="newwindow">認證碼</a>。</span></p>
+			<p><label for="info_bio">一行自介：</label>
+				<textarea id="info_bio"><?php print htmlspecialchars($bio) ?></textarea>
+			</p>
+		</form>
 	</div>
 	<div id="groups-title">
 		<h2><span class="title-placeholder">{您的名字}</span>的火狐屬性</h2>

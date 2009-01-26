@@ -492,6 +492,35 @@ input#openid-identifier {
 	margin: 0; padding: 12px;
 }
 
+#info_form label {
+	display: block;
+	float: left; clear: both;
+	width: 25%; margin-right: -10px;
+}
+
+#info_form input, #info_form textarea {
+	width: 75%;
+	float: right; clear: right;
+}
+
+#info_form .form-prepend {
+	display: block;
+	float: left; margin-left: 10px;
+	padding: 2px 0 ;
+}
+
+#info_form #info_name {
+	clear: none; float: left;
+	width: 30%;
+}
+
+#info_form .form-desc {
+	display: block;
+	width: 75%;
+	float: right; clear: right;
+	color: #666666; font-size: 0.92em;
+}
+
 .editable {
 	cursor: pointer;
 }

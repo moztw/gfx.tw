@@ -86,15 +86,19 @@ class Editor extends Controller {
 		if (!$this->session->userdata('id')) {
 			$this->json_error('Not Logged In.', 'EDITOR_NOT_LOGGED_IN');
 		}
-		if (!$this->input->post('name')) {
+		if ($this->input->post('name') === false) {
 			$this->json_error('No Name Provided', 'EDITOR_SAVE_NO_NAME');
+		}
+		if ($this->input->post('title') === false) {
+			$this->json_error('No Title Provided', 'EDITOR_SAVE_NO_TITLE');
 		}
 		if ($this->input->post('token') !== md5($this->session->userdata('id') . '--secret-token-good-day-fx')) {
 			$this->json_error('Wrong Token', 'EDITOR_SAVE_ERROR_TOKEN');
 		}
-		$data = array();
-		if ($this->input->post('name')) $data['name'] = $this->input->post('name');
-		if ($this->input->post('title')) $data['title'] = $this->input->post('title');
+		$data = array(
+			'name' => $this->input->post('name'),
+			'title' => $this->input->post('title')
+		);
 		if ($this->input->post('avatar')) {
 			$a = $this->input->post('avatar');
 			if (in_array($a, array('(gravatar)', '(default)')) || file_exists('./useravatars/' . $a)) {
@@ -111,6 +115,19 @@ class Editor extends Controller {
 				. ' AND `id` != ' . $this->session->userdata('id'))
 				->num_rows() !== 0) {
 			$this->json_error('Bad Name', 'EDITOR_BAD_NAME');
+		}
+		if ($this->input->post('email') !== false) $data['email'] = $this->input->post('email');
+		if ($this->input->post('web') !== false) $data['web'] = $this->input->post('web');
+		if ($this->input->post('blog') !== false) $data['blog'] = $this->input->post('blog');
+		if ($this->input->post('bio') !== false) $data['bio'] = $this->input->post('bio');
+		if ($this->input->post('forum') !== false) {
+			$F = explode('::', $this->input->post('forum'), 3);
+			if (count($F) === 3 && $F[0] === md5($F[1] . $F[2] . '--secret-md5-string hash blah kkk')) {
+				$data['forum_id'] = $F[1];
+				$data['forum_username'] = $F[2];
+			} else {
+				$this->json_error('Forum code error', 'EDITOR_FORUM_CODE');
+			}
 		}
 		$this->db->update('users', $data, array('id' => $this->session->userdata('id')));
 		//Won't work because affected rows is 0 when nothing is actually changed.

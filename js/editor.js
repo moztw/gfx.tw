@@ -62,6 +62,10 @@ gfx.editor = {
 				$(this).parent('.addon').remove();
 				gfx.editor.addonChanged = true;
 				return false;
+			},
+			'#userinfo button' : function () {
+				gfx.editor.infoChanged = true;
+				gfx.openWindow('info');
 			}
 		},
 		'focus' : {
@@ -149,6 +153,12 @@ gfx.editor = {
 					'height' : 200,
 					'position' : ['center', 200]
 				},
+				'info' : {
+					'width' : 600,
+					'height': 450,
+					'buttons' : {},
+					'position' : ['center', 100]
+				},
 				'addons' : {
 					'width' : 800,
 					'height': 500,
@@ -160,6 +170,9 @@ gfx.editor = {
 		//Javascript language structure bug?
 		gfx.windowOption.progress.buttons[T['PROGRESS_FORCESTOP']] = gfx.editor.forceStop;
 		gfx.windowOption.almostdone.buttons[T['ALMOSTDONE_OK']] = gfx.editor.savePage;
+		gfx.windowOption.info.buttons[T['INFO_CONFIRM']] = function () {
+			gfx.closeWindow('info');
+		};
 		gfx.windowOption.addons.buttons[T['ADDON_ADD_CONFIRM']] = gfx.editor.addAddon;
 
 		$(window).bind(
@@ -444,7 +457,7 @@ gfx.editor = {
 		var d = {
 			'token' : $('#token').val(),
 			'title' : $('#title-name').text(),
-			'name' : $('#name').val()
+			'name' : $('#info_name').val() || $('#name').val()
 		}
 		if (d['title'] === '') {
 			window.alert(T['EDITOR_NO_TITLE']);
@@ -456,8 +469,20 @@ gfx.editor = {
 			$('#name').focus();
 			return;
 		}
+		if ($('#name').val()) {
+			$('#info_name').val($('#name').val());
+			$('#name').val('');
+		}
 		if (gfx.editor.avatar) {
 			d.avatar = gfx.editor.avatar;
+		}
+		if (gfx.editor.infoChanged) {
+			d.email = $('#info_email').val();
+			d.web = $('#info_web').val();
+			d.blog = $('#info_blog').val();
+			d.forum = $('#info_forum').val();
+			d.bio = $('#info_bio').val();
+			$('#info_forum').val('');
 		}
 		if (gfx.editor.featureChanged) {
 			$('.feature h2').each(
