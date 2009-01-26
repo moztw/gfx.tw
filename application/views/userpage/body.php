@@ -128,4 +128,10 @@ foreach ($groups as $group) {
 }
 ?>
 	</div>
+	<div id="groups-tail">
+		<p>blah!</p>
+		<div id="groups-install">
+			<p>(install description) </p>
+		</div>
+	</div>
 	</div>

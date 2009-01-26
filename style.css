@@ -285,28 +285,44 @@ input#openid-identifier {
 #middleblock {
 	overflow: auto;
 	clear: both;
-	height: 100%;
-	background: transparent url('images/userpage-block-bg.jpg') center top repeat-y;
+	background: transparent url('images/userpage-block-bg.jpg') left top repeat-y;
+	height: 100%; width: 860px;
 }
 
 #userinfo {
-	float: left; width: 268px;
-	border: 1px dashed #999999;
+	float: left; width: 258px;
+	margin: 2em 0 0 10px;
+	border: 1px solid #999999;
+	background-color: #ffffff;
+
 }
 
 #groups {
-	float: right; width: 628px;
-	border: 1px dashed #999999;
+	float: right; width: 580px;
+	border: 1px solid #999999;
+	border-top: none;
+	border-bottom: none;
+	background-color: #ffffcc;
 }
 
 #groups-show-detail {
 	float: right;
 }
 
-#groups-title {
-	float: right; width: 628px;
-	border: 1px dashed #999999;
+#groups-title, #groups-tail {
+	float: right; width: 580px;
+	border: 1px solid #999999;
+	background-color: #ffffcc;
 }
+
+#groups-title {
+	border-bottom: none;
+}
+
+#groups-tail {
+	border-top: none;
+}
+
 
 #groups .group {
 	clear: both;
@@ -360,7 +376,7 @@ input#openid-identifier {
 	height: 300px; overflow: auto;
 }
 .addon {
-	float: left; width: 153px; height: 70px;
+	float: left; width: 190px; height: 70px;
 	border: 1px dashed #999999;
 }
 
