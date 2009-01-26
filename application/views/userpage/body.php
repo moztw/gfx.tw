@@ -43,9 +43,6 @@ foreach ($features as $feature) {
 }
 ?>
 	</div>
-	<table id="middleblock">
-    <tr>
-    <th scope="col">
 	<div id="userinfo">
 	<h2>關於<?php print htmlspecialchars($title) ?></h2>
 	<ul>
@@ -129,7 +126,4 @@ foreach ($groups as $group) {
 	group($group, $addons[$group['id']]);
 }
 ?>
-			</th>
-      </tr>
-    </table>
 	</div>

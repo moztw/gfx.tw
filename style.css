@@ -229,13 +229,6 @@ input#openid-identifier {
 	top: 209px; left: 268px;
 	height: 75px; width: 540px;
 }
-
-#middleblock {
-	background: transparent url('images/middleblock-bg.gif') center top repeat-y;
-	width: 906px;
-	border-width: 0px;
-}
-
 #features {
 	width: 900px; height: 272px; margin: 0; padding: 10px 0;
 	background: transparent url('images/userpage-block-bg.jpg') center top repeat-y;
