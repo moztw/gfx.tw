@@ -282,6 +282,13 @@ input#openid-identifier {
 	width: 61px; height: 25px;
 }
 
+#middleblock {
+	overflow: auto;
+	clear: both;
+	height: 100%;
+	background: transparent url('images/userpage-block-bg.jpg') center top repeat-y;
+}
+
 #userinfo {
 	float: left; width: 268px;
 	border: 1px dashed #999999;

@@ -43,6 +43,7 @@ foreach ($features as $feature) {
 }
 ?>
 	</div>
+	<div id="middleblock">
 	<div id="userinfo">
 	<h2>關於<?php print htmlspecialchars($title) ?></h2>
 	<ul>
@@ -54,7 +55,7 @@ foreach ($features as $feature) {
 		<li><span class="item">部落格</span> <a class="blog value" href="<?php print htmlspecialchars($blog); ?>"><?php print htmlspecialchars($blog); ?></a></li>
 <?php } ?>
 <?php if ($forum_username)  { ?>
-		<li><span class="item"><a href="http://forum.moztw.org/">MozTW 討論區</a>ID</span> <span class="forum-username value"><?php print htmlspecialchars($forum_username); ?></span></li>
+		<li><span class="item">MozTW 討論區 ID</span> <a class="forum-username value" href="http://forum.moztw.org/profile.php?mode=viewprofile&amp;u=<?php print htmlspecialchars($forum_id) ?>"><?php print htmlspecialchars($forum_username); ?></a></li>
 <?php } ?>
 <?php if ($bio)  { ?>
 		<li><span class="item">一行自介</span> <span class="bio value"><?php print htmlspecialchars($bio); ?></span></li>
@@ -126,4 +127,5 @@ foreach ($groups as $group) {
 	group($group, $addons[$group['id']]);
 }
 ?>
+	</div>
 	</div>
