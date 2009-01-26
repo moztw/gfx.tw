@@ -232,7 +232,7 @@ $config['encryption_key'] = "";
 |
 */
 $config['sess_cookie_name']		= 'gfx_session';
-$config['sess_expiration']		= 7200;
+$config['sess_expiration']		= 259200; //3 days
 $config['sess_encrypt_cookie']	= FALSE;
 $config['sess_use_database']	= FALSE;
 $config['sess_table_name']		= 'ci_sessions';

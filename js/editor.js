@@ -501,7 +501,7 @@ gfx.editor = {
 				data: d,
 				success: function (result, status) {
 					if (result.error) {
-						window.alert(result.error);
+						window.alert(T[result.tag] || result.error);
 						return;
 					}
 
@@ -621,7 +621,7 @@ gfx.editor = {
 				},
 				success: function (result, status) {
 					if (result.error) {
-						window.alert(result.error);
+						window.alert(T[result.tag] || result.error);
 						return;
 					}
 					if (!result.addons.length) {
@@ -657,7 +657,7 @@ gfx.editor = {
 				},
 				success: function (result, status) {
 					/*if (result.error) {
-						window.alert(result.error);
+						window.alert(T[result.tag] || result.error);
 						return;
 					}*/
 					if (!result.addons.length) {
