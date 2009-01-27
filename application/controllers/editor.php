@@ -96,7 +96,7 @@ class Editor extends Controller {
 		if ($this->input->post('web') !== false) $data['web'] = $this->input->post('web');
 		if ($this->input->post('blog') !== false) $data['blog'] = $this->input->post('blog');
 		if ($this->input->post('bio') !== false) $data['bio'] = $this->input->post('bio');
-		if ($this->input->post('forum') !== false) {
+		if ($this->input->post('forum') !== false && $this->input->post('forum') !== '') {
 			$F = explode('::', $this->input->post('forum'), 3);
 			if (count($F) === 3 && $F[0] === md5($F[1] . $F[2] . '--secret-md5-string hash blah kkk')) {
 				$data['forum_id'] = $F[1];
