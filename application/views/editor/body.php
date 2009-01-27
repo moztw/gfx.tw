@@ -61,6 +61,13 @@ if (!$avatar) {
 			<p>預設圖示</p>
 		</div>
 	</div>
+	<div id="window_download" class="window" title="正在啟動下載...">
+		<h2>感謝您下載 Firefox！</h2>
+		<p>下載將在幾秒內開始，如果沒有啟動請按<a href="/download">這裡</a>。</p>
+		<p>安裝完畢後，別忘了使用 Firefox 連到：</p>
+		<p class="gfx-url"><?php print site_url('{您的推薦網址}') ?></p>
+		<p>依照<span class="title-placeholder">{您的名字}</span>的建議，加入附加元件改造屬於您的火狐！</p>
+	</div>
 	<div id="featureselection">
 		<p class="features-desc">請選三個你推薦別人使用 Firefox 的理由（確定後可以拖曳改變順序）：</p>
 		<ul>

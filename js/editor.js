@@ -66,6 +66,10 @@ gfx.editor = {
 			'#userinfo button' : function () {
 				gfx.editor.infoChanged = true;
 				gfx.openWindow('info');
+			},
+			'.download a' : function () {
+				gfx.openWindow('download');
+				return false;
 			}
 		},
 		'focus' : {

@@ -24,6 +24,13 @@ if (!$avatar) {
 		<p class="count"><?php print htmlspecialchars($title) ?>已經推薦<?php print $count ?>人使用了！</p>
 		<p class="desc">您的網際生活將因 Firefox 更加豐富有趣！Firefox 有許多特色，協助您完成工作、找到資訊。正因為它如此實用，<?php print htmlspecialchars($title) ?>願意推薦您改用 Firefox！以下是<?php print htmlspecialchars($title) ?>最喜歡 Firefox 的三大特點：</p>
 	</div>
+	<div id="window_download" class="window" title="正在啟動下載...">
+		<h2>感謝您下載 Firefox！</h2>
+		<p>下載將在幾秒內開始，如果沒有啟動請按<a href="/download">這裡</a>。</p>
+		<p>安裝完畢後，別忘了使用 Firefox 連到：</p>
+		<p class="gfx-url"><?php print site_url($name) ?></p>
+		<p>依照<?php print htmlspecialchars($title) ?>的建議，加入附加元件改造屬於您的火狐！</p>
+	</div>
 	<div id="features">
 <?php
 /* put it into a function scope */

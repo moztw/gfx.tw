@@ -217,9 +217,9 @@ input#openid-identifier {
 #titleblock .count {
 	margin: 0; padding: 0;
 	position: absolute;
-	top: 110px; left: 630px;
-	width: 230px; height: 14px;
-	font-size: 14px; line-height: 14px;
+	top: 113px; left: 630px;
+	width: 230px; height: 12px;
+	font-size: 12px; line-height: 12px;
 	text-align: right;
 	white-space: nowrap;
 }
@@ -513,6 +513,12 @@ input#openid-identifier {
 
 #window_progress {
 	margin: 0; padding: 12px;
+}
+
+#window_download .gfx-url {
+	text-align: center;
+	font-weight: bold;
+	font: 1.2em monospace;
 }
 
 #info_form label {

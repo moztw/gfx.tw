@@ -17,6 +17,22 @@ var gfx = {
 			'a.newwindow' : function () {
 				window.open(this.href);
 				return false;
+			},
+			'.download a' : function () {
+				gfx.openWindow('download');
+				var os = (/(win|mac|linux)/.exec(navigator.platform.toLowerCase()) || [null])[0];
+				var name = (/^\/([^\/\.\?]+)\??.*$/.exec(window.location.pathname) || [null, null])[1];
+				var dl = '/download';
+				if (os && name) {
+					dl += '?name=' + name + '&os=' + os;
+				}
+				//Call directly as IE will show information bar if we don't.
+				/*
+					setTimeout(function () {window.location.href = dl; }, 100);
+				*/
+				window.location.href = dl;
+
+				return false;
 			}
 		},
 		'change' : {
@@ -30,10 +46,19 @@ var gfx = {
 			'width' : 500,
 			'height' : 400,
 			'position' : ['center', 120]
+		},
+		'download' : {
+			'width' : 500,
+			'height' : 320,
+			'position' : ['center', 130],
+			'buttons' : {
+				'OK' : function () {
+					gfx.closeWindow('download');
+				}
+			}
 		}
 	},
 	'onload' : function () {
-
 		if (gfx.editor) gfx.editor.onload();
 		if ($('#groups-show-detail-box:checked').length) $('#groups').addClass('detailed');
 
