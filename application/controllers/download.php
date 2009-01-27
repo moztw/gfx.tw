@@ -8,8 +8,12 @@ class Download extends Controller {
 	}
 	function index() {
 		parse_str($this->input->server('QUERY_STRING'), $G);
-		if (isset($G['name'])) {
+		if (isset($G['name']) && $G['name'] === '(default)') {
+			$name = $this->config->item('gfx_home_user');
+		} elseif (isset($G['name'])) {
 			$name = $G['name'];
+		} elseif ($this->input->server('HTTP_REFERER') === base_url()) {
+			$name = $this->config->item('gfx_home_user');
 		} elseif ($this->input->server('HTTP_REFERER')) {
 			/*
 				Try to determene name from http referrer

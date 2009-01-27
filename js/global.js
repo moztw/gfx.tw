@@ -21,7 +21,8 @@ var gfx = {
 			'.download a' : function () {
 				gfx.openWindow('download');
 				var os = (/(win|mac|linux)/.exec(navigator.platform.toLowerCase()) || [null])[0];
-				var name = (/^\/([^\/\.\?]+)\??.*$/.exec(window.location.pathname) || [null, null])[1];
+				var name = (/^\/([^\/\.\?]*)\??.*$/.exec(window.location.pathname) || [null, null])[1];
+				if (name === '') name = '(default)';
 				var dl = '/download';
 				if (os && name) {
 					dl += '?name=' + name + '&os=' + os;
