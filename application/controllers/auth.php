@@ -58,8 +58,8 @@ class Auth extends Controller {
 						'avatar' => '',
 						'email' => '',
 						'bio' => '',
-						'web' => $open_id,
-						'blog' => $open_id,
+						'web' => , //$open_id, //I was told that Google/Yahoo generated open id is annoy to be put here.
+						'blog' => , //$open_id,
 						'blog_rss' => '',
 						'forum_username' => '',
 						'count' => 1,
