@@ -5,6 +5,7 @@ class Addon extends Controller {
 		parent::Controller();
 		$this->load->scaffolding('addons');
 		$this->load->database();
+		$this->load->config('gfx');
 	}
 	function index() {
 		show_404();
@@ -21,7 +22,7 @@ class Addon extends Controller {
 		$addons = $this->db->query('SELECT * FROM `addons` WHERE MATCH (`title`,`description`) AGAINST (' . $this->db->escape($this->input->post('q')) . ') ORDER BY `title` ASC;');
 		$A = array();
 		foreach ($addons->result_array() as $addon) {
-			if ($addon['amo_id']) $addon['url'] = 'https://addons.mozilla.org/zh-TW/firefox/addon/' . $addon['amo_id'];
+			if ($addon['amo_id']) $addon['url'] = $this->config->item('gfx_amo_url') . $addon['amo_id'];
 			unset($addon['amo_id']);
 			$A[] = $addon;
 		}
@@ -53,7 +54,7 @@ class Addon extends Controller {
 			. 'GROUP BY t2.addon_id ORDER BY COUNT(t2.id) DESC, t1.title ASC;');
 		$A = array();
 		foreach ($addons->result_array() as $addon) {
-			if ($addon['amo_id']) $addon['url'] = 'https://addons.mozilla.org/zh-TW/firefox/addon/' . $addon['amo_id'];
+			if ($addon['amo_id']) $addon['url'] = $this->config->item('gfx_amo_url') . $addon['amo_id'];
 			//unset($addon['amo_id']);
 			$A[] = $addon;
 		}
@@ -66,7 +67,7 @@ class Addon extends Controller {
 				$A[$r] = array_merge(
 					array(
 						'id' => $A[$r]['id'],
-						'url' => 'https://addons.mozilla.org/zh-TW/firefox/addon/' . $data['amo_id']
+						'url' => $this->config->item('gfx_amo_url') . $data['amo_id']
 					),
 					$data
 				);
@@ -108,14 +109,14 @@ class Addon extends Controller {
 		} else {
 			$A = $addons->row_array();
 		}
-		$A['url'] = 'https://addons.mozilla.org/zh-TW/firefox/addon/' . $A['amo_id'];
+		$A['url'] = $this->config->item('gfx_amo_url') . $A['amo_id'];
 		unset($A['amo_id']);
 		header('Content-Type: text/javascript');
 		print json_encode(array('addons' => array($A)));
 	}
 	function get_amo_content($amo_id) {
 		//TBD: connection timeout
-		$html = file_get_contents('https://addons.mozilla.org/zh-TW/firefox/addon/' . $amo_id);
+		$html = file_get_contents($this->config->item('gfx_amo_url') . $amo_id);
 		if (!preg_match('/<h3 class=\"name\"[^>]*><img src=\"([\w\.\/\-]+)\" class=\"addon-icon\" alt=\"\" \/>([^<]+) [\d\.]+<\/h3>/', $html, $M)) {
 			return false;
 		}

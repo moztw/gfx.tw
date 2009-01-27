@@ -35,8 +35,8 @@ if (!$avatar) {
 			</h1>
 		</form>
 		<div class="download">
-			<p class="link"><a href="#">免費下載</a></p>
-			<p class="version">3.0 系列</p>
+			<p class="link"><a href="/download">免費下載</a></p>
+			<p class="version">3.0 系列最新版</p>
 		</div>
 		<p class="count">{您的推薦指數會在這裡出現}</p>
 		<p class="desc">您的網際生活將因 Firefox 更加豐富有趣！Firefox 有許多特色，協助您完成工作、找到資訊。正因為它如此實用，<span class="title-placeholder">{您的名字}</span>願意推薦您改用 Firefox！以下是<span class="title-placeholder">{您的名字}</span>最喜歡 Firefox 的三大特點：</p>
@@ -110,6 +110,7 @@ while(isset($features[$i])) {
 }
 ?>
 	</div>
+	<div id="middleblock">
 	<div id="userinfo">
 		<h2>關於<span class="title-placeholder">{您的名字}</span></h2>
 		<p>您的個人介紹會出現在此處。<button>編輯</button></p>
@@ -185,4 +186,5 @@ foreach ($allgroups as $group) {
 	</div>
 	<div id="window_progress" class="window" title="與伺服器通訊中...">
 		<img src="images/ajax-progress.gif" alt="處理中..." />
+	</div>
 	</div>

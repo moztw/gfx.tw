@@ -1,31 +1,6 @@
 <?php
 
 class Editor extends Controller {
-	var $badname = array(
-		'editor', 
-		'userpage', 
-		'feature', 
-		'auth', 
-		'addons',
-		'about', 
-		'lobby', 
-		'view', 
-		'sticker', 
-		'stickers', 
-		'users', 
-		'blog', 
-		'events', 
-		'event', 
-		'doc', 
-		'docs', 
-		'share', 
-		'badge', 
-		'home',
-		'js',
-		'useravatars',
-		'system',
-		'images'
-	);
 	function Editor() {
 		parent::Controller();
 		$this->load->scaffolding('u2f');
@@ -106,10 +81,11 @@ class Editor extends Controller {
 				$data['avatar'] = $a;
 			}
 		}
+		$this->load->config('gfx');
 		if (!preg_match('/^[a-zA-Z0-9_\-]+$/', $this->input->post('name'))
 			|| strlen($this->input->post('name')) > 200
 			|| substr($this->input->post('name'), 0, 8) === '__temp__'
-			|| in_array($this->input->post('name'), $this->badname)
+			|| in_array($this->input->post('name'), $this->config->item('gfx_badname'))
 			|| $this->db->query('SELECT `id` FROM `users` '
 				. 'WHERE `name` = ' . $this->db->escape($this->input->post('name'))
 				. ' AND `id` != ' . $this->session->userdata('id'))
