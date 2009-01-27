@@ -98,12 +98,15 @@ class Editor extends Controller {
 		if ($this->input->post('bio') !== false) $data['bio'] = $this->input->post('bio');
 		if ($this->input->post('forum') !== false && $this->input->post('forum') !== '') {
 			$F = explode('::', $this->input->post('forum'), 3);
-			if (count($F) === 3 && $F[0] === md5($F[1] . $F[2] . '--secret-md5-string hash blah kkk')) {
+			if (count($F) === 3 && $F[0] === substr(md5($F[1] . $F[2] . '--secret-md5-string hash blah kkk'), 16)) {
 				$data['forum_id'] = $F[1];
 				$data['forum_username'] = $F[2];
 			} else {
 				$this->json_error('Forum code error', 'EDITOR_FORUM_CODE');
 			}
+		} elseif ($this->input->post('forum') === '') {
+				$data['forum_id'] = '';
+				$data['forum_username'] = '';
 		}
 		$this->db->update('users', $data, array('id' => $this->session->userdata('id')));
 		//Won't work because affected rows is 0 when nothing is actually changed.

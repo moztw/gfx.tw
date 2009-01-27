@@ -53,8 +53,13 @@ optgroup {
 
 #header #header_top_link a {
 	display: block;
-	background: transparent url('images/header-title.png') center center no-repeat;
-	width: 54px; height: 19px;
+	/* alpha or beta image style */
+	background: transparent url('images/header-title-alpha.png') center center no-repeat;
+	width: 90px; height: 25px;
+	position: relative; top: -6px;
+	/* normal style */
+/*	background: transparent url('images/header-title.png') center center no-repeat;
+	width: 54px; height: 19px; */
 	text-indent: -10000px;
 }
 
@@ -541,6 +546,10 @@ input#openid-identifier {
 #info_form #info_name {
 	clear: none; float: left;
 	width: 30%;
+}
+
+#info_form #info_forum {
+	font-family: monospace;
 }
 
 #info_form .form-desc {

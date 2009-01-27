@@ -486,7 +486,6 @@ gfx.editor = {
 			d.blog = $('#info_blog').val();
 			d.forum = $('#info_forum').val();
 			d.bio = $('#info_bio').val();
-			$('#info_forum').val('');
 		}
 		if (gfx.editor.featureChanged) {
 			$('.feature h2').each(

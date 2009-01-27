@@ -130,7 +130,7 @@ while(isset($features[$i])) {
 			<span class="form-desc">不會公開。</span></p>
 			<p><label for="info_web">個人首頁：</label> <?php print form_input(array('id' =>'info_web', 'value' => $web)); ?></p>
 			<p><label for="info_blog">部落格：</label> <?php print form_input(array('id' =>'info_blog', 'value' => $blog)); ?></p>
-			<p><label for="info_forum">討論區 ID 認證：</label> <?php print form_password(array('id' =>'info_forum', 'value' => '')); ?>
+			<p><label for="info_forum">討論區 ID 認證：</label> <?php print form_input(array('id' =>'info_forum', 'value' => ($forum_id && $forum_username)?(substr(md5($forum_id . $forum_username . '--secret-md5-string hash blah kkk'), 16) . '::' . $forum_id . '::' . $forum_username):'')); ?>
 			<span class="form-desc">請貼<a href="http://forum.moztw.org/gfxcode.php" class="newwindow">認證碼</a>。</span></p>
 			<p><label for="info_bio">一行自介：</label>
 				<textarea id="info_bio"><?php print htmlspecialchars($bio) ?></textarea>
