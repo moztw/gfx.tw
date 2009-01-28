@@ -121,7 +121,7 @@ class Addon extends Controller {
 			return false;
 		}
 		preg_match('/<p class=\"desc\"[^>]*>([^<]+)(<\/p>|<br \/>)/', $html, $D);
-		preg_match('/<a href=\"([\w\.\/\-]+\.xpi)\" id=\"installTrigger/', $html, $X);
+		preg_match('/<a href=\"([^\"]+\.xpi)\" id=\"installTrigger/', $html, $X);
 		return array(
 			'title' => html_entity_decode($M[2], ENT_QUOTES, 'UTF-8'),
 			'amo_id' => $amo_id,
