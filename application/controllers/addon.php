@@ -117,7 +117,7 @@ class Addon extends Controller {
 	function get_amo_content($amo_id) {
 		//TBD: connection timeout
 		$html = file_get_contents($this->config->item('gfx_amo_url') . $amo_id);
-		if (!preg_match('/<h3 class=\"name\"[^>]*><img src=\"([\w\.\/\-]+)\" class=\"addon-icon\" alt=\"\" \/>([^<]+) [\d\.]+<\/h3>/', $html, $M)) {
+		if (!preg_match('/<h3 class=\"name\"[^>]*><img src=\"([\w\.\/\-]+)\" class=\"addon-icon\" alt=\"\" \/>([^<]+) [\d\.a-z]+<\/h3>/', $html, $M)) {
 			return false;
 		}
 		preg_match('/<p class=\"desc\"[^>]*>([^<]+)(<\/p>|<br \/>)/', $html, $D);
