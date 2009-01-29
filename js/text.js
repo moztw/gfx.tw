@@ -20,6 +20,7 @@ var T = {
 		EDITOR_NO_TITLE: '請輸入暱稱。',
 		TITLE_LENGTH: '名稱太長了喔！',
 		NAME_LENGTH: '網址太長了喔！',
+		NO_GROUPS: '必須要選擇一個以上的火狐屬性。',
 		ADDON_ADD: '新增',
 		ADDON_DEL: '刪除',
 		ADDON_CANNOT_ADD_TITLE: '無法重複新增附加元件。',

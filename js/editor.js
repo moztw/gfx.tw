@@ -473,6 +473,11 @@ gfx.editor = {
 			$('#title-name-edit input').focus();
 			return;
 		}
+		var g = $('.group-title input:checked');
+		if (gfx.editor.groupChanged && !g.length) {
+			window.alert(T.UI.NO_GROUPS);
+			return;
+		}
 		if (d['name'] === '') {
 			gfx.openWindow('almostdone');
 			$('#name').focus();
@@ -500,7 +505,7 @@ gfx.editor = {
 			);
 		}
 		if (gfx.editor.groupChanged) {
-			$('.group-title input:checked').each(
+			g.each(
 				function (i) {
 					d['groups[' + (i+1) + ']'] = $(this).parent().attr('id').substr(2);
 				}
