@@ -183,6 +183,9 @@ foreach ($allgroups as $group) {
 }
 ?>
 	</div>
+	<div id="groups-tail">
+			<p>直接從頁面安裝附加元件的說明會出現在這裡。</p>
+	</div>
 	<div id="window_addons" class="window" title="新增附加元件">
 		<form action="#" id="addon_query_form">
 			<p>搜尋: <?php print form_input(array('id' =>'addon_query', 'value' => '')); ?> <button type="submit">尋找附加元件</button></p>

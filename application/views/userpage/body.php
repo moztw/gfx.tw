@@ -86,8 +86,8 @@ function addon($addon) {
 ?>
 		<div class="addon">
 <?php
-	if (!$xpi_url) { ?>
-		<p class="install"><input type="checkbox" value="<?php print htmlspecialchars($xpi_url); ?>" id="addon-install-<?php print $id ?>" /><label for="addon-install-<?php print $id ?>">列入安裝清單</label></p>
+	if ($xpi_url) { ?>
+		<p class="install"><input type="checkbox" id="addon-install-<?php print $id ?>" /><label for="addon-install-<?php print $id ?>">列入安裝清單</label></p>
 <?php
 	} else { ?>
 		<p class="install"><input type="checkbox" value="<?php print htmlspecialchars($xpi_url); ?>" id="addon-install-<?php print $id ?>" disabled="disabled" /><label title="請至套件網站安裝" for="addon-install-<?php print $id ?>">列入安裝清單</label></p>
@@ -136,9 +136,12 @@ foreach ($groups as $group) {
 ?>
 	</div>
 	<div id="groups-tail">
-		<p>blah!</p>
+		<p>這些附加元件的說明主要來自於 <a href="https://addons.mozilla.org/" class="newwindow">Mozilla 附加元件網站</a>，
+由作者提供。</p>
 		<div id="groups-install">
-			<p>(install description) </p>
+			<p><button>立刻安裝</button>安裝所有勾選的擴充套件！</p>
+			<p>在 Mozilla 附加元件網站標示為「實驗中」，或是安裝前需特別同意使用條款、隱私權保護條款的擴充套件無法在此快速安裝；請自行前往各擴充套件網頁。</p>
+			<p>
 		</div>
 	</div>
 	</div>

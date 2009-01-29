@@ -11,8 +11,13 @@ var gfx = {
 				return false;
 			},
 			'#groups-show-detail-box' : function () {
-				if (this.checked) $('#groups').addClass('detailed');
-				else $('#groups').removeClass('detailed');
+				if (this.checked) {
+					$('#groups').addClass('detailed');
+					$('#groups-install').addClass('show');
+				} else {
+					$('#groups').removeClass('detailed');
+					$('#groups-install').removeClass('show');
+				}
 			},
 			'a.newwindow' : function () {
 				window.open(this.href);
@@ -61,7 +66,10 @@ var gfx = {
 	},
 	'onload' : function () {
 		if (gfx.editor) gfx.editor.onload();
-		if ($('#groups-show-detail-box:checked').length) $('#groups').addClass('detailed');
+		if ($('#groups-show-detail-box:checked').length) {
+			$('#groups').addClass('detailed');
+			$('#groups-install').addClass('show');
+		}
 
 		$('.window').each(
 			function () {

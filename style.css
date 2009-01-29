@@ -346,12 +346,21 @@ input#openid-identifier {
 
 #groups-show-detail {
 	float: right;
+	margin: 0.2em 1em;
 }
 
 #groups-title, #groups-tail {
 	float: right; width: 572px;
 	border: 4px solid #ffff99;
 	background-color: #ffffcc;
+}
+
+#groups-title h2, #groups-tail h2 {
+	margin: 0.7em;
+}
+
+#groups-title p, #groups-tail p {
+	margin: 1em;
 }
 
 #groups-title {
@@ -369,6 +378,7 @@ input#openid-identifier {
 #groups .group {
 	clear: both;
 	border: 2px solid #cccccc;
+	background-color: #ffffff;
 	-moz-border-radius: 6px;
 }
 
@@ -406,6 +416,27 @@ input#openid-identifier {
 	overflow: auto;
 }
 
+#groups-install {
+	display: none;
+}
+
+#groups-install.show {
+	display: block;
+	margin: 1em;
+	padding: 0.5em;
+	border: 2px solid #99ff99;
+	background-color: #c4fea1;
+	-moz-border-radius: 6px;
+}
+
+#groups-install button {
+	float: right;
+	font-size: 1.2em;
+	font-weight: bold;
+	margin-top: -0.4em;
+}
+
+
 #addon_query {
 	width: 60%;
 }
@@ -415,8 +446,10 @@ input#openid-identifier {
 }
 
 #addon_query_result {
-	border: 1px dashed #999999;
 	height: 300px; overflow: auto;
+	border: 2px solid #cccccc;
+	background-color: #ffffff;
+	-moz-border-radius: 6px;
 }
 .addon {
 	margin: 1px 0;
@@ -424,6 +457,12 @@ input#openid-identifier {
 	background-color: #ffffff;
 	border: 2px solid #ccffcc;
 	-moz-border-radius: 6px;
+	overflow: hidden;
+}
+
+.group-addons .ui-sortable-placeholder {
+	visibility: visible!important;
+	border-style: dashed;
 }
 
 .addon a {
@@ -475,13 +514,16 @@ input#openid-identifier {
 	padding-left: 50px; width: auto;
 }
 
-.detailed .addon .desc, .detailed .addon .install {
+.detailed .addon .desc {
 	display: block;
 	padding-left: 50px;
 }
 
 .detailed .addon .install {
+	display: block;
 	float: right;
+	background-color: #ccffcc;
+	-moz-border-radius-bottomleft: 6px;
 }
 
 #featureselection {
