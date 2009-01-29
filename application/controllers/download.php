@@ -24,12 +24,12 @@ class Download extends Controller {
 		/* remember, $name is an unsafe string; always escape before putting into SQL query string */
 		if (isset($name) && $this->session->userdata('id')) {
 			/* Should not count download from oneself */
-			$this->db->query('UPDATE `users` SET `count` = `count`+1 '
+			$this->db->query('UPDATE `users` SET `count` = `count`+1, `modified` = `modified` '
 				. 'WHERE `name` = ' . $this->db->escape($name)
 				. ' AND `id` != ' . $this->session->userdata('id') . ';');
 		} elseif (isset($name)) {
 			/* Yes, it's really easy to cheat with wget */
-			$this->db->query('UPDATE `users` SET `count` = `count`+1 '
+			$this->db->query('UPDATE `users` SET `count` = `count`+1, `modified` = `modified` '
 				. 'WHERE `name` = ' . $this->db->escape($name) . ';');
 		}
 		$dlurl = $this->config->item('gfx_downloadurl');
