@@ -353,6 +353,7 @@ gfx.editor = {
 				timeout: 20000,
 				dataType: 'json',
 				beforeSend : function (xhr) {
+					if (gfx.xhr) gfx.xhr.abort();
 					setTimeout(
 						function () {
 							if (gfx.xhr.readyState !== 4) {
