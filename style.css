@@ -121,7 +121,10 @@ input#openid-identifier {
 	float: right;
 }
 
-.title-placeholder {
+span.title-placeholder {
+}
+
+span.title-empty {
 	font-size: 90%;
 }
 

@@ -15,6 +15,7 @@ var T = {
 	/* ui texts and alert, confirm messages */
 	UI: {
 		EMPTY_TITLE: '在這裡輸入暱稱',
+		TITLE_PLACEHOLDER: '{您的名字}',
 		CONFIRM_QUIT: '離開此頁會失去所有未儲存的資料！',
 		FEATURES_COUNT: '請選三個你推薦別人使用 Firefox 的理由，三個就對了！',
 		EDITOR_NO_TITLE: '請輸入暱稱。',
