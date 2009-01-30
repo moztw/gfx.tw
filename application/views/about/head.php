@@ -10,7 +10,7 @@ print '<?xml version="1.0" encoding="UTF-8"?>';
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<title>抓火狐 :: <?php print htmlspecialchars($title) ?></title>
 	<link rel="stylesheet" type="text/css" href="<?php print site_url('style.css') ?>" />
-	<link rel="stylesheet" type="text/css" href="<?php print site_url('style/ui.dialog.css') ?>" />
+	<link rel="stylesheet" type="text/css" href="<?php print site_url('style/ui.all.css') ?>" />
 	<script type="text/javascript" src="<?php print site_url('js/jquery-1.3.1.min.js'); ?>"></script>
 	<script type="text/javascript" src="<?php print site_url('js/jquery-ui-personalized-1.6.min.js'); ?>"></script>
 	<script type="text/javascript" src="<?php print site_url('js/global.js'); ?>" charset="UTF-8"></script>
