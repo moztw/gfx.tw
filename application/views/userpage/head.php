@@ -9,9 +9,10 @@ print '<?xml version="1.0" encoding="UTF-8"?>';
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<title><?php print htmlspecialchars($title); ?>的抓火狐推薦頁！</title>
-	<link rel="stylesheet" type="text/css" href="<?php print base_url() ?>style.css" />
-	<script type="text/javascript" src="<?php print site_url('js/jquery-1.3.min.js'); ?>"></script>
-	<script type="text/javascript" src="<?php print site_url('js/ui/minified/jquery.ui.all.min.js'); ?>"></script>
+	<link rel="stylesheet" type="text/css" href="<?php print site_url('style.css') ?>" />
+	<link rel="stylesheet" type="text/css" href="<?php print site_url('style/ui.dialog.css') ?>" />
+	<script type="text/javascript" src="<?php print site_url('js/jquery-1.3.1.min.js'); ?>"></script>
+	<script type="text/javascript" src="<?php print site_url('js/jquery-ui-personalized-1.6.min.js'); ?>"></script>
 	<script type="text/javascript" src="<?php print site_url('js/global.js'); ?>" charset="UTF-8"></script>
 	<script type="text/javascript" src="<?php print site_url('js/text.js'); ?>" charset="UTF-8"></script>
 </head>

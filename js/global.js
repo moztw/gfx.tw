@@ -107,7 +107,6 @@ var gfx = {
 			function () {
 				var option = {
 					autoOpen: false,
-					dialogClass: 'flora',
 					modal: true,
 					overlay: {
 						backgroundColor: '#000000',
