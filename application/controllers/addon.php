@@ -117,7 +117,7 @@ class Addon extends Controller {
 	function get_amo_content($amo_id) {
 		//TBD: connection timeout
 		$html = file_get_contents($this->config->item('gfx_amo_url') . $amo_id);
-		if (!preg_match('/<h3 class=\"name\"[^>]*><img src=\"([\w\.\/\-]+)\" class=\"addon-icon\" alt=\"\" \/>([^<]+) [\d\.a-z]+<\/h3>/', $html, $M)) {
+		if (!preg_match('/<h3 class=\"name\"[^>]*><img src=\"([\w\.\/\-]+)\" class=\"addon-icon\" alt=\"\" \/>([^<]+) ([\d\.a-z]+)<\/h3>/', $html, $M)) {
 			return false;
 		}
 		preg_match('/<p class=\"desc\"[^>]*>([^<]+)(<\/p>|<br \/>)/', $html, $D);
@@ -125,6 +125,7 @@ class Addon extends Controller {
 		return array(
 			'title' => html_entity_decode($M[2], ENT_QUOTES, 'UTF-8'),
 			'amo_id' => $amo_id,
+			'amo_version' => html_entity_decode($M[3], ENT_QUOTES, 'UTF-8'),
 			'icon_url' => ($M[1] === '/img/default_icon.png')?'':'https://addons.mozilla.org' . $M[1],
 			'xpi_url' =>  (isset($X[1]))?'https://addons.mozilla.org' . $X[1]:'',
 			'description' => (isset($D[1]))?html_entity_decode($D[1], ENT_QUOTES, 'UTF-8'):'',

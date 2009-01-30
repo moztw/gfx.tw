@@ -39,6 +39,29 @@ var gfx = {
 				window.location.href = dl;
 
 				return false;
+			},
+			'#groups-install button' : function () {
+				if (window.InstallTrigger === undefined) {
+					alert(T.UI.EXTINSTALL_NOT_FX);
+					return;
+				}
+				var o = $('#groups .install input:checked').not('[disabled]');
+				if (!o.length) {
+					alert(T.UI.EXTINSTALL_CHECKED_NOTHING);
+					return;
+				}
+				var l = {};
+				o.each(
+					function (i) {
+						var a = $(this).parents('.addon');
+						l[a.find('a span').attr('title')] = {
+		                    URL : this.value,
+		                    IconURL: a.find('a img').attr('src')
+		                };
+					}
+				);
+				gfx.openWindow('extinstall');
+				InstallTrigger.install(l);
 			}
 		},
 		'change' : {
@@ -57,11 +80,13 @@ var gfx = {
 			'width' : 500,
 			'height' : 320,
 			'position' : ['center', 130],
-			'buttons' : {
-				'OK' : function () {
-					gfx.closeWindow('download');
-				}
-			}
+			'buttons' : { }
+		},
+		'extinstall' : {
+			'width' : 300,
+			'height' : 250,
+			'position' : ['right', 'top'],
+			'buttons' : { }
 		}
 	},
 	'onload' : function () {
@@ -71,6 +96,13 @@ var gfx = {
 			$('#groups-install').addClass('show');
 		}
 
+		gfx.windowOption.download.buttons[T.BUTTONS.DOWNLOAD_OK] = function () {
+			gfx.closeWindow('download');
+		}
+		gfx.windowOption.extinstall.buttons[T.BUTTONS.EXTINSTALL_OK] = function () {
+			gfx.closeWindow('extinstall');
+		}
+		
 		$('.window').each(
 			function () {
 				var option = {

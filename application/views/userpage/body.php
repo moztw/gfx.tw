@@ -87,14 +87,14 @@ function addon($addon) {
 		<div class="addon">
 <?php
 	if ($xpi_url) { ?>
-		<p class="install"><input type="checkbox" id="addon-install-<?php print $id ?>" /><label for="addon-install-<?php print $id ?>">列入安裝清單</label></p>
+		<p class="install"><input type="checkbox" value="<?php print htmlspecialchars($xpi_url); ?>" id="addon-install-<?php print $id ?>" /><label for="addon-install-<?php print $id ?>">列入安裝清單</label></p>
 <?php
 	} else { ?>
-		<p class="install"><input type="checkbox" value="<?php print htmlspecialchars($xpi_url); ?>" id="addon-install-<?php print $id ?>" disabled="disabled" /><label title="請至套件網站安裝" for="addon-install-<?php print $id ?>">列入安裝清單</label></p>
+		<p class="install"><input type="checkbox" id="addon-install-<?php print $id ?>" disabled="disabled" /><label title="請至套件網站安裝" for="addon-install-<?php print $id ?>">列入安裝清單</label></p>
 <?php 
 	}
 ?>
-			<p><a href="<?php print htmlspecialchars($url); ?>"><img src="<? print htmlspecialchars($icon_url) ?>" alt="" /><span><?php print htmlspecialchars($title); ?></span></a></p>
+			<p><a href="<?php print htmlspecialchars($url); ?>"><img src="<? print htmlspecialchars($icon_url) ?>" alt="" /><span title="<?php print htmlspecialchars($title . ' ' . $amo_version); ?>"><?php print htmlspecialchars($title); ?></span></a></p>
 <?php
 	if (isset($description)) {
 ?>
@@ -139,9 +139,13 @@ foreach ($groups as $group) {
 		<p>這些附加元件的說明主要來自於 <a href="https://addons.mozilla.org/" class="newwindow">Mozilla 附加元件網站</a>，
 由作者提供。</p>
 		<div id="groups-install">
-			<p><button>立刻安裝</button>安裝所有勾選的擴充套件！</p>
+			<p><button>立刻安裝</button>安裝所有勾選的附加元件！</p>
 			<p>在 Mozilla 附加元件網站標示為「實驗中」，或是安裝前需特別同意使用條款、隱私權保護條款的擴充套件無法在此快速安裝；請自行前往各擴充套件網頁。</p>
 			<p>
 		</div>
 	</div>
+	</div>
+	<div id="window_extinstall" class="window" title="正在安裝...">
+		<p><strong>請點選右上角出現的「允許」按鈕，允許敝站為您安裝附加元件。</strong></p>
+		<p>根據您所勾選的元件數量，Firefox 可能需要一些時間確認檔案後才會出現「軟體安裝」通知。</p>
 	</div>

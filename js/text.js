@@ -26,14 +26,18 @@ var T = {
 		ADDON_DEL: '刪除',
 		ADDON_CANNOT_ADD_TITLE: '無法重複新增附加元件。',
 		ADDON_SUGGEST_LIST: '或是從下面選擇最多人在此屬性推薦的附加元件 ...',
-		ADDON_SEARCH_RESULT: '搜尋結果：'
+		ADDON_SEARCH_RESULT: '搜尋結果：',
+		EXTINSTALL_NOT_FX: '必須要使用 Firefox 系列瀏覽器才能安裝附加元件喔。',
+		EXTINSTALL_CHECKED_NOTHING: '您沒有選擇任何附加元件。'
 	},
 	/* $.dialog buttons */
 	BUTTONS: {
 		PROGRESS_FORCESTOP: '停止',
 		ALMOSTDONE_OK: '確定',
 		INFO_OK: '確定',
-		ADDON_ADD_OK: '確定'
+		ADDON_ADD_OK: '確定',
+		DOWNLOAD_OK: '確定',
+		EXTINSTALL_OK: '確定'
 	},
 	/* substitution of server error messages */
 	EDITOR_NOT_LOGGED_IN: '沒有登入，無法存檔。或是請開新分頁重新登入再按一次存檔。',
