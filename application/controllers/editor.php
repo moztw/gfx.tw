@@ -184,6 +184,9 @@ class Editor extends Controller {
 		$this->cache->remove($this->input->post('name'), 'userpage-head');
 		$this->cache->remove($this->input->post('name'), 'userpage');
 		$this->cache->remove($this->session->userdata('id'), 'header');
+
+		//TBD: making stickers and put it into ./userstickers/ 
+
 		header('Content-Type: text/javascript');
 		print json_encode(array('name' => $this->input->post('name')));
 	}
