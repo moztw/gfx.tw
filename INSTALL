@@ -8,7 +8,7 @@ Enviroment:
 {
 
 [mysqld]
-# enable chinese search (?)
+# enable chinese search
 ft_min_word_len =1
 
 }
@@ -17,8 +17,9 @@ Install:
 1. Check out code from svn
 2. Config base path at application/config/config.php and .htaccess
 3. Config db at application/config/database.php
-4. Create database and tables and inital data with importing gfx.sql
-5. sudo chown www-data:www-data useravatars system/cache (or chmod 777 if you cannot sudo)
+4. Create database and table structures by importing gfx.sql
+5. Create inital user at table `users`, feature selections at `features` and group selections `groups`
+6. sudo chown www-data:www-data useravatars system/cache userstickers (or chmod 777 if you cannot sudo)
 
 On Production Site:
 1. Change $route['scaffolding_trigger']  to empty string in application/config/routes.php
