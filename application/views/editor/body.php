@@ -3,7 +3,7 @@
 if (!$avatar) {
 	$avatar = './images/keyhole_edit.gif';
 } elseif ($avatar === '(gravatar)') {
-	$avatar = 'http://www.gravatar.com/avatar/' . md5($email) . '?s=60&amp;r=g&amp;d=' . urlencode(site_url('images/keyhole_edit.gif'));
+	$avatar = 'http://www.gravatar.com/avatar/' . md5($email) . '?s=65&amp;r=g&amp;d=' . urlencode(site_url('images/keyhole_edit.gif'));
 } else {
 	$avatar = './useravatars/' . $avatar;
 }
