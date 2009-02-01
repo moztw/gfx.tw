@@ -76,9 +76,18 @@ class Editor extends Controller {
 		);
 		if ($this->input->post('avatar')) {
 			$a = $this->input->post('avatar');
-			if (in_array($a, array('(gravatar)', '(default)')) || file_exists('./useravatars/' . $a)) {
-				if ($a === '(default)') $a = '';
-				$data['avatar'] = $a;
+			switch ($a) {
+				case '(default)':
+				$data['avatar'] = '';
+				break;
+				case '(gravatar)':
+				$data['avatar'] = '(gravatar)';
+				default:
+				if (preg_match('/^[0-9a-z\/]+\.(gif|jpg|jpeg|png)$/i', $a) && file_exists('./useravatars/' . $a)) {
+					$data['avatar'] = $a;
+				} else {
+					$this->json_error('Wrong avatar', 'EDITOR_SAVE_ERROR_AVATAR');
+				}
 			}
 		}
 		$this->load->config('gfx');
@@ -194,10 +203,12 @@ class Editor extends Controller {
 	function upload() {
 		//Can't check session here becasue of Flash plugin bug.
 		//We do not and unable to verify user information, therefore we only process the image are return the filename; the actual submision of avatar is done by save() function.
+		$subdir = date('Y/m/');
+		@mkdir('./useravatars/' . $subdir, 755, true);
 		$this->load->library(
 			'upload',
 			array(
-				'upload_path' => './useravatars/',
+				'upload_path' => './useravatars/' . $subdir,
 				'allowed_types' => 'exe|jpg|gif|png', //'exe' due to Flash bug reported by SWFUpload (Flash always send mime_types as application/octet-stream)
 				'max_size' => 1024,
 				'encrypt_name' => true
@@ -220,7 +231,7 @@ class Editor extends Controller {
 			}
 			//Success!
 			header('Content-Type: text/javascript');
-			print json_encode(array('img' => $data['file_name']));
+			print json_encode(array('img' => $subdir . $data['file_name']));
 		}
 	}
 	function json_error($msg, $tag = false) {
