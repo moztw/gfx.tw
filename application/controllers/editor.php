@@ -14,7 +14,7 @@ class Editor extends Controller {
 		$this->load->helper('form');
 		$user = $this->db->query('SELECT * FROM users WHERE `id` = ' . $this->session->userdata('id') . ' LIMIT 1');
 		if ($user->num_rows() === 0) {
-			//Rare cases where session exists but got deleted.
+			//Rare cases where session exists but user got deleted.
 			$this->session->sess_destroy();
 			header('Location: ' . base_url());
 			exit();
@@ -49,13 +49,15 @@ class Editor extends Controller {
 			if (!isset($A[$group['id']])) $A[$group['id']] = array();
 		}
 		unset($groups, $group);
-		$this->load->view('editor/head.php');
-		$this->load->_ci_cached_vars = array(); //Clean up cached vars
-		$this->load->view('header.php', $user->row_array()); //Can be fetched from cache but not worth the effort.
-		$this->load->_ci_cached_vars = array(); //Clean up cached vars
-		$this->load->view('editor/body.php', array_merge($user->row_array(), array('allfeatures' => $F, 'allgroups' => $G, 'addons' => $A)));
-		$this->load->_ci_cached_vars = array(); //Clean up cached vars
-		$this->load->view('footer.php', array('db' => 'everything'));
+
+		$data = array(
+			'meta' => $this->load->view('editor/meta.php', $user->row_array(), true),
+			'content' => $this->load->view('editor/content.php', array_merge($user->row_array(), array('allfeatures' => $F, 'allgroups' => $G, 'addons' => $A)), true),
+			'db' => 'content '
+		);
+
+		$this->load->library('parser');
+		$this->parser->page($data, $this->session->userdata('id'), $user->row_array());
 	}
 	function save() {
 		if (!$this->session->userdata('id')) {
@@ -191,7 +193,6 @@ class Editor extends Controller {
 			}
 		}
 		$this->load->library('cache');
-		$this->cache->remove($this->input->post('name'), 'userpage-head');
 		$this->cache->remove($this->input->post('name'), 'userpage');
 		$this->cache->remove($this->session->userdata('id'), 'header');
 

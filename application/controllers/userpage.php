@@ -4,7 +4,6 @@ class Userpage extends Controller {
 	function Userpage() {
 		parent::Controller();
 		$this->load->scaffolding('users');
-		$this->load->database();
 	}
 	function index() {
 		$this->view('foxmosa');
@@ -30,22 +29,11 @@ class Userpage extends Controller {
 				exit();
 			}
 		}
-		$this->load->library('cache');
-		/* See if cache is available or not */
-		if ($this->session->userdata('id')) {
-			$session_id = $this->session->userdata('id');
-		} else {
-			$session_id = 0;
-		}
-		//if (!is_numeric($id)) {
-			$body = $this->cache->get($id, 'userpage');
-			$head = $this->cache->get($id, 'userpage-head');
-		//}
-		$header = $this->cache->get($session_id, 'header');
 
-		/* Query Database and save views to cache */
-		$db = '';
-		if (!$body || !$head) {
+		$this->load->library('cache');
+		$data = $this->cache->get($id, 'userpage');
+		if (!$data) {
+			$data = array();
 			$this->load->database();
 			//if (is_numeric($id)) {
 			//	$user = $this->db->query('SELECT * FROM users WHERE `id` = ' . $this->db->escape($id) . ' LIMIT 1');
@@ -84,41 +72,20 @@ class Userpage extends Controller {
 				$G[] = $group;
 			}
 			unset($groups, $group);
-			if (!$head) {
-				$db .= 'head ';
-				$head = $this->load->view('userpage/head.php', $user->row_array(), true);
-				$this->cache->save($user->row()->name, $head, 'userpage-head', 60);
-			}
-			if (!$body) {
-				$db .= 'body ';
-				$this->load->_ci_cached_vars = array(); //Clean up cached vars
-				$body = $this->load->view('userpage/body.php', array_merge($user->row_array(), array('features' => $F, 'groups' => $G, 'addons' => $A)), true);
-				$this->cache->save($user->row()->name, $body, 'userpage', 60);
-			}
-		}
-		if (!$header) {
-			$this->load->database();
-			if (isset($user) && ($user->row()->id == $session_id)) {
-				$C = $user->row_array();
-				$C['session_id'] = $session_id;
-			} elseif ($session_id !== 0) {
-				$auth = $this->db->query('SELECT * FROM users WHERE `id` = ' . $this->session->userdata('id') . ' LIMIT 1');
-				$C = $auth->row_array();
-				$C['session_id'] = $session_id;
-			} else {
-				$C = array();
-			}
-			$db .= 'header ';
 			$this->load->_ci_cached_vars = array(); //Clean up cached vars
-			$header = $this->load->view('header.php', $C, true);
-			$this->cache->save($session_id, $header, 'header', 60);
+			$data['meta'] = $this->load->view('userpage/meta.php', $user->row_array(), true);
+			$data['content'] = $this->load->view('userpage/content.php', array_merge($user->row_array(), array('features' => $F, 'groups' => $G, 'addons' => $A)), true);
+			$this->cache->save($user->row()->name, $data, 'userpage', 60);
+
+			$data['db'] = 'content ';
 		}
 
-		/* Output coz everything should be ready by now */
-		print $head;
-		print $header;
-		print $body;
-		$footer = $this->load->view('footer.php', array('db' => $db));
+		$this->load->library('parser');
+		if ($this->session->userdata('id') && isset($user) && $user->row()->id == $this->session->userdata('id')) {
+			$this->parser->page($data, $this->session->userdata('id'), $user->row_array());
+		} else {
+			$this->parser->page($data, $this->session->userdata('id'));
+		}
 	}
 }
 

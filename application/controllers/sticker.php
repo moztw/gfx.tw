@@ -17,12 +17,12 @@ class Sticker extends Controller {
 			header('Location: ' . base_url());
 			exit();
 		}
-		$this->load->view('sticker/head.php');
-		$this->load->_ci_cached_vars = array(); //Clean up cached vars
-		$this->load->view('header.php', $user->row_array()); //Can be fetched from cache but not worth the effort.
-		$this->load->_ci_cached_vars = array(); //Clean up cached vars
-		$this->load->view('sticker/body.php');
-		$this->load->_ci_cached_vars = array(); //Clean up cached vars
-		$this->load->view('footer.php', array('db' => 'everything'));
+		$data = array(
+			'meta' => $this->load->view('sticker/meta.php', $user->row_array(), true),
+			'content' => $this->load->view('sticker/content.php', $user->row_array(), true),
+			'db' => 'content '
+		);
+		$this->load->library('parser');
+		$this->parser->page($data, $this->session->userdata('id'), $user->row_array());
 	}
 }

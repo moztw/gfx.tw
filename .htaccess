@@ -1,9 +1,9 @@
 RewriteEngine On
 
-AuthName "gfx.tw staging site"
-AuthType Basic
-AuthUserFile "/home/timdream/gfx/stage/htpasswd"
-require valid-user
+#AuthName "gfx.tw staging site"
+#AuthType Basic
+#AuthUserFile "/home/timdream/gfx/stage/htpasswd"
+#require valid-user
 
 #Don't do it the other way around coz lots of POST will get redirected.
 RewriteCond %{REQUEST_FILENAME} !-f
