@@ -104,6 +104,13 @@ class Editor extends Controller {
 				->num_rows() !== 0) {
 			$this->json_error('Bad Name', 'EDITOR_BAD_NAME');
 		}
+		$this->db->update('users', $data, array('id' => $this->session->userdata('id')));
+		if ($this->db->affected_rows() === 1) {
+			$infoChanged = true;
+		} else {
+			$infoChanged = false;
+		}
+		$data = array();
 		if ($this->input->post('email') !== false) $data['email'] = $this->input->post('email');
 		if ($this->input->post('web') !== false) $data['web'] = $this->input->post('web');
 		if ($this->input->post('blog') !== false) $data['blog'] = $this->input->post('blog');
@@ -120,11 +127,8 @@ class Editor extends Controller {
 				$data['forum_id'] = '';
 				$data['forum_username'] = '';
 		}
-		$this->db->update('users', $data, array('id' => $this->session->userdata('id')));
-		//Won't work because affected rows is 0 when nothing is actually changed.
-		//if ($data && $this->db->affected_rows() !== 1) {
-		//	$this->json_error('error' . $this->db->affected_rows());
-		//}
+		if ($data) $this->db->update('users', $data, array('id' => $this->session->userdata('id')));
+		
 		if ($this->input->post('features')) {
 			$query = $this->db->query('SELECT `id` FROM `u2f` WHERE `user_id` = ' . $this->session->userdata('id') . ' ORDER BY `order` ASC;');
 			$i = 0;
@@ -195,11 +199,38 @@ class Editor extends Controller {
 		$this->load->library('cache');
 		$this->cache->remove($this->input->post('name'), 'userpage');
 		$this->cache->remove($this->session->userdata('id'), 'header');
+		
+		//TBD: hide user id from user
+		$d = './userstickers/' . dechex(intval($this->session->userdata('id')) >> 12) . '/' . dechex(intval($this->session->userdata('id') & (pow(2,12)-1))) . '/';
+		@mkdir($d, 0755, true);
 
-		//TBD: making stickers and put it into ./userstickers/ 
+		if ($infoChanged || $this->input->post('features')) {
+			$features = $this->db->query('SELECT t1.title FROM features t1, u2f t2 ' 
+			. 'WHERE t2.feature_id = t1.id AND t2.user_id = ' . $this->session->userdata('id') . ' ORDER BY t2.order ASC;');
+			$F = array();
+			foreach ($features->result_array() as $feature) {
+				$F[] = $feature;
+			}
+			file_put_contents(
+				$d . 'featurecard.html',
+				$this->load->view(
+					'userstickers/featurecard.php',
+					array(
+						'name' => $this->input->post('name'),
+						'title' => $this->input->post('title'),
+						'features' => $F
+					),
+					true
+				)
+			);
+		}
 
 		header('Content-Type: text/javascript');
-		print json_encode(array('name' => $this->input->post('name')));
+		print json_encode(
+			array(
+				'name' => $this->input->post('name')
+			)
+		);
 	}
 	/* Upload Avatar */
 	function upload() {
@@ -233,7 +264,11 @@ class Editor extends Controller {
 			}
 			//Success!
 			header('Content-Type: text/javascript');
-			print json_encode(array('img' => $subdir . $data['file_name']));
+			print json_encode(
+				array(
+					'img' => $subdir . $data['file_name']
+				)
+			);
 		}
 	}
 	function json_error($msg, $tag = false) {
