@@ -29,8 +29,8 @@ if (isset($id)) {
 		<form action="<?php print site_url('auth/login'); ?>" method="post">
 			<p><label for="openid-identifier">您的 OpenID 網址: </label><input type="text" name="openid-identifier" id="openid-identifier" value="" /> <input type="submit" value="登入" /></p>
 			<h3>OpenID 是什麼？</h3>
-			<p>OpenID 讓您使用其他網站的帳號登入敝站，避免再次記憶帳號與輸入資料的困擾。若您曾在下列網站註冊過，您可以選擇想要使用的 OpenID：</p>
-			<p><label for="openid_sp">OpenID 服務商: </label><select id="openid_sp">
+			<p>OpenID 讓您使用其他網站的帳號登入敝站，避免再次記憶帳號與輸入資料的困擾。若您曾在下列網站註冊過，您可以在下方選擇想要使用的 OpenID。</p>
+			<p><label for="openid_sp">OpenID 服務商：</label><select id="openid_sp">
 				<option value="" label="(選擇服務商)" selected="selected">(選擇服務商)</option>
 				<optgroup label="不需修改網址可直接登入">
 					<option value="https://www.google.com/accounts/o8/id">Google</option>
@@ -40,11 +40,13 @@ if (isset($id)) {
 					<option value="openid.aol.com/[帳號]">AIM</option>
 					<option value="[帳號].livejournal.com">LiveJournal</option>
 					<option value="[帳號].myid.tw">myID.tw</option>
+					<option value="[帳號].myopenid.com">myOpenID</option>
 					<option value="profile.typekey.com/[帳號]">TypePad</option>
 					<option value="[帳號].wordpress.com">WordPress.com</option>
 				</optgroup>
 			</select></p>
 			<p>若您真的沒有任何 OpenID，或是不願意讓敝站帳號與之連結，您可以到 <a href="http://myid.tw/" class="newwindow">myID.tw</a> 申請一個屬於您的 OpenID。</p>
+			<p><strong>注意：</strong>您必須要分別登出服務商網站與抓火狐網站才能完全清除您的認證。</p>
 		</form>
 	</div>
 <?php
