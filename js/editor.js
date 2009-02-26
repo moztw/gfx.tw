@@ -70,6 +70,13 @@ gfx.editor = {
 			'.download a' : function () {
 				gfx.openWindow('download');
 				return false;
+			},
+			'#forum_auth' : function () {
+				$('#forum_auth_iframe')
+					.css('display', 'block')
+					.empty()
+					.append($(document.createElement('iframe')).attr('src', this.href));
+				return false;
 			}
 		},
 		'focus' : {
@@ -161,7 +168,7 @@ gfx.editor = {
 				},
 				'info' : {
 					'width' : 600,
-					'height': 450,
+					'height': 400,
 					'buttons' : {},
 					'position' : ['center', 100]
 				},
@@ -181,6 +188,17 @@ gfx.editor = {
 		};
 		gfx.windowOption.addons.buttons[T.BUTTONS.ADDON_ADD_OK] = gfx.editor.addAddon;
 
+		if (window.postMessage) {
+			window.addEventListener(
+				'message',
+				function (e) {
+					$('#info_forum').val(e.data);
+					$('#forum_auth_iframe').css('display', null).empty();
+				},
+				false
+			);
+		}
+		
 		$(window).bind(
 			'scroll',
 			function (e) {

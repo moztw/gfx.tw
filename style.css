@@ -645,6 +645,15 @@ span.title-empty {
 	font-family: monospace;
 }
 
+#info_form #forum_auth_iframe {
+	display: none;
+}
+#info_form #forum_auth_iframe iframe {
+	border: none;
+	height: 1.3em; width: 100%;
+	overflow: hidden;
+}
+
 #info_form .form-desc {
 	display: block;
 	width: 75%;
