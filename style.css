@@ -1,5 +1,4 @@
 @charset "UTF-8";
-@import url('http://ui.jquery.com/latest/themes/flora/flora.dialog.css');
 
 html {
 	overflow: auto;
@@ -582,6 +581,10 @@ span.title-empty {
 	display: block;
 	margin: 0; padding: 0.5em;
 	overflow: auto;
+}
+
+#window_login label {
+	font-weight: bold;
 }
 
 #window_avatar .window_content {
