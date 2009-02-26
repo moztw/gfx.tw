@@ -72,6 +72,7 @@ gfx.editor = {
 				return false;
 			},
 			'#forum_auth' : function () {
+				$('#info_forum').val('');
 				$('#forum_auth_iframe')
 					.css('display', 'block')
 					.empty()
@@ -170,7 +171,7 @@ gfx.editor = {
 					'width' : 600,
 					'height': 400,
 					'buttons' : {},
-					'position' : ['center', 100]
+					'position' : ['center', 120]
 				},
 				'addons' : {
 					'width' : 800,
