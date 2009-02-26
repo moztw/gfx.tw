@@ -63,7 +63,7 @@ gfx.editor = {
 				gfx.editor.addonChanged = true;
 				return false;
 			},
-			'#userinfo button' : function () {
+			'#userinfo button, #change-email' : function () {
 				gfx.editor.infoChanged = true;
 				gfx.openWindow('info');
 			},

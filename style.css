@@ -597,12 +597,16 @@ span.title-empty {
 }
 #window_avatar .avatar_selection .avatar_icon {
 	height: 65px; width: 65px;
-	margin: 0.5em auto;
+	margin: 1em auto;
 	cursor: pointer;
 }
 
 #window_avatar .avatar_selection #avatar_spfupload {
 	background: transparent url('images/keyhole_edit.gif') center center no-repeat;
+}
+
+#window_avatar p {
+	margin: 0;
 }
 
 #window_progress {
