@@ -34,7 +34,11 @@ class Auth extends Controller {
 		$response = $this->openid->getResponse();
 		switch ($response->status) {
 			case Auth_OpenID_CANCEL:
+				$this->session->set_flashdata('message', 'highlight:info:' . $this->lang->line('gfx_message_auth_login_canceled'));
+				header('Location: ' . base_url());
+				break;
 			case Auth_OpenID_FAILURE:
+				$this->session->set_flashdata('message', 'error:alert:' . $this->lang->line('gfx_message_auth_login_failed'));
 				header('Location: ' . base_url());
 				break;
 			case Auth_OpenID_SUCCESS:
