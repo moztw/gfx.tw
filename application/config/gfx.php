@@ -8,12 +8,26 @@ $config['gfx_site_wide_message'] = array(
 		'message' => '這是個預演(staging)站！請在試玩之後，提供畫面與程式操作互動的意見，謝謝！'
 	)
 );
+/* This token is used to generate the md5 hash to be send back by POST requests so we can check it's origin.
+Change this on a live site will disable all forms; user would have to reload to get the new hash */
 $config['gfx_token'] = '--secret-token-good-day-fx';
+/* Remember to change gfxcode.php on your phpBB installation.
+Change this token does not affect forum id and username that already in the database */
 $config['gfx_forum_auth_token'] = '--secret-md5-string hash blah kkk';
+/* This is the download url that download controller redirect users to.
+Usually this goes to Mozilla load balancing bouncer (i.e. download.mozilla.com)
+"os" variable will append to the end
+Thanks to bug 398366, do remember to change the version every time new version comes out */
 $config['gfx_downloadurl'] = 'http://download.mozilla.org/?product=firefox-3.0.6&lang=zh-TW&os=';
-$config['gfx_downloadfallback'] = 'http://www.mozilla.com/firefox/all.html';
+/* Where user will be redirect to if Javascript and User-agent both failed to detect os */
+/* TBD: instead redirect to another webpage, show up a dialog and ask for the os from user? */
+$config['gfx_downloadfallback'] = 'http://www.moztw.org/firefox/';
+/* AMO url where addon description, title, and xpi address can be fetched. Amo ID will be append. */
 $config['gfx_amo_url'] = 'https://addons.mozilla.org/zh-TW/firefox/addon/';
-$config['gfx_home_user'] = 'foxmosa'; # this is used to count downloads from homepage
+/* So far this config is only used to count download clicks from home page. */
+$config['gfx_home_user'] = 'foxmosa';
+/* Bad names that user should not use as their gfx url.
+Should include all controller and reserve url for future functions */
 $config['gfx_badname'] = array(
 	'editor', 
 	'userpage', 
@@ -41,4 +55,6 @@ $config['gfx_badname'] = array(
 	'system',
 	'images'
 );
-?>
+
+/* End of file gfx.php */
+/* Location: .applications/config/gfx.php */ 
