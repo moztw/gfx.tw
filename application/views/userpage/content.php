@@ -90,7 +90,7 @@ function addon($addon) {
 		<p class="install"><input type="checkbox" value="<?php print htmlspecialchars($xpi_url); ?>" id="addon-install-<?php print $id ?>" /><label for="addon-install-<?php print $id ?>">列入安裝清單</label></p>
 <?php
 	} else { ?>
-		<p class="install"><input type="checkbox" id="addon-install-<?php print $id ?>" disabled="disabled" /><label for="addon-install-<?php print $id ?>">請至附加元件網站安裝</label></p>
+		<p class="install disabled"><input type="checkbox" id="addon-install-<?php print $id ?>" disabled="disabled" /><label for="addon-install-<?php print $id ?>">請至附加元件網站安裝</label></p>
 <?php 
 	}
 ?>
