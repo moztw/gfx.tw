@@ -542,6 +542,10 @@ span.title-empty {
 	display: none;
 }
 
+.addon .disabled {
+	color: #666666;
+}
+
 .addon .desc {
 	display: none;
 }
