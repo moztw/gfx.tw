@@ -4,17 +4,19 @@ class GFX_Parser extends CI_Parser {
 	function page($data = array(), $session_id = false, $user = array()) {
 		$CI =& get_instance();
 
+		$CI->load->config('gfx');
+
 		//If some of the value is missing in $data
+		if (!isset($data['messages'])) {
+			$data['messages'] = array();
+		}
+		$data['messages'] = array_merge(
+			$CI->config->item('gfx_site_wide_message'),
+			$data['messages']
+		);
 		$data = array_merge(
 			array(
 				'meta' => '',
-				'messages' => array(
-		/*			array(
-						'type' => 'error',
-						'icon' => 'alert',
-						'message' => 'Hello World!'
-					) */
-				),
 				'content' => '<p>Error: No Content.</p>',
 				'db' => ''
 			),

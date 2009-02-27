@@ -1,5 +1,13 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
+/* Change this config item to empty array if you don't need site wide message */
+$config['gfx_site_wide_message'] = array(
+	array(
+		'type' => 'highlight',
+		'icon' => 'comment',
+		'message' => '這是個預演(staging)站！請在試玩之後，提供畫面與程式操作互動的意見，謝謝！'
+	)
+);
 $config['gfx_token'] = '--secret-token-good-day-fx';
 $config['gfx_forum_auth_token'] = '--secret-md5-string hash blah kkk';
 $config['gfx_downloadurl'] = 'http://download.mozilla.org/?product=firefox-3.0.6&lang=zh-TW&os=';
