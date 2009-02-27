@@ -61,6 +61,7 @@ class Editor extends Controller {
 		$this->parser->page($data, $this->session->userdata('id'), $user->row_array());
 	}
 	function save() {
+		$this->load->config('gfx');
 		if (!$this->session->userdata('id')) {
 			$this->json_error('Not Logged In.', 'EDITOR_NOT_LOGGED_IN');
 		}
@@ -70,7 +71,7 @@ class Editor extends Controller {
 		if ($this->input->post('title') === false) {
 			$this->json_error('No Title Provided', 'EDITOR_SAVE_NO_TITLE');
 		}
-		if ($this->input->post('token') !== md5($this->session->userdata('id') . '--secret-token-good-day-fx')) {
+		if ($this->input->post('token') !== md5($this->session->userdata('id') . $this->config->item('gfx_token'))) {
 			$this->json_error('Wrong Token', 'EDITOR_SAVE_ERROR_TOKEN');
 		}
 		$data = array(
@@ -119,7 +120,7 @@ class Editor extends Controller {
 		if ($this->input->post('bio') !== false) $data['bio'] = $this->input->post('bio');
 		if ($this->input->post('forum') !== false && $this->input->post('forum') !== '') {
 			$F = explode('::', $this->input->post('forum'), 3);
-			if (count($F) === 3 && $F[0] === substr(md5($F[1] . $F[2] . '--secret-md5-string hash blah kkk'), 16)) {
+			if (count($F) === 3 && $F[0] === substr(md5($F[1] . $F[2] . $this->config->item('gfx_forum_auth_token')), 16)) {
 				$data['forum_id'] = $F[1];
 				$data['forum_username'] = $F[2];
 			} else {

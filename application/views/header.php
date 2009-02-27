@@ -2,6 +2,7 @@
 		<p id="header_top_link"><a href="<?php print base_url() ?>" title="回首頁">抓火狐</a></p>
 <?php
 if (isset($id)) {
+	$this->load->config('gfx');
 ?>
 		<p id="header_user_functions">Hi, <span id="header_username"><?php
 	if ($title !== '') print htmlspecialchars($title);
@@ -18,7 +19,7 @@ if (isset($id)) {
 )</p>
 	</div>
 	<form id="logout_form" action="<?php print site_url('auth/logout'); ?>" method="post">
-		<input type="hidden" id="token" name="token" value="<?php print md5($id . '--secret-token-good-day-fx') ?>" />
+		<input type="hidden" id="token" name="token" value="<?php print md5($id . $this->config->item('gfx_token')) ?>" />
 		<p><input type="submit" value="登出" /></p>
 	</form>
 <?php } else { ?>

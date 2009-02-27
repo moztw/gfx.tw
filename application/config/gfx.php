@@ -1,5 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
+$config['gfx_token'] = '--secret-token-good-day-fx';
+$config['gfx_forum_auth_token'] = '--secret-md5-string hash blah kkk';
 $config['gfx_downloadurl'] = 'http://download.mozilla.org/?product=firefox-3.0.6&lang=zh-TW&os=';
 $config['gfx_downloadfallback'] = 'http://www.mozilla.com/firefox/all.html';
 $config['gfx_amo_url'] = 'https://addons.mozilla.org/zh-TW/firefox/addon/';

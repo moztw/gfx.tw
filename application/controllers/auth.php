@@ -113,9 +113,10 @@ class Auth extends Controller {
 <?php
 	}
 	function logout() {
+		$this->load->config('gfx');
 		if ($this->input->post('session_id') === $this->session->userdata('session_id')) {
 			$this->session->unset_userdata('id');
-		} elseif ($this->input->post('token') === md5($this->session->userdata('id') . '--secret-token-good-day-fx')) {
+		} elseif ($this->input->post('token') === md5($this->session->userdata('id') . $this->config->item('gfx_token'))) {
 			$this->session->unset_userdata('id');
 		}
 		$this->session->set_flashdata('message', 'highlight:info:' . $this->lang->line('gfx_message_auth_logout'));
