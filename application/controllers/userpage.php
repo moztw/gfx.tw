@@ -74,8 +74,8 @@ class Userpage extends Controller {
 			}
 			unset($groups, $group);
 			$this->load->_ci_cached_vars = array(); //Clean up cached vars
-			$data['meta'] = $this->load->view('userpage/meta.php', $user->row_array(), true);
-			$data['content'] = $this->load->view('userpage/content.php', array_merge($user->row_array(), array('features' => $F, 'groups' => $G, 'addons' => $A)), true);
+			$data['meta'] = $this->load->view($this->config->item('language') . '/userpage/meta.php', $user->row_array(), true);
+			$data['content'] = $this->load->view($this->config->item('language') . '/userpage/content.php', array_merge($user->row_array(), array('features' => $F, 'groups' => $G, 'addons' => $A)), true);
 			$this->cache->save($user->row()->name, $data, 'userpage', 60);
 
 			$data['db'] = 'content ';

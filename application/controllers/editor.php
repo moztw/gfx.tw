@@ -52,8 +52,8 @@ class Editor extends Controller {
 		unset($groups, $group);
 
 		$data = array(
-			'meta' => $this->load->view('editor/meta.php', $user->row_array(), true),
-			'content' => $this->load->view('editor/content.php', array_merge($user->row_array(), array('allfeatures' => $F, 'allgroups' => $G, 'addons' => $A)), true),
+			'meta' => $this->load->view($this->config->item('language') . '/editor/meta.php', $user->row_array(), true),
+			'content' => $this->load->view($this->config->item('language') . '/editor/content.php', array_merge($user->row_array(), array('allfeatures' => $F, 'allgroups' => $G, 'addons' => $A)), true),
 			'db' => 'content '
 		);
 
@@ -217,7 +217,7 @@ class Editor extends Controller {
 			file_put_contents(
 				$d . 'featurecard.html',
 				$this->load->view(
-					'userstickers/featurecard.php',
+					$this->config->item('language') . '/userstickers/featurecard.php',
 					array(
 						'name' => $this->input->post('name'),
 						'title' => $this->input->post('title'),

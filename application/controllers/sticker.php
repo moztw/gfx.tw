@@ -24,8 +24,8 @@ class Sticker extends Controller {
 			exit();
 		}
 		$data = array(
-			'meta' => $this->load->view('sticker/meta.php', $user->row_array(), true),
-			'content' => $this->load->view('sticker/content.php', $user->row_array(), true),
+			'meta' => $this->load->view($this->config->item('language') . '/sticker/meta.php', $user->row_array(), true),
+			'content' => $this->load->view($this->config->item('language') . '/sticker/content.php', $user->row_array(), true),
 			'db' => 'content '
 		);
 		$this->load->library('parser');

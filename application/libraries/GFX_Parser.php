@@ -45,12 +45,12 @@ class GFX_Parser extends CI_Parser {
 			}
 			$data['db'] .= 'header ';
 			$CI->load->_ci_cached_vars = array(); //Clean up cached vars
-			$data['header'] = $CI->load->view('header.php', $user, true);
+			$data['header'] = $CI->load->view($CI->config->item('language') . '/header.php', $user, true);
 			$CI->cache->save($session_id, $data['header'], 'header', 60);
 		}
 
 		//Print out the entire page
-		$this->parse('page_template', $data);
+		$this->parse($CI->config->item('language') . '/page_template', $data);
 	}
 }
 

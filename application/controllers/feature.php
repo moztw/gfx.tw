@@ -32,8 +32,8 @@ class Feature extends Controller {
 				show_404();
 			}
 			$data = array(
-				'meta' => $this->load->view('feature/meta.php', $feature->row_array(), true),
-				'content' => $body = $this->load->view('feature/content.php', $feature->row_array(), true)
+				'meta' => $this->load->view($this->config->item('language') . '/feature/meta.php', $feature->row_array(), true),
+				'content' => $body = $this->load->view($this->config->item('language') . '/feature/content.php', $feature->row_array(), true)
 			);
 			$this->cache->save($feature->row()->name, $data, 'feature', 60);
 			$data['db'] = 'content ';

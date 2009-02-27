@@ -30,8 +30,8 @@ class About extends Controller {
 				show_404();
 			}
 			$data = array(
-				'meta' => $this->load->view('about/meta.php', $about->row_array(), true),
-				'content' => $body = $this->load->view('about/content.php', $about->row_array(), true)
+				'meta' => $this->load->view($this->config->item('language') . '/about/meta.php', $about->row_array(), true),
+				'content' => $body = $this->load->view($this->config->item('language') . '/about/content.php', $about->row_array(), true)
 			);
 			$this->cache->save($about->row()->name, $data, 'about', 60);
 			$data['db'] = 'content ';

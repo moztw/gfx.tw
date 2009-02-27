@@ -15,7 +15,7 @@ ft_min_word_len =1
 
 Install:
 1. Check out code from svn
-2. Config base path at application/config/config.php and .htaccess
+2. Config base path at application/config/config.php and .htaccess, and various config at application/config/gfx.php
 3. Config db at application/config/database.php
 4. Create database and table structures by importing gfx.sql
 5. Create inital user at table `users`, feature selections at `features` and group selections `groups`
@@ -24,6 +24,19 @@ Install:
 On Production Site:
 1. Change $route['scaffolding_trigger']  to empty string in application/config/routes.php
 2. Change error_reporting(E_ALL) to error_reporting(E_ERROR) in ./index.php
+
+Localisation:
+
+To localize this website,
+1. Create new directory for your locale in application/languages/, system/languages/, application/views/ and translating all files
+   CodeIginter will spit error if any of the file is missing.
+   you might want to copy system/languages/english if you don't want to translate them; they don't really shows often.
+2. $cfg['language'] change application/config/config.php to your language.
+3. Some of the paramaters in application/config/gfx.php are locale-related. Do remember to change them.
+4. You might want to tweak style.css and some images, especially if the locale is RTL.
+Note that localisation only affects appearence, not dynamatic content;
+it's not pratical to preapre concentrate all locale to a huge table, nor possible to fetch amo content of every locale.
+(this means it's safe to delete all other locale files if you don't need them)
 
 Known Issue:
 If your protect your setup with HTTP password (which may be seted in .htaccess),
