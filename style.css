@@ -102,6 +102,7 @@ div.message {
 	margin: 0.3em 0;
 	font-size: 0.82em;
 	font-weight: bold;
+	width: 100%;
 }
 div.message div {
 	padding: 0 0.7em;

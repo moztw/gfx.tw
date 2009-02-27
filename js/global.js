@@ -2,7 +2,7 @@ var gfx = {
 	'bind' : {
 		'click' : {
 			'div.message div p a.ui-icon-close' : function () {
-				$(this).parents('.message').remove();
+				$(this).parents('.message').slideUp(500);
 				return false;
 			},
 			'#link_login' : function () {
