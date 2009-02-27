@@ -78,7 +78,7 @@ class Openid{
     function _set_message($error, $msg, $val = '', $sub = '%s')
     {
       $CI =& get_instance();
-        $CI->lang->load('openid', 'english');
+        $CI->lang->load('openid', $CI->config->item('language'));
         echo str_replace($sub, $val, $CI->lang->line($msg));
         
         if ($error)
