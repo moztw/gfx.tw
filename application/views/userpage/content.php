@@ -72,9 +72,9 @@ foreach ($features as $feature) {
 	<div id="groups-title">
 		<h2><?php print htmlspecialchars($title) ?>的火狐屬性</h2>
 		<p>火狐帶有強大的擴充功能....（descriptive text on addons for new- and non-fx users）</p>
-		<p id="groups-show-detail"><input type="checkbox" id="groups-show-detail-box" /> <label for="groups-show-detail-box">顯示細節與快速安裝</label></p>
+		<p id="groups-show-detail"><input type="checkbox" id="groups-show-detail-box" checked="checked" /> <label for="groups-show-detail-box">顯示套件說明</label></p>
 	</div>
-	<div id="groups">
+	<div id="groups" class="detailed">
 <?php
 /* put it into a function scope */
 function addon($addon) {
@@ -90,7 +90,7 @@ function addon($addon) {
 		<p class="install"><input type="checkbox" value="<?php print htmlspecialchars($xpi_url); ?>" id="addon-install-<?php print $id ?>" /><label for="addon-install-<?php print $id ?>">列入安裝清單</label></p>
 <?php
 	} else { ?>
-		<p class="install"><input type="checkbox" id="addon-install-<?php print $id ?>" disabled="disabled" /><label title="請至套件網站安裝" for="addon-install-<?php print $id ?>">列入安裝清單</label></p>
+		<p class="install"><input type="checkbox" id="addon-install-<?php print $id ?>" disabled="disabled" /><label for="addon-install-<?php print $id ?>">請至附加元件網站安裝</label></p>
 <?php 
 	}
 ?>

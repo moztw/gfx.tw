@@ -154,7 +154,7 @@ function addon($addon) {
 	elseif (!$url && !$amo_id) return;
 ?>
 		<div class="addon" id="a_<?php print $id ?>">
-			<p class="del-addon" title="刪除">刪除</p>
+			<p class="del-addon ui-icon ui-icon-close" title="刪除">刪除</p>
 			<p><a href="<?php print htmlspecialchars($url); ?>"><img src="<? print htmlspecialchars($icon_url) ?>" alt="" /><span><?php print htmlspecialchars($title); ?></span></a></p>
 		</div>
 <?php
@@ -167,7 +167,7 @@ function group($group, $addons) {
 			<div class="group-title<?php print (isset($user_id))?'':' not-selected'; ?>" id="g_<?php print $id ?>">
 				<input type="checkbox" <?php print (isset($user_id))?'checked="checked"':''; ?>/>
 				<h3><?php print htmlspecialchars($title) ?></h3>
-				<p class="group-add-addon"><a href="#">新增元件</a></p>
+				<p class="group-add-addon"><a href="#" class="ui-icon ui-icon-circle-plus" title="在此屬性下新增附加元件">新增元件</a></p>
 				<p><?php print htmlspecialchars($description) ?></p>
 			</div>
 			<div class="group-addons">

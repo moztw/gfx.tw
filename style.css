@@ -435,8 +435,9 @@ span.title-empty {
 	margin: 0; padding: 0;
 }
 
-#groups .group .group-add-addon {
-	float: right;
+#groups .group p.group-add-addon {
+	float: right; 
+	margin: 1px;
 }
 
 #groups .group .group-addons {
@@ -447,10 +448,6 @@ span.title-empty {
 }
 
 #groups-install {
-	display: none;
-}
-
-#groups-install.show {
 	display: block;
 	margin: 1em;
 	padding: 0.5em;
@@ -476,14 +473,13 @@ span.title-empty {
 }
 
 #addon_query_result {
-	height: 300px; overflow: auto;
+	height: 280px; overflow: auto;
 	border: 2px solid #cccccc;
 	background-color: #ffffff;
 	-moz-border-radius: 6px;
 }
 .addon {
 	margin: 1px 0;
-	float: left; width: 185px; height: 70px;
 	background-color: #ffffff;
 	border: 2px solid #ccffcc;
 	-moz-border-radius: 6px;
@@ -509,39 +505,45 @@ span.title-empty {
 }
 
 .addon img {
-	display: block; margin: 3px 76px;
+	display: block; float: left; margin: 3px 10px;
+	width: 24px; height: 24px;
+}
+
+.detailed .addon img {
 	width: 32px; height: 32px;
 }
 
 .addon span {
-	display: block; width: 100%;
-	text-align: center;
+	display: block;
+	font-weight: bold; font-size: 1.2em;
+	text-align: left;
+	padding-left: 42px; width: auto;
+}
+
+.detailed .addon span {
+	padding-left: 50px;
+}
+
+.addon .add-addon {
+	float: right;
+	cursor: pointer;
+}
+
+.addon .del-addon {
+	float: right;
+	cursor: pointer;
+}
+
+.addon .del-addon:hover {
+	background-color: #cccccc;
 }
 
 .addon .desc, .addon .install {
 	display: none;
 }
 
-.addon .add-addon {
-	float: right;
-}
-
-.addon .del-addon {
-	float: right;
-}
-
-.detailed .addon {
-	float: none; width: auto; height: auto;
-}
-
-.detailed .addon img {
-	float: left; margin: 3px 10px;
-}
-
-.detailed span {
-	font-weight: bold; font-size: 1.2em;
-	text-align: left;
-	padding-left: 50px; width: auto;
+.addon .desc {
+	display: none;
 }
 
 .detailed .addon .desc {
@@ -549,7 +551,7 @@ span.title-empty {
 	padding-left: 50px;
 }
 
-.detailed .addon .install {
+.addon .install {
 	display: block;
 	float: right;
 	background-color: #ccffcc;

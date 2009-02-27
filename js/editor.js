@@ -59,7 +59,12 @@ gfx.editor = {
 				return false;
 			},*/
 			'.del-addon' : function () {
-				$(this).parent('.addon').remove();
+				$(this).parent('.addon').slideUp(
+					500,
+					function () {
+						$(this).remove();
+					}
+				);
 				gfx.editor.addonChanged = true;
 				return false;
 			},
@@ -648,21 +653,27 @@ gfx.editor = {
 				}
 			);
 			if ($('#a_' + d['id']).length) {
-				o.find('input').attr('disabled', 'disabled').next().attr('title', T.UI.ADDON_CANNOT_ADD_TITLE);
+				o.find('input').attr('disabled', 'disabled').next().text(T.UI.ADDON_ADD_CANT_DUP);
 			}
 		}
 		if (del) {
 			o.prepend(
 				$(document.createElement('p')).attr(
 					{
-						'class' : 'del-addon'
+						'class' : 'del-addon ui-icon ui-icon-close',
+						'title' : T.UI.ADDON_DEL
 					}
 				).text(
 					T.UI.ADDON_DEL
 				).bind(
 					'click',
 					function () {
-						$(this).parent('.addon').remove();
+						$(this).parent('.addon').slideUp(
+							500,
+							function () {
+								$(this).remove();
+							}
+						);
 						gfx.editor.addonChanged = true;
 						return false;
 					}
