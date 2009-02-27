@@ -116,6 +116,15 @@ div.message div p a.ui-icon-close:hover {
 	background-color: #d0d0d0;
 }
 
+div.message div p a {
+	color: #000000;
+	text-decoration: none;
+}
+
+div.message div p a:hover {
+	text-decoration: underline;
+}
+
 #editor_save {
 	position: relative;
 	background: transparent url('images/editor-save.gif') center top no-repeat;

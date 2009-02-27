@@ -111,6 +111,7 @@ class Editor extends Controller {
 		} else {
 			$infoChanged = false;
 		}
+		$this->session->set_userdata(array('name' => $this->input->post('name')));
 		$data = array();
 		if ($this->input->post('email') !== false) $data['email'] = $this->input->post('email');
 		if ($this->input->post('web') !== false) $data['web'] = $this->input->post('web');

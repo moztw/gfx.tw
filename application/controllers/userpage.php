@@ -80,6 +80,18 @@ class Userpage extends Controller {
 			$data['db'] = 'content ';
 		}
 
+		if ($this->session->userdata('name') && $id === $this->session->userdata('name')) {
+			$data['messages'] = array(
+				array (
+					'type' => 'highlight',
+					'icon' => 'info',
+					'message' => $this->lang->line('gfx_message_userpage_yourpage')
+				)
+			);
+		}
+		
+
+		
 		$this->load->library('parser');
 		if ($this->session->userdata('id') && isset($user) && $user->row()->id == $this->session->userdata('id')) {
 			$this->parser->page($data, $this->session->userdata('id'), $user->row_array());

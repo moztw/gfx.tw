@@ -81,6 +81,9 @@ class Auth extends Controller {
 					$this->db->insert('u2g', array('user_id' => $data['id'], 'group_id' => '2', 'order' => '2'));
 				}
 				$this->session->set_userdata(array('id' => $data['id']));
+				if (substr($data['name'], 0, 8) !== '__temp__') {
+					$this->session->set_userdata(array('name' => $data['name']));
+				}
 					/*
 						We grab anything else from database coz user might open up two session at two places
 						Also, you really can't save much thing in the cookie.
