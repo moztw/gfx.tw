@@ -1,4 +1,3 @@
-<body>
 	<div id="header">
 		<p id="header_top_link"><a href="<?php print base_url() ?>" title="回首頁">抓火狐</a></p>
 <?php
