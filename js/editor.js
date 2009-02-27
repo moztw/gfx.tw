@@ -329,13 +329,22 @@ gfx.editor = {
 				'upload_success_handler' : function (file, result) {
 					this.setButtonDisabled(false);
 					gfx.closeWindow('progress');
-					//Great, jQuery doen't have a JSON.decode function w/o HTTP request.
-					//We get this from mootools source.
-					var JSONdecode = function (string) {
-						if (!(/^[,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t]*$/).test(string.replace(/\\./g, '@').replace(/"[^"\\\n\r]*"/g, ''))) return null;
-						return eval('(' + string + ')');
+					if (JSON && JSON.parse) {
+						/* Fx 3.1 Native JSON parser */
+						try {
+							result = JSON.parse(result);
+						} catch (e) {
+							result = null;
+						}						
+					} else {
+						//Great, jQuery doen't have a JSON.decode function w/o HTTP request.
+						//We get this from mootools source.
+						var JSONdecode = function (string) {
+							if (!(/^[,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t]*$/).test(string.replace(/\\./g, '@').replace(/"[^"\\\n\r]*"/g, ''))) return null;
+							return eval('(' + string + ')');
+						}
+						result = JSONdecode(result);
 					}
-					result = JSONdecode(result);
 					if (!result) {
 						window.alert(T.AJAX_ERROR.PARSE_RESPONSE);
 					} else if (result.error) {
