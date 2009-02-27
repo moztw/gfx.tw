@@ -24,7 +24,7 @@ $config['gfx_downloadurl'] = 'http://download.mozilla.org/?product=firefox-3.0.6
 $config['gfx_downloadfallback'] = 'http://www.moztw.org/firefox/';
 /* AMO url where addon description, title, and xpi address can be fetched. Amo ID will be append. */
 $config['gfx_amo_url'] = 'https://addons.mozilla.org/zh-TW/firefox/addon/';
-/* So far this config is only used to count download clicks from home page. */
+/* The user should show on the home page. */
 $config['gfx_home_user'] = 'foxmosa';
 /* Bad names that user should not use as their gfx url.
 Should include all controller and reserve url for future functions */

@@ -6,7 +6,8 @@ class Userpage extends Controller {
 		$this->load->scaffolding('users');
 	}
 	function index() {
-		$this->view('foxmosa');
+		$this->load->config('gfx');
+		$this->view($this->config->item('gfx_home_user'));
 	}
 	function view($id) {
 		/* xrds doc request, usually done by OpenID 2.0 op who checks "Relay Party" */
