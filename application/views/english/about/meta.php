@@ -1,0 +1,1 @@
+	<title>gfx :: <?php print htmlspecialchars($title) ?></title>
