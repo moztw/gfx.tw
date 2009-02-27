@@ -3,7 +3,6 @@
 class Auth extends Controller {
 	function Auth() {
 		parent::Controller();
-		$this->lang->load('openid', 'english');
 		$this->load->library('openid');
 	}
 	function index() {
