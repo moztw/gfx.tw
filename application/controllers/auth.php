@@ -11,7 +11,6 @@ class Auth extends Controller {
 	}
 	function login() {
 		if (!$this->input->post('openid-identifier')) {
-			//$this->session->set_flashdata('error', 'no post data');
 			header('Location: ' . base_url());
 			exit();
 		}
@@ -88,6 +87,7 @@ class Auth extends Controller {
 						Also, you really can't save much thing in the cookie.
 					 */
 					 //TBD: hide user id in cookie (if we don't want ppl to know number of users on site)
+				$this->session->set_flashdata('message', 'highlight:info:' . $this->lang->line('gfx_message_auth_login'));
 				header('Location: ' . site_url('editor'));
 		}
 	}
@@ -108,13 +108,11 @@ class Auth extends Controller {
 	}
 	function logout() {
 		if ($this->input->post('session_id') === $this->session->userdata('session_id')) {
-			header('X-Session: destroyed.');
-			$this->session->sess_destroy();
+			$this->session->unset_userdata('id');
 		} elseif ($this->input->post('token') === md5($this->session->userdata('id') . '--secret-token-good-day-fx')) {
-			header('X-Session: destroyed.');
-			$this->session->sess_destroy();
+			$this->session->unset_userdata('id');
 		}
-		
+		$this->session->set_flashdata('message', 'highlight:info:' . $this->lang->line('gfx_message_auth_logout'));
 		header('Location: ' . base_url());
 	}
 }

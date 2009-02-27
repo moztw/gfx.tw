@@ -98,6 +98,24 @@ input#openid-identifier {
 	display: none;
 }
 
+div.message {
+	margin: 0.3em 0;
+	font-size: 0.82em;
+	font-weight: bold;
+}
+div.message div {
+	padding: 0 0.7em;
+}
+div.message div p span.ui-icon {
+	float: left; margin-right: 0.3em;
+}
+div.message div p a.ui-icon-close {
+	float: right; margin-left: 0.3em;
+}
+div.message div p a.ui-icon-close:hover {
+	background-color: #d0d0d0;
+}
+
 #editor_save {
 	position: relative;
 	background: transparent url('images/editor-save.gif') center top no-repeat;

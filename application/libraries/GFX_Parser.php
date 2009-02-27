@@ -8,11 +8,29 @@ class GFX_Parser extends CI_Parser {
 		$data = array_merge(
 			array(
 				'meta' => '',
+				'messages' => array(
+		/*			array(
+						'type' => 'error',
+						'icon' => 'alert',
+						'message' => 'Hello World!'
+					) */
+				),
 				'content' => '<p>Error: No Content.</p>',
 				'db' => ''
 			),
 			$data
 		);
+		
+		//Get message from flashdata
+		$message = $CI->session->flashdata('message');
+		if ($message) {
+			$message = explode(':', $message ,3);
+			$data['messages'][] = array(
+				'type' => $message[0], 
+				'icon' => $message[1],
+				'message' => $message[2]
+			);
+		}
 
 		//Prepare header
 		$CI->load->library('cache');

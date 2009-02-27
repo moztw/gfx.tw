@@ -8,6 +8,7 @@ class Editor extends Controller {
 	}
 	function index() {
 		if (!$this->session->userdata('id')) {
+			$this->session->set_flashdata('message', 'error:alert:' . $this->lang->line('gfx_message_editor_notlogin'));
 			header('Location: ' . base_url());
 			exit();
 		}

@@ -16,6 +16,14 @@
 </head>
 <body>
 {header}
+{messages}
+<div class="ui-widget message">
+	<div class="ui-state-{type} ui-corner-all"> 
+		<p><a href="#" class="ui-icon ui-icon-close"></a><span class="ui-icon ui-icon-{icon}"></span>
+{message}</p>
+	</div>
+</div>
+{/messages}
 {content}
 	<div id="footer">
 		<p>版權所有 &copy; gfx.tw | <a href="http://stage.gfx.tw/about">關於我們</a> | <a href="http://stage.gfx.tw/about/legal">使用條款</a> | <a href="http://www.moztw.org/">MozTW，台灣 Mozilla 社群</a> <img src="http://www.moztw.org/images/moztw_80x15.png" alt="MozTW" /></p>
