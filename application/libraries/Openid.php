@@ -79,7 +79,8 @@ class Openid{
     {
       $CI =& get_instance();
         $CI->lang->load('openid');
-		$CI->session->set_flashdata('message', 'error:alert:' . str_replace($sub, $val, $CI->lang->line($msg)));
+		$CI->session->set_flashdata('message', 'error:alert:' . 
+			htmlspecialchars(str_replace($sub, $val, $CI->lang->line($msg))));
 		header('Location: ' . base_url());
         if ($error)
         {
