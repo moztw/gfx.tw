@@ -11,7 +11,7 @@ class Userpage extends Controller {
 	}
 	function view($id) {
 		/* xrds doc request, usually done by OpenID 2.0 op who checks "Relay Party" */
-		if (strpos($_SERVER['HTTP_ACCEPT'], 'application/xrds+xml') !== false) {
+		if (isset($_SERVER['HTTP_ACCEPT']) && strpos($_SERVER['HTTP_ACCEPT'], 'application/xrds+xml') !== false) {
 			header('X-XRDS-Location: ' . site_url('auth/xrds'));
 			header('Content-Type: text/plain');
 			print 'You should find the location of xrds doc in the header. I could place a <meta> tag here but I am lazy and you are dumb.';
