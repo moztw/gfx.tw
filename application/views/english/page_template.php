@@ -10,7 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="<?php print site_url('style/ui.all.css') ?>" />
 	<script type="text/javascript" src="<?php print site_url('js/jquery-1.3.1.min.js') ?>"></script>
 	<script type="text/javascript" src="<?php print site_url('js/jquery-ui-personalized-1.6.min.js') ?>"></script>
-	<script type="text/javascript" src="<?php print site_url('js/' . $this->config->item('language') . '-text.js') ?>" charset="UTF-8"></script>
+	<script type="text/javascript" src="<?php print site_url('js/text-en.js') ?>" charset="UTF-8"></script>
 	<script type="text/javascript" src="<?php print site_url('js/global.js') ?>" charset="UTF-8"></script>
 {meta}
 </head>
