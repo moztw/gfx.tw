@@ -6,8 +6,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-TW" lang="zh-TW">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	<link rel="stylesheet" type="text/css" href="<?php print site_url('style.css') ?>" />
+	<link rel="stylesheet" type="text/css" href="<?php print site_url('style/global.css') ?>" />
 	<link rel="stylesheet" type="text/css" href="<?php print site_url('style/ui.all.css') ?>" />
+	<link rel="stylesheet" type="text/css" href="<?php print site_url('style/language-zh-TW.css') ?>" />
 	<script type="text/javascript" src="<?php print site_url('js/jquery-1.3.1.min.js') ?>"></script>
 	<script type="text/javascript" src="<?php print site_url('js/jquery-ui-personalized-1.6.min.js') ?>"></script>
 	<script type="text/javascript" src="<?php print site_url('js/text-zh-TW.js') ?>" charset="UTF-8"></script>

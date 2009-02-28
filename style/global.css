@@ -7,7 +7,6 @@ html {
 body {
 	width: 900px;
 	margin: 0 auto; padding: 0;
-	font: 0.92em '文泉驛正黑','微軟正黑體', sans-serif;
 }
 
 img {
@@ -15,7 +14,6 @@ img {
 }
 
 input, select, textarea, button, option, optgroup {
-	font: 1em '文泉驛正黑','微軟正黑體', sans-serif;
 	vertical-align: baseline;
 }
 
@@ -27,7 +25,7 @@ optgroup {
 
 #header {
 	margin: 0 0 10px 0; padding: 0;
-	background: transparent url('images/header.jpg') center bottom no-repeat;
+	background: transparent url('../images/header.jpg') center bottom no-repeat;
 	height: 2.5em;
 	color: #cccccc;
 }
@@ -51,14 +49,9 @@ optgroup {
 }
 
 #header #header_top_link a {
+	/* background: has moved to language-*.css */
 	display: block;
-	/* alpha or beta image style */
-	background: transparent url('images/header-title-alpha.png') center center no-repeat;
-	width: 90px; height: 25px;
 	position: relative; top: -6px;
-	/* normal style */
-/*	background: transparent url('images/header-title.png') center center no-repeat;
-	width: 54px; height: 19px; */
 	text-indent: -10000px;
 }
 
@@ -68,7 +61,7 @@ optgroup {
 
 #footer {
 	margin: 0; padding: 50px 0 10px 0;
-	background: #ffffff url('images/userpage-block-bg-bottom.jpg') center top no-repeat;
+	background: #ffffff url('../images/userpage-block-bg-bottom.jpg') center top no-repeat;
 	clear: both;
 }
 
@@ -90,7 +83,7 @@ optgroup {
 
 input#openid-identifier {
 	width: 340px;
-	background: #ffffff url('images/openid-logo-transparent.png') left center no-repeat;
+	background: #ffffff url('../images/openid-logo-transparent.png') left center no-repeat;
 	padding-left: 20px;
 }
 
@@ -128,7 +121,7 @@ div.message div p a:hover {
 
 #editor_save {
 	position: relative;
-	background: transparent url('images/editor-save.gif') center top no-repeat;
+	background: transparent url('../images/editor-save.gif') center top no-repeat;
 	margin: 10px 0 20px 0; padding: 0;
 	width: 900px; z-index: 2;
 }
@@ -139,7 +132,7 @@ div.message div p a:hover {
 
 #editor_save p {
 	position: relative; top: 10px;
-	background: transparent url('images/editor-save.gif') center bottom no-repeat;
+	background: transparent url('../images/editor-save.gif') center bottom no-repeat;
 	margin: 0; padding: 0 0.5em 10px 0.5em;
 	overflow: auto; clear: both;
 }
@@ -156,7 +149,7 @@ span.title-empty {
 }
 
 #titleblock {
-	background: transparent url('images/titleblock.png') center top no-repeat;
+	background: transparent url('../images/titleblock.png') center top no-repeat;
 	height: 308px;
 	position: relative;
 }
@@ -203,7 +196,7 @@ span.title-empty {
 }
 #titleblock #title-2 {
 	position: absolute;
-	background: transparent url('images/title-2.png') center top no-repeat;
+	background: transparent url('../images/title-2.png') center top no-repeat;
 	top: 122px; left: 268px;
 	height: 77px; width: 273px;
 	font-size: 77px; line-height: 77px; color: #ff9900;
@@ -266,26 +259,26 @@ span.title-empty {
 }
 #features {
 	width: 900px; height: 272px; margin: 0; padding: 10px 0;
-	background: transparent url('images/userpage-block-bg.jpg') center top repeat-y;
+	background: transparent url('../images/userpage-block-bg.jpg') center top repeat-y;
 }
 #features .feature {
 	float: left; width: 300px; height: 272px;
 	position: relative;
-	background: transparent url('images/feature-empty.gif') center top no-repeat;
+	background: transparent url('../images/feature-empty.gif') center top no-repeat;
 }
 #features #security {
-	background: transparent url('images/feature-lock.gif') center top no-repeat;
+	background: transparent url('../images/feature-lock.gif') center top no-repeat;
 }
 #features #personalization {
-	background: transparent url('images/feature-puzzle.gif') center top no-repeat;
+	background: transparent url('../images/feature-puzzle.gif') center top no-repeat;
 }
 #features #info {
-	background: transparent url('images/feature-star.gif') center top no-repeat;
+	background: transparent url('../images/feature-star.gif') center top no-repeat;
 }
 
 #features .ui-sortable-placeholder {
 	visibility: visible!important;
-	background: transparent url('images/feature-dragbox.gif') center top no-repeat;
+	background: transparent url('../images/feature-dragbox.gif') center top no-repeat;
 }
 
 #features .feature h2 {
@@ -309,7 +302,7 @@ span.title-empty {
 	top: 220px; left: 210px;
 	width: 61px; height: 25px;
 	font-size: 15px; text-indent: -10000px;
-	background: transparent url('images/feature-more.gif') top center no-repeat;
+	background: transparent url('../images/feature-more.gif') top center no-repeat;
 }
 
 #features .feature .link a {
@@ -320,7 +313,7 @@ span.title-empty {
 #middleblock {
 	overflow: auto;
 	clear: both;
-	background: transparent url('images/userpage-block-bg.jpg') left top repeat-y;
+	background: transparent url('../images/userpage-block-bg.jpg') left top repeat-y;
 	height: 100%; width: 860px;
 }
 
@@ -564,7 +557,7 @@ span.title-empty {
 
 #featureselection {
 	width: 820px; margin: 0 40px; padding: 0;
-	background: #ccffcc url('images/featureselection-corner-top.gif') top center no-repeat;
+	background: #ccffcc url('../images/featureselection-corner-top.gif') top center no-repeat;
 }
 #featureselection p, #featureselection ul {
 	margin: 0; padding: 0;
@@ -590,17 +583,17 @@ span.title-empty {
 	clear: both;
 	text-align: right;
 	padding: 0 10px 10px 10px;
-	background: #ccffcc url('images/featureselection-corner-bottom.gif') bottom center no-repeat;
+	background: #ccffcc url('../images/featureselection-corner-bottom.gif') bottom center no-repeat;
 }
 
 .pageblock {
-	background: transparent url('images/userpage-block-bg.jpg') center top repeat-y;
+	background: transparent url('../images/userpage-block-bg.jpg') center top repeat-y;
 	margin: 0; padding: 0 0 1.5em 0;
 }
 .pageblock h1 {
 	margin: 0 0 -273px 0; padding: 1em 90px 273px 110px;
 	height: 40px;
-	background: #ffffff url('images/userpage-block-bg-top.png') center 45px no-repeat;
+	background: #ffffff url('../images/userpage-block-bg-top.png') center 45px no-repeat;
 }
 .pageblock .content {
 	margin: 0; padding: 0 90px 0 110px;
@@ -636,7 +629,7 @@ span.title-empty {
 }
 
 #window_avatar .avatar_selection #avatar_spfupload {
-	background: transparent url('images/keyhole_edit.gif') center center no-repeat;
+	background: transparent url('../images/keyhole_edit.gif') center center no-repeat;
 }
 
 #window_avatar p {

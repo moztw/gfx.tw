@@ -10,8 +10,8 @@
 
 /* Component containers
 ----------------------------------*/
-.ui-widget { font-family: '文泉驛正黑','微軟正黑體', segoe ui, sans-serif; font-size: 1em; }
-.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: '文泉驛正黑','微軟正黑體', segoe ui, sans-serif; font-size: 1em; }
+.ui-widget { font-size: 1em; }
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-size: 1em; }
 .ui-widget-header { border: 1px solid #59584f; background: #3b3b35 url(images/ui-bg_inset-soft_22_3b3b35_1x100.png) 50% 50% repeat-x; color: #ffffff; font-weight: bold; }
 .ui-widget-header a { color: #ffffff; }
 .ui-widget-content { border: 1px solid #aaaaaa; background: #f0efea url(images/ui-bg_highlight-soft_100_f0efea_1x100.png) 50% top repeat-x; color: #222222; }

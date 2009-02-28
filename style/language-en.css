@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+body {
+	font: 0.92em arial,verdana,sans-serif;
+}
+
+input, select, textarea, button, option, optgroup {
+	font: 1em arial,verdana,sans-serif;
+}
+
+#header #header_top_link a {
+	/* alpha or beta image style */
+	background: transparent url('../images/header-title-alpha-en.png') center center no-repeat;
+	width: 90px; height: 25px;
+	/* normal style */
+/*	background: transparent url('../images/header-title-en.png') center center no-repeat;
+	width: 54px; height: 19px; */
+}
+
+.ui-widget { font-family: arial, verdana, segoe ui, sans-serif; }
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: arial, verdana, segoe ui, sans-serif; }
