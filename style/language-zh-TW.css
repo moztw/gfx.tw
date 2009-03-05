@@ -1,11 +1,23 @@
 @charset "UTF-8";
 
+body,
+input, select, textarea, button, option, optgroup,
+.ui-widget,
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
+	font-family: 
+		'蘋果儷中黑','Apple LiGothic Medium',
+		'微軟正黑體', 'Microsoft JhengHei',
+		'文泉驛正黑',
+		'Arial', 'Verdana', 'Segoe UI', '新細明體','PMingLiu',
+		sans-serif;
+}
+
 body {
-	font: 0.92em '文泉驛正黑','微軟正黑體', sans-serif;
+	font-size: 0.92em 
 }
 
 input, select, textarea, button, option, optgroup {
-	font: 1em '文泉驛正黑','微軟正黑體', sans-serif;
+	font-size: 1em
 }
 
 #header #header_top_link a {
@@ -16,6 +28,3 @@ input, select, textarea, button, option, optgroup {
 /*	background: transparent url('../images/header-title-zh-TW.png') center center no-repeat;
 	width: 54px; height: 19px; */
 }
-
-.ui-widget { font-family: '文泉驛正黑','微軟正黑體', segoe ui, sans-serif; }
-.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: '文泉驛正黑','微軟正黑體', segoe ui, sans-serif; }
