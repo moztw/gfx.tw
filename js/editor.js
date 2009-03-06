@@ -392,9 +392,11 @@ gfx.editor = {
 				dataType: 'json',
 				beforeSend : function (xhr) {
 					if (gfx.xhr) gfx.xhr.abort();
+					xhr.running = true;
 					setTimeout(
 						function () {
-							if (gfx.xhr.readyState !== 4) {
+							/* for some reason check gfx.xhr.readyState won't work */
+							if (gfx.xhr.running) {
 								gfx.openWindow('progress');
 							}
 						},
@@ -402,9 +404,11 @@ gfx.editor = {
 					);
 				},
 				complete : function (xhr, status) {
+					xhr.running = false;
 					gfx.closeWindow('progress');
 				},
 				error: function (xhr, status, error) {
+					xhr.running = false;
 					gfx.closeWindow('progress');
 					switch (status) {
 						case 'timeout':
