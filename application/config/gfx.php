@@ -11,6 +11,8 @@ $config['gfx_site_wide_message'] = array(
 /* This token is used to generate the md5 hash to be send back by POST requests so we can check it's origin.
 Change this on a live site will disable all forms; user would have to reload to get the new hash */
 $config['gfx_token'] = '--secret-token-good-day-fx';
+/* Cache time (in seconds) */
+$config['gfx_cache_time'] = 60;
 /* Remember to change gfxcode.php on your phpBB installation.
 Change this token does not affect forum id and username that already in the database */
 $config['gfx_forum_auth_token'] = '--secret-md5-string hash blah kkk';

@@ -35,7 +35,8 @@ class Feature extends Controller {
 				'meta' => $this->load->view($this->config->item('language') . '/feature/meta.php', $feature->row_array(), true),
 				'content' => $body = $this->load->view($this->config->item('language') . '/feature/content.php', $feature->row_array(), true)
 			);
-			$this->cache->save($feature->row()->name, $data, 'feature', 60);
+			$this->load->config('gfx');
+			$this->cache->save($feature->row()->name, $data, 'feature', $this->config->item('gfx_cache_time'));
 			$data['db'] = 'content ';
 		}
 		$this->load->library('parser');

@@ -33,7 +33,8 @@ class About extends Controller {
 				'meta' => $this->load->view($this->config->item('language') . '/about/meta.php', $about->row_array(), true),
 				'content' => $body = $this->load->view($this->config->item('language') . '/about/content.php', $about->row_array(), true)
 			);
-			$this->cache->save($about->row()->name, $data, 'about', 60);
+			$this->load->config('gfx');
+			$this->cache->save($about->row()->name, $data, 'about', $this->config->item('gfx_cache_time'));
 			$data['db'] = 'content ';
 		}
 		$this->load->library('parser');
