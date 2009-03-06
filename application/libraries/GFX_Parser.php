@@ -46,7 +46,7 @@ class GFX_Parser extends CI_Parser {
 			$data['db'] .= 'header ';
 			$CI->load->_ci_cached_vars = array(); //Clean up cached vars
 			$data['header'] = $CI->load->view($CI->config->item('language') . '/header.php', $user, true);
-			$CI->cache->save($session_id, $data['header'], 'header', 60);
+			$CI->cache->save($session_id, $data['header'], 'header', $CI->config->item('gfx_cache_time'));
 		}
 
 		//Print out the entire page
