@@ -16,10 +16,10 @@ $dir = site_url('/userstickers/' . dechex(intval($this->session->userdata('id'))
 			</div>
 			<div class="col">
 				<h2>Stickers</h2>
-				<p><a href="<?php print site_url($name); ?>" title="Go to my gfx personal page!"><img src="http://stage.gfx.tw/stickerimages/logo-wordmark-195x100.png" alt="Mozilla Firefox"/></a></p>
-				<textarea readonly="readonly">&lt;a href="<?php print site_url($id); ?>" title="Go to my gfx personal page!"&gt;&lt;img src="http://stage.gfx.tw/stickerimages/logo-wordmark-195x100.png" alt="Mozilla Firefox"/&gt;&lt;/a&gt;</textarea>
-				<p><a href="<?php print site_url($name); ?>" title="Go to my gfx personal page!"><img src="http://stage.gfx.tw/stickerimages/logo-wordmark-195x100.png" alt="Mozilla Firefox"/></a></p>
-				<textarea readonly="readonly">&lt;a href="<?php print site_url($id); ?>" title="Go to my gfx personal page!"&gt;&lt;img src="http://stage.gfx.tw/stickerimages/logo-wordmark-195x100.png" alt="Mozilla Firefox"/&gt;&lt;/a&gt;</textarea>
+				<p><a href="<?php print site_url($name); ?>" title="Go to my gfx personal page!"><img src="<?php print site_url('stickerimages/logo-wordmark-195x100.png'); ?>" alt="Mozilla Firefox"/></a></p>
+				<textarea readonly="readonly">&lt;a href="<?php print site_url($name); ?>" title="Go to my gfx personal page!"&gt;&lt;img src="<?php print site_url('stickerimages/logo-wordmark-195x100.png'); ?>" alt="Mozilla Firefox"/&gt;&lt;/a&gt;</textarea>
+				<p><a href="<?php print site_url($name); ?>" title="Go to my gfx personal page!"><img src="<?php print site_url('stickerimages/logo-wordmark-195x100.png'); ?>" alt="Mozilla Firefox"/></a></p>
+				<textarea readonly="readonly">&lt;a href="<?php print site_url($name); ?>" title="Go to my gfx personal page!"&gt;&lt;img src="<?php print site_url('stickerimages/logo-wordmark-195x100.png'); ?>" alt="Mozilla Firefox"/&gt;&lt;/a&gt;</textarea>
 			</div>
 			<div class="desc">
 				<h2>Usage</h2>
