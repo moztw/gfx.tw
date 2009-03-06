@@ -610,10 +610,6 @@ span.title-empty {
 	overflow: auto;
 }
 
-.ui-widget-shadow {
-	display: none;
-}
-
 #window_login label {
 	font-weight: bold;
 }

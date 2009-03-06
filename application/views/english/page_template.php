@@ -10,7 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="<?php print site_url('style/ui.all.css') ?>" />
 	<link rel="stylesheet" type="text/css" href="<?php print site_url('style/language-en.css') ?>" />
 	<script type="text/javascript" src="<?php print site_url('js/jquery-1.3.2.min.js') ?>"></script>
-	<script type="text/javascript" src="<?php print site_url('js/jquery-ui-personalized-1.6.min.js') ?>"></script>
+	<script type="text/javascript" src="<?php print site_url('js/jquery-ui-1.7.custom.min.js') ?>"></script>
 	<script type="text/javascript" src="<?php print site_url('js/text-en.js') ?>" charset="UTF-8"></script>
 	<script type="text/javascript" src="<?php print site_url('js/global.js') ?>" charset="UTF-8"></script>
 {meta}
@@ -30,6 +30,10 @@
 		<p>Copyright &copy; gfx.tw | <a href="<?php print site_url('about') ?>">About Us</a> | <a href="<?php print site_url('about/legal') ?>">Legal</a> | <a href="http://www.moztw.org/">MozTW, Mozilla Taiwan Community</a> <img src="http://www.moztw.org/images/moztw_80x15.png" alt="MozTW" /></p>
 		<p>Not affiliated with Mozilla. Firefox and the Firefox logos are trademarks of the <a href="http://www.mozilla.org/">Mozilla Fundation</a>.</p>
 	</div>
+	<script type="text/javascript" src="<?php print site_url('js/jquery-1.3.2.min.js') ?>"></script>
+	<script type="text/javascript" src="<?php print site_url('js/jquery-ui-1.7.custom.min.js') ?>"></script>
+	<script type="text/javascript" src="<?php print site_url('js/text-zh-TW.js') ?>" charset="UTF-8"></script>
+	<script type="text/javascript" src="<?php print site_url('js/global.js') ?>" charset="UTF-8"></script>
 	<!-- <?php print 'Elapsed Time: ' . $this->benchmark->elapsed_time() . ', Memory usage: ' . $this->benchmark->memory_usage(); ?>, from DB: {db} -->
 	</body>
 </html>
