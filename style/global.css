@@ -9,6 +9,12 @@ body {
 	margin: 0 auto; padding: 0;
 }
 
+body.inframe {
+	width: auto;
+	margin: 0;
+	background-color: #f0efea;
+}
+
 img {
 	border: none; vertical-align: middle;
 }

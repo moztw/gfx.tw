@@ -7,7 +7,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<link rel="stylesheet" type="text/css" href="<?php print site_url('style/global.css') ?>" />
-	<link rel="stylesheet" type="text/css" href="<?php print site_url('style/ui.all.css') ?>" />
+	<link rel="stylesheet" type="text/css" href="<?php print site_url('style/jquery-ui-1.7.custom.css') ?>" />
 	<link rel="stylesheet" type="text/css" href="<?php print site_url('style/language-zh-TW.css') ?>" />
 	<script type="text/javascript" src="<?php print site_url('js/jquery-1.3.2.min.js') ?>"></script>
 	<script type="text/javascript" src="<?php print site_url('js/jquery-ui-1.7.custom.min.js') ?>"></script>

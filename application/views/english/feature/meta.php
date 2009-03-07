@@ -1,1 +1,1 @@
-	<title>gfx :: Firefox Feature Suggestion :: <?php print htmlspecialchars($title) ?></title>
+	<title>gfx :: Firefox Feature Introduction :: <?php print htmlspecialchars($title) ?></title>

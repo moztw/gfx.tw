@@ -42,6 +42,62 @@ var gfx = {
 
 				return false;
 			},
+			'#features p.link a' : function () {
+				var resizeIfr = function (ifr, el) {
+					ifr.css(
+						{
+							width: el.width() + 'px',
+							height: el.height() + 'px'
+						}
+					);
+				}
+				$(document.createElement('div')).attr(
+					{
+						id : 'iframe-feature',
+						class : 'window'
+					}
+				).append(
+					$(document.createElement('iframe')).attr(
+						{
+							src : this.href + '/inframe'
+						}
+					).css(
+						{
+							border: 'none'
+						}
+					)
+				).dialog(
+					{
+						modal: true,
+						title: $(this).parents('.feature').find('h2').text(),
+						overlay: {
+							backgroundColor: '#000000',
+							opacity: 0.5
+						},
+						'width' : 800,
+						'height' : 500,
+						'show' : null, /* demenstion detection will fail */
+						'position' : ['center', 50],
+						'resize' : function (e, ui) {
+							resizeIfr(
+								$(ui.element).find('.ui-dialog-content iframe'),
+								$(ui.element).find('.ui-dialog-content')
+							);
+						},
+						'open' : function (e) {
+							resizeIfr(
+								$(e.target).find('iframe'),
+								$(e.target)
+							);
+						},
+						'close' : function (e, ui) {
+							$(e.target).dialog('destroy').remove();
+						}
+					}
+				);
+				
+				return false;
+			},
 			'#groups-install button' : function () {
 				if (window.InstallTrigger === undefined) {
 					alert(T.UI.EXTINSTALL_NOT_FX);

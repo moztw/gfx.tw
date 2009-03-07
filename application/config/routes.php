@@ -69,6 +69,7 @@ $route['feature'] = "feature";
 $route['feature/edit'] = "feature/create";
 $route['feature/edit/(:any)'] = "feature/edit/$1";
 $route['feature/(:any)'] = "feature/view/$1";
+$route['feature/(:any)/inframe'] = "feature/view/$1/inframe";
 $route['sticker'] = "sticker";
 $route['auth/(:any)'] = "auth/$1";
 
