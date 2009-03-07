@@ -16,16 +16,27 @@ $config['gfx_cache_time'] = 60;
 /* Remember to change gfxcode.php on your phpBB installation.
 Change this token does not affect forum id and username that already in the database */
 $config['gfx_forum_auth_token'] = '--secret-md5-string hash blah kkk';
-/* This is the download url that download controller redirect users to.
-Usually this goes to Mozilla load balancing bouncer (i.e. download.mozilla.com)
+
+/* This is the download url that download controller redirects users to.
+Usually this goes to Mozilla load balancing bouncer (i.e. download.mozilla.org)
 "os" variable will append to the end
 Thanks to bug 398366, do remember to change the version every time new version comes out */
 $config['gfx_downloadurl'] = 'http://download.mozilla.org/?product=firefox-3.0.7&lang=zh-TW&os=';
 /* Where user will be redirect to if Javascript and User-agent both failed to detect os */
 /* TBD: instead redirect to another webpage, show up a dialog and ask for the os from user? */
 $config['gfx_downloadfallback'] = 'http://www.moztw.org/firefox/';
+
 /* AMO url where addon description, title, and xpi address can be fetched. Amo ID will be append. */
 $config['gfx_amo_url'] = 'https://addons.mozilla.org/zh-TW/firefox/addon/';
+/* RegExp to fetch title (version), description, and xpi */
+$config['gfx_amo_title_regexp'] = '/<h3 class=\"name\"[^>]*><img src=\"([\w\.\/\-]+)\" class=\"addon-icon\" alt=\"\" \/>([^<]+) ([\d\.a-z]+)<\/h3>/';
+$config['gfx_amo_desc_regexp'] = '/<p class=\"desc\"[^>]*>([^<]+)(<\/p>|<br \/>)/';
+$config['gfx_amo_xpi_regexp'] = '/<a href=\"([^\"]+)\"  id=\"installTrigger/';
+/* Only re-fetch add-ons after the data is that old (seconds) */
+$config['gfx_amo_fetch_older_than_time'] = 7*24*60*60;
+/* Or it's older than a specific date stated here */
+$config['gfx_amo_fetch_older_than_date'] = strtotime('2009-03-07 10:00:00');
+
 /* The user should show on the home page. */
 $config['gfx_home_user'] = 'foxmosa';
 /* Bad names that user should not use as their gfx url.

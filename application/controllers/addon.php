@@ -28,7 +28,11 @@ class Addon extends Controller {
 		}
 		//Pick one of the addons found and send to to re-fetch if it's too old
 		$r = array_rand($A);
-		if (isset($A[$r]) && isset($A[$r]['amo_id']) && strtotime($A[$r]['fetched']) < time()-7*24*60*60) {
+		if (
+			isset($A[$r]) &&
+			isset($A[$r]['amo_id']) &&
+			strtotime($A[$r]['fetched']) < max(time()-$this->config->item('gfx_amo_fetch_older_than_time'), $this->config->item('gfx_amo_fetch_older_than_date'))
+			) {
 			$data = $this->get_amo_content($A[$r]['amo_id']);
 			if ($data) {
 				$A[$r] = array_merge(
@@ -60,7 +64,8 @@ class Addon extends Controller {
 		}
 		//Pick one of the addons found and send to to re-fetch if it's too old
 		$r = array_rand($A);
-		if (isset($A[$r]['amo_id']) || strtotime($A[$r]['fetched']) < time()-7*24*60*60) {
+		if (isset($A[$r]['amo_id']) && 
+			strtotime($A[$r]['fetched']) < max(time()-$this->config->item('gfx_amo_fetch_older_than_time'), $this->config->item('gfx_amo_fetch_older_than_date'))) {
 			$data = $this->get_amo_content($A[$r]['amo_id']);
 			if ($data) {
 				$this->db->update('addons', $data, array('id' => $A[$r]['id']));
@@ -93,7 +98,7 @@ class Addon extends Controller {
 				),
 				$data
 			);
-		} elseif (strtotime($addons->row()->fetched) < time()-7*24*60*60) {
+		} elseif (strtotime($A[$r]['fetched']) < max(time()-$this->config->item('gfx_amo_fetch_older_than_time'), $this->config->item('gfx_amo_fetch_older_than_date'))) {
 			//re-fetch data from amo every week if someone query this addon
 			$data = $this->get_amo_content($amo_id);
 			$A = $addons->row_array();
@@ -117,11 +122,11 @@ class Addon extends Controller {
 	function get_amo_content($amo_id) {
 		//TBD: connection timeout
 		$html = @file_get_contents($this->config->item('gfx_amo_url') . $amo_id);
-		if (!preg_match('/<h3 class=\"name\"[^>]*><img src=\"([\w\.\/\-]+)\" class=\"addon-icon\" alt=\"\" \/>([^<]+) ([\d\.a-z]+)<\/h3>/', $html, $M)) {
+		if (!preg_match($this->config->item('gfx_amo_title_regexp'), $html, $M)) {
 			return false;
 		}
-		preg_match('/<p class=\"desc\"[^>]*>([^<]+)(<\/p>|<br \/>)/', $html, $D);
-		preg_match('/<a href=\"([^\"]+\.xpi)\" id=\"installTrigger/', $html, $X);
+		preg_match($this->config->item('gfx_amo_desc_regexp'), $html, $D);
+		preg_match($this->config->item('gfx_amo_xpi_regexp'), $html, $X);
 		return array(
 			'title' => html_entity_decode($M[2], ENT_QUOTES, 'UTF-8'),
 			'amo_id' => $amo_id,
