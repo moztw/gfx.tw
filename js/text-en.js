@@ -14,6 +14,7 @@ var T = {
 	},
 	/* ui texts and alert, confirm messages */
 	UI: {
+		USING_IE_TO_EDIT: 'Don\'t you feel it\'s a bit ironic to edit your page with IE? Seriously, this page will break in IE so please try to use Firefox instead.',
 		EMPTY_TITLE: 'Enter your name here',
 		TITLE_PLACEHOLDER: '{your name}',
 		CONFIRM_QUIT: 'Leave this page will lost all your unsaved modifications!',

@@ -248,6 +248,35 @@ var gfx = {
 	},
 	'closeWindow' : function (id) {
 		$('#window_' + id).dialog("close");
+	},
+	'message' : function (type, icon, msg) {
+		var o = $(document.createElement('div'))
+		.addClass('ui-widget message')
+		.css('display', 'none')
+		.append(
+			$(document.createElement('div'))
+			.addClass('ui-state-' + type + ' ui-corner-all')
+			.append(
+				$(document.createElement('p'))
+				.append(
+					$(document.createElement('a'))
+					.addClass('ui-icon ui-icon-close')
+					.attr('href', '#')
+					.bind(
+						'click',
+						function () {
+							$(this).parents('.message').slideUp(500);
+							return false;
+						}
+					)
+				).append(
+					$(document.createElement('span'))
+					.addClass('ui-icon ui-icon-' + icon)
+				).append(msg)
+			)
+		);
+		$('#header').after(o);
+		o.slideDown(500);
 	}
 };
 $(document).ready(gfx.onload);

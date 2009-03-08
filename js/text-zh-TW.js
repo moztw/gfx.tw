@@ -14,6 +14,7 @@ var T = {
 	},
 	/* ui texts and alert, confirm messages */
 	UI: {
+		USING_IE_TO_EDIT: '不覺得用 IE 編輯抓火狐推薦頁有點諷刺嗎？好啦，認真說，編輯頁用 IE 應該會壞掉，所以改用 Firefox 吧。',
 		EMPTY_TITLE: '在這裡輸入暱稱',
 		TITLE_PLACEHOLDER: '{您的名字}',
 		CONFIRM_QUIT: '離開此頁會失去所有未儲存的資料！',

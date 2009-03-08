@@ -142,6 +142,10 @@ gfx.editor = {
 		}
 	},
 	'onload' : function () {
+		if ($.browser.msie) {
+			gfx.message('error', 'alert', T.UI.USING_IE_TO_EDIT);
+		}
+	
 		$.each(
 			gfx.editor.bind,
 			function(e, o) {
