@@ -12,6 +12,7 @@ Avatars and addons does upload/send to the server for processing and checking va
 but one still have to save the page in order to keep avatars s/he uploaded and addons s/he included.
 
 */
+/*global window, document, $, T, gfx, SWFUpload,  */
 
 gfx.editor = {
 	'bind' : {
@@ -43,8 +44,11 @@ gfx.editor = {
 				gfx.editor.changeAvatar('(default)', './images/keyhole.gif');
 			},
 			'#groups input' : function () {
-				if (this.checked) $(this).parent().removeClass('not-selected');
-				else $(this).parent().addClass('not-selected');
+				if (this.checked) {
+					$(this).parent().removeClass('not-selected');
+				} else {
+					$(this).parent().addClass('not-selected');
+				}
 				gfx.editor.groupChanged = true;
 			},
 			'#groups .group-add-addon a' : function () {
@@ -208,7 +212,7 @@ gfx.editor = {
 		$(window).bind(
 			'scroll',
 			function (e) {
-				offset = $(document).scrollTop();
+				var offset = $(document).scrollTop();
 				if (offset > 50) {
 					if (!$('#editor_save_placeholder').length) {
 						$('#editor_save').after(
@@ -269,13 +273,16 @@ gfx.editor = {
 		}
 		$('#groups input').each(
 			function (i) {
-				if (this.checked) $(this).parent().removeClass('not-selected');
-				else $(this).parent().addClass('not-selected');
+				if (this.checked) {
+					$(this).parent().removeClass('not-selected');
+				} else {
+					$(this).parent().addClass('not-selected');
+				}
 			}
 		);
 		gfx.editor.swfupload = new SWFUpload(
 			{
-				'upload_url': location.href + '/upload',
+				'upload_url': window.location.href + '/upload',
 				// File Upload Settings
 				file_size_limit : 1024,	// 1MB
 				file_types : '*.jpg;*.jpeg;*.gif;*.png',
@@ -292,7 +299,7 @@ gfx.editor = {
 				'file_dialog_complete_handler' : function (n, q) {
 					if (n === 1 && q === 1) {
 						this.setButtonDisabled(true);
-						setTimeout(
+						window.setTimeout(
 							function () {
 								if (gfx.editor.swfupload.getStats().in_progress !== 0) {
 									gfx.openWindow('progress');
@@ -339,11 +346,13 @@ gfx.editor = {
 					} else {
 						//Great, jQuery doen't have a JSON.decode function w/o HTTP request.
 						//We get this from mootools source.
-						var JSONdecode = function (string) {
-							if (!(/^[,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t]*$/).test(string.replace(/\\./g, '@').replace(/"[^"\\\n\r]*"/g, ''))) return null;
+						var decode = function (string) {
+							if (!(/^[,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t]*$/).test(string.replace(/\\./g, '@').replace(/"[^"\\\n\r]*"/g, ''))) {
+								return null;
+							}
 							return eval('(' + string + ')');
-						}
-						result = JSONdecode(result);
+						};
+						result = decode(result);
 					}
 					if (!result) {
 						window.alert(T.AJAX_ERROR.PARSE_RESPONSE);
@@ -391,9 +400,11 @@ gfx.editor = {
 				timeout: 20000,
 				dataType: 'json',
 				beforeSend : function (xhr) {
-					if (gfx.xhr) gfx.xhr.abort();
+					if (gfx.xhr) {
+						gfx.xhr.abort();
+					}
 					xhr.running = true;
-					setTimeout(
+					window.setTimeout(
 						function () {
 							/* for some reason check gfx.xhr.readyState won't work */
 							if (gfx.xhr.running) {
@@ -430,7 +441,9 @@ gfx.editor = {
 		);
 	},
 	'forceStop' : function () {
-		if (gfx.xhr) gfx.xhr.abort();
+		if (gfx.xhr) {
+			gfx.xhr.abort();
+		}
 		//because Flash object doesn't init before openwindow(avatar);
 		try {
 			gfx.editor.swfupload.cancelUpload();
@@ -478,7 +491,7 @@ gfx.editor = {
 					.text('More...')
 				)
 			);
-		}
+		};
 		$('.feature').each(
 			function (i) {
 				if (!$('#fs_' + this.id + ':checked').length) {
@@ -509,8 +522,8 @@ gfx.editor = {
 			'token' : $('#token').val(),
 			'title' : $('#title-name').text(),
 			'name' : $('#info_name').val() || $('#name').val()
-		}
-		if (d['title'] === '') {
+		};
+		if (d.title === '') {
 			window.alert(T.UI.NO_TITLE);
 			$('#title-name-edit input').focus();
 			return;
@@ -520,7 +533,7 @@ gfx.editor = {
 			window.alert(T.UI.NO_GROUPS);
 			return;
 		}
-		if (d['name'] === '') {
+		if (d.name === '') {
 			gfx.openWindow('almostdone');
 			$('#name').focus();
 			return;
@@ -603,27 +616,27 @@ gfx.editor = {
 			.attr(
 				{
 					'class' : 'addon',
-					'id' : 'a_' + d['id']
+					'id' : 'a_' + d.id
 				}
 			).append(
 				$(document.createElement('p'))
 				.append(
 					$(document.createElement('a'))
-					.attr('href', d['url']).append(
+					.attr('href', d.url).append(
 						$(document.createElement('img')).attr(
 							{
-								'src' : d['icon_url'] || 'images/addon_default_icon.png',
+								'src' : d.icon_url || 'images/addon_default_icon.png',
 								'alt' : ''
 							}
 						)
 					).append(
-						$(document.createElement('span')).text(d['title'])
+						$(document.createElement('span')).text(d.title)
 					)
 				)
 			.append(
 				$(document.createElement('p'))
 				.attr('class', 'desc')
-				.text(d['description'])
+				.text(d.description)
 			)
 			).bind(
 				'mousedown',
@@ -646,14 +659,14 @@ gfx.editor = {
 				).append(
 					$(document.createElement('input')).attr(
 						{
-							'id' : 'addon_add_' + d['id'],
+							'id' : 'addon_add_' + d.id,
 							'type' : 'checkbox'
 						}
 					).data('addon', d)
 				).append(
 					$(document.createElement('label')).attr(
 						{
-							'for' : 'addon_add_' + d['id']
+							'for' : 'addon_add_' + d.id
 						}
 					).text(T.UI.ADDON_ADD)
 				)
@@ -665,7 +678,7 @@ gfx.editor = {
 					return false;
 				}
 			);
-			if ($('#a_' + d['id']).length) {
+			if ($('#a_' + d.id).length) {
 				o.find('input').attr('disabled', 'disabled').next().text(T.UI.ADDON_ADD_CANT_DUP);
 			}
 		}
@@ -703,7 +716,7 @@ gfx.editor = {
 			{
 				url: './addon/query',
 				data: {
-					'q' : $('#addon_query').val().replace(/^https:\/\/addons.mozilla.org\/[\w-]{5}\/firefox\/addon\/(\d+)$/, '$1')
+					'q' : $('#addon_query').val().replace(/^https:\/\/addons.mozilla.org\/[\w\-]{5}\/firefox\/addon\/(\d+)$/, '$1')
 				},
 				success: function (result, status) {
 					if (result.error) {

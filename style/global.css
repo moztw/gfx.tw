@@ -22,6 +22,7 @@ html > body {
 body.inframe {
 	margin: 0;
 	background-color: #f0efea;
+	text-align: left;
 }
 
 html > body.inframe {
@@ -509,6 +510,7 @@ span.title-empty {
 	border: 2px solid #ccffcc;
 	-moz-border-radius: 6px;
 	overflow: hidden;
+	clear: both;
 }
 
 .group-addons .ui-sortable-placeholder {

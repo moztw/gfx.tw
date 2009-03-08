@@ -1,3 +1,5 @@
+/*global window, document, $, T */
+
 var gfx = {
 	'bind' : {
 		'click' : {
@@ -27,9 +29,11 @@ var gfx = {
 			},
 			'.download a' : function () {
 				gfx.openWindow('download');
-				var os = (/(win|mac|linux)/.exec(navigator.platform.toLowerCase()) || [null])[0];
+				var os = (/(win|mac|linux)/.exec(window.navigator.platform.toLowerCase()) || [null])[0];
 				var name = (/^\/([^\/\.\?]*)\??.*$/.exec(window.location.pathname) || [null, null])[1];
-				if (name === '') name = '(default)';
+				if (name === '') {
+					name = '(default)';
+				}
 				var dl = '/download';
 				if (os && name) {
 					dl += '?name=' + name + '&os=' + os;
@@ -50,26 +54,40 @@ var gfx = {
 							height: el.height() + 'px'
 						}
 					);
-				}
-				$(document.createElement('div')).attr(
+				};
+				$(document.createElement('div'))
+				.addClass('window').attr(
 					{
-						id : 'iframe-feature',
-						class : 'window'
+						'id' : 'iframe-feature'
 					}
 				).append(
 					$(document.createElement('iframe')).attr(
 						{
-							src : this.href + '/inframe'
+							src : this.href + '/inframe',
+							frameBorder: '0' /* IE7 */
 						}
 					).css(
 						{
 							border: 'none'
 						}
 					)
+				).append(
+					/* A div covers iframe so that mouseover can be detected when resizing
+					Won't work in IE7 coz its transparent */
+					$(document.createElement('div')).css(
+						{
+							width: '100%',
+							height: '100%',
+							position: 'absolute',
+							top: 0,
+							left: 0,
+							display: 'none'
+						}
+					)
 				).dialog(
 					{
-						modal: true,
 						title: $(this).parents('.feature').find('h2').text(),
+						modal: true,
 						overlay: {
 							backgroundColor: '#000000',
 							opacity: 0.5
@@ -78,6 +96,12 @@ var gfx = {
 						'height' : 500,
 						'show' : null, /* demenstion detection will fail */
 						'position' : ['center', 50],
+						'resizeStart' : function (e, ui) {
+							$(ui.element).find('.ui-dialog-content div').show();
+						},
+						'resizeStop' : function (e, ui) {
+							$(ui.element).find('.ui-dialog-content div').hide();
+						},
 						'resize' : function (e, ui) {
 							resizeIfr(
 								$(ui.element).find('.ui-dialog-content iframe'),
@@ -100,12 +124,12 @@ var gfx = {
 			},
 			'#groups-install button' : function () {
 				if (window.InstallTrigger === undefined) {
-					alert(T.UI.EXTINSTALL_NOT_FX);
+					window.alert(T.UI.EXTINSTALL_NOT_FX);
 					return;
 				}
 				var o = $('#groups .install input:checked').not('[disabled]');
 				if (!o.length) {
-					alert(T.UI.EXTINSTALL_CHECKED_NOTHING);
+					window.alert(T.UI.EXTINSTALL_CHECKED_NOTHING);
 					return;
 				}
 				var l = {};
@@ -119,7 +143,7 @@ var gfx = {
 					}
 				);
 				gfx.openWindow('extinstall');
-				InstallTrigger.install(l);
+				window.InstallTrigger.install(l);
 			}
 		},
 		'change' : {
@@ -148,7 +172,9 @@ var gfx = {
 		}
 	},
 	'onload' : function () {
-		if (gfx.editor) gfx.editor.onload();
+		if (gfx.editor) {
+			gfx.editor.onload();
+		}
 		if ($('#groups-show-detail-box:checked').length) {
 			$('#groups').addClass('detailed');
 		} else {
@@ -157,22 +183,43 @@ var gfx = {
 
 		gfx.windowOption.download.buttons[T.BUTTONS.DOWNLOAD_OK] = function () {
 			gfx.closeWindow('download');
-		}
+		};
 		gfx.windowOption.extinstall.buttons[T.BUTTONS.EXTINSTALL_OK] = function () {
 			gfx.closeWindow('extinstall');
-		}
+		};
 		
 		$('.window').each(
 			function () {
 				var option = {
 					autoOpen: false,
-					modal: true,
-					overlay: {
-						backgroundColor: '#000000',
-						opacity: 0.5
-					},
 					position: ['center', 100]
 				};
+				if ($.browser.msie && parseInt($.browser.version) <= 6) {
+					/* Is IE6, some fix for jQuery UI dialog
+					Not prefect but works (sigh...) */
+					option.open = function (e) {
+						$(e.target).dialog('option', 'height', option.height + 20);
+						if ($(e.target).parent().find('.ui-dialog-buttonpane').length) {
+							$(e.target).height(
+								$(e.target).parent().innerHeight()
+								- $(e.target).parent().find('.ui-dialog-titlebar').outerHeight({'margin':true})
+								- $(e.target).parent().find('.ui-dialog-buttonpane').outerHeight({'margin':true})
+							);
+						} else {
+							$(e.target).height(
+								$(e.target).parent().innerHeight()
+								- $(e.target).parent().find('.ui-dialog-titlebar').outerHeight({'margin':true})
+							);
+						}
+					};
+				} else {
+					/* Not IE6 */
+					option.modal = true;
+					option.overlay = {
+						backgroundColor: '#000000',
+						opacity: 0.5
+					};
+				}
 
 				if (gfx.windowOption[this.id.substr(7)]) {
 					$.extend(
@@ -202,5 +249,5 @@ var gfx = {
 	'closeWindow' : function (id) {
 		$('#window_' + id).dialog("close");
 	}
-}
+};
 $(document).ready(gfx.onload);
