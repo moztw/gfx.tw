@@ -1,18 +1,44 @@
 @charset "UTF-8";
 
+/* The mighty HTML */
+
 html {
 	overflow: auto;
 	border: none;
 }
+
+/* The body */
+
 body {
-	width: 900px;
 	margin: 0 auto; padding: 0;
+	text-align: center;
+}
+
+html > body {
+	width: 900px;
+	text-align: left;
 }
 
 body.inframe {
-	width: auto;
 	margin: 0;
 	background-color: #f0efea;
+}
+
+html > body.inframe {
+	width: auto;
+}
+
+body div {
+	width: 900px;
+	text-align: left;
+}
+
+body div div {
+	width: auto;
+}
+
+body > div {
+	width: auto;
 }
 
 img {
@@ -101,7 +127,7 @@ div.message {
 	margin: 0.3em 0;
 	font-size: 0.82em;
 	font-weight: bold;
-	width: 100%;
+	width: 900px;
 }
 div.message div {
 	padding: 0 0.7em;
@@ -229,7 +255,7 @@ span.title-empty {
 	position: absolute;
 	top: 15px; left: 65px;
 	height: 26px; width: 148px;
-	font-size: 26px; line-height: 26px;
+	font-size: 26px; line-height: 30px;
 }
 
 #titleblock .download .link a {
@@ -253,7 +279,7 @@ span.title-empty {
 	position: absolute;
 	top: 113px; left: 630px;
 	width: 230px; height: 12px;
-	font-size: 12px; line-height: 12px;
+	font-size: 12px; line-height: 14px;
 	text-align: right;
 	white-space: nowrap;
 }
@@ -291,7 +317,7 @@ span.title-empty {
 	position: absolute;
 	margin: 0; padding: 0;
 	top: 30px; left: 100px;
-	font-size: 35px; line-height: 35px;
+	font-size: 35px; line-height: 40px;
 }
 
 #features .feature p {
@@ -320,7 +346,7 @@ span.title-empty {
 	overflow: auto;
 	clear: both;
 	background: transparent url('../images/userpage-block-bg.jpg') left top repeat-y;
-	height: 100%; width: 860px;
+	width: 860px;
 }
 
 #userinfo {
