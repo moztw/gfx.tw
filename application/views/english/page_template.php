@@ -20,7 +20,7 @@
 {messages}
 <div class="ui-widget message">
 	<div class="ui-state-{type} ui-corner-all"> 
-		<p><a href="#" class="ui-icon ui-icon-close"></a><span class="ui-icon ui-icon-{icon}"></span>
+		<p><a href="#" class="ui-icon ui-icon-circle-close"></a><span class="ui-icon ui-icon-{icon}"></span>
 {message}</p>
 	</div>
 </div>

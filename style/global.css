@@ -130,9 +130,10 @@ input#openid-identifier {
 
 div.message {
 	margin: 0.3em 0;
-	font-size: 0.82em;
+	font-size: 1.5em;
 	font-weight: bold;
 	width: 900px;
+	display: none;
 }
 div.message div {
 	padding: 0 0.7em;
@@ -140,10 +141,10 @@ div.message div {
 div.message div p span.ui-icon {
 	float: left; margin-right: 0.3em;
 }
-div.message div p a.ui-icon-close {
+div.message div p a.ui-icon {
 	float: right; margin-left: 0.3em;
 }
-div.message div p a.ui-icon-close:hover {
+div.message div p a.ui-icon:hover {
 	background-color: #d0d0d0;
 }
 

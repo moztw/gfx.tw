@@ -3,7 +3,7 @@
 var gfx = {
 	'bind' : {
 		'click' : {
-			'div.message div p a.ui-icon-close' : function () {
+			'div.message div p a.ui-icon' : function () {
 				$(this).parents('.message').slideUp(500);
 				return false;
 			},
@@ -245,6 +245,7 @@ var gfx = {
 				);
 			}
 		);
+		gfx.showMessage($('.message:first'));
 	},
 	'openWindow' : function (id) {
 		$('#window_' + id).dialog("open");
@@ -263,7 +264,7 @@ var gfx = {
 				$(document.createElement('p'))
 				.append(
 					$(document.createElement('a'))
-					.addClass('ui-icon ui-icon-close')
+					.addClass('ui-icon ui-icon-circle-close')
 					.attr('href', '#')
 					.bind(
 						'click',
@@ -272,14 +273,22 @@ var gfx = {
 							return false;
 						}
 					)
-				).append(
+				)/*.append(
 					$(document.createElement('span'))
 					.addClass('ui-icon ui-icon-' + icon)
-				).append(msg)
+				)*/.append(msg)
 			)
 		);
 		$('#header').after(o);
 		o.slideDown(500);
+	},
+	'showMessage' : function (o) {
+		o.slideDown(
+			500, 
+			function () {
+				gfx.showMessage($(this).next('.message'));
+			}
+		);
 	}
 };
 $(document).ready(gfx.onload);
