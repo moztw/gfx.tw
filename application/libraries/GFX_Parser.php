@@ -19,6 +19,7 @@ class GFX_Parser extends CI_Parser {
 				'meta' => '',
 				'admin' => '',
 				'content' => '<p>Error: No Content.</p>',
+				'script' => '',
 				'db' => ''
 			),
 			$data

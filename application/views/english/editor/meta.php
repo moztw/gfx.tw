@@ -1,3 +1,1 @@
 	<title>Edit your personal gfx page!</title>
-	<script type="text/javascript" src="./js/editor.js" charset="UTF-8"></script>
-	<script type="text/javascript" src="./swfupload/swfupload-min.js" charset="UTF-8"></script>
