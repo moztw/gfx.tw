@@ -128,7 +128,7 @@ class Auth extends Controller {
 			$this->session->unset_userdata('admin');
 			$this->session->set_flashdata('message', 'highlight:info:' . $this->lang->line('gfx_message_auth_logout'));
 		} else {
-			//TBD: Wrong token message.
+			$this->session->set_flashdata('message', 'error:alert:' . $this->lang->line('gfx_message_wrong_token'));
 		}
 		header('Location: ' . base_url());
 	}
