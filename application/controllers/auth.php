@@ -84,7 +84,12 @@ class Auth extends Controller {
 					$this->db->insert('u2g', array('user_id' => $data['id'], 'group_id' => '1', 'order' => '1'));
 					$this->db->insert('u2g', array('user_id' => $data['id'], 'group_id' => '2', 'order' => '2'));
 				}
-				$this->session->set_userdata(array('id' => $data['id']));
+				$this->session->set_userdata(
+					array(
+						'id' => $data['id'],
+						'admin' => $data['admin']
+					)
+				);
 				if (substr($data['name'], 0, 8) !== '__temp__') {
 					$this->session->set_userdata(array('name' => $data['name']));
 				}
@@ -114,14 +119,17 @@ class Auth extends Controller {
 	}
 	function logout() {
 		$this->load->config('gfx');
-		if ($this->input->post('session_id') === $this->session->userdata('session_id')) {
+		if (
+			($this->input->post('session_id') === $this->session->userdata('session_id'))
+			|| ($this->input->post('token') === md5($this->session->userdata('id') . $this->config->item('gfx_token')))
+		) {
 			$this->session->unset_userdata('id');
 			$this->session->unset_userdata('name');
-		} elseif ($this->input->post('token') === md5($this->session->userdata('id') . $this->config->item('gfx_token'))) {
-			$this->session->unset_userdata('id');
-			$this->session->unset_userdata('name');
+			$this->session->unset_userdata('admin');
+			$this->session->set_flashdata('message', 'highlight:info:' . $this->lang->line('gfx_message_auth_logout'));
+		} else {
+			//TBD: Wrong token message.
 		}
-		$this->session->set_flashdata('message', 'highlight:info:' . $this->lang->line('gfx_message_auth_logout'));
 		header('Location: ' . base_url());
 	}
 }
