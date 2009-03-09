@@ -25,6 +25,7 @@
 	</div>
 </div>
 {/messages}
+{admin}
 {content}
 	<div id="footer">
 		<p>Copyright &copy; gfx.tw | <a href="<?php print site_url('about') ?>">About Us</a> | <a href="<?php print site_url('about/legal') ?>">Legal</a> | <a href="http://www.moztw.org/">MozTW, Mozilla Taiwan Community</a> <img src="http://www.moztw.org/images/moztw_80x15.png" alt="MozTW" /></p>

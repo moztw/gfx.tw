@@ -175,6 +175,9 @@ var gfx = {
 		if (gfx.editor) {
 			gfx.editor.onload();
 		}
+		if (gfx.admin) {
+			gfx.admin.onload();
+		}
 		if ($('#groups-show-detail-box:checked').length) {
 			$('#groups').addClass('detailed');
 		} else {

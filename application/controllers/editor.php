@@ -200,7 +200,7 @@ class Editor extends Controller {
 			}
 		}
 		$this->load->library('cache');
-		$this->cache->remove($this->input->post('name'), 'userpage');
+		$this->cache->remove($this->input->post('name'), 'user');
 		$this->cache->remove($this->session->userdata('id'), 'header');
 		
 		//TBD: hide user id from user

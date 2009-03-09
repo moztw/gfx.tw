@@ -29,7 +29,9 @@ var T = {
 		ADDON_SUGGEST_LIST: 'Or select add-ons from there most suggested under this gang ...',
 		ADDON_SEARCH_RESULT: 'Search result:',
 		EXTINSTALL_NOT_FX: 'Add-on can only be installed on Firefox. Go download it!',
-		EXTINSTALL_CHECKED_NOTHING: 'You have not yet select any add-on.'
+		EXTINSTALL_CHECKED_NOTHING: 'You have not yet select any add-on.',
+		ADMIN_DELETEUSER_CONFIRM: 'Are you sure you want to delete this account?',
+		ADMIN_FACEOFF_CONFIRM: 'You would have to log out and log back in again to switch back, are you sure?'
 	},
 	/* $.dialog buttons */
 	BUTTONS: {
@@ -38,7 +40,11 @@ var T = {
 		INFO_OK: 'Close',
 		ADDON_ADD_OK: 'Ok',
 		DOWNLOAD_OK: 'Close',
-		EXTINSTALL_OK: 'Close'
+		EXTINSTALL_OK: 'Close',
+		DELETE_OK: 'Ok, DELETE MY ACCOUNT',
+		ADMIN_OK: 'Save',
+		ADMIN_FACEOFF: 'Switch to this Account',
+		ADMIN_DELETEUSER: 'DELETE ACCOUNT'
 	},
 	/* substitution of server error messages */
 	EDITOR_NOT_LOGGED_IN: 'You have been logged out. Please open another tab to log in than click save again.',

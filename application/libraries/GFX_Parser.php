@@ -17,6 +17,7 @@ class GFX_Parser extends CI_Parser {
 		$data = array_merge(
 			array(
 				'meta' => '',
+				'admin' => '',
 				'content' => '<p>Error: No Content.</p>',
 				'db' => ''
 			),

@@ -87,6 +87,10 @@ gfx.editor = {
 					.empty()
 					.append($(document.createElement('iframe')).attr('src', this.href));
 				return false;
+			},
+			'#info_delete_account' : function () {
+				gfx.openWindow('delete');
+				return false;
 			}
 		},
 		'focus' : {
@@ -191,6 +195,12 @@ gfx.editor = {
 					'height': 500,
 					'buttons' : {},
 					'position' : ['center', 50]
+				},
+				'delete' : {
+					'width' : 400,
+					'height': 300,
+					'buttons' : {},
+					'position' : ['center', 200]
 				}
 			}
 		);
@@ -201,6 +211,12 @@ gfx.editor = {
 			gfx.closeWindow('info');
 		};
 		gfx.windowOption.addons.buttons[T.BUTTONS.ADDON_ADD_OK] = gfx.editor.addAddon;
+		gfx.windowOption.delete.buttons[T.BUTTONS.DELETE_OK] = function () {
+			window.onbeforeunload = function (e) {
+				return null;
+			}
+			$('#delete_post').submit();
+		};
 
 		if (window.postMessage) {
 			window.addEventListener(

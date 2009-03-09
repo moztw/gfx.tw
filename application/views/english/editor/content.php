@@ -8,6 +8,8 @@ if (!$avatar) {
 	$avatar = './useravatars/' . $avatar;
 }
 
+$this->load->config('gfx');
+
 ?>
 	<div id="editor_save">
 		<p><button id="editor_save_button">Save your page</button>Save your customization and claim your badges!</p>
@@ -137,7 +139,15 @@ while(isset($features[$i])) {
 			<p><label for="info_bio">One line bio:</label>
 				<textarea id="info_bio"><?php print htmlspecialchars($bio) ?></textarea>
 			</p>
+			<p><a href="#" id="info_delete_account">Delete My Account</a></p>
 		</form>
+	</div>
+	<div id="window_delete" class="window" title="Delete Account">
+		<form id="delete_post" action="/user/delete" method="post">
+			<input type="hidden" name="token" value="<?php print md5($this->session->userdata('id') . $this->config->item('gfx_token')); ?>" />
+		</form>
+		<p>Account deletion will remove all information, and release your gfx URL for others to pick.</p>
+		<p>Information CANNOT BE RECOVERED. Press the button below only if you know what you are doing.</p>
 	</div>
 	<div id="groups-title">
 		<h2>Gangs <span class="title-placeholder">{Your name}</span>'s Firefox belongs to</h2>

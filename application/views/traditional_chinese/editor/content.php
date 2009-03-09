@@ -8,6 +8,8 @@ if (!$avatar) {
 	$avatar = './useravatars/' . $avatar;
 }
 
+$this->load->config('gfx');
+
 ?>
 	<div id="editor_save">
 		<p><button id="editor_save_button">儲存您的頁面</button>編輯完畢，儲存變更、領取宣傳貼紙！</p>
@@ -137,7 +139,15 @@ while(isset($features[$i])) {
 			<p><label for="info_bio">一行自介：</label>
 				<textarea id="info_bio"><?php print htmlspecialchars($bio) ?></textarea>
 			</p>
+			<p><a href="#" id="info_delete_account">刪除我的帳號</a></p>
 		</form>
+	</div>
+	<div id="window_delete" class="window" title="刪除帳號">
+		<form id="delete_post" action="/user/delete" method="post">
+			<input type="hidden" name="token" value="<?php print md5($this->session->userdata('id') . $this->config->item('gfx_token')); ?>" />
+		</form>
+		<p>刪除帳號將移除您的所有資訊，並將您的推薦頁網址提供給他人使用。</p>
+		<p>這個動作無法復原。若確定要刪除您的帳號請按下面的按鈕。</p>
 	</div>
 	<div id="groups-title">
 		<h2><span class="title-placeholder">{您的名字}</span>的火狐屬性</h2>

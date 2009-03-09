@@ -57,6 +57,7 @@ class Auth extends Controller {
 						'login' => $open_id,
 						'name' => '__temp__' . md5($open_id), /* require unique */
 						'title' => '',
+						'admin' => 'N',
 						'avatar' => '',
 						'email' => '',
 						'bio' => '',
@@ -131,6 +132,43 @@ class Auth extends Controller {
 			$this->session->set_flashdata('message', 'error:alert:' . $this->lang->line('gfx_message_wrong_token'));
 		}
 		header('Location: ' . base_url());
+	}
+	function switchto() {
+		$this->load->config('gfx');
+		if (
+			($this->input->post('token') === md5($this->session->userdata('id') . $this->config->item('gfx_token')))
+			&& ($this->session->userdata('admin') === 'Y')
+		) {
+			$this->load->database();
+			$data = $this->db->query('SELECT `admin` FROM `users` WHERE `id` = ' . $this->session->userdata('id') . ';');
+			if ($data->num_rows() === 0 || $data->row()->admin !== 'Y') {
+				$this->session->set_flashdata('message', 'error:alert:' . $this->lang->line('gfx_message_wrong_token'));
+				header('Location: ' . base_url());
+			}
+			$data->free_result();
+			$user = $this->db->get_where('users', array('id' => $this->input->post('id')));
+			if ($user->num_rows() !== 0) {
+				$data = $user->row_array();
+				$this->session->set_userdata(
+					array(
+						'id' => $data['id'],
+						'admin' => $data['admin']
+					)
+				);
+				if (substr($data['name'], 0, 8) !== '__temp__') {
+					$this->session->set_userdata(array('name' => $data['name']));
+				}
+				 //TBD: hide user id in cookie (if we don't want ppl to know number of users on site)
+				$this->session->set_flashdata('message', 'highlight:info:' . $this->lang->line('gfx_message_auth_login'));
+				header('Location: ' . site_url('editor'));
+			} else {
+				$this->session->set_flashdata('message', 'error:alert:' . $this->lang->line('gfx_message_wrong_token'));
+				header('Location: ' . base_url());
+			}
+		} else {
+			$this->session->set_flashdata('message', 'error:alert:' . $this->lang->line('gfx_message_wrong_token'));
+			header('Location: ' . base_url());
+		}
 	}
 }
 

@@ -92,6 +92,10 @@ optgroup {
 	float: right;
 }
 
+#header #link_manage {
+	display: none;
+}
+
 #footer {
 	margin: 0; padding: 50px 0 10px 0;
 	background: #ffffff url('../images/userpage-block-bg-bottom.jpg') center top no-repeat;
@@ -680,15 +684,30 @@ span.title-empty {
 	font: 1.2em monospace;
 }
 
-#info_form label {
+#window_delete {
+	font-size: 1.2em;
+	font-weight: bold;
+	color: #ff0000;
+}
+
+#info_form label, #admin_form label {
 	display: block;
-	float: left; clear: both;
+	float: left;
 	width: 25%; margin-right: -10px;
 }
 
-#info_form input, #info_form textarea {
+#info_form p, #admin_form p {
+	clear: both;
+}
+
+#info_form input, #info_form textarea, #admin_form input, #admin_form textarea {
 	width: 75%;
 	float: right; clear: right;
+}
+
+#info_form input[type="checkbox"], #admin_form input[type="checkbox"] {
+	width: auto;
+	float: left;
 }
 
 #info_form .form-prepend {
@@ -715,7 +734,7 @@ span.title-empty {
 	overflow: hidden;
 }
 
-#info_form .form-desc {
+#info_form .form-desc, #admin_form .form-desc {
 	display: block;
 	width: 75%;
 	float: right; clear: right;

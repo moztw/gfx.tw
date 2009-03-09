@@ -40,7 +40,7 @@
 |
 */
 
-$route['default_controller'] = "userpage";
+$route['default_controller'] = "user";
 $route['scaffolding_trigger'] = "tmd";
 
 /* We must explicitly define all routes here because the last route will overwrite them all */
@@ -54,8 +54,8 @@ if ($route['scaffolding_trigger']) {
 	$route['editor/' . $route['scaffolding_trigger'] . '/(:any)'] = "editor/" . $route['scaffolding_trigger'] . '/$1';
 	$route['feature/' . $route['scaffolding_trigger']] = "feature/" . $route['scaffolding_trigger'];
 	$route['feature/' . $route['scaffolding_trigger'] . '/(:any)'] = "feature/" . $route['scaffolding_trigger'] . '/$1';
-	$route['userpage/' . $route['scaffolding_trigger']] = "userpage/" . $route['scaffolding_trigger'];
-	$route['userpage/' . $route['scaffolding_trigger'] . '/(:any)'] = "userpage/" . $route['scaffolding_trigger'] . '/$1';
+	$route['user/' . $route['scaffolding_trigger']] = "user/" . $route['scaffolding_trigger'];
+	$route['user/' . $route['scaffolding_trigger'] . '/(:any)'] = "user/" . $route['scaffolding_trigger'] . '/$1';
 }
 $route['about'] = "about";
 $route['about/(:any)'] = "about/view/$1";
@@ -72,8 +72,9 @@ $route['feature/(:any)'] = "feature/view/$1";
 $route['feature/(:any)/inframe'] = "feature/view/$1/inframe";
 $route['sticker'] = "sticker";
 $route['auth/(:any)'] = "auth/$1";
+$route['user/(:any)'] = "user/$1";
 
-$route['(:any)'] = "userpage/view/$1";
+$route['(:any)'] = "user/view/$1";
 
 /* End of file routes.php */
 /* Location: ./system/application/config/routes.php */

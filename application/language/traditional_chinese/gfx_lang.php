@@ -9,5 +9,9 @@ $lang['gfx_message_sticker_notlogin'] = "您必須要登入才能索取您的推
 $lang['gfx_message_sticker_nopage'] = "您必須編輯完您的火狐推薦頁才能索取推薦貼紙。";
 $lang['gfx_message_userpage_yourpage'] = "這是您的抓火狐推薦頁面。您可以<a href=\"/editor\">編輯此頁</a>。";
 $lang['gfx_message_wrong_token'] = "認證失敗。";
+$lang['gfx_message_user_deleted'] = "帳號已刪除。";
+$lang['gfx_message_user_updated'] = "帳號已更新。";
+$lang['gfx_message_dup_login'] = "Open ID 網址重複，無法修改。";
+$lang['gfx_message_no_such_user'] = "沒有這個帳號。";
 
 ?>
