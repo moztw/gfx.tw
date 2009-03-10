@@ -217,7 +217,7 @@ $config['cache_path'] = '';
 | enabled you MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = "";
+$config['encryption_key'] = "l6OW7px3CtIMsoy9SQbG";
 
 /*
 |--------------------------------------------------------------------------
@@ -233,7 +233,7 @@ $config['encryption_key'] = "";
 */
 $config['sess_cookie_name']		= 'gfx_session';
 $config['sess_expiration']		= 259200; //3 days
-$config['sess_encrypt_cookie']	= FALSE;
+$config['sess_encrypt_cookie']	= TRUE;
 $config['sess_use_database']	= FALSE;
 $config['sess_table_name']		= 'ci_sessions';
 $config['sess_match_ip']		= FALSE;
