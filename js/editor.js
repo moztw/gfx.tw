@@ -414,51 +414,6 @@ gfx.editor = {
 				}
 			}
 		);
-		$.ajaxSetup(
-			{
-				type: 'POST',
-				timeout: 20000,
-				dataType: 'json',
-				beforeSend : function (xhr) {
-					if (gfx.xhr) {
-						gfx.xhr.abort();
-					}
-					xhr.running = true;
-					window.setTimeout(
-						function () {
-							/* for some reason check gfx.xhr.readyState won't work */
-							if (gfx.xhr.running) {
-								gfx.openWindow('progress');
-							}
-						},
-						400
-					);
-				},
-				complete : function (xhr, status) {
-					xhr.running = false;
-					gfx.closeWindow('progress');
-				},
-				error: function (xhr, status, error) {
-					xhr.running = false;
-					gfx.closeWindow('progress');
-					switch (status) {
-						case 'timeout':
-						window.alert(T.AJAX_ERROR.TIMEOUT);
-						break;
-						case 'parsererror':
-						window.alert(T.AJAX_ERROR.PARSE_RESPONSE);
-						break;
-						case 'error':
-						default:
-						if (xhr.status === 0) {
-							window.alert(T.AJAX_ERROR.UNABLE_TO_CONNECT);
-						} else {
-							window.alert(T.AJAX_ERROR.SERVER_RESPONSE);
-						}
-					}
-				}
-			}
-		);
 	},
 	'forceStop' : function () {
 		if (gfx.xhr) {

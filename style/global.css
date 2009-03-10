@@ -711,18 +711,18 @@ span.title-empty {
 	float: left;
 }
 
-#info_form .form-prepend {
+#info_form .form-prepend, #admin_form .form-prepend {
 	display: block;
 	float: left; margin-left: 10px;
 	padding: 2px 0 ;
 }
 
-#info_form #info_name {
+#info_form #info_name, #admin_form #admin_name {
 	clear: none; float: left;
 	width: 30%;
 }
 
-#info_form #info_forum {
+#info_form #info_forum, #admin_form #admin_content {
 	font-family: monospace;
 }
 

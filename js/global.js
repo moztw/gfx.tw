@@ -55,6 +55,45 @@ var gfx = {
 						}
 					);
 				};
+				var option = {
+					title: $(this).parents('.feature').find('h2').text(),
+					modal: true,
+					overlay: {
+						backgroundColor: '#000000',
+						opacity: 0.5
+					},
+					'width' : 800,
+					'height' : 500,
+					'show' : null, /* demenstion detection will fail */
+					'position' : ['center', 50],
+					'resizeStart' : function (e, ui) {
+						$(ui.element).find('.ui-dialog-content div').show();
+					},
+					'resizeStop' : function (e, ui) {
+						$(ui.element).find('.ui-dialog-content div').hide();
+					},
+					'resize' : function (e, ui) {
+						resizeIfr(
+							$(ui.element).find('.ui-dialog-content iframe'),
+							$(ui.element).find('.ui-dialog-content')
+						);
+					},
+					'open' : function (e) {
+						resizeIfr(
+							$(e.target).find('iframe'),
+							$(e.target)
+						);
+					},
+					'close' : function (e, ui) {
+						$(e.target).dialog('destroy').remove();
+					}
+				};
+				if ($('#link_manage').length) {
+					option.buttons = {};
+					option.buttons[T.BUTTONS.ADMIN_EDIT_FEATURE] = function () {
+						window.location.href = $('#iframe-feature iframe').attr('src');
+					};
+				}
 				$(document.createElement('div'))
 				.addClass('window').attr(
 					{
@@ -84,41 +123,7 @@ var gfx = {
 							display: 'none'
 						}
 					)
-				).dialog(
-					{
-						title: $(this).parents('.feature').find('h2').text(),
-						modal: true,
-						overlay: {
-							backgroundColor: '#000000',
-							opacity: 0.5
-						},
-						'width' : 800,
-						'height' : 500,
-						'show' : null, /* demenstion detection will fail */
-						'position' : ['center', 50],
-						'resizeStart' : function (e, ui) {
-							$(ui.element).find('.ui-dialog-content div').show();
-						},
-						'resizeStop' : function (e, ui) {
-							$(ui.element).find('.ui-dialog-content div').hide();
-						},
-						'resize' : function (e, ui) {
-							resizeIfr(
-								$(ui.element).find('.ui-dialog-content iframe'),
-								$(ui.element).find('.ui-dialog-content')
-							);
-						},
-						'open' : function (e) {
-							resizeIfr(
-								$(e.target).find('iframe'),
-								$(e.target)
-							);
-						},
-						'close' : function (e, ui) {
-							$(e.target).dialog('destroy').remove();
-						}
-					}
-				);
+				).dialog(option);
 				
 				return false;
 			},
@@ -169,9 +174,27 @@ var gfx = {
 			'height' : 250,
 			'position' : ['right', 'top'],
 			'buttons' : { }
+		},
+		'progress' : {
+			'width' : 244,
+			'height' : 40,
+			'buttons' : {},
+			'position' : [100, 100]
 		}
 	},
 	'onload' : function () {
+		gfx.windowOption.download.buttons[T.BUTTONS.DOWNLOAD_OK] = function () {
+			gfx.closeWindow('download');
+		};
+		gfx.windowOption.extinstall.buttons[T.BUTTONS.EXTINSTALL_OK] = function () {
+			gfx.closeWindow('extinstall');
+		};
+		gfx.windowOption.progress.buttons[T.BUTTONS.PROGRESS_FORCESTOP] = function () {
+			if (gfx.xhr) {
+				gfx.xhr.abort();
+			}
+			gfx.closeWindow('progress');
+		};
 		if (gfx.editor) {
 			gfx.editor.onload();
 		}
@@ -183,13 +206,6 @@ var gfx = {
 		} else {
 			$('#groups').removeClass('detailed');
 		}
-
-		gfx.windowOption.download.buttons[T.BUTTONS.DOWNLOAD_OK] = function () {
-			gfx.closeWindow('download');
-		};
-		gfx.windowOption.extinstall.buttons[T.BUTTONS.EXTINSTALL_OK] = function () {
-			gfx.closeWindow('extinstall');
-		};
 		
 		$('.window').each(
 			function () {
@@ -245,6 +261,53 @@ var gfx = {
 				);
 			}
 		);
+
+		$.ajaxSetup(
+			{
+				type: 'POST',
+				timeout: 20000,
+				dataType: 'json',
+				beforeSend : function (xhr) {
+					if (gfx.xhr) {
+						gfx.xhr.abort();
+					}
+					xhr.running = true;
+					window.setTimeout(
+						function () {
+							/* for some reason check gfx.xhr.readyState won't work */
+							if (gfx.xhr.running) {
+								gfx.openWindow('progress');
+							}
+						},
+						400
+					);
+				},
+				complete : function (xhr, status) {
+					xhr.running = false;
+					gfx.closeWindow('progress');
+				},
+				error: function (xhr, status, error) {
+					xhr.running = false;
+					gfx.closeWindow('progress');
+					switch (status) {
+						case 'timeout':
+						window.alert(T.AJAX_ERROR.TIMEOUT);
+						break;
+						case 'parsererror':
+						window.alert(T.AJAX_ERROR.PARSE_RESPONSE);
+						break;
+						case 'error':
+						default:
+						if (xhr.status === 0) {
+							window.alert(T.AJAX_ERROR.UNABLE_TO_CONNECT);
+						} else {
+							window.alert(T.AJAX_ERROR.SERVER_RESPONSE);
+						}
+					}
+				}
+			}
+		);
+		
 		gfx.showMessage($('.message:first'));
 	},
 	'openWindow' : function (id) {

@@ -44,7 +44,8 @@ var T = {
 		DELETE_OK: 'Ok, DELETE MY ACCOUNT',
 		ADMIN_OK: 'Save',
 		ADMIN_FACEOFF: 'Switch to this Account',
-		ADMIN_DELETEUSER: 'DELETE ACCOUNT'
+		ADMIN_DELETEUSER: 'DELETE ACCOUNT',
+		ADMIN_EDIT_FEATURE: 'Admin: Edit this feature'
 	},
 	/* substitution of server error messages */
 	EDITOR_NOT_LOGGED_IN: 'You have been logged out. Please open another tab to log in than click save again.',

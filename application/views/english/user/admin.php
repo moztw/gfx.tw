@@ -4,8 +4,6 @@ $this->load->helper('form');
 
 ?><div class="window" id="window_admin" title="Update User ID#<?php print $id; ?>">
 	<form id="admin_form" action="/user/update" method="post">
-		<input type="hidden" name="id" value="<?php print $id; ?>" />
-		<input type="hidden" name="token" value="<?php print md5($this->session->userdata('id') . $this->config->item('gfx_token')); ?>" />
 		<p><label for="admin_login">Open ID URL:</label> <?php print form_input(array('id' =>'admin_login', 'name' => 'login', 'value' => $login)); ?>
 			<span class="form-desc">Cannot repeat, scrabble to provent user to log in again; Use the switch button below to "log in" with these accounts.</span></p>
 		<p><label for="admin_count">Firefox download count:</label> <?php print form_input(array('id' =>'admin_count', 'name' => 'count', 'value' => $count)); ?>
@@ -20,6 +18,9 @@ $this->load->helper('form');
 	<input type="hidden" name="id" value="<?php print $id; ?>" />
 	<input type="hidden" name="token" value="<?php print md5($this->session->userdata('id') . $this->config->item('gfx_token')); ?>" />
 </form>
+<div id="window_progress" class="window" title="Loading...">
+	<img src="images/ajax-progress.gif" alt="Processing..." />
+</div>
 <script type="text/javascript">
 gfx.admin = {
 	'bind' : {
@@ -50,7 +51,37 @@ gfx.admin = {
 			}
 		);
 		gfx.windowOption.admin.buttons[T.BUTTONS.ADMIN_OK] = function () {
-			$('#admin_form').submit();
+			gfx.xhr = $.ajax(
+				{
+					url: './user/update',
+					data: {
+						'token' : $('#token').val(),
+						'id' : $('#admin_id').val(),
+						'login' : $('#admin_login').val(),
+						'count' : $('#admin_count').val(),
+						'avatar' : $('#admin_avatar').val(),
+						'admin' : ($('#admin_admin:checked').length)?'Y':'N'
+					},
+					success: function (result, status) {
+						if (result.error) {
+							window.alert(T[result.tag] || result.error);
+							return;
+						}
+						if (result.message) {
+							if (result.message.type === 'error') {
+								window.alert(result.message.msg);
+							} else {
+								gfx.message(
+									result.message.type,
+									result.message.icon,
+									result.message.msg
+								);
+								gfx.closeWindow('admin');
+							}
+						}
+					}
+				}
+			);
 		};
 		gfx.windowOption.admin.buttons[T.BUTTONS.ADMIN_FACEOFF] = function () {
 			if (!window.confirm(T.UI.ADMIN_FACEOFF_CONFIRM)) {
@@ -58,7 +89,7 @@ gfx.admin = {
 			}
 			$('#admin_post').attr(
 				{
-					'action' : '/auth/switchto'
+					'action' : './auth/switchto'
 				}
 			).submit();
 		};
@@ -68,7 +99,7 @@ gfx.admin = {
 			}
 			$('#admin_post').attr(
 				{
-					'action' : '/user/delete'
+					'action' : './user/delete'
 				}
 			).submit();
 		}

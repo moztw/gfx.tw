@@ -165,16 +165,34 @@ class User extends Controller {
 			($this->input->post('token') !== md5($this->session->userdata('id') . $this->config->item('gfx_token')))
 			|| ($this->session->userdata('admin') !== 'Y')
 		) {
-			$this->session->set_flashdata('message', 'error:alert:' . $this->lang->line('gfx_message_wrong_token'));
-			header('Location: ' . base_url());
+			//$this->session->set_flashdata('message', 'error:alert:' . $this->lang->line('gfx_message_wrong_token'));
+			//header('Location: ' . base_url());
+			print json_encode(
+				array(
+					'message' => array(
+						'type' => 'error',
+						'icon' => 'alert',
+						'msg' => $this->lang->line('gfx_message_wrong_token')
+					)
+				)
+			);
 			exit();
 		}
 		/* Check is really admin */
 		$this->load->database();
 		$data = $this->db->query('SELECT `admin` FROM `users` WHERE `id` = ' . $this->session->userdata('id') . ';');
 		if ($data->num_rows() === 0 || $data->row()->admin !== 'Y') {
-			$this->session->set_flashdata('message', 'error:alert:' . $this->lang->line('gfx_message_wrong_token'));
-			header('Location: ' . base_url());
+			//$this->session->set_flashdata('message', 'error:alert:' . $this->lang->line('gfx_message_wrong_token'));
+			//header('Location: ' . base_url());
+			print json_encode(
+				array(
+					'message' => array(
+						'type' => 'error',
+						'icon' => 'alert',
+						'msg' => $this->lang->line('gfx_message_wrong_token')
+					)
+				)
+			);
 			exit();
 		}
 		$data->free_result();
@@ -182,16 +200,34 @@ class User extends Controller {
 		$data = $this->db->query('SELECT `login` FROM `users` WHERE `id` != ' . $this->input->post('id')
 			. ' AND `login` = ' . $this->db->escape($this->input->post('login')) . ';');
 		if ($data->num_rows() !== 0) {
-			$this->session->set_flashdata('message', 'error:alert:' . $this->lang->line('gfx_message_dup_login'));
-			header('Location: ' . base_url());
+			//$this->session->set_flashdata('message', 'error:alert:' . $this->lang->line('gfx_message_dup_login'));
+			//header('Location: ' . base_url());
+			print json_encode(
+				array(
+					'message' => array(
+						'type' => 'error',
+						'icon' => 'alert',
+						'msg' => $this->lang->line('gfx_message_dup_login')
+					)
+				)
+			);
 			exit();
 		}
 		$data->free_result();
 		/* Check whether user exists and his/her name */
 		$data = $this->db->query('SELECT `name` FROM `users` WHERE `id` = ' . $this->input->post('id') . ';');
 		if ($data->num_rows() === 0) {
-			$this->session->set_flashdata('message', 'error:alert:' . $this->lang->line('gfx_message_no_such_user'));
-			header('Location: ' . base_url());
+			//$this->session->set_flashdata('message', 'error:alert:' . $this->lang->line('gfx_message_no_such_user'));
+			//header('Location: ' . base_url());
+			print json_encode(
+				array(
+					'message' => array(
+						'type' => 'error',
+						'icon' => 'alert',
+						'msg' => $this->lang->line('gfx_message_no_such_user')
+					)
+				)
+			);
 			exit();
 		}
 		/* Update data */
@@ -201,7 +237,7 @@ class User extends Controller {
 				'login' => $this->input->post('login'),
 				'count' => $this->input->post('count'),
 				'avatar' => $this->input->post('avatar'),
-				'admin' => ($this->input->post('admin'))?'Y':'N'
+				'admin' => $this->input->post('admin')
 			),
 			array(
 				'id' => $this->input->post('id')
@@ -209,8 +245,17 @@ class User extends Controller {
 		);
 		$this->load->library('cache');
 		$this->cache->remove($data->row()->name, 'user');
-		$this->session->set_flashdata('message', 'highlight:info:' . $this->lang->line('gfx_message_user_updated'));
-		header('Location: ' . site_url($data->row()->name));
+		//$this->session->set_flashdata('message', 'highlight:info:' . $this->lang->line('gfx_message_user_updated'));
+		//header('Location: ' . site_url($data->row()->name));
+		print json_encode(
+			array(
+				'message' => array(
+					'type' => 'highlight',
+					'icon' => 'info',
+					'msg' => $this->lang->line('gfx_message_user_updated')
+				)
+			)
+		);
 	}
 }
 

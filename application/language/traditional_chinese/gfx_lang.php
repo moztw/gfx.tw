@@ -10,8 +10,12 @@ $lang['gfx_message_sticker_nopage'] = "您必須編輯完您的火狐推薦頁�
 $lang['gfx_message_userpage_yourpage'] = "這是您的抓火狐推薦頁面。您可以<a href=\"/editor\">編輯此頁</a>。";
 $lang['gfx_message_wrong_token'] = "認證失敗。";
 $lang['gfx_message_user_deleted'] = "帳號已刪除。";
-$lang['gfx_message_user_updated'] = "帳號已更新。";
+$lang['gfx_message_user_updated'] = "帳號已更新，重新載入之後才能看到結果。";
 $lang['gfx_message_dup_login'] = "Open ID 網址重複，無法修改。";
 $lang['gfx_message_no_such_user'] = "沒有這個帳號。";
+$lang['gfx_message_error_feature_name'] = "功能推薦不能用這個網址。";
+$lang['gfx_message_dup_feature_name'] = "功能推薦網址重複，無法修改。";
+$lang['gfx_message_feature_deleted'] = "功能推薦已刪除。";
+$lang['gfx_message_feature_updated'] = "功能推薦已更新，重新載入之後才能看到結果。";
 
 ?>

@@ -31,7 +31,8 @@ var T = {
 		EXTINSTALL_NOT_FX: '必須要使用 Firefox 系列瀏覽器才能安裝附加元件喔。',
 		EXTINSTALL_CHECKED_NOTHING: '您沒有選擇任何附加元件。',
 		ADMIN_DELETEUSER_CONFIRM: '確定要刪除這個帳號？',
-		ADMIN_FACEOFF_CONFIRM: '切換到帳號之後，您必須登出才能變回自己。您確定嗎？'
+		ADMIN_FACEOFF_CONFIRM: '切換到帳號之後，您必須登出才能變回自己。您確定嗎？',
+		ADMIN_DELETEFEATURE_CONFIRM: '確定要刪除這個功能推薦？'
 	},
 	/* $.dialog buttons */
 	BUTTONS: {
@@ -44,7 +45,9 @@ var T = {
 		DELETE_OK: '了解，刪除我的帳號',
 		ADMIN_OK: '儲存修改',
 		ADMIN_FACEOFF: '切換到此帳號',
-		ADMIN_DELETEUSER: '刪除帳號'
+		ADMIN_DELETEUSER: '刪除帳號',
+		ADMIN_EDIT_FEATURE: '管理：編輯功能介紹',
+		ADMIN_DELETEFEATURE: '刪除功能推薦'
 	},
 	/* substitution of server error messages */
 	EDITOR_NOT_LOGGED_IN: '沒有登入，無法存檔。或是請開新分頁重新登入再按一次存檔。',

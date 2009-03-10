@@ -10,7 +10,12 @@ $lang['gfx_message_sticker_nopage'] = "You have to finish editing your personal 
 $lang['gfx_message_userpage_yourpage'] = "This is your own personal GFX page. You can <a href=\"/editor\">edit this page</a>.";
 $lang['gfx_message_wrong_token'] = "Authentication failed.";
 $lang['gfx_message_user_deleted'] = "Account deleted.";
-$lang['gfx_message_user_updated'] = "Account updated.";
+$lang['gfx_message_user_updated'] = "Account updated, reload this page to see the result.";
 $lang['gfx_message_dup_login'] = "There is already another account under this Open ID.";
 $lang['gfx_message_no_such_user'] = "No such user.";
+$lang['gfx_message_error_feature_name'] = "Feature URL unacceptable.";
+$lang['gfx_message_dup_feature_name'] = "Feature URL already in used.";
+$lang['gfx_message_feature_deleted'] = "Feature introduction deleted.";
+$lang['gfx_message_feature_updated'] = "Feature introduction updated, reload this page to see the result.";
+
 ?>
