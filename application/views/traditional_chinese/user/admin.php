@@ -5,7 +5,7 @@ $this->load->helper('form');
 ?><div class="window" id="window_admin" title="管理使用者 ID#<?php print $id; ?>">
 	<form id="admin_form" action="#" method="post">
 		<p><label for="admin_login">Open ID 網址：</label> <?php print form_input(array('id' =>'admin_login', 'name' => 'login', 'value' => $login)); ?>
-			<span class="form-desc">不得重複，輸入亂數可阻止使用者再次登入；無法登入的帳號只能用下面的切換使用者功能登入修改資料。</span></p>
+			<span class="form-desc">不得重複；無法登入的帳號只能用下面的切換使用者功能登入修改資料。</span></p>
 		<p><label for="admin_count">Firefox 下載數：</label> <?php print form_input(array('id' =>'admin_count', 'name' => 'count', 'value' => $count)); ?>
 			<span class="form-desc">不要幫別人作弊呀 (遠目)。</span></p>
 		<p><label for="admin_avatar">個人圖示網址：</label> <?php print form_input(array('id' =>'admin_avatar', 'name' => 'avatar', 'value' => $avatar)); ?>

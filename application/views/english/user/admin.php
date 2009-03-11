@@ -5,7 +5,7 @@ $this->load->helper('form');
 ?><div class="window" id="window_admin" title="Update User ID#<?php print $id; ?>">
 	<form id="admin_form" action="/user/update" method="post">
 		<p><label for="admin_login">Open ID URL:</label> <?php print form_input(array('id' =>'admin_login', 'name' => 'login', 'value' => $login)); ?>
-			<span class="form-desc">Cannot repeat, scrabble to provent user to log in again; Use the switch button below to "log in" with these accounts.</span></p>
+			<span class="form-desc">Cannot repeat; Use the switch button below to "log in" with these accounts.</span></p>
 		<p><label for="admin_count">Firefox download count:</label> <?php print form_input(array('id' =>'admin_count', 'name' => 'count', 'value' => $count)); ?>
 			<span class="form-desc">Try not to cheat, ok?</span></p>
 		<p><label for="admin_avatar">Avatar URL:</label> <?php print form_input(array('id' =>'admin_avatar', 'name' => 'avatar', 'value' => $avatar)); ?>
