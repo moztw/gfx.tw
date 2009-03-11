@@ -2,7 +2,9 @@
 
 $this->load->helper('form');
 
-?><div class="window" id="window_admin" title="管理使用者 ID#<?php print $id; ?>">
+?>
+	<script type="text/javascript" src="<?php print site_url('js/admin.user.js'); ?>" charset="UTF-8"></script>
+<div class="window" id="window_admin" title="管理使用者 ID#<?php print $id; ?>">
 	<form id="admin_form" action="#" method="post">
 		<p><label for="admin_login">Open ID 網址：</label> <?php print form_input(array('id' =>'admin_login', 'name' => 'login', 'value' => $login)); ?>
 			<span class="form-desc">不得重複；無法登入的帳號只能用下面的切換使用者功能登入修改資料。</span></p>
@@ -21,89 +23,3 @@ $this->load->helper('form');
 <div id="window_progress" class="window" title="與伺服器通訊中...">
 	<img src="images/ajax-progress.gif" alt="處理中..." />
 </div>
-<script type="text/javascript">
-gfx.admin = {
-	'bind' : {
-		'click' : {
-			'#link_manage a' : function () {
-				gfx.openWindow('admin');
-				return false;
-			}
-		}
-	},
-	'onload' : function () {
-		if (!gfx.windowOption) {
-			gfx.windowOption = {};
-		}
-		gfx.windowOption.admin = {
-			'width' : 600,
-			'height' : 400,
-			'buttons' : {},
-			'position' : ['center', 120]
-		};
-		$.each(
-			gfx.admin.bind,
-			function(e, o) {
-				$.extend(
-					gfx.bind[e] || (gfx.bind[e] = {}),
-					o
-				);
-			}
-		);
-		gfx.windowOption.admin.buttons[T.BUTTONS.ADMIN_OK] = function () {
-			gfx.xhr = $.ajax(
-				{
-					url: './user/update',
-					data: {
-						'token' : $('#token').val(),
-						'id' : $('#admin_id').val(),
-						'login' : $('#admin_login').val(),
-						'count' : $('#admin_count').val(),
-						'avatar' : $('#admin_avatar').val(),
-						'admin' : ($('#admin_admin:checked').length)?'Y':'N'
-					},
-					success: function (result, status) {
-						if (result.error) {
-							window.alert(T[result.tag] || result.error);
-							return;
-						}
-						if (result.message) {
-							if (result.message.type === 'error') {
-								window.alert(result.message.msg);
-							} else {
-								gfx.message(
-									result.message.type,
-									result.message.icon,
-									result.message.msg
-								);
-								gfx.closeWindow('admin');
-							}
-						}
-					}
-				}
-			);
-		};
-		gfx.windowOption.admin.buttons[T.BUTTONS.ADMIN_FACEOFF] = function () {
-			if (!window.confirm(T.UI.ADMIN_FACEOFF_CONFIRM)) {
-				return;
-			}
-			$('#admin_post').attr(
-				{
-					'action' : './auth/switchto'
-				}
-			).submit();
-		};
-		gfx.windowOption.admin.buttons[T.BUTTONS.ADMIN_DELETEUSER] = function () {
-			if (!window.confirm(T.UI.ADMIN_DELETEUSER_CONFIRM)) {
-				return;
-			}
-			$('#admin_post').attr(
-				{
-					'action' : './user/delete'
-				}
-			).submit();
-		}
-		$('#link_manage').show();
-	}
-};
-</script>

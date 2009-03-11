@@ -1,28 +1,14 @@
-/*
+/*global window, document, $, T, gfx, SWFUpload */
 
-How does editor work?
-First, onload function inject all the control or callback into buttons on pages.
-The information is almost entirely store on the DOM itself, execpt some bools that indicate "things were changed".
-
-savePage() grab all the information before making the final submission via ajax.
-
-Meaning, nothing is going to send to the users table unless s/he save the page.
-
-Avatars and addons does upload/send to the server for processing and checking vaildity,
-but one still have to save the page in order to keep avatars s/he uploaded and addons s/he included.
-
-*/
-/*global window, document, $, T, gfx, SWFUpload,  */
-
-gfx.editor = {
+gfx.page = {
 	'bind' : {
 		'click' : {
 			'#editor_save_button' : function () {
 				//Dumb, but we cannot self-reference at this point.
-				gfx.editor.savePage();
+				gfx.page.savePage();
 			},
 			'#save_page' : function () {
-				gfx.editor.savePage();
+				gfx.page.savePage();
 			},
 			'#title-name' : function () {
 				var t = $(this);
@@ -32,16 +18,73 @@ gfx.editor = {
 				.val(t.text()).focus();
 			},
 			'#featureselection_save button:only-child' : function () {
-				gfx.editor.changeFeatureSelection();
+				var s = [];
+				gfx.page.featureChanged = true;
+				$('#featureselection input:checked').each(
+					function (i) {
+						var t = $(this);
+						s[s.length] = [
+							this.name.substr(3),
+							this.id.substr(3),
+							t.next().text(),
+							t.next().attr('title')
+						];
+					}
+				);
+				if (s.length !== 3) {
+					window.alert(T.UI.FEATURES_COUNT);
+					return;
+				}
+				var Feature = function (d) {
+					return $(document.createElement('div'))
+					.attr({
+						'id' : d[1],
+						'class' : 'feature'
+					})
+					.append(
+						$(document.createElement('h2'))
+						.attr('id', 'featureid-' + d[0])
+						.text(d[2])
+					).append(
+						$(document.createElement('p'))
+						.text(d[3])
+					).append(
+						$(document.createElement('p'))
+						.addClass('link')
+						.append(
+							$(document.createElement('a'))
+							.attr('href', './features/' + d[1])
+							.text('More...')
+						)
+					);
+				};
+				$('.feature').each(
+					function (i) {
+						if (!$('#fs_' + this.id + ':checked').length) {
+							$(this).remove();
+						}
+					}
+				);
+				var f = $('#features');
+				$.each(
+					s,
+					function (i, d) {
+						if (!$('#' + d[1]).length) {
+							f.append(new Feature(d));
+						}
+					}
+				);
+				f.sortable("refresh");
+				return false;
 			},
 			'#title-avatar' : function () {
-				gfx.openWindow('avatar');
+				gfx.openDialog('avatar');
 			},
 			'#avatar_glavatar' : function () {
-				gfx.editor.changeAvatar('(gravatar)', $(this).children()[0].src);
+				gfx.page.changeAvatar('(gravatar)', $(this).children()[0].src);
 			},
 			'#avatar_default' : function () {
-				gfx.editor.changeAvatar('(default)', './images/keyhole.gif');
+				gfx.page.changeAvatar('(default)', './images/keyhole.gif');
 			},
 			'#groups input' : function () {
 				if (this.checked) {
@@ -49,13 +92,51 @@ gfx.editor = {
 				} else {
 					$(this).parent().addClass('not-selected');
 				}
-				gfx.editor.groupChanged = true;
+				gfx.page.groupChanged = true;
 			},
 			'#groups .group-add-addon a' : function () {
-				gfx.editor.currentGroup = this.parentNode.parentNode.id.substr(2);
-				gfx.openWindow('addons');
+				gfx.page.currentGroup = this.parentNode.parentNode.id.substr(2);
+				gfx.openDialog('addons');
 				$('#addon_query').val('').focus();
-				gfx.editor.suggestAddon();
+				
+				//suggest addon
+				var r = $('#addon_query_result').empty();
+				$('#addon_query_desc').show().text(String.fromCharCode(160)); // &nbsp;
+				$('#addon_query_notfound').hide();
+				gfx.xhr = $.ajax(
+					{
+						url: './addon/suggest',
+						data: {
+							'g' : gfx.page.currentGroup
+						},
+						/* don't show progress window  */
+						beforeSend : function (xhr) { },
+						complete : function (xhr, status) { },
+						error: function (xhr, status, error) { },
+						success: function (result, status) {
+							/*if (result.error) {
+								window.alert(T[result.tag] || result.error);
+								return;
+							}*/
+							if (!result.addons.length) {
+							/*	$('#addon_query_notfound').show();
+								$('#addon_query_desc').hide();*/
+								return;
+							}
+							$('#addon_query_desc').text(T.UI.ADDON_SUGGEST_LIST);
+							$.each(
+								result.addons,
+								function (i, d) {
+									r.append(
+										new gfx.page.Addon(d, true, false)
+									);
+								}
+							);
+						}
+					}
+				);
+
+				
 				return false;
 			},
 			/*'.addon p > a' : function () {
@@ -69,15 +150,15 @@ gfx.editor = {
 						$(this).remove();
 					}
 				);
-				gfx.editor.addonChanged = true;
+				gfx.page.addonChanged = true;
 				return false;
 			},
 			'#userinfo button, #change-email' : function () {
-				gfx.editor.infoChanged = true;
-				gfx.openWindow('info');
+				gfx.page.infoChanged = true;
+				gfx.openDialog('info');
 			},
 			'.download a' : function () {
-				gfx.openWindow('download');
+				gfx.openDialog('download');
 				return false;
 			},
 			'#forum_auth' : function () {
@@ -89,7 +170,7 @@ gfx.editor = {
 				return false;
 			},
 			'#info_delete_account' : function () {
-				gfx.openWindow('delete');
+				gfx.openDialog('delete');
 				return false;
 			}
 		},
@@ -106,7 +187,7 @@ gfx.editor = {
 					$('#title-name').text(this.value).css('display', null);
 					$('span.title-placeholder').removeClass('title-empty').text(this.value);
 					$(this).css('display', null);
-					gfx.editor.infoChanged = true;
+					gfx.page.infoChanged = true;
 				} else {
 					$('#title-name').text(this.value);
 					$('span.title-placeholder').addClass('title-empty').text(T.UI.TITLE_PLACEHOLDER);
@@ -136,7 +217,40 @@ gfx.editor = {
 		},
 		'submit' : {
 			'#addon_query_form' : function () {
-				gfx.editor.queryAddon();
+				var r = $('#addon_query_result').empty();
+				$('#addon_query_desc').show().text(String.fromCharCode(160)); // &nbsp;
+				$('#addon_query_notfound').hide();
+				gfx.xhr = $.ajax(
+					{
+						url: './addon/query',
+						data: {
+							'q' : $('#addon_query').val().replace(/^https:\/\/addons.mozilla.org\/[\w\-]{5}\/firefox\/addon\/(\d+)$/, '$1')
+						},
+						success: function (result, status) {
+							if (result.error) {
+								window.alert(T[result.tag] || result.error);
+								return;
+							}
+							if (!result.addons.length) {
+								$('#addon_query_notfound').show();
+								$('#addon_query_desc').hide();
+								return;
+							}
+							$('#addon_query_desc').text(T.UI.ADDON_SEARCH_RESULT);
+							$.each(
+								result.addons,
+								function (i, d) {
+									r.append(
+										new gfx.page.Addon(d, true, false)
+									);
+								}
+							);
+							if (result.addons.length === 1) {
+								r.find('input[disabled!=true]').attr('checked', true);
+							}
+						}
+					}
+				);
 				return false;
 			},
 			'#title-name-form' : function () {
@@ -145,73 +259,76 @@ gfx.editor = {
 			}
 		}
 	},
-	'onload' : function () {
-		if ($.browser.msie) {
-			gfx.message('error', 'alert', T.UI.USING_IE_TO_EDIT);
+	'dialog' : {
+		'avatar' : {
+			'width' : 500,
+			'height' : 200,
+			'position' : ['center', 150]
+		},
+		'progress' : {
+			'width' : 244,
+			'height' : 40,
+			'buttons' : {},
+			'position' : [100, 100]
+		},
+		'almostdone' : {
+			'width' : 350,
+			'height' : 250,
+			'buttons' : {},
+			'position' : ['center', 150]
+		},
+		'editcomplete' : {
+			'width' : 400,
+			'height' : 200,
+			'position' : ['center', 200]
+		},
+		'info' : {
+			'width' : 600,
+			'height': 400,
+			'buttons' : {},
+			'position' : ['center', 120]
+		},
+		'addons' : {
+			'width' : 800,
+			'height': 500,
+			'buttons' : {},
+			'position' : ['center', 50]
+		},
+		'delete' : {
+			'width' : 400,
+			'height': 300,
+			'buttons' : {},
+			'position' : ['center', 200]
 		}
-	
-		$.each(
-			gfx.editor.bind,
-			function(e, o) {
-				$.extend(
-					gfx.bind[e] || (gfx.bind[e] = {}),
-					o
-				);
+	},
+	'onload' : function () {
+		this.dialog.progress.buttons[T.BUTTONS.PROGRESS_FORCESTOP] = function () {
+			if (gfx.xhr) {
+				gfx.xhr.abort();
 			}
-		);
-		$.extend(
-			gfx.windowOption || (gfx.windowOption = {}),
-			{
-				'avatar' : {
-					'width' : 500,
-					'height' : 200,
-					'position' : ['center', 150]
-				},
-				'progress' : {
-					'width' : 244,
-					'height' : 40,
-					'buttons' : {},
-					'position' : [100, 100]
-				},
-				'almostdone' : {
-					'width' : 350,
-					'height' : 250,
-					'buttons' : {},
-					'position' : ['center', 150]
-				},
-				'editcomplete' : {
-					'width' : 400,
-					'height' : 200,
-					'position' : ['center', 200]
-				},
-				'info' : {
-					'width' : 600,
-					'height': 400,
-					'buttons' : {},
-					'position' : ['center', 120]
-				},
-				'addons' : {
-					'width' : 800,
-					'height': 500,
-					'buttons' : {},
-					'position' : ['center', 50]
-				},
-				'delete' : {
-					'width' : 400,
-					'height': 300,
-					'buttons' : {},
-					'position' : ['center', 200]
-				}
+			//because Flash object doesn't init before openDialog(avatar);
+			try {
+				gfx.page.swfupload.cancelUpload();
+			} catch (e) {
 			}
-		);
-		//Javascript language structure bug?
-		gfx.windowOption.progress.buttons[T.BUTTONS.PROGRESS_FORCESTOP] = gfx.editor.forceStop;
-		gfx.windowOption.almostdone.buttons[T.BUTTONS.ALMOSTDONE_OK] = gfx.editor.savePage;
-		gfx.windowOption.info.buttons[T.BUTTONS.INFO_OK] = function () {
-			gfx.closeWindow('info');
+			gfx.closeDialog('progress');
 		};
-		gfx.windowOption.addons.buttons[T.BUTTONS.ADDON_ADD_OK] = gfx.editor.addAddon;
-		gfx.windowOption.delete.buttons[T.BUTTONS.DELETE_OK] = function () {
+		this.dialog.almostdone.buttons[T.BUTTONS.ALMOSTDONE_OK] = gfx.page.savePage;
+		this.dialog.info.buttons[T.BUTTONS.INFO_OK] = function () {
+			gfx.closeDialog('info');
+		};
+		this.dialog.addons.buttons[T.BUTTONS.ADDON_ADD_OK] = function () {
+			$('#addon_query_result .add-addon input:checked').each(
+				function () {
+					$('#g_' + gfx.page.currentGroup + ' + div.group-addons').append(
+						new gfx.page.Addon($(this).data('addon'), false, true)
+					).sortable('refresh');
+				}
+			);
+			gfx.closeDialog('addons');
+			gfx.page.addonChanged = true;
+		};
+		this.dialog.delete.buttons[T.BUTTONS.DELETE_OK] = function () {
 			window.onbeforeunload = function (e) {
 				return null;
 			}
@@ -227,6 +344,10 @@ gfx.editor = {
 				},
 				false
 			);
+		}
+
+		if ($.browser.msie) {
+			gfx.message('error', 'alert', T.UI.USING_IE_TO_EDIT);
 		}
 		
 		$(window).bind(
@@ -268,13 +389,14 @@ gfx.editor = {
 				}
 			}
 		).scroll();
+
 		window.onbeforeunload = function (e) {
 			if (
-				gfx.editor.infoChanged ||
-				gfx.editor.avatar ||
-				gfx.editor.featureChanged ||
-				gfx.editor.groupChanged ||
-				gfx.editor.addonChanged
+				gfx.page.infoChanged ||
+				gfx.page.avatar ||
+				gfx.page.featureChanged ||
+				gfx.page.groupChanged ||
+				gfx.page.addonChanged
 			) {
 				return T.UI.CONFIRM_QUIT;
 			} else {
@@ -300,7 +422,7 @@ gfx.editor = {
 				}
 			}
 		);
-		gfx.editor.swfupload = new SWFUpload(
+		gfx.page.swfupload = new SWFUpload(
 			{
 				'upload_url': window.location.href + '/upload',
 				// File Upload Settings
@@ -321,8 +443,8 @@ gfx.editor = {
 						this.setButtonDisabled(true);
 						window.setTimeout(
 							function () {
-								if (gfx.editor.swfupload.getStats().in_progress !== 0) {
-									gfx.openWindow('progress');
+								if (gfx.page.swfupload.getStats().in_progress !== 0) {
+									gfx.openDialog('progress');
 								}
 							},
 							400
@@ -348,14 +470,14 @@ gfx.editor = {
 				},
 				'upload_error_handler' : function (file, error, msg) {
 					this.setButtonDisabled(false);
-					gfx.closeWindow('progress');
+					gfx.closeDialog('progress');
 					if (error !== SWFUpload.UPLOAD_ERROR.FILE_CANCELLED) {
 						window.alert(msg);
 					}
 				},
 				'upload_success_handler' : function (file, result) {
 					this.setButtonDisabled(false);
-					gfx.closeWindow('progress');
+					gfx.closeDialog('progress');
 					if (JSON && JSON.parse) {
 						/* Fx 3.1 Native JSON parser */
 						try {
@@ -379,7 +501,7 @@ gfx.editor = {
 					} else if (result.error) {
 						window.alert(T[result.tag] || result.error);
 					} else {
-						gfx.editor.changeAvatar(result.img, './useravatars/' + result.img);
+						gfx.page.changeAvatar(result.img, './useravatars/' + result.img);
 					}
 				}
 			}
@@ -389,7 +511,7 @@ gfx.editor = {
 				containment: 'document',
 				revert: 250,
 				update: function (e, ui) {
-					gfx.editor.featureChanged = true;
+					gfx.page.featureChanged = true;
 				}
 			}
 		);
@@ -399,7 +521,7 @@ gfx.editor = {
 				containment: 'document',
 				revert: 250,
 				update: function () {
-					gfx.editor.groupChanged = true;
+					gfx.page.groupChanged = true;
 				}
 			}
 		);
@@ -410,86 +532,15 @@ gfx.editor = {
 				//handle: 'p > a',
 				connectWith: ['#groups .group-addons'],
 				update: function () {
-					gfx.editor.addonChanged = true;
+					gfx.page.addonChanged = true;
 				}
 			}
 		);
-	},
-	'forceStop' : function () {
-		if (gfx.xhr) {
-			gfx.xhr.abort();
-		}
-		//because Flash object doesn't init before openwindow(avatar);
-		try {
-			gfx.editor.swfupload.cancelUpload();
-		} catch (e) {
-		}
-		gfx.closeWindow('progress');
-	},
-	'changeFeatureSelection' : function () {
-		var s = [];
-		gfx.editor.featureChanged = true;
-		$('#featureselection input:checked').each(
-			function (i) {
-				var t = $(this);
-				s[s.length] = [
-					this.name.substr(3),
-					this.id.substr(3),
-					t.next().text(),
-					t.next().attr('title')
-				];
-			}
-		);
-		if (s.length !== 3) {
-			window.alert(T.UI.FEATURES_COUNT);
-			return;
-		}
-		var Feature = function (d) {
-			return $(document.createElement('div'))
-			.attr({
-				'id' : d[1],
-				'class' : 'feature'
-			})
-			.append(
-				$(document.createElement('h2'))
-				.attr('id', 'featureid-' + d[0])
-				.text(d[2])
-			).append(
-				$(document.createElement('p'))
-				.text(d[3])
-			).append(
-				$(document.createElement('p'))
-				.addClass('link')
-				.append(
-					$(document.createElement('a'))
-					.attr('href', './features/' + d[1])
-					.text('More...')
-				)
-			);
-		};
-		$('.feature').each(
-			function (i) {
-				if (!$('#fs_' + this.id + ':checked').length) {
-					$(this).remove();
-				}
-			}
-		);
-		var f = $('#features');
-		$.each(
-			s,
-			function (i, d) {
-				if (!$('#' + d[1]).length) {
-					f.append(new Feature(d));
-				}
-			}
-		);
-		f.sortable("refresh");
-		return false;
 	},
 	'changeAvatar' : function (avatar, url) {
-		gfx.editor.avatar = avatar;
+		gfx.page.avatar = avatar;
 		$('#title-avatar img:only-child').attr('src', url);
-		gfx.closeWindow('avatar');
+		gfx.closeDialog('avatar');
 	},
 	'savePage' : function () {
 		//Gather data
@@ -504,12 +555,12 @@ gfx.editor = {
 			return;
 		}
 		var g = $('.group-title input:checked');
-		if (gfx.editor.groupChanged && !g.length) {
+		if (gfx.page.groupChanged && !g.length) {
 			window.alert(T.UI.NO_GROUPS);
 			return;
 		}
 		if (d.name === '') {
-			gfx.openWindow('almostdone');
+			gfx.openDialog('almostdone');
 			$('#name').focus();
 			return;
 		}
@@ -517,31 +568,31 @@ gfx.editor = {
 			$('#info_name').val($('#name').val());
 			$('#name').val('');
 		}
-		if (gfx.editor.avatar) {
-			d.avatar = gfx.editor.avatar;
+		if (gfx.page.avatar) {
+			d.avatar = gfx.page.avatar;
 		}
-		if (gfx.editor.infoChanged) {
+		if (gfx.page.infoChanged) {
 			d.email = $('#info_email').val();
 			d.web = $('#info_web').val();
 			d.blog = $('#info_blog').val();
 			d.forum = $('#info_forum').val();
 			d.bio = $('#info_bio').val();
 		}
-		if (gfx.editor.featureChanged) {
+		if (gfx.page.featureChanged) {
 			$('.feature h2').each(
 				function (i) {
 					d['features[' + (i+1) + ']'] = this.id.substr(10);
 				}
 			);
 		}
-		if (gfx.editor.groupChanged) {
+		if (gfx.page.groupChanged) {
 			g.each(
 				function (i) {
 					d['groups[' + (i+1) + ']'] = $(this).parent().attr('id').substr(2);
 				}
 			);
 		}
-		if (gfx.editor.addonChanged) {
+		if (gfx.page.addonChanged) {
 			$('#groups .addon').each(
 				function (i) {
 					d['addons[' + (i+1) + '][id]'] = this.id.substr(2);
@@ -573,15 +624,15 @@ gfx.editor = {
 						return;
 					}
 
-					gfx.editor.infoChanged
-					= gfx.editor.avatar
-					= gfx.editor.featureChanged
-					= gfx.editor.groupChanged
-					= gfx.editor.addonChanged = null;
+					gfx.page.infoChanged
+					= gfx.page.avatar
+					= gfx.page.featureChanged
+					= gfx.page.groupChanged
+					= gfx.page.addonChanged = null;
 
 					$('#window_userpage_url').attr('href', './' + result.name);
-					gfx.closeWindow('almostdone');
-					gfx.openWindow('editcomplete');
+					gfx.closeDialog('almostdone');
+					gfx.openDialog('editcomplete');
 				}
 			}
 		);
@@ -675,96 +726,12 @@ gfx.editor = {
 								$(this).remove();
 							}
 						);
-						gfx.editor.addonChanged = true;
+						gfx.page.addonChanged = true;
 						return false;
 					}
 				)
 			);
 		}
 		return o;
-	},
-	'queryAddon' : function () {
-		var r = $('#addon_query_result').empty();
-		$('#addon_query_desc').show().text(String.fromCharCode(160)); // &nbsp;
-		$('#addon_query_notfound').hide();
-		gfx.xhr = $.ajax(
-			{
-				url: './addon/query',
-				data: {
-					'q' : $('#addon_query').val().replace(/^https:\/\/addons.mozilla.org\/[\w\-]{5}\/firefox\/addon\/(\d+)$/, '$1')
-				},
-				success: function (result, status) {
-					if (result.error) {
-						window.alert(T[result.tag] || result.error);
-						return;
-					}
-					if (!result.addons.length) {
-						$('#addon_query_notfound').show();
-						$('#addon_query_desc').hide();
-						return;
-					}
-					$('#addon_query_desc').text(T.UI.ADDON_SEARCH_RESULT);
-					$.each(
-						result.addons,
-						function (i, d) {
-							r.append(
-								new gfx.editor.Addon(d, true, false)
-							);
-						}
-					);
-					if (result.addons.length === 1) {
-						r.find('input[disabled!=true]').attr('checked', true);
-					}
-				}
-			}
-		);
-	},
-	'suggestAddon' : function () {
-		var r = $('#addon_query_result').empty();
-		$('#addon_query_desc').show().text(String.fromCharCode(160)); // &nbsp;
-		$('#addon_query_notfound').hide();
-		gfx.xhr = $.ajax(
-			{
-				url: './addon/suggest',
-				data: {
-					'g' : gfx.editor.currentGroup
-				},
-				/* don't show progress window  */
-				beforeSend : function (xhr) { },
-				complete : function (xhr, status) { },
-				error: function (xhr, status, error) { },
-				success: function (result, status) {
-					/*if (result.error) {
-						window.alert(T[result.tag] || result.error);
-						return;
-					}*/
-					if (!result.addons.length) {
-					/*	$('#addon_query_notfound').show();
-						$('#addon_query_desc').hide();*/
-						return;
-					}
-					$('#addon_query_desc').text(T.UI.ADDON_SUGGEST_LIST);
-					$.each(
-						result.addons,
-						function (i, d) {
-							r.append(
-								new gfx.editor.Addon(d, true, false)
-							);
-						}
-					);
-				}
-			}
-		);
-	},
-	'addAddon' : function () {
-		$('#addon_query_result .add-addon input:checked').each(
-			function () {
-				$('#g_' + gfx.editor.currentGroup + ' + div.group-addons').append(
-					new gfx.editor.Addon($(this).data('addon'), false, true)
-				).sortable('refresh');
-			}
-		);
-		gfx.closeWindow('addons');
-		gfx.editor.addonChanged = true;
 	}
 };
