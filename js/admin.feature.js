@@ -1,12 +1,4 @@
 gfx.admin = {
-	'bind' : {
-		'click' : {
-			'#link_manage a' : function () {
-				gfx.openDialog('admin');
-				return false;
-			}
-		}
-	},
 	'dialog' : {
 		'admin' : {
 			'width' : 800,
@@ -70,6 +62,5 @@ gfx.admin = {
 			},
 			550
 		);
-		$('#link_manage').show();
 	}
 };

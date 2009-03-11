@@ -309,13 +309,27 @@ var gfx = {
 					);
 					gfx.openDialog('extinstall');
 					window.InstallTrigger.install(l);
+				},
+				'#link_manage a' : function () {
+					gfx.openDialog('admin');
+					return false;
 				}
 			},
 			'change' : {
 				'#openid_sp' : function () {
 					$('#openid-identifier').val(this.value);
 				}
-			}
+			},
+			'mouseover' : {
+				'#link_manage' : function () {
+					$(this).addClass('ui-state-hover');
+				}
+			},
+			'mouseout' : {
+				'#link_manage' : function () {
+					$(this).removeClass('ui-state-hover');
+				}
+			}			
 		},
 		'dialog' : {
 			'login' : {
@@ -374,6 +388,7 @@ var gfx = {
 			}
 			
 			showMessage($('.message:first'));
+			$('#link_manage').show();
 		}
 	},
 	'openDialog' : function (id) {

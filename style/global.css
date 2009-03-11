@@ -92,8 +92,20 @@ optgroup {
 	float: right;
 }
 
-#header #link_manage {
+#link_manage {
 	display: none;
+	position: fixed;
+	bottom: 1em; right: 2em; z-index: 10;
+	opacity: 0.2;
+	padding: 0.5em;
+}
+
+#link_manage.ui-state-hover {
+	opacity: 1;
+}
+
+#link_manage .ui-icon {
+	float: left; margin-right: 0.3em;
 }
 
 #footer {

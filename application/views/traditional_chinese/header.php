@@ -14,11 +14,13 @@ if (isset($id)) {
 ?><a href="<?php print site_url($name) ?>">我的頁面</a> / <a href="<?php print site_url('editor') ?>">編輯</a> / <a href="<?php print site_url('sticker') ?>">宣傳貼紙</a><?php
 	} else { ?><a href="<?php print site_url('editor') ?>">編輯</a><?php
 	}
-	if ($admin === 'Y') {
-?><span id="link_manage"> / <a href="#"><strong>管理此頁</strong></a></span><?php
-	}
 ?> / <a href="#" id="link_logout">登出</a>)</p>
 	</div>
+<?php
+	if ($admin === 'Y') {
+?><p id="link_manage" class="ui-state-default ui-corner-all"><a href="#"><span class="ui-icon ui-icon-gear">[*]</span>管理此頁</a></p><?php
+	}
+?>
 	<form id="logout_form" action="<?php print site_url('auth/logout'); ?>" method="post">
 		<input type="hidden" id="token" name="token" value="<?php print md5($id . $this->config->item('gfx_token')) ?>" />
 		<p><input type="submit" value="登出" /></p>

@@ -14,11 +14,13 @@ if (isset($id)) {
 ?><a href="<?php print site_url($name) ?>">My Page</a> / <a href="<?php print site_url('editor') ?>">Edit</a> / <a href="<?php print site_url('sticker') ?>">Stickers and Badges</a><?php
 	} else { ?><a href="<?php print site_url('editor') ?>">Edit</a><?php
 	}
-	if ($admin === 'Y') {
-?><span id="link_manage"> / <a href="#"><strong>Manage</strong></a></span><?php
-	}
 ?> / <a href="#" id="link_logout">Log out</a>)</p>
 	</div>
+<?php
+	if ($admin === 'Y') {
+?><p id="link_manage" class="ui-state-default ui-corner-all"><a href="#"><span class="ui-icon ui-icon-gear">[*]</span>Manage</a></p><?php
+	}
+?>
 	<form id="logout_form" action="<?php print site_url('auth/logout'); ?>" method="post">
 		<input type="hidden" id="token" name="token" value="<?php print md5($id . $this->config->item('gfx_token')) ?>" />
 		<p><input type="submit" value="Logout" /></p>
