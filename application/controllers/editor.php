@@ -7,11 +7,12 @@ class Editor extends Controller {
 		$this->load->database();
 	}
 	function index() {
-		if (!$this->session->userdata('id')) {
-			$this->session->set_flashdata('message', 'error:alert:' . $this->lang->line('gfx_message_editor_notlogin'));
+		$this->load->helper('gfx');
+		if (!checkAuth(false, false, 'flashdata')) {
 			header('Location: ' . base_url());
 			exit();
 		}
+
 		$this->load->helper('form');
 		$user = $this->db->query('SELECT * FROM users WHERE `id` = ' . $this->session->userdata('id') . ' LIMIT 1');
 		if ($user->num_rows() === 0) {
@@ -63,19 +64,16 @@ class Editor extends Controller {
 		$this->parser->page($data, $this->session->userdata('id'), $user->row_array());
 	}
 	function save() {
-		$this->load->config('gfx');
-		if (!$this->session->userdata('id')) {
-			$this->json_error('Not Logged In.', 'EDITOR_NOT_LOGGED_IN');
-		}
+		$this->load->helper('gfx');
+		checkAuth(true, false, 'json');
+
 		if ($this->input->post('name') === false) {
-			$this->json_error('No Name Provided', 'EDITOR_SAVE_NO_NAME');
+			json_message('EDITOR_NAME_EMPTY');
 		}
 		if ($this->input->post('title') === false) {
-			$this->json_error('No Title Provided', 'EDITOR_SAVE_NO_TITLE');
+			json_message('EDITOR_TITLE_EMPTY');
 		}
-		if ($this->input->post('token') !== md5($this->session->userdata('id') . $this->config->item('gfx_token'))) {
-			$this->json_error('Wrong Token', 'EDITOR_SAVE_ERROR_TOKEN');
-		}
+
 		$data = array(
 			'name' => $this->input->post('name'),
 			'title' => $this->input->post('title')
@@ -93,10 +91,11 @@ class Editor extends Controller {
 				if (preg_match('/^[0-9a-z\/]+\.(gif|jpg|jpeg|png)$/i', $a) && file_exists('./useravatars/' . $a)) {
 					$data['avatar'] = $a;
 				} else {
-					$this->json_error('Wrong avatar', 'EDITOR_SAVE_ERROR_AVATAR');
+					json_message('EDITOR_AVATAR_ERROR');
 				}
 			}
 		}
+
 		$this->load->config('gfx');
 		if (!preg_match('/^[a-zA-Z0-9_\-]+$/', $this->input->post('name'))
 			|| strlen($this->input->post('name')) > 200
@@ -106,7 +105,7 @@ class Editor extends Controller {
 				. 'WHERE `name` = ' . $this->db->escape($this->input->post('name'))
 				. ' AND `id` != ' . $this->session->userdata('id'))
 				->num_rows() !== 0) {
-			$this->json_error('Bad Name', 'EDITOR_BAD_NAME');
+			json_message('EDITOR_NAME_BAD');
 		}
 		$this->db->update('users', $data, array('id' => $this->session->userdata('id')));
 		if ($this->db->affected_rows() === 1) {
@@ -126,7 +125,7 @@ class Editor extends Controller {
 				$data['forum_id'] = $F[1];
 				$data['forum_username'] = $F[2];
 			} else {
-				$this->json_error('Forum code error', 'EDITOR_FORUM_CODE');
+				json_message('EDITOR_FORUM_CODE');
 			}
 		} elseif ($this->input->post('forum') === '') {
 				$data['forum_id'] = '';
@@ -139,7 +138,7 @@ class Editor extends Controller {
 			$i = 0;
 			foreach ($this->input->post('features') as $f) { // don't care about the keys
 				if (!is_numeric($f)) {
-					$this->json_error('Feature Content Error.', 'EDITOR_SAVE_FEATURE_ERROR');
+					json_message('EDITOR_FEATURE_ERROR');
 				}
 				if ($i < $query->num_rows()) {
 					$row = $query->row_array($i);
@@ -162,7 +161,7 @@ class Editor extends Controller {
 			$i = 0;
 			foreach ($this->input->post('groups') as $g) { // don't care about the keys
 				if (!is_numeric($g)) {
-					$this->json_error('Feature Content Error.', 'EDITOR_SAVE_FEATURE_ERROR');
+					json_message('EDITOR_GROUP_ERROR');
 				}
 				if ($i < $query->num_rows()) {
 					$row = $query->row_array($i);
@@ -184,7 +183,7 @@ class Editor extends Controller {
 			$i = 0;
 			foreach ($this->input->post('addons') as $a) { // don't care about the keys
 				if (!is_numeric($a['id'])) {
-					$this->json_error('Feature Content Error.', 'EDITOR_SAVE_FEATURE_ERROR');
+					json_message('EDITOR_ADDON_ERROR');
 				}
 				if ($i < $query->num_rows()) {
 					$row = $query->row_array($i);
@@ -261,11 +260,11 @@ class Editor extends Controller {
 			list($width, $height, $type) = getimagesize($data['full_path']);
 			if (!in_array($type, array(IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG))) {
 				unlink($data['full_path']);
-				$this->json_error('Wrong file type.', 'EDITOR_AVATAR_WRONG_FILE_TYPE');
+				json_message('EDITOR_AVATAR_WRONG_FILE_TYPE');
 			}
 			if ($width > 500 || $height > 500) {
 				unlink($data['full_path']);
-				$this->json_error('Image Size Too Large.', 'EDITOR_AVATAR_SIZE_TOO_LARGE');
+				json_message('EDITOR_AVATAR_SIZE_TOO_LARGE');
 			}
 			//Success!
 			header('Content-Type: text/javascript');
@@ -275,12 +274,6 @@ class Editor extends Controller {
 				)
 			);
 		}
-	}
-	function json_error($msg, $tag = false) {
-		header('Content-Type: text/javascript');
-		if ($tag) print json_encode(array('error' => $msg, 'tag' => $tag));
-		else print json_encode(array('error' => $msg));
-		exit();
 	}
 }
 

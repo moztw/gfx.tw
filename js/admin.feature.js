@@ -28,22 +28,15 @@ gfx.admin = {
 						'content' : $('#admin_content').val()
 					},
 					success: function (result, status) {
-						if (result.error) {
-							window.alert(T[result.tag] || result.error);
+						if (gfx.ajaxError(result)) {
 							return;
 						}
-						if (result.message) {
-							if (result.message.type === 'error') {
-								window.alert(result.message.msg);
-							} else {
-								gfx.message(
-									result.message.type,
-									result.message.icon,
-									result.message.msg
-								);
-								gfx.closeWindow('admin');
-							}
-						}
+						gfx.message(
+							result.message.type,
+							result.message.icon,
+							result.message.msg
+						);
+						gfx.closeDialog('admin');
 					}
 				}
 			);

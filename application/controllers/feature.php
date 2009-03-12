@@ -77,71 +77,17 @@ class Feature extends Controller {
 	}
 	function update() {
 		$this->load->config('gfx');
-		/* Check token and admin */
-		if (
-			($this->input->post('token') !== md5($this->session->userdata('id') . $this->config->item('gfx_token')))
-			|| ($this->session->userdata('admin') !== 'Y')
-		) {
-			//$this->session->set_flashdata('message', 'error:alert:' . $this->lang->line('gfx_message_wrong_token'));
-			//header('Location: ' . base_url());
-			print json_encode(
-				array(
-					'message' => array(
-						'type' => 'error',
-						'icon' => 'alert',
-						'msg' => $this->lang->line('gfx_message_wrong_token')
-					)
-				)
-			);
-			exit();
-		}
-		/* Check is really admin */
-		$this->load->database();
-		$data = $this->db->query('SELECT `admin` FROM `users` WHERE `id` = ' . $this->session->userdata('id') . ';');
-		if ($data->num_rows() === 0 || $data->row()->admin !== 'Y') {
-			//$this->session->set_flashdata('message', 'error:alert:' . $this->lang->line('gfx_message_wrong_token'));
-			//header('Location: ' . base_url());
-			print json_encode(
-				array(
-					'message' => array(
-						'type' => 'error',
-						'icon' => 'alert',
-						'msg' => $this->lang->line('gfx_message_wrong_token')
-					)
-				)
-			);
-			exit();
-		}
-		$data->free_result();
+		$this->load->helper('gfx');
+		checkAuth(true, true, 'json');
 		/* Feature name cannot collide function name */
 		if (in_array($this->input->post('name'), array('update', 'delete'))) {
-			print json_encode(
-				array(
-					'message' => array(
-						'type' => 'error',
-						'icon' => 'alert',
-						'msg' => $this->lang->line('gfx_message_error_feature_name')
-					)
-				)
-			);
-			exit();
+			json_message('error_feature_name');
 		}
 		/* Check whether name already used */
 		$data = $this->db->query('SELECT `name` FROM `features` WHERE `id` != ' . $this->input->post('id')
 			. ' AND `name` = ' . $this->db->escape($this->input->post('name')) . ';');
 		if ($data->num_rows() !== 0) {
-			//$this->session->set_flashdata('message', 'error:alert:' . $this->lang->line('gfx_message_dup_login'));
-			//header('Location: ' . base_url());
-			print json_encode(
-				array(
-					'message' => array(
-						'type' => 'error',
-						'icon' => 'alert',
-						'msg' => $this->lang->line('gfx_message_dup_feature_name')
-					)
-				)
-			);
-			exit();
+			json_message('dup_feature_name');
 		}
 		$data->free_result();
 		/* Update data */
@@ -161,17 +107,8 @@ class Feature extends Controller {
 		$this->load->library('cache');
 		$this->cache->remove($this->input->post('name'), 'feature-inframe');
 		$this->cache->remove($this->input->post('name'), 'feature');
-		//$this->session->set_flashdata('message', 'highlight:info:' . $this->lang->line('gfx_message_user_updated'));
-		//header('Location: ' . site_url($data->row()->name));
-		print json_encode(
-			array(
-				'message' => array(
-					'type' => 'highlight',
-					'icon' => 'info',
-					'msg' => $this->lang->line('gfx_message_feature_updated')
-				)
-			)
-		);
+
+		json_message('feature_updated', 'highlight', 'info');
 	}
 }
 

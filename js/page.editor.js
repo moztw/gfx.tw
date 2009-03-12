@@ -32,7 +32,7 @@ gfx.page = {
 					}
 				);
 				if (s.length !== 3) {
-					window.alert(T.UI.FEATURES_COUNT);
+					gfx.alert('EDITOR_FEATURE_COUNT');
 					return;
 				}
 				var Feature = function (d) {
@@ -107,6 +107,7 @@ gfx.page = {
 					{
 						url: './addon/suggest',
 						data: {
+							'token' : $('#token').val(),
 							'g' : gfx.page.currentGroup
 						},
 						/* don't show progress window  */
@@ -114,10 +115,13 @@ gfx.page = {
 						complete : function (xhr, status) { },
 						error: function (xhr, status, error) { },
 						success: function (result, status) {
-							/*if (result.error) {
-								window.alert(T[result.tag] || result.error);
+							/*if (gfx.ajaxError(result)) {
 								return;
 							}*/
+							/* don't alert ajax error */
+							if (result.message) {
+								return;
+							}
 							if (!result.addons.length) {
 							/*	$('#addon_query_notfound').show();
 								$('#addon_query_desc').hide();*/
@@ -223,12 +227,12 @@ gfx.page = {
 				gfx.xhr = $.ajax(
 					{
 						url: './addon/query',
-						data: {
+						data: {	
+							'token' : $('#token').val(),
 							'q' : $('#addon_query').val().replace(/^https:\/\/addons.mozilla.org\/[\w\-]{5}\/firefox\/addon\/(\d+)$/, '$1')
 						},
 						success: function (result, status) {
-							if (result.error) {
-								window.alert(T[result.tag] || result.error);
+							if (gfx.ajaxError(result)) {
 								return;
 							}
 							if (!result.addons.length) {
@@ -328,7 +332,7 @@ gfx.page = {
 			gfx.closeDialog('addons');
 			gfx.page.addonChanged = true;
 		};
-		this.dialog.delete.buttons[T.BUTTONS.DELETE_OK] = function () {
+		this.dialog['delete'].buttons[T.BUTTONS.DELETE_OK] = function () {
 			window.onbeforeunload = function (e) {
 				return null;
 			}
@@ -455,16 +459,16 @@ gfx.page = {
 				'file_queue_error_handler' : function (file, error, msg) {
 					switch (error) {
 						case SWFUpload.QUEUE_ERROR.ZERO_BYTE_FILE:
-						window.alert(T.SWFUPLOAD.ZERO_BYTE_FILE || msg);
+						gfx.alert(T.SWFUPLOAD.ZERO_BYTE_FILE || msg, 'SWFUPLOAD_ZERO_BYTE_FILE');
 						break;
 						case SWFUpload.QUEUE_ERROR.FILE_EXCEEDS_SIZE_LIMIT:
-						window.alert(T.SWFUPLOAD.FILE_EXCEEDS_SIZE_LIMIT || msg);
+						gfx.alert(T.SWFUPLOAD.FILE_EXCEEDS_SIZE_LIMIT || msg, 'SWFUPLOAD_FILE_EXCEEDS_SIZE_LIMIT');
 						break;
 						case SWFUpload.QUEUE_ERROR.INVALID_FILETYPE:
-						window.alert(T.SWFUPLOAD.INVALID_FILETYPE || msg);
+						gfx.alert(T.SWFUPLOAD.INVALID_FILETYPE || msg, 'SWFUPLOAD_INVALID_FILETYPE');
 						break;
 						default:
-						window.alert(msg);
+						gfx.alert(msg, 'SWFUPLOAD_UNKNOWN_QUERE_ERROR');
 						break;
 					}
 				},
@@ -472,7 +476,7 @@ gfx.page = {
 					this.setButtonDisabled(false);
 					gfx.closeDialog('progress');
 					if (error !== SWFUpload.UPLOAD_ERROR.FILE_CANCELLED) {
-						window.alert(msg);
+						gfx.alert(msg, 'SWFUPLOAD_UNKNOWN_UPLOAD_ERROR');
 					}
 				},
 				'upload_success_handler' : function (file, result) {
@@ -488,19 +492,29 @@ gfx.page = {
 					} else {
 						//Great, jQuery doen't have a JSON.decode function w/o HTTP request.
 						//We get this from mootools source.
-						var decode = function (string) {
-							if (!(/^[,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t]*$/).test(string.replace(/\\./g, '@').replace(/"[^"\\\n\r]*"/g, ''))) {
-								return null;
+						if (JSON && JSON.parse) {
+							//Firefox 3.1 JSON parser
+							try {
+								result = JSON.parse(result);
+							} catch (e) {
+								result = null;
 							}
-							return eval('(' + string + ')');
-						};
-						result = decode(result);
+						} else {
+							var decode = function (string) {
+								if (!(/^[,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t]*$/).test(string.replace(/\\./g, '@').replace(/"[^"\\\n\r]*"/g, ''))) {
+									return null;
+								}
+								return eval('(' + string + ')');
+							};
+							result = decode(result);
+						}
 					}
 					if (!result) {
-						window.alert(T.AJAX_ERROR.PARSE_RESPONSE);
-					} else if (result.error) {
-						window.alert(T[result.tag] || result.error);
+						gfx.alert(T.AJAX_ERROR.PARSE_RESPONSE, 'AJAX_ERROR_PARSE_RESPONSE');
 					} else {
+						if (gfx.ajaxError(result)) {
+							return;
+						}
 						gfx.page.changeAvatar(result.img, './useravatars/' + result.img);
 					}
 				}
@@ -550,13 +564,13 @@ gfx.page = {
 			'name' : $('#info_name').val() || $('#name').val()
 		};
 		if (d.title === '') {
-			window.alert(T.UI.NO_TITLE);
+			gfx.alert('EDITOR_TITLE_EMPTY');
 			$('#title-name-edit input').focus();
 			return;
 		}
 		var g = $('.group-title input:checked');
 		if (gfx.page.groupChanged && !g.length) {
-			window.alert(T.UI.NO_GROUPS);
+			gfx.alert('EDITOR_GROUP_EMPTY');
 			return;
 		}
 		if (d.name === '') {
@@ -602,15 +616,15 @@ gfx.page = {
 		}
 		//check for errors
 		if (d.title.length > 128) {
-			window.alert(T.UI.TITLE_LENGTH);
+			gfx.alert('EDITOR_TITLE_LENGTH');
 			return;
 		}
 		if (d.name.length > 60) {
-			window.alert(T.UI.NAME_LENGTH);
+			gfx.alert('EDITOR_NAME_LENGTH');
 			return;
 		}
 		if (!/^[a-zA-Z0-9_\-]+$/.test(d.name)) {
-			window.alert(T.EDITOR_BAD_NAME);
+			gfx.alert('EDITOR_NAME_BAD');
 			return;
 		}
 		//ajax send
@@ -619,8 +633,7 @@ gfx.page = {
 				url: './editor/save',
 				data: d,
 				success: function (result, status) {
-					if (result.error) {
-						window.alert(T[result.tag] || result.error);
+					if (gfx.ajaxError(result)) {
 						return;
 					}
 

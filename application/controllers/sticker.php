@@ -6,8 +6,8 @@ class Sticker extends Controller {
 		$this->load->database();
 	}
 	function index() {
-		if (!$this->session->userdata('id')) {
-			$this->session->set_flashdata('message', 'error:alert:' . $this->lang->line('gfx_message_sticker_notlogin'));
+		$this->load->helper('gfx');
+		if (!checkAuth(false, false, 'flashdata')) {
 			header('Location: ' . base_url());
 			exit();
 		}
@@ -15,11 +15,13 @@ class Sticker extends Controller {
 		if ($user->num_rows() === 0) {
 			//Rare cases where session exists but got deleted.
 			$this->session->unset_userdata('id');
+			$this->session->unset_userdata('name');
+			$this->session->unset_userdata('admin');
 			header('Location: ' . base_url());
 			exit();
 		}
 		if (substr($user->row()->name, 0, 8) === '__temp__') {
-			$this->session->set_flashdata('message', 'error:alert:' . $this->lang->line('gfx_message_sticker_nopage'));
+			flashdata_message('sticker_nopage');
 			header('Location: ' . base_url());
 			exit();
 		}

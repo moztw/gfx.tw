@@ -6,14 +6,13 @@ class Addon extends Controller {
 		$this->load->scaffolding('addons');
 		$this->load->database();
 		$this->load->config('gfx');
+		$this->load->helper('gfx');
 	}
 	function index() {
 		show_404();
 	}
 	function query() {
-		if (!$this->session->userdata('id')) {
-			$this->json_error('Not Logged In.', 'EDITOR_NOT_LOGGED_IN');
-		}
+		checkAuth(true, false, 'json');
 		//The user specific want to find the addon through fetch
 		if (is_numeric($this->input->post('q')) && $this->input->post('q') !== '0') {
 			$this->fetch($this->input->post('q'));
@@ -46,12 +45,9 @@ class Addon extends Controller {
 		print json_encode(array('addons' => $A));
 	}
 	function suggest() {
-		if (!$this->session->userdata('id')) {
-			$this->json_error('Not Logged In.', 'EDITOR_NOT_LOGGED_IN');
-		}
+		checkAuth(true, false, 'json');
 		if (!is_numeric($this->input->post('g'))) {
-			$this->json_error('Not number');
-			return;
+			json_message('group_not_number');
 		}
 		$addons = $this->db->query('SELECT t1.*, t2.addon_id, COUNT(t2.id) FROM addons t1, u2a t2 '
 			. 'WHERE t2.group_id =  ' . $this->db->escape($this->input->post('g')) . ' AND t1.id = t2.addon_id '
@@ -81,13 +77,12 @@ class Addon extends Controller {
 		print json_encode(array('addons' => $A));
 	}
 	function fetch($amo_id) {
-		if (!is_numeric($amo_id) || $amo_id === '0') {
-			$this->json_error('Not Number.');
-		}
 		$addons = $this->db->get_where('addons', array('amo_id' => $amo_id), 1);
 		if (!$addons->num_rows()) {
 			$data = $this->get_amo_content($amo_id);
-			if (!$data) $this->json_error('Fetch failed', 'ADDON_CANNOT_FETCH');
+			if (!$data) {
+				json_message('amo_fetch_failed');
+			}
 			$this->db->insert(
 				'addons',
 				$data
@@ -136,12 +131,6 @@ class Addon extends Controller {
 			'description' => (isset($D[1]))?html_entity_decode($D[1], ENT_QUOTES, 'UTF-8'):'',
 			'fetched' => date('Y-m-d H:m:s')
 		);
-	}
-	function json_error($msg, $tag = false) {
-		header('Content-Type: text/javascript');
-		if ($tag) print json_encode(array('error' => $msg, 'tag' => $tag));
-		else print json_encode(array('error' => $msg));
-		exit();
 	}
 }
 

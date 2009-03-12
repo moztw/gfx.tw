@@ -29,16 +29,16 @@ class Auth extends Controller {
 	}
 	function check() {
 		$this->config->load('openid');
-
+		$this->load->helper('gfx');
 		$this->openid->set_request_to(site_url($this->config->item('openid_request_to')));
 		$response = $this->openid->getResponse();
 		switch ($response->status) {
 			case Auth_OpenID_CANCEL:
-				$this->session->set_flashdata('message', 'highlight:info:' . $this->lang->line('gfx_message_auth_login_canceled'));
+				flashdata_message('auth_login_canceled', 'highlight', 'info:');
 				header('Location: ' . base_url());
 				break;
 			case Auth_OpenID_FAILURE:
-				$this->session->set_flashdata('message', 'error:alert:' . $this->lang->line('gfx_message_auth_login_failed'));
+				flashdata_message('auth_login_failed');
 				header('Location: ' . base_url());
 				break;
 			case Auth_OpenID_SUCCESS:
@@ -55,7 +55,7 @@ class Auth extends Controller {
 					$sreg = $sreg_resp->contents();
 					$data = array(
 						'login' => $open_id,
-						'name' => '__temp__' . md5($open_id), /* require unique */
+						'name' => '__temp__' . md5($open_id . time()), /* require unique */
 						'title' => '',
 						'admin' => 'N',
 						'avatar' => '',
@@ -98,7 +98,7 @@ class Auth extends Controller {
 						Also, you really can't save much thing in the cookie.
 					 */
 					 //TBD: hide user id in cookie (if we don't want ppl to know number of users on site)
-				$this->session->set_flashdata('message', 'highlight:info:' . $this->lang->line('gfx_message_auth_login'));
+				flashdata_message('auth_login', 'highlight', 'info');
 				header('Location: ' . site_url('editor'));
 		}
 		if (isset($_COOKIE[session_name()])) {
@@ -123,55 +123,41 @@ class Auth extends Controller {
 	}
 	function logout() {
 		$this->load->config('gfx');
-		if (
-			($this->input->post('session_id') === $this->session->userdata('session_id'))
-			|| ($this->input->post('token') === md5($this->session->userdata('id') . $this->config->item('gfx_token')))
-		) {
-			$this->session->unset_userdata('id');
-			$this->session->unset_userdata('name');
-			$this->session->unset_userdata('admin');
-			$this->session->set_flashdata('message', 'highlight:info:' . $this->lang->line('gfx_message_auth_logout'));
-		} else {
-			$this->session->set_flashdata('message', 'error:alert:' . $this->lang->line('gfx_message_wrong_token'));
+		$this->load->helper('gfx');
+		if (!checkAuth(true, false, 'flashdata')) {
+			header('Location: ' . base_url());
+			exit();
 		}
+		$this->session->unset_userdata('id');
+		$this->session->unset_userdata('name');
+		$this->session->unset_userdata('admin');
+		flashdata_message('auth_logout', 'highlight', 'info');
 		header('Location: ' . base_url());
 	}
 	function switchto() {
 		$this->load->config('gfx');
-		if (
-			($this->input->post('token') === md5($this->session->userdata('id') . $this->config->item('gfx_token')))
-			&& ($this->session->userdata('admin') === 'Y')
-		) {
-			$this->load->database();
-			$data = $this->db->query('SELECT `admin` FROM `users` WHERE `id` = ' . $this->session->userdata('id') . ';');
-			if ($data->num_rows() === 0 || $data->row()->admin !== 'Y') {
-				$this->session->set_flashdata('message', 'error:alert:' . $this->lang->line('gfx_message_wrong_token'));
-				header('Location: ' . base_url());
-			}
-			$data->free_result();
-			$user = $this->db->get_where('users', array('id' => $this->input->post('id')));
-			if ($user->num_rows() !== 0) {
-				$data = $user->row_array();
-				$this->session->set_userdata(
-					array(
-						'id' => $data['id'],
-						'admin' => $data['admin']
-					)
-				);
-				if (substr($data['name'], 0, 8) !== '__temp__') {
-					$this->session->set_userdata(array('name' => $data['name']));
-				}
-				 //TBD: hide user id in cookie (if we don't want ppl to know number of users on site)
-				$this->session->set_flashdata('message', 'highlight:info:' . $this->lang->line('gfx_message_auth_login'));
-				header('Location: ' . site_url('editor'));
-			} else {
-				$this->session->set_flashdata('message', 'error:alert:' . $this->lang->line('gfx_message_wrong_token'));
-				header('Location: ' . base_url());
-			}
-		} else {
-			$this->session->set_flashdata('message', 'error:alert:' . $this->lang->line('gfx_message_wrong_token'));
+		$this->load->helper('gfx');
+		if (!checkAuth(true, true, 'flashdata')) {
 			header('Location: ' . base_url());
+			exit();
 		}
+		$user = $this->db->get_where('users', array('id' => $this->input->post('id')));
+		if ($user->num_rows() === 0) {
+			flashdata_message('no_such_user');
+			header('Location: ' . base_url());
+			exit();
+		}
+		$data = $user->row_array();
+		$userdata = array(
+			'id' => $data['id'],
+			'admin' => $data['admin']
+		);
+		if (substr($data['name'], 0, 8) !== '__temp__') {
+			$userdata['name'] = $data['name'];
+		}
+		$this->session->set_userdata($userdata);
+		flashdata_message('auth_login', 'highlight', 'info');
+		header('Location: ' . site_url('editor'));
 	}
 }
 

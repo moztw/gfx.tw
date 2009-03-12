@@ -32,7 +32,7 @@ class GFX_Parser extends CI_Parser {
 			$data['messages'][] = array(
 				'type' => $message[0], 
 				'icon' => $message[1],
-				'message' => $message[2]
+				'message' => ($CI->lang->line('gfx_message_' . $message[2]))?$CI->lang->line('gfx_message_' . $message[2]):$message[2]
 			);
 		}
 
