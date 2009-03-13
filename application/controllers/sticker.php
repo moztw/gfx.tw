@@ -14,15 +14,14 @@ class Sticker extends Controller {
 		$user = $this->db->query('SELECT * FROM users WHERE `id` = ' . $this->session->userdata('id') . ' LIMIT 1');
 		if ($user->num_rows() === 0) {
 			//Rare cases where session exists but got deleted.
-			$this->session->unset_userdata('id');
-			$this->session->unset_userdata('name');
-			$this->session->unset_userdata('admin');
+			session_data_unset(false);
+			flashdata_message('no_such_user');
 			header('Location: ' . base_url());
 			exit();
 		}
 		if (substr($user->row()->name, 0, 8) === '__temp__') {
 			flashdata_message('sticker_nopage');
-			header('Location: ' . base_url());
+			header('Location: ' . site_url('editor'));
 			exit();
 		}
 		$data = array(

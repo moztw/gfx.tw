@@ -51,6 +51,32 @@ function checkAuth($checkOrigin = false, $checkAdmin = false, $errorType = '') {
 	}
 	return $islogin;
 }
+function session_data_set($data, $msg = true) {
+	$CI =& get_instance();
+	if (substr($data['name'], 0, 8) === '__temp__') {
+		unset($data['name']);
+		if ($CI->session->userdata('name')) {
+			$CI->session->unset_userdata('name');
+		}
+	}
+	$CI->session->set_userdata($data);
+	if ($msg) {
+		flashdata_message('auth_login', 'highlight', 'info');
+	}
+}
+function session_data_unset($msg = true) {
+	$CI =& get_instance();
+	$CI->session->unset_userdata(
+		array(
+			'id' => '',
+			'admin' => '',
+			'name' => ''
+		)
+	);
+	if ($msg) {
+		flashdata_message('auth_logout', 'highlight', 'info');
+	}
+}
 function flashdata_message($tag = 'unknown_message', $type = 'error', $icon = 'alert') {
 	$CI =& get_instance();
 	$CI->session->set_flashdata(

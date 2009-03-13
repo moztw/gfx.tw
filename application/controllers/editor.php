@@ -17,7 +17,8 @@ class Editor extends Controller {
 		$user = $this->db->query('SELECT * FROM users WHERE `id` = ' . $this->session->userdata('id') . ' LIMIT 1');
 		if ($user->num_rows() === 0) {
 			//Rare cases where session exists but user got deleted.
-			$this->session->sess_destroy();
+			session_data_unset(false);
+			flashdata_message('no_such_user');
 			header('Location: ' . base_url());
 			exit();
 		}

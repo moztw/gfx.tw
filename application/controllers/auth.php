@@ -85,20 +85,13 @@ class Auth extends Controller {
 					$this->db->insert('u2g', array('user_id' => $data['id'], 'group_id' => '1', 'order' => '1'));
 					$this->db->insert('u2g', array('user_id' => $data['id'], 'group_id' => '2', 'order' => '2'));
 				}
-				$userdata = array(
-					'id' => $data['id'],
-					'admin' => $data['admin']
+				session_data_set(
+					array(
+						'id' => $data['id'],
+						'name' => $data['name'],
+						'admin' => $data['admin']
+					)
 				);
-				if (substr($data['name'], 0, 8) !== '__temp__') {
-					$userdata['name'] = $data['name'];
-				}
-				$this->session->set_userdata($userdata);
-					/*
-						We grab anything else from database coz user might open up two session at two places
-						Also, you really can't save much thing in the cookie.
-					 */
-					 //TBD: hide user id in cookie (if we don't want ppl to know number of users on site)
-				flashdata_message('auth_login', 'highlight', 'info');
 				header('Location: ' . site_url('editor'));
 		}
 		if (isset($_COOKIE[session_name()])) {
@@ -128,10 +121,7 @@ class Auth extends Controller {
 			header('Location: ' . base_url());
 			exit();
 		}
-		$this->session->unset_userdata('id');
-		$this->session->unset_userdata('name');
-		$this->session->unset_userdata('admin');
-		flashdata_message('auth_logout', 'highlight', 'info');
+		session_data_unset();
 		header('Location: ' . base_url());
 	}
 	function switchto() {
@@ -147,16 +137,13 @@ class Auth extends Controller {
 			header('Location: ' . base_url());
 			exit();
 		}
-		$data = $user->row_array();
-		$userdata = array(
-			'id' => $data['id'],
-			'admin' => $data['admin']
+		session_data_set(
+			array(
+				'id' => $user->row()->id,
+				'name' => $user->row()->name,
+				'admin' => $user->row()->admin
+			)
 		);
-		if (substr($data['name'], 0, 8) !== '__temp__') {
-			$userdata['name'] = $data['name'];
-		}
-		$this->session->set_userdata($userdata);
-		flashdata_message('auth_login', 'highlight', 'info');
 		header('Location: ' . site_url('editor'));
 	}
 }
