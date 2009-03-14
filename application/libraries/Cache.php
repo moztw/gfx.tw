@@ -33,7 +33,7 @@ class Cache
 	function is_cached($cache_id, $cache_group = NULL)
 	{
 		
-		if ($this->_get_expiry($cache_id, $cache_group) > time()) return TRUE;
+		if ($this->get_expiry($cache_id, $cache_group) > time()) return TRUE;
 		
 		$this->remove($cache_id, $cache_group);
 		
@@ -222,12 +222,16 @@ class Cache
 		if ($filecount == $delcount) @rmdir($group_dir);
 		
 	}
+
+	/**
+	 * 	Get expiry time of the file
+	 * 
+	 * 	@param	Cache Id
+	 * 	@param	Cache group Id
+	 * 	@return The timestamp or 0 if there is no cache
+	 */
 	
-	//
-	//	Private methods
-	//
-	
-	function _get_expiry($cache_id, $cache_group = NULL)
+	function get_expiry($cache_id, $cache_group = NULL)
 	{
 		
 		$file = $this->_file($cache_id, $cache_group).$this->options['expiry_postfix'];
@@ -237,6 +241,10 @@ class Cache
 		return intval(file_get_contents($file));
 		
 	}
+	
+	//
+	//	Private methods
+	//
 	
 	function _file($cache_id, $cache_group = NULL)
 	{
