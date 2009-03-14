@@ -96,51 +96,7 @@ gfx.page = {
 			},
 			'#groups .group-add-addon a' : function () {
 				gfx.page.currentGroup = this.parentNode.parentNode.id.substr(2);
-				gfx.openDialog('addons');
-				$('#addon_query').val('').focus();
-				
-				//suggest addon
-				var r = $('#addon_query_result').empty();
-				$('#addon_query_desc').show().text(String.fromCharCode(160)); // &nbsp;
-				$('#addon_query_notfound').hide();
-				gfx.xhr = $.ajax(
-					{
-						url: './addon/suggest',
-						data: {
-							'token' : $('#token').val(),
-							'g' : gfx.page.currentGroup
-						},
-						/* don't show progress window  */
-						beforeSend : function (xhr) { },
-						complete : function (xhr, status) { },
-						error: function (xhr, status, error) { },
-						success: function (result, status) {
-							/*if (gfx.ajaxError(result)) {
-								return;
-							}*/
-							/* don't alert ajax error */
-							if (result.message) {
-								return;
-							}
-							if (!result.addons.length) {
-							/*	$('#addon_query_notfound').show();
-								$('#addon_query_desc').hide();*/
-								return;
-							}
-							$('#addon_query_desc').text(T.UI.ADDON_SUGGEST_LIST);
-							$.each(
-								result.addons,
-								function (i, d) {
-									r.append(
-										new gfx.page.Addon(d, true, false)
-									);
-								}
-							);
-						}
-					}
-				);
-
-				
+				gfx.openDialog('addons');				
 				return false;
 			},
 			/*'.addon p > a' : function () {
@@ -158,7 +114,6 @@ gfx.page = {
 				return false;
 			},
 			'#userinfo button, #change-email' : function () {
-				gfx.page.infoChanged = true;
 				gfx.openDialog('info');
 			},
 			'.download a' : function () {
@@ -279,7 +234,13 @@ gfx.page = {
 			'width' : 350,
 			'height' : 250,
 			'buttons' : {},
-			'position' : ['center', 150]
+			'position' : ['center', 150],
+			'open' : function () {
+				$('#name').focus();
+			},
+			'close' : function () {
+				$('#name').val('');
+			}
 		},
 		'editcomplete' : {
 			'width' : 400,
@@ -290,13 +251,61 @@ gfx.page = {
 			'width' : 600,
 			'height': 400,
 			'buttons' : {},
-			'position' : ['center', 120]
+			'position' : ['center', 120],
+			'open' : function () {
+				gfx.page.infoChanged = true;
+				$('#info_name').focus();
+			}
 		},
 		'addons' : {
 			'width' : 800,
 			'height': 500,
 			'buttons' : {},
-			'position' : ['center', 50]
+			'position' : ['center', 50],
+			'open' : function () {
+				$('#addon_query').val('').focus();
+				
+				//suggest addon
+				var r = $('#addon_query_result').empty();
+				$('#addon_query_desc').show().text(String.fromCharCode(160)); // &nbsp;
+				$('#addon_query_notfound').hide();
+				gfx.xhr = $.ajax(
+					{
+						url: './addon/suggest',
+						data: {
+							'token' : $('#token').val(),
+							'g' : gfx.page.currentGroup
+						},
+						/* don't show progress window  */
+						beforeSend : function (xhr) { },
+						complete : function (xhr, status) { },
+						error: function (xhr, status, error) { },
+						success: function (result, status) {
+							/*if (gfx.ajaxError(result)) {
+								return;
+							}*/
+							/* don't alert ajax error */
+							if (result.message) {
+								return;
+							}
+							if (!result.addons.length) {
+							/*	$('#addon_query_notfound').show();
+								$('#addon_query_desc').hide();*/
+								return;
+							}
+							$('#addon_query_desc').text(T.UI.ADDON_SUGGEST_LIST);
+							$.each(
+								result.addons,
+								function (i, d) {
+									r.append(
+										new gfx.page.Addon(d, true, false)
+									);
+								}
+							);
+						}
+					}
+				);
+			}
 		},
 		'delete' : {
 			'width' : 400,
@@ -575,12 +584,7 @@ gfx.page = {
 		}
 		if (d.name === '') {
 			gfx.openDialog('almostdone');
-			$('#name').focus();
 			return;
-		}
-		if ($('#name').val()) {
-			$('#info_name').val($('#name').val());
-			$('#name').val('');
 		}
 		if (gfx.page.avatar) {
 			d.avatar = gfx.page.avatar;
@@ -636,6 +640,7 @@ gfx.page = {
 					if (gfx.ajaxError(result)) {
 						return;
 					}
+					$('#info_name').val(result.name);
 
 					gfx.page.infoChanged
 					= gfx.page.avatar

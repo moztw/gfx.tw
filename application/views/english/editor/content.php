@@ -133,7 +133,7 @@ while(isset($features[$i])) {
 			<span class="form-desc">Will not published; Glavatar avatar will change after reload.</span></p>
 			<p><label for="info_web">Website:</label> <?php print form_input(array('id' =>'info_web', 'value' => $web)); ?></p>
 			<p><label for="info_blog">Blog:</label> <?php print form_input(array('id' =>'info_blog', 'value' => $blog)); ?></p>
-			<p><label for="info_forum">Forum ID:</label> <?php print form_input(array('id' =>'info_forum', 'value' => ($forum_id && $forum_username)?(substr(md5($forum_id . $forum_username . '--secret-md5-string hash blah kkk'), 16) . '::' . $forum_id . '::' . $forum_username):'')); ?>
+			<p><label for="info_forum">Forum ID:</label> <?php print form_password(array('id' =>'info_forum', 'value' => ($forum_id && $forum_username)?'(keep-the-forum-username)':'')); ?>
 			<span class="form-desc">Get your authorization code <a href="http://forum.moztw.org/gfxcode.php" id="forum_auth">code</a>; remove the code to hide your forum username.</span>
 			<span class="form-desc" id="forum_auth_iframe">&nbsp;</span></p>
 			<p><label for="info_bio">One line bio:</label>

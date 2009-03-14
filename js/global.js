@@ -45,8 +45,10 @@ $(function () {
 					);
 					delete gfx[this].dialog;
 				}
-				gfx[this].onload.apply(setting);
-				delete gfx[this].onload;
+				if (gfx[this].onload) {
+					gfx[this].onload.apply(setting);
+					delete gfx[this].onload;
+				}
 			}
 		}
 	);
@@ -111,6 +113,9 @@ $(function () {
 	/* unset setting */
 	setting = null;
 
+	/* show the first tab or every tab set */
+	$('.tabs li:first').click();
+	
 	/* ajax setup */
 	$.ajaxSetup(
 		{
@@ -207,14 +212,6 @@ var gfx = {
 					return false;
 				},
 				'#features p.link a' : function () {
-					var resizeIfr = function (ifr, el) {
-						ifr.css(
-							{
-								width: el.width() + 'px',
-								height: el.height() + 'px'
-							}
-						);
-					};
 					var option = {
 						title: $(this).parents('.feature').find('h2').text(),
 						modal: true,
@@ -233,13 +230,13 @@ var gfx = {
 							$(ui.element).find('.ui-dialog-content div').hide();
 						},
 						'resize' : function (e, ui) {
-							resizeIfr(
+							gfx.fillContainer(
 								$(ui.element).find('.ui-dialog-content iframe'),
 								$(ui.element).find('.ui-dialog-content')
 							);
 						},
 						'open' : function (e) {
-							resizeIfr(
+							gfx.fillContainer(
 								$(e.target).find('iframe'),
 								$(e.target)
 							);
@@ -313,6 +310,13 @@ var gfx = {
 				'#link_manage a' : function () {
 					gfx.openDialog('admin');
 					return false;
+				},
+				'.tabs li' : function () {
+					$(this).addClass('ui-state-hover')
+					.siblings('li').removeClass('ui-state-hover')
+					.parent()
+					.siblings('.tab-content').eq($(this).prevAll().length).show()
+					.siblings('.tab-content').hide();
 				}
 			},
 			'change' : {
@@ -321,13 +325,13 @@ var gfx = {
 				}
 			},
 			'mouseover' : {
-				'#link_manage' : function () {
-					$(this).addClass('ui-state-hover');
+				'#link_manage a' : function () {
+					$(this).parent().addClass('ui-state-hover');
 				}
 			},
 			'mouseout' : {
-				'#link_manage' : function () {
-					$(this).removeClass('ui-state-hover');
+				'#link_manage a' : function () {
+					$(this).parent().removeClass('ui-state-hover');
 				}
 			}			
 		},
@@ -377,7 +381,6 @@ var gfx = {
 				$('#groups').removeClass('detailed');
 			}
 
-			
 			var showMessage = function (o) {
 				o.slideDown(
 					500, 
@@ -399,6 +402,26 @@ var gfx = {
 	},
 	'closeDialog' : function (id) {
 		$('#window_' + id).dialog("close");
+	},
+	'fillContainer' : function (element, container, option) {
+		if (option !== 'noheight') {
+			var h = container.height();
+			element.filter(':visible').siblings().each(
+				function () {
+					h -= this.offsetHeight;
+				}
+			);
+			element.height(h);
+		}
+		if (option !== 'nowidth') {
+			var w = container.width();
+			element.filter(':visible').siblings().each(
+				function () {
+					w -= this.offsetWidth;
+				}
+			);
+			element.width(w);
+		}
 	},
 	'message' : function (type, icon, msg) {
 		var o = $(document.createElement('div'))

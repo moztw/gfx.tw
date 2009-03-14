@@ -48,7 +48,8 @@ var T = {
 		ADDON_SEARCH_RESULT: '搜尋結果：',
 		ADMIN_DELETEUSER_CONFIRM: '確定要刪除這個帳號？',
 		ADMIN_FACEOFF_CONFIRM: '切換到帳號之後，您必須登出才能變回自己。您確定嗎？',
-		ADMIN_DELETEFEATURE_CONFIRM: '確定要刪除這個功能推薦？'
+		ADMIN_DELETEFEATURE_CONFIRM: '確定要刪除這個功能推薦？',
+		ADMIN_SITE_MANAGE: '網站管理'
 	},
 	/* $.dialog buttons */
 	BUTTONS: {
