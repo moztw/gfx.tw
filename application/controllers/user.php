@@ -9,7 +9,7 @@ class User extends Controller {
 		$this->load->config('gfx');
 		$this->view($this->config->item('gfx_home_user'));
 	}
-	function view($id) {
+	function view($name) {
 		/* xrds doc request, usually done by OpenID 2.0 op who checks "Relay Party" */
 		if (isset($_SERVER['HTTP_ACCEPT']) && strpos($_SERVER['HTTP_ACCEPT'], 'application/xrds+xml') !== false) {
 			header('X-XRDS-Location: ' . site_url('auth/xrds'));
@@ -19,33 +19,18 @@ class User extends Controller {
 			exit();
 		}
 
-		/* Redirect numeric id instead of showing pages (below) */
-		if (is_numeric($id)) {
-			$this->load->database();
-			$user = $this->db->query('SELECT `name` FROM `users` WHERE `id` = ' . $this->db->escape($id) . ';');
-			if ($user->num_rows() === 0 || substr($user->row()->name, 0, 8) === '__temp__') {
-				show_404();
-			} else {
-				header('Location: ' . site_url($user->row()->name));
-				exit();
-			}
-		}
-
 		$this->load->library('cache');
-		$data = $this->cache->get($id, 'user');
-		if (!$data || $this->session->userdata('admin') === 'Y') {
+		$this->load->helper('gfx');
+		checkETag($name, 'user');
+		$data = $this->cache->get($name, 'user');
+
+		if (!$data) {
 			$data = array();
 			$this->load->database();
-			//if (is_numeric($id)) {
-			//	$user = $this->db->query('SELECT * FROM users WHERE `id` = ' . $this->db->escape($id) . ' LIMIT 1');
-			//	$features = $this->db->query('SELECT t1.name, t1.title, t1.description FROM features t1, u2f t2 WHERE t2.feature_id = t1.id AND t2.user_id = ' . $this->db->escape($id) . ' ORDER BY t2.order ASC;');
-			//} else {
-				if (!preg_match('/^[a-zA-Z0-9_\-]+$/', $id) || substr($id, 0, 8) === '__temp__') {
-					show_404();
-				}
-				$user = $this->db->query('SELECT * FROM users WHERE `name` = ' . $this->db->escape($id) . ' LIMIT 1');
-				//$features = $this->db->query('SELECT t1.name, t1.title, t1.description FROM features t1, u2f t2, users t3 WHERE t2.feature_id = t1.id AND t2.user_id = t3.id AND t3.name = ' . $this->db->escape($id) . ' ORDER BY t2.order ASC;');
-			//}
+			if (!preg_match('/^[a-zA-Z0-9_\-]+$/', $name) || substr($name, 0, 8) === '__temp__') {
+				show_404();
+			}
+			$user = $this->db->query('SELECT * FROM users WHERE `name` = ' . $this->db->escape($name) . ' LIMIT 1');
 			if ($user->num_rows() === 0) {
 				//TBD: pretty error for userpages
 				show_404();
@@ -75,14 +60,21 @@ class User extends Controller {
 			unset($groups, $group);
 			$this->load->_ci_cached_vars = array(); //Clean up cached vars
 			$data['meta'] = $this->load->view($this->config->item('language') . '/user/meta.php', $user->row_array(), true);
+			$data['admin'] = $this->load->view($this->config->item('language') . '/user/admin.php', $user->row_array(), true);
 			$data['content'] = $this->load->view($this->config->item('language') . '/user/content.php', array_merge($user->row_array(), array('features' => $F, 'groups' => $G, 'addons' => $A)), true);
 			$this->load->config('gfx');
-			$this->cache->save($user->row()->name, $data, 'user', $this->config->item('gfx_cache_time'));
+			$data['expiry'] = $this->cache->save($user->row()->name, $data, 'user', $this->config->item('gfx_cache_time'));
 
 			$data['db'] = 'content ';
+		} else {
+			$data['expiry'] = $this->cache->get_expiry($name, 'user');
 		}
 
-		if ($this->session->userdata('name') && $id === $this->session->userdata('name')) {
+		if ($this->session->userdata('admin') !== 'Y') {
+			unset($data['admin']);
+		}
+
+		if ($this->session->userdata('name') && $name === $this->session->userdata('name')) {
 			$data['messages'] = array(
 				array (
 					'type' => 'highlight',
@@ -90,11 +82,6 @@ class User extends Controller {
 					'message' => $this->lang->line('gfx_message_userpage_yourpage')
 				)
 			);
-		}
-
-		if ($this->session->userdata('admin') === 'Y') {
-			$this->load->_ci_cached_vars = array();
-			$data['admin'] = $this->load->view($this->config->item('language') . '/user/admin.php', $user->row_array(), true);
 		}
 		
 		$this->load->library('parser');

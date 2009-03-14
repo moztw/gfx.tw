@@ -32,8 +32,20 @@ class Feature extends Controller {
 		$this->load->library('cache');
 		switch ($type) {
 			case 'inframe':
-			$data = $this->cache->get($id, 'feature-inframe');
+			if (isset($_SERVER['HTTP_IF_NONE_MATCH'])
+				&& (
+					trim($_SERVER['HTTP_IF_NONE_MATCH'])
+					=== md5(
+						$this->cache->get_expiry($id, 'feature-inframe')
+					)
+				)
+			) {
+				header("HTTP/1.1 304 Not Modified");
+				exit();
+			}
 
+			$data = $this->cache->get($id, 'feature-inframe');
+			
 			if (!$data) {
 				$this->load->database();
 				$feature = $this->db->query('SELECT * FROM features WHERE `name` = ' . $this->db->escape($id) . ' LIMIT 1');
@@ -42,14 +54,19 @@ class Feature extends Controller {
 				}
 				$data = $this->load->view($this->config->item('language') . '/feature/inframe.php', $feature->row_array(), true);
 				$this->load->config('gfx');
-				$this->cache->save($feature->row()->name, $data, 'feature-inframe', $this->config->item('gfx_cache_time'));
+				$expiry = $this->cache->save($feature->row()->name, $data, 'feature-inframe', $this->config->item('gfx_cache_time'));
+			} else {
+				$expiry = $this->cache->get_expiry($id, 'feature-inframe');
 			}
+			header('ETag: ' . md5($expiry));
 			print $data;
 			break;
 			default:
+			$this->load->helper('gfx');
+			checkETag($id, 'feature');
 			$data = $this->cache->get($id, 'feature');
 
-			if (!$data || $this->session->userdata('admin') === 'Y') {
+			if (!$data) {
 				$this->load->database();
 				$feature = $this->db->query('SELECT * FROM features WHERE `name` = ' . $this->db->escape($id) . ' LIMIT 1');
 				if ($feature->num_rows() === 0) {
@@ -57,15 +74,17 @@ class Feature extends Controller {
 				}
 				$data = array(
 					'meta' => $this->load->view($this->config->item('language') . '/feature/meta.php', $feature->row_array(), true),
-					'content' => $body = $this->load->view($this->config->item('language') . '/feature/content.php', $feature->row_array(), true)
+					'content' => $body = $this->load->view($this->config->item('language') . '/feature/content.php', $feature->row_array(), true),
+					'admin' =>$this->load->view($this->config->item('language') . '/feature/admin.php', $feature->row_array(), true)
 				);
 				$this->load->config('gfx');
-				//$this->cache->save($feature->row()->name, $data, 'feature', $this->config->item('gfx_cache_time'));
+				$data['expiry'] = $this->cache->save($feature->row()->name, $data, 'feature', $this->config->item('gfx_cache_time'));
 				$data['db'] = 'content ';
+			} else {
+				$data['expiry'] = $this->cache->get_expiry($id, 'feature');
 			}
-			if ($this->session->userdata('admin') === 'Y') {
-				$this->load->_ci_cached_vars = array();
-				$data['admin'] = $this->load->view($this->config->item('language') . '/feature/admin.php', $feature->row_array(), true);
+			if ($this->session->userdata('admin') !== 'Y') {
+				unset($data['admin']);
 			}
 			$this->load->library('parser');
 			$this->parser->page($data, $this->session->userdata('id'));

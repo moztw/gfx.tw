@@ -20,7 +20,8 @@ class GFX_Parser extends CI_Parser {
 				'admin' => '',
 				'content' => '<p>Error: No Content.</p>',
 				'script' => '',
-				'db' => ''
+				'db' => '',
+				'expiry' => 0
 			),
 			$data
 		);
@@ -48,9 +49,17 @@ class GFX_Parser extends CI_Parser {
 			$data['db'] .= 'header ';
 			$CI->load->_ci_cached_vars = array(); //Clean up cached vars
 			$data['header'] = $CI->load->view($CI->config->item('language') . '/header.php', $user, true);
-			$CI->cache->save($session_id, $data['header'], 'header', $CI->config->item('gfx_cache_time'));
+			$expiry = $CI->cache->save($session_id, $data['header'], 'header', $CI->config->item('gfx_cache_time'));
+		} else {
+			$expiry = $CI->cache->get_expiry($session_id, 'header');
 		}
 
+		//Send ETag only if there is no flashdata and the controller asks to do so.
+		if (!$message && $data['expiry']) {
+			header('ETag: ' . md5($data['expiry'] . ':' . $expiry . ':' . $session_id));
+			//header('Last-Modified: ' . date('r', max($data['expiry'], $expiry)));
+		}
+		
 		//Print out the entire page
 		$this->parse($CI->config->item('language') . '/page_template', $data);
 	}

@@ -90,6 +90,7 @@ class Cache
 		fclose($f1);
 		fclose($f2);
 		
+		return $expire_time;
 	}
 	
 	/**

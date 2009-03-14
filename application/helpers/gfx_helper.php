@@ -1,5 +1,23 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+function checkETag($cache_id, $cache_group) {
+	$CI =& get_instance();
+	if (isset($_SERVER['HTTP_IF_NONE_MATCH'])
+		&& !$CI->session->flashdata('message')
+		&& (
+			trim($_SERVER['HTTP_IF_NONE_MATCH'])
+			=== md5(
+				$CI->cache->get_expiry($cache_id, $cache_group)
+				. ':' . $CI->cache->get_expiry($CI->session->userdata('id'), 'header')
+				. ':' . $CI->session->userdata('id')
+			)
+		)
+	) {
+		header("HTTP/1.1 304 Not Modified");
+		exit();
+	}
+}
+
 function checkAuth($checkOrigin = false, $checkAdmin = false, $errorType = '') {
 	$CI =& get_instance();
 	$islogin = true;

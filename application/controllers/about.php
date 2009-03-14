@@ -21,6 +21,8 @@ class About extends Controller {
 		}
 		
 		$this->load->library('cache');
+		$this->load->helper('gfx');
+		checkETag($id, 'about');
 		$data = $this->cache->get($id, 'about');
 
 		if (!$data) {
@@ -34,8 +36,10 @@ class About extends Controller {
 				'content' => $body = $this->load->view($this->config->item('language') . '/about/content.php', $about->row_array(), true)
 			);
 			$this->load->config('gfx');
-			$this->cache->save($about->row()->name, $data, 'about', $this->config->item('gfx_cache_time'));
+			$data['expiry'] = $this->cache->save($about->row()->name, $data, 'about', $this->config->item('gfx_cache_time'));
 			$data['db'] = 'content ';
+		} else {
+			$data['expiry'] = $this->cache->get_expiry($id, 'about');
 		}
 		$this->load->library('parser');
 		$this->parser->page($data, $this->session->userdata('id'));
