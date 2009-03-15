@@ -9,11 +9,26 @@ class GFX_Parser extends CI_Parser {
 		//If some of the value is missing in $data
 		if (!isset($data['messages'])) {
 			$data['messages'] = array();
+		} else {
+			foreach ($data['messages'] as $k => $v) {
+				$data['messages'][$k] = array_merge(
+					array(
+						'type' => '',
+						'icon' => '',
+						'message' => '',
+						'announcement' => ''
+					),
+					$v
+				);
+			}
 		}
-		$data['messages'] = array_merge(
-			$CI->config->item('gfx_site_wide_message'),
-			$data['messages']
-		);
+		if ($CI->config->item('gfx_site_wide_message')
+			&& !$CI->session->userdata('hide_announcement')) {
+			foreach ($CI->config->item('gfx_site_wide_message') as $M) {
+				$M['announcement'] = ' announcement';
+				array_unshift($data['messages'], $M);
+			}
+		}
 		$data = array_merge(
 			array(
 				'meta' => '',
@@ -33,7 +48,8 @@ class GFX_Parser extends CI_Parser {
 			$data['messages'][] = array(
 				'type' => $message[0], 
 				'icon' => $message[1],
-				'message' => ($CI->lang->line('gfx_message_' . $message[2]))?$CI->lang->line('gfx_message_' . $message[2]):$message[2]
+				'message' => ($CI->lang->line('gfx_message_' . $message[2]))?$CI->lang->line('gfx_message_' . $message[2]):$message[2],
+				'announcement' => ''
 			);
 		}
 
@@ -56,7 +72,15 @@ class GFX_Parser extends CI_Parser {
 
 		//Send ETag only if there is no flashdata and the controller asks to do so.
 		if (!$message && $data['expiry']) {
-			header('ETag: ' . md5($data['expiry'] . ':' . $expiry . ':' . $session_id));
+			header(
+				'ETag: ' . 
+				md5(
+					$data['expiry']
+					. ':' . $expiry
+					. ':' . $session_id
+					. ':' . ($CI->session->userdata('hide_announcement'))?'Y':'N'
+				)
+			);
 			//header('Last-Modified: ' . date('r', max($data['expiry'], $expiry)));
 		}
 		

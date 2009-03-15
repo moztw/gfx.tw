@@ -10,6 +10,7 @@ function checkETag($cache_id, $cache_group) {
 				$CI->cache->get_expiry($cache_id, $cache_group)
 				. ':' . $CI->cache->get_expiry($CI->session->userdata('id'), 'header')
 				. ':' . $CI->session->userdata('id')
+				. ':' . ($CI->session->userdata('hide_announcement'))?'Y':'N'
 			)
 		)
 	) {
@@ -71,7 +72,7 @@ function checkAuth($checkOrigin = false, $checkAdmin = false, $errorType = '') {
 }
 function session_data_set($data, $msg = true) {
 	$CI =& get_instance();
-	if (substr($data['name'], 0, 8) === '__temp__') {
+	if (isset($data['name']) && substr($data['name'], 0, 8) === '__temp__') {
 		unset($data['name']);
 		if ($CI->session->userdata('name')) {
 			$CI->session->unset_userdata('name');
@@ -88,7 +89,8 @@ function session_data_unset($msg = true) {
 		array(
 			'id' => '',
 			'admin' => '',
-			'name' => ''
+			'name' => '',
+			'hide_announcement' => ''
 		)
 	);
 	if ($msg) {

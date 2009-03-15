@@ -89,7 +89,8 @@ class Auth extends Controller {
 					array(
 						'id' => $data['id'],
 						'name' => $data['name'],
-						'admin' => $data['admin']
+						'admin' => $data['admin'],
+						'hide_announcement' => ''
 					)
 				);
 				header('Location: ' . site_url('editor'));
@@ -123,6 +124,11 @@ class Auth extends Controller {
 		}
 		session_data_unset();
 		header('Location: ' . base_url());
+	}
+	function skip_announcement() {
+		$this->load->helper('gfx');
+		session_data_set(array('hide_announcement' => 'Y'), false);
+		json_message('ok', 'highlight', 'info');
 	}
 	function switchto() {
 		$this->load->config('gfx');

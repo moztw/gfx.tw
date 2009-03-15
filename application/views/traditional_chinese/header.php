@@ -4,17 +4,29 @@
 if (isset($id)) {
 	$this->load->config('gfx');
 ?>
-		<p id="header_user_functions">Hi, <span id="header_username"><?php
+		<ul>
+ <?php
+	if (substr($name, 0, 8) !== '__temp__') {
+?>
+			<li class="ui-corner-top ui-state-default"><a href="<?php print site_url($name) ?>"><?php print htmlspecialchars($title); ?></a></li>
+<!--			<li class="ui-corner-top ui-state-default"><a href="<?php print site_url($name) ?>">我的頁面</a></li>-->
+			<li class="ui-corner-top ui-state-default"><a href="<?php print site_url('editor') ?>">編輯頁面</a></li>
+			<li class="ui-corner-top ui-state-default"><a href="<?php print site_url('sticker') ?>">宣傳貼紙</a></li>
+<?php
+	} else {
+?>
+			<li class="ui-corner-top ui-state-default"><a href="<?php print site_url('editor') ?>">編輯頁面</a></li>
+<?php
+	}
+?>
+			<li class="ui-corner-top ui-state-default"><a href="#" id="link_logout">登出</a></li>
+		</ul>
+<?php /*		<p id="header_user_functions">Hi, <span id="header_username"><?php
 	if ($title !== '') print htmlspecialchars($title);
 	elseif (strlen($login) > 40) print htmlspecialchars(substr($login, strpos($login, '//', 5)+2, 30)) . '...';
 	else print htmlspecialchars(rtrim(substr($login, strpos($login, '//', 5)+2), '/'));
- ?></span>(
- <?php
-	if (substr($name, 0, 8) !== '__temp__') {
-?><a href="<?php print site_url($name) ?>">我的頁面</a> / <a href="<?php print site_url('editor') ?>">編輯</a> / <a href="<?php print site_url('sticker') ?>">宣傳貼紙</a><?php
-	} else { ?><a href="<?php print site_url('editor') ?>">編輯</a><?php
-	}
-?> / <a href="#" id="link_logout">登出</a>)</p>
+ ?></span>(<a href="#" id="link_logout">登出</a>)</p>
+ */ ?>
 	</div>
 <?php
 	if ($admin === 'Y') {

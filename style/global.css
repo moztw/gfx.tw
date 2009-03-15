@@ -59,7 +59,7 @@ optgroup {
 #header {
 	margin: 0 0 10px 0; padding: 0;
 	background: transparent url('../images/header.jpg') center bottom no-repeat;
-	height: 2.5em;
+	height: 38px;
 	color: #cccccc;
 }
 #header p {
@@ -90,6 +90,24 @@ optgroup {
 
 #header #header_user_functions, #header #header_login {
 	float: right;
+}
+
+#header ul {
+	float: right;
+	margin: 6px 6px 0 0; padding: 0;
+	height: 32px;
+	list-style: none;
+}
+
+#header ul li {
+	float: left; display: block; height: 30px;
+	margin: 0 1px; padding: 0;
+	list-style: none;
+}
+
+#header ul li a {
+	display: block;
+	padding: 0.2em 0.5em 0.6em 0.5em;
 }
 
 #link_manage {

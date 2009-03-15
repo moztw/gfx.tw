@@ -172,6 +172,20 @@ var gfx = {
 					$(this).parents('.message').slideUp(500);
 					return false;
 				},
+				'div.announcement div p a.ui-icon' : function () {
+					$.ajax(
+						{
+							url: '/auth/skip_announcement',
+							data: {},
+							beforeSend : function (xhr) { },
+							complete : function (xhr, status) { },
+							error: function (xhr, status, error) { },
+							success: function (result, status) {
+								gfx.ajaxError(result);
+							}
+						}
+					);
+				},
 				'#link_login' : function () {
 					gfx.openDialog('login');
 					$('#openid-identifier').focus();
