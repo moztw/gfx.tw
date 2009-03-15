@@ -7,8 +7,8 @@ $dir = site_url('/userstickers/' . dechex(intval($this->session->userdata('id'))
 		<div class="content">
 			<div class="first-col">
 				<h2>HTML Promo Badge</h2>
-				<iframe style="margin: 5px auto; width: 200px; height: 230px" src="<?php print $dir ?>/featurecard.html"></iframe>
-				<textarea readonly="readonly">&lt;iframe style="margin: 5px auto; width: 200px; height: 230px" src="<?php print $dir ?>/featurecard.html"&gt;&lt;/iframe&gt;</textarea>
+				<iframe style="margin: 5px auto; width: 200px; height: 250px" src="<?php print $dir ?>/featurecard.html"></iframe>
+				<textarea readonly="readonly">&lt;iframe style="margin: 5px auto; width: 200px; height: 250px" src="<?php print $dir ?>/featurecard.html"&gt;&lt;/iframe&gt;</textarea>
 			</div>
 			<div class="col">
 				<h2>Image Promo Badge</h2>

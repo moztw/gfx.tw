@@ -17,6 +17,9 @@ $config['gfx_cache_time'] = 60*5;
 Change this token does not affect forum id and username that already in the database */
 $config['gfx_forum_auth_token'] = '--secret-md5-string hash blah kkk';
 
+/* path to font for sticker generations */
+$config['gfx_sticker_font'] = '/usr/share/fonts/truetype/ttf-custom/LiHei Pro.ttf';
+
 /* This is the download url that download controller redirects users to.
 Usually this goes to Mozilla load balancing bouncer (i.e. download.mozilla.org)
 "os" variable will append to the end

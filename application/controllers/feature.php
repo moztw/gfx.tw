@@ -109,6 +109,10 @@ class Feature extends Controller {
 			json_message('dup_feature_name');
 		}
 		$data->free_result();
+		
+		/* Update stickers*/
+		$this->_update_feature_images($this->input->post('title'), $this->input->post('name'));
+		
 		/* Update data */
 		$this->db->update(
 			'features',
@@ -128,6 +132,21 @@ class Feature extends Controller {
 		$this->cache->remove($this->input->post('name'), 'feature');
 
 		json_message('feature_updated', 'highlight', 'info');
+	}
+	function _update_feature_images($title, $name) {
+		$this->load->config('gfx');
+		//$D = imagettfbbox(12, 0, $this->config->item('gfx_sticker_font'), $title);
+		$text = imagecreatetruecolor(150, 20);
+		imagesavealpha($text, true);
+		imagefill($text, 0, 0, imagecolorallocatealpha($text, 255, 255, 255, 127));
+		imagettftext($text, 12, 0, 0, 16, imagecolorallocate($text, 0, 0, 0), $this->config->item('gfx_sticker_font'), $title);
+		imagegd2($text, './stickerimages/features/' . $name . '.gd2');
+		//imagepng($text, './stickerimages/features/' . $name . '-text.png');
+		$bg = imagecreatefromgd2('./images/' . $this->config->item('language') . '/singlefeature.gd2');
+		imagecopy($bg, $text, 40, 6, 0 , 0, 150, 20);
+		imagepng($bg, './stickerimages/features/' . $name . '.png');
+		imagedestroy($text);
+		imagedestroy($bg);
 	}
 }
 

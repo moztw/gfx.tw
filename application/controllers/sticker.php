@@ -19,6 +19,12 @@ class Sticker extends Controller {
 			header('Location: ' . base_url());
 			exit();
 		}
+		$features = $this->db->query('SELECT t1.name, t1.title FROM features t1, u2f t2 ' 
+		. 'WHERE t2.feature_id = t1.id AND t2.user_id = ' . $this->session->userdata('id') . ' ORDER BY t2.order ASC;');
+		$F = array();
+		foreach ($features->result_array() as $feature) {
+			$F[] = $feature;
+		}
 		if (substr($user->row()->name, 0, 8) === '__temp__') {
 			flashdata_message('sticker_nopage');
 			header('Location: ' . site_url('editor'));
@@ -26,7 +32,7 @@ class Sticker extends Controller {
 		}
 		$data = array(
 			'meta' => $this->load->view($this->config->item('language') . '/sticker/meta.php', $user->row_array(), true),
-			'content' => $this->load->view($this->config->item('language') . '/sticker/content.php', $user->row_array(), true),
+			'content' => $this->load->view($this->config->item('language') . '/sticker/content.php', array_merge($user->row_array(), array('features' => $F)), true),
 			'db' => 'content '
 		);
 		$this->load->library('parser');

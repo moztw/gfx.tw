@@ -217,12 +217,14 @@ class Editor extends Controller {
 		@mkdir($d, 0755, true);
 
 		if ($infoChanged || $this->input->post('features')) {
-			$features = $this->db->query('SELECT t1.title FROM features t1, u2f t2 ' 
+			$features = $this->db->query('SELECT t1.name, t1.title FROM features t1, u2f t2 ' 
 			. 'WHERE t2.feature_id = t1.id AND t2.user_id = ' . $this->session->userdata('id') . ' ORDER BY t2.order ASC;');
 			$F = array();
 			foreach ($features->result_array() as $feature) {
 				$F[] = $feature;
 			}
+			
+			// featurecard.html
 			file_put_contents(
 				$d . 'featurecard.html',
 				$this->load->view(
@@ -235,6 +237,39 @@ class Editor extends Controller {
 					true
 				)
 			);
+			
+			// featurecard.png
+			$card = imagecreatefromgd2(
+				'./images/' . $this->config->item('language') . '/featurecard.gd2'
+			);
+			$D = imagettfbbox(14, 0, $this->config->item('gfx_sticker_font'), $this->input->post('title'));
+			imagettftext(
+				$card,
+				14,
+				0,
+				(200-($D[2]-$D[0]))/2,
+				18,
+				imagecolorallocate($card, 0, 0, 0),
+				$this->config->item('gfx_sticker_font'),
+				$this->input->post('title')
+			);
+			imagecopy(
+				$card,
+				imagecreatefromgd2('./stickerimages/features/' . $F[0]['name'] . '.gd2'),
+				52, 125,
+				0, 0, 150, 20);
+			imagecopy(
+				$card,
+				imagecreatefromgd2('./stickerimages/features/' . $F[1]['name'] . '.gd2'),
+				52, 144,
+				0, 0, 150, 20);
+			imagecopy(
+				$card,
+				imagecreatefromgd2('./stickerimages/features/' . $F[2]['name'] . '.gd2'),
+				52, 163,
+				0, 0, 150, 20);
+			imagepng($card, $d . 'featurecard.png');
+			imagedestroy($card);
 		}
 
 		header('Content-Type: text/javascript');
