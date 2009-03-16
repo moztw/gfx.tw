@@ -216,7 +216,10 @@ class Editor extends Controller {
 		$d = './userstickers/' . dechex(intval($this->session->userdata('id')) >> 12) . '/' . dechex(intval($this->session->userdata('id') & (pow(2,12)-1))) . '/';
 		@mkdir($d, 0755, true);
 
-		if ($infoChanged || $this->input->post('features')) {
+		if ($infoChanged
+			|| $this->input->post('features')
+			|| !file_exists($d . 'featurecard.html')
+			|| !file_exists($d . 'featurecard.png')) {
 			$features = $this->db->query('SELECT t1.name, t1.title FROM features t1, u2f t2 ' 
 			. 'WHERE t2.feature_id = t1.id AND t2.user_id = ' . $this->session->userdata('id') . ' ORDER BY t2.order ASC;');
 			$F = array();
