@@ -10,7 +10,7 @@ function checkETag($cache_id, $cache_group) {
 				$CI->cache->get_expiry($cache_id, $cache_group)
 				. ':' . $CI->cache->get_expiry($CI->session->userdata('id'), 'header')
 				. ':' . $CI->session->userdata('id')
-				. ':' . ($CI->session->userdata('hide_announcement'))?'Y':'N'
+				. ':' . (($CI->session->userdata('hide_announcement'))?'Y':'N')
 			)
 		)
 	) {

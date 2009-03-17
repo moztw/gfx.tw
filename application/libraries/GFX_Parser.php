@@ -78,7 +78,7 @@ class GFX_Parser extends CI_Parser {
 					$data['expiry']
 					. ':' . $expiry
 					. ':' . $session_id
-					. ':' . ($CI->session->userdata('hide_announcement'))?'Y':'N'
+					. ':' . (($CI->session->userdata('hide_announcement'))?'Y':'N')
 				)
 			);
 			//header('Last-Modified: ' . date('r', max($data['expiry'], $expiry)));
