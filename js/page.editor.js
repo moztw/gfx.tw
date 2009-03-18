@@ -53,7 +53,7 @@ gfx.page = {
 						.addClass('link')
 						.append(
 							$(document.createElement('a'))
-							.attr('href', './features/' + d[1])
+							.attr('href', './feature/' + d[1])
 							.text('More...')
 						)
 					);
