@@ -31,12 +31,12 @@ class About extends Controller {
 			if ($about->num_rows() === 0) {
 				show_404();
 			}
+			$this->load->config('gfx');
 			$data = array(
 				'meta' => $this->load->view($this->config->item('language') . '/about/meta.php', $about->row_array(), true),
 				'content' => $this->load->view($this->config->item('language') . '/about/content.php', $about->row_array(), true),
 				'admin' => $this->load->view($this->config->item('language') . '/about/admin.php', $about->row_array(), true)
 			);
-			$this->load->config('gfx');
 			$data['expiry'] = $this->cache->save($about->row()->name, $data, 'about', $this->config->item('gfx_cache_time'));
 			$data['db'] = 'content ';
 		} else {
@@ -80,5 +80,17 @@ class About extends Controller {
 		$this->cache->remove($this->input->post('name'), 'about');
 
 		json_message('about_updated', 'highlight', 'info');
+	}
+	function delete () {
+		$this->load->config('gfx');
+		$this->load->helper('gfx');
+		if (!checkAuth(true, true, 'flashdata')) {
+			header('Location: ' . site_url('about'));
+			exit();
+		}
+		$this->load->database();
+		$this->db->delete('aboutpages', array('id' => $this->input->post('id')));
+		flashdata_message('about_deleted', 'highlight', 'info');
+		header('Location: ' . site_url('about'));
 	}
 }
