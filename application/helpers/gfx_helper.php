@@ -51,8 +51,8 @@ function checkAuth($checkOrigin = false, $checkAdmin = false, $errorType = '') {
 		} else {
 			$CI->load->database();
 			//query
-			$data = $CI->db->query('SELECT `admin` FROM `users` WHERE `id` = ' . $CI->session->userdata('id') . ';');
-			if ($data->num_rows() === 0 || $data->row()->admin !== 'Y') {
+			$data = $CI->db->query('SELECT `id` FROM `users` WHERE `admin` = \'Y\' AND `id` = ' . $CI->session->userdata('id') . ';');
+			if ($data->num_rows() === 0) {
 				$islogin = false;
 			}
 			$data->free_result();
