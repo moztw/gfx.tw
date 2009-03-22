@@ -114,10 +114,7 @@ gfx.page = {
 				return false;
 			},
 			'#userinfo button, #change-email' : function () {
-				//Validate title before opening dialog.
-				if (gfx.page.validate.title($('#title-name').text())) {
-					gfx.openDialog('info');
-				}
+				gfx.openDialog('info');
 				return false;
 			},
 			'.download a' : function () {
@@ -256,8 +253,10 @@ gfx.page = {
 			'height': 400,
 			'buttons' : {},
 			'position' : ['center', 120],
+			'beforeopen' : function () {
+				return gfx.page.validate.title($('#title-name').text());
+			},
 			'open' : function () {
-				//Important: validate title before opening dialog!
 				gfx.page.info = {};
 				$.each(
 					['name', 'email', 'web', 'blog', 'forum', 'bio'],

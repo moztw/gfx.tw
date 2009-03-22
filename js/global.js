@@ -110,6 +110,11 @@ $(function () {
 		}
 	);
 	
+	var h = window.location.hash.substr(1);
+	if (h && $('#window_' + h)) {
+		gfx.openDialog(h);
+	}
+	
 	/* unset setting */
 	setting = null;
 
@@ -262,7 +267,7 @@ var gfx = {
 					if ($('#link_manage').length) {
 						option.buttons = {};
 						option.buttons[T.BUTTONS.ADMIN_EDIT_FEATURE] = function () {
-							window.location.href = $('#iframe-feature iframe').attr('src');
+							window.location.href = $('#iframe-feature iframe').attr('src') + '#admin';
 						};
 					}
 					$(document.createElement('div'))
@@ -418,7 +423,14 @@ var gfx = {
 		}
 	},
 	'openDialog' : function (id) {
-		$('#window_' + id).dialog("open");
+		//beforeopen is an option we made up so we check it ourselves.
+		if ($('#window_' + id).dialog('option', 'beforeopen')) {
+			if ($('#window_' + id).dialog('option', 'beforeopen')()) {
+				$('#window_' + id).dialog('open');
+			}
+		} else {
+			$('#window_' + id).dialog('open');
+		}
 	},
 	'closeDialog' : function (id) {
 		$('#window_' + id).dialog("close");

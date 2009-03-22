@@ -49,11 +49,5 @@ gfx.admin = {
 			}
 			$('#admin_post').submit();
 		}
-		setTimeout(
-			function () {
-				gfx.openDialog('admin');
-			},
-			550
-		);
 	}
 };

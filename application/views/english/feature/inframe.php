@@ -14,7 +14,7 @@
 <body class="feature-inframe inframe">
 	<script type="text/javascript">
 		if (window.parent === window) {
-			location.href = location.href.substr(0, location.href.length-8);
+			location.href = location.pathname.substr(0, location.pathname.length-8) + location.hash;
 		}
 	</script>
 	<?php
