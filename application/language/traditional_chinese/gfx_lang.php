@@ -20,5 +20,9 @@ $lang['gfx_message_error_feature_name'] = "功能推薦不能用這個網址。"
 $lang['gfx_message_dup_feature_name'] = "功能推薦網址重複，無法修改。";
 $lang['gfx_message_feature_deleted'] = "功能推薦已刪除。";
 $lang['gfx_message_feature_updated'] = "功能推薦已更新，重新載入之後才能看到結果。";
+$lang['gfx_message_error_about_name'] = "網站簡介頁面不能用這個網址。";
+$lang['gfx_message_dup_about_name'] = "網站簡介頁面網址重複，無法修改。";
+$lang['gfx_message_about_deleted'] = "網站簡介頁面已刪除。";
+$lang['gfx_message_about_updated'] = "網站簡介頁面已更新，重新載入之後才能看到結果。";
 
 ?>

@@ -50,6 +50,7 @@ var T = {
 		ADMIN_DELETEUSER_CONFIRM: '確定要刪除這個帳號？',
 		ADMIN_FACEOFF_CONFIRM: '切換到帳號之後，您必須登出才能變回自己。您確定嗎？',
 		ADMIN_DELETEFEATURE_CONFIRM: '確定要刪除這個功能推薦？',
+		ADMIN_DELETEABOUT_CONFIRM: '確定要刪除這個網站簡介頁面？',
 		ADMIN_SITE_MANAGE: '網站管理'
 	},
 	/* $.dialog buttons */
@@ -66,6 +67,7 @@ var T = {
 		ADMIN_FACEOFF: '切換到此帳號',
 		ADMIN_DELETEUSER: '刪除帳號',
 		ADMIN_EDIT_FEATURE: '管理：編輯功能介紹',
-		ADMIN_DELETEFEATURE: '刪除功能推薦'
+		ADMIN_DELETEFEATURE: '刪除功能推薦',
+		ADMIN_DELETEABOUT: '刪除頁面'
 	}
 };

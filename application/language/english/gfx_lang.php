@@ -20,5 +20,9 @@ $lang['gfx_message_error_feature_name'] = "Feature URL unacceptable.";
 $lang['gfx_message_dup_feature_name'] = "Feature URL already in used.";
 $lang['gfx_message_feature_deleted'] = "Feature introduction deleted.";
 $lang['gfx_message_feature_updated'] = "Feature introduction updated, reload this page to see the result.";
+$lang['gfx_message_error_about_name'] = "About page URL unacceptable.";
+$lang['gfx_message_dup_about_name'] = "About URL already in used.";
+$lang['gfx_message_about_deleted'] = "About page deleted.";
+$lang['gfx_message_about_updated'] = "About page updated, reload this page to see the result.";
 
 ?>

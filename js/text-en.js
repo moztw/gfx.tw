@@ -50,6 +50,7 @@ var T = {
 		ADMIN_DELETEUSER_CONFIRM: 'Are you sure you want to delete this account?',
 		ADMIN_FACEOFF_CONFIRM: 'You would have to log out and log back in again to switch back, are you sure?',
 		ADMIN_DELETEFEATURE_CONFIRM: 'Are you sure you want to delete this featur introduction?',
+		ADMIN_DELETEABOUT_CONFIRM: 'Are you sure you want to delete this about page?',
 		ADMIN_SITE_MANAGE: 'Site Manage'
 	},
 	/* $.dialog buttons */
@@ -66,6 +67,7 @@ var T = {
 		ADMIN_FACEOFF: 'Switch to this Account',
 		ADMIN_DELETEUSER: 'DELETE ACCOUNT',
 		ADMIN_EDIT_FEATURE: 'Admin: Edit this feature',
-		ADMIN_DELETEFEATURE: 'Delete this feature'
+		ADMIN_DELETEFEATURE: 'Delete this feature',
+		ADMIN_DELETEABOUT: 'Delete this page'
 	}
 };

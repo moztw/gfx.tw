@@ -58,6 +58,8 @@ if ($route['scaffolding_trigger']) {
 	$route['user/' . $route['scaffolding_trigger'] . '/(:any)'] = "user/" . $route['scaffolding_trigger'] . '/$1';
 }
 $route['about'] = "about";
+$route['about/update'] = "about/update";
+$route['about/delete'] = "about/delete";
 $route['about/(:any)'] = "about/view/$1";
 $route['addon'] = "addon";
 $route['addon/(:any)'] = "addon/$1";
