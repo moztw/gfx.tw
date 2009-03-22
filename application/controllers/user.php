@@ -105,6 +105,7 @@ class User extends Controller {
 			exit();
 		}
 		/* Check whether user exists and his/her name */
+		$this->load->database();
 		$data = $this->db->query('SELECT `name` FROM `users` WHERE `id` = ' . $id . ';');
 		if ($data->num_rows() === 0) {
 			flashdata_message('no_such_user');
