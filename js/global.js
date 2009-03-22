@@ -454,7 +454,7 @@ var gfx = {
 				$(document.createElement('p'))
 				.append(
 					$(document.createElement('a'))
-					.addClass('ui-icon ui-icon-circle-close')
+					.addClass('ui-icon ui-icon-circle-close ui-corner-all')
 					.attr('href', '#')
 					.bind(
 						'click',
