@@ -12,7 +12,7 @@ $config['gfx_site_wide_message'] = array(
 Change this on a live site will disable all forms; user would have to reload to get the new hash */
 $config['gfx_token'] = '--secret-token-good-day-fx';
 /* Cache time (in seconds) */
-$config['gfx_cache_time'] = 60*5;
+$config['gfx_cache_time'] = 60;
 /* Remember to change gfxcode.php on your phpBB installation.
 Change this token does not affect forum id and username that already in the database */
 $config['gfx_forum_auth_token'] = '--secret-md5-string hash blah kkk';
@@ -23,15 +23,15 @@ $config['gfx_sticker_font'] = '/usr/share/fonts/truetype/ttf-custom/LiHei Pro.tt
 /* This is the download url that download controller redirects users to.
 Usually this goes to Mozilla load balancing bouncer (i.e. download.mozilla.org)
 "os" variable will append to the end
-Thanks to bug 398366, do remember to change the version every time new version comes out */
+Thanks to bug 398366,do remember to change the version every time new version comes out */
 $config['gfx_downloadurl'] = 'http://download.mozilla.org/?product=firefox-3.0.7&lang=zh-TW&os=';
 /* Where user will be redirect to if Javascript and User-agent both failed to detect os */
-/* TBD: instead redirect to another webpage, show up a dialog and ask for the os from user? */
+/* TBD: instead redirect to another webpage,show up a dialog and ask for the os from user? */
 $config['gfx_downloadfallback'] = 'http://www.moztw.org/firefox/';
 
-/* AMO url where addon description, title, and xpi address can be fetched. Amo ID will be append. */
+/* AMO url where addon description,title,and xpi address can be fetched. Amo ID will be append. */
 $config['gfx_amo_url'] = 'https://addons.mozilla.org/zh-TW/firefox/addon/';
-/* RegExp to fetch title (version), description, and xpi */
+/* RegExp to fetch title (version),description,and xpi */
 $config['gfx_amo_title_regexp'] = '/<h3 class=\"name\"[^>]*><img src=\"([\w\.\/\-]+)\" class=\"addon-icon\" alt=\"\" \/>([^<]+) ([\d\.a-z]+)<\/h3>/';
 $config['gfx_amo_desc_regexp'] = '/<p class=\"desc\"[^>]*>([^<]+)(<\/p>|<br \/>)/';
 $config['gfx_amo_xpi_regexp'] = '/<a href=\"([^\"]+)\"  id=\"installTrigger/';
@@ -45,32 +45,49 @@ $config['gfx_home_user'] = 'foxmosa';
 /* Bad names that user should not use as their gfx url.
 Should include all controller and reserve url for future functions */
 $config['gfx_badname'] = array(
-	'editor', 
-	'userpage', 
-	'feature', 
-	'auth', 
+	'about',
 	'addons',
-	'about', 
-	'lobby', 
-	'view', 
-	'sticker', 
-	'stickers',
-	'user',
-	'users', 
-	'blog', 
-	'events', 
-	'event', 
-	'doc', 
-	'docs', 
+	'auth',
+	'badge',
+	'badges',
+	'blog',
+	'comment',
+	'comments',
+	'doc',
+	'docs',
 	'download',
 	'downloads',
-	'share', 
-	'badge', 
+	'editor',
+	'event',
+	'events',
+	'explore',
+	'feature',
+	'features',
+	'highlight',
+	'highlights',
 	'home',
+	'homes',
+	'help',
+	'helps',
+	'list',
+	'lists',
+	'image',
+	'images',
 	'js',
-	'useravatars',
+	'lobby',
+	'random',
+	'share',
+	'sticker',
+	'stickers',
 	'system',
-	'images'
+	'systems',
+	'user',
+	'users',
+	'useravatar',
+	'useravatars',
+	'userpage',
+	'userpages',
+	'view'
 );
 
 /* End of file gfx.php */
