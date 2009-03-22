@@ -72,12 +72,12 @@ class Feature extends Controller {
 				if ($feature->num_rows() === 0) {
 					show_404();
 				}
+				$this->load->config('gfx');
 				$data = array(
 					'meta' => $this->load->view($this->config->item('language') . '/feature/meta.php', $feature->row_array(), true),
 					'content' => $body = $this->load->view($this->config->item('language') . '/feature/content.php', $feature->row_array(), true),
 					'admin' =>$this->load->view($this->config->item('language') . '/feature/admin.php', $feature->row_array(), true)
 				);
-				$this->load->config('gfx');
 				$data['expiry'] = $this->cache->save($feature->row()->name, $data, 'feature', $this->config->item('gfx_cache_time'));
 				$data['db'] = 'content ';
 			} else {
