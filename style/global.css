@@ -187,11 +187,6 @@ div.message div p a.ui-icon:hover {
 
 div.message div p a {
 	color: #000000;
-	text-decoration: none;
-}
-
-div.message div p a:hover {
-	text-decoration: underline;
 }
 
 #editor_save {
