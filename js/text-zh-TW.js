@@ -20,7 +20,7 @@ var T = {
 		EXTINSTALL_NOT_FX: '必須要使用 Firefox 系列瀏覽器才能安裝附加元件喔。',
 		EXTINSTALL_CHECKED_NOTHING: '您沒有選擇任何附加元件。',
 
-		EDITOR_TITLE_EMPTY: '請輸入暱稱。',
+		EDITOR_TITLE_EMPTY: '請先輸入暱稱。',
 		EDITOR_TITLE_LENGTH: '名稱太長了喔！',
 		EDITOR_NAME_EMPTY: '請輸入網址。',
 		EDITOR_NAME_BAD: '無法使用此網址作為您的推薦頁，請換一個。',
@@ -41,6 +41,7 @@ var T = {
 		EMPTY_TITLE: '在這裡輸入暱稱',
 		TITLE_PLACEHOLDER: '{您的名字}',
 		CONFIRM_QUIT: '離開此頁會失去所有未儲存的資料！',
+		INFO_UPDATED: '個人介紹成功儲存。',
 		ADDON_ADD: '新增',
 		ADDON_ADD_CANT_DUP: '無法重複新增',
 		ADDON_DEL: '刪除',
@@ -55,7 +56,8 @@ var T = {
 	BUTTONS: {
 		PROGRESS_FORCESTOP: '停止',
 		ALMOSTDONE_OK: '確定',
-		INFO_OK: '確定',
+		INFO_SAVE: '儲存變更',
+		INFO_CANCEL: '取消',
 		ADDON_ADD_OK: '確定',
 		DOWNLOAD_OK: '確定',
 		EXTINSTALL_OK: '確定',

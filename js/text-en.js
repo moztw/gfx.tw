@@ -41,6 +41,7 @@ var T = {
 		EMPTY_TITLE: 'Enter your name here',
 		TITLE_PLACEHOLDER: '{your name}',
 		CONFIRM_QUIT: 'Leave this page will lost all your unsaved modifications!',
+		INFO_UPDATED: 'Intro Updated.',
 		ADDON_ADD: 'Add',
 		ADDON_ADD_CANT_DUP: 'Cannot duplicate',
 		ADDON_DEL: 'Delete',
@@ -55,7 +56,8 @@ var T = {
 	BUTTONS: {
 		PROGRESS_FORCESTOP: 'Stop',
 		ALMOSTDONE_OK: 'OK',
-		INFO_OK: 'Close',
+		INFO_SAVE: 'Save',
+		INFO_CANCEL: 'Cancel',
 		ADDON_ADD_OK: 'Ok',
 		DOWNLOAD_OK: 'Close',
 		EXTINSTALL_OK: 'Close',

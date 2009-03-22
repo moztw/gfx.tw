@@ -114,7 +114,11 @@ gfx.page = {
 				return false;
 			},
 			'#userinfo button, #change-email' : function () {
-				gfx.openDialog('info');
+				//Validate title before opening dialog.
+				if (gfx.page.validate.title($('#title-name').text())) {
+					gfx.openDialog('info');
+				}
+				return false;
 			},
 			'.download a' : function () {
 				gfx.openDialog('download');
@@ -253,8 +257,26 @@ gfx.page = {
 			'buttons' : {},
 			'position' : ['center', 120],
 			'open' : function () {
-				gfx.page.infoChanged = true;
+				//Important: validate title before opening dialog!
+				gfx.page.info = {};
+				$.each(
+					['name', 'email', 'web', 'blog', 'forum', 'bio'],
+					function () {
+						gfx.page.info[this] = $('#info_' + this).val();
+					}
+				);
 				$('#info_name').focus();
+			},
+			'close' : function () {
+				if (gfx.page.info) {
+					$.each(
+						['name', 'email', 'web', 'blog', 'forum', 'bio'],
+						function () {
+							$('#info_' + this).val(gfx.page.info[this]);
+						}
+					);
+					delete gfx.page.info;
+				}
 			}
 		},
 		'addons' : {
@@ -327,7 +349,51 @@ gfx.page = {
 			gfx.closeDialog('progress');
 		};
 		this.dialog.almostdone.buttons[T.BUTTONS.ALMOSTDONE_OK] = gfx.page.savePage;
-		this.dialog.info.buttons[T.BUTTONS.INFO_OK] = function () {
+		this.dialog.info.buttons[T.BUTTONS.INFO_SAVE] = function () {
+			if (!$('#info_name').val()) {
+				gfx.alert(T.ALERT.EDITOR_NAME_EMPTY);
+				$('#info_name').focus();
+				return;
+			}
+			//Gather data
+			//Save title because we have to make sure name and title are vaild at same time.
+			var d = {
+				'token' : $('#token').val(),
+				'title' : $('#title-name').text()
+			};
+			$.each(
+				['name', 'email', 'web', 'blog', 'forum', 'bio'],
+				function () {
+					d[this] = $('#info_' + this).val();
+				}
+			);
+			//check for errors
+			if (!gfx.page.validate.name(d.name)) {
+				return;
+			}
+			//ajax send
+			gfx.xhr = $.ajax(
+				{
+					url: './editor/save',
+					data: d,
+					success: function (result, status) {
+						if (gfx.ajaxError(result)) {
+							return;
+						}
+						$.each(
+							['name', 'email', 'web', 'blog', 'forum', 'bio'],
+							function () {
+								gfx.page.info[this] = $('#info_' + this).val();
+							}
+						);
+						gfx.message('highlight', 'info', T.UI.INFO_UPDATED);
+						gfx.closeDialog('info');
+					}
+				}
+			);
+			
+		};
+		this.dialog.info.buttons[T.BUTTONS.INFO_CANCEL] = function () {
 			gfx.closeDialog('info');
 		};
 		this.dialog.addons.buttons[T.BUTTONS.ADDON_ADD_OK] = function () {
@@ -560,6 +626,35 @@ gfx.page = {
 			}
 		);
 	},
+	'validate' : {
+		'name' : function (name) {
+			if (name.length > 60) {
+				gfx.alert('EDITOR_NAME_LENGTH');
+				return false;
+			}
+			if (!/^[a-zA-Z0-9_\-]+$/.test(name)) {
+				gfx.alert('EDITOR_NAME_BAD');
+				return false;
+			}
+			return true;
+		},
+		'title' : function (title) {
+			if (title === '') {
+				gfx.alert('EDITOR_TITLE_EMPTY');
+				//Scroll to top.
+				if ($(window).scrollTop() > 70) {
+					$(window).scrollTop(70);
+				}
+				$('#title-name-edit input').focus();
+				return false;
+			}
+			if (title.length > 128) {
+				gfx.alert('EDITOR_TITLE_LENGTH');
+				return false;
+			}
+			return true;
+		}
+	},
 	'changeAvatar' : function (avatar, url) {
 		gfx.page.avatar = avatar;
 		$('#title-avatar img:only-child').attr('src', url);
@@ -572,11 +667,6 @@ gfx.page = {
 			'title' : $('#title-name').text(),
 			'name' : $('#info_name').val() || $('#name').val()
 		};
-		if (d.title === '') {
-			gfx.alert('EDITOR_TITLE_EMPTY');
-			$('#title-name-edit input').focus();
-			return;
-		}
 		var g = $('.group-title input:checked');
 		if (gfx.page.groupChanged && !g.length) {
 			gfx.alert('EDITOR_GROUP_EMPTY');
@@ -588,13 +678,6 @@ gfx.page = {
 		}
 		if (gfx.page.avatar) {
 			d.avatar = gfx.page.avatar;
-		}
-		if (gfx.page.infoChanged) {
-			d.email = $('#info_email').val();
-			d.web = $('#info_web').val();
-			d.blog = $('#info_blog').val();
-			d.forum = $('#info_forum').val();
-			d.bio = $('#info_bio').val();
 		}
 		if (gfx.page.featureChanged) {
 			$('.feature h2').each(
@@ -619,16 +702,10 @@ gfx.page = {
 			);
 		}
 		//check for errors
-		if (d.title.length > 128) {
-			gfx.alert('EDITOR_TITLE_LENGTH');
+		if (!gfx.page.validate.name(d.name)) {
 			return;
 		}
-		if (d.name.length > 60) {
-			gfx.alert('EDITOR_NAME_LENGTH');
-			return;
-		}
-		if (!/^[a-zA-Z0-9_\-]+$/.test(d.name)) {
-			gfx.alert('EDITOR_NAME_BAD');
+		if (!gfx.page.validate.title(d.title)) {
 			return;
 		}
 		//ajax send
