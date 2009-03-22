@@ -8,6 +8,8 @@ if (!$avatar) {
 	$avatar = './useravatars/' . $avatar;
 }
 
+if (substr($name, 0,8) === '__temp__') $name = '';
+
 $this->load->config('gfx');
 
 ?>
@@ -146,8 +148,9 @@ while(isset($features[$i])) {
 		<form id="delete_post" action="/user/delete" method="post">
 			<input type="hidden" name="token" value="<?php print md5($this->session->userdata('id') . $this->config->item('gfx_token')); ?>" />
 		</form>
-		<p>刪除帳號將移除您的所有資訊，並將您的推薦頁網址提供給他人使用。</p>
-		<p>這個動作無法復原。若確定要刪除您的帳號請按下面的按鈕。</p>
+		<p>這會從系統中刪除您所有個人資訊，包括自訂的套件列表、圖片、下載次數紀錄等等。</p>
+		<p id="delete-url-notice">另外，您的推薦頁網址 (<?php print base_url(); ?><span class="name-placeholder"><?php print $name ?></span>/) 也將取消，其他人從此可以選用 <span class="name-placeholder"><?php print $name ?></span> 作為他的網址。</p>
+		<p>這個動作無法復原。若確定要刪除您的帳號，請按下面的按鈕。</p>
 	</div>
 	<div id="groups-title">
 		<h2><span class="title-placeholder">{您的名字}</span>的火狐屬性</h2>

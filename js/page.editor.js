@@ -331,9 +331,12 @@ gfx.page = {
 		},
 		'delete' : {
 			'width' : 400,
-			'height': 300,
+			'height': 350,
 			'buttons' : {},
-			'position' : ['center', 200]
+			'position' : ['center', 200],
+			'open' : function () {
+				$('#delete-url-notice').toggle($('.name-placeholder:first').text() !== '');
+			}
 		}
 	},
 	'onload' : function () {
@@ -386,6 +389,7 @@ gfx.page = {
 								gfx.page.info[this] = $('#info_' + this).val();
 							}
 						);
+						$('.name-placeholder').text(result.name);
 						gfx.message('highlight', 'info', T.UI.INFO_UPDATED);
 						gfx.closeDialog('info');
 					}
@@ -726,6 +730,7 @@ gfx.page = {
 					= gfx.page.addonChanged = null;
 
 					$('#window_userpage_url').attr('href', './' + result.name);
+					$('.name-placeholder').text(result.name);
 					gfx.closeDialog('almostdone');
 					gfx.openDialog('editcomplete');
 				}
