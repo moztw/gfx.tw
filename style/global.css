@@ -100,9 +100,16 @@ optgroup {
 }
 
 #header ul li {
-	float: left; display: block; height: 30px;
-	margin: 0 1px; padding: 0;
+	float: left; display: block;
+	margin: 0 2px; padding: 0;
 	list-style: none;
+}
+
+#header ul li.ui-corner-top {
+	height: 30px;
+}
+#header ul li.ui-corner-all {
+	height: 24px;
 }
 
 #header ul li a {

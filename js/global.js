@@ -341,11 +341,17 @@ var gfx = {
 			'mouseover' : {
 				'#link_manage a' : function () {
 					$(this).parent().addClass('ui-state-hover');
+				},
+				'#header li' : function () {
+					$(this).addClass('ui-state-hover');
 				}
 			},
 			'mouseout' : {
 				'#link_manage a' : function () {
 					$(this).parent().removeClass('ui-state-hover');
+				},
+				'#header li' : function () {
+					$(this).removeClass('ui-state-hover');
 				}
 			}			
 		},

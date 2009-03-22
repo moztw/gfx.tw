@@ -19,7 +19,7 @@ if (isset($id)) {
 <?php
 	}
 ?>
-			<li class="ui-corner-top ui-state-default"><a href="#" id="link_logout">登出</a></li>
+			<li class="ui-corner-all ui-state-default"><a href="#" id="link_logout">登出</a></li>
 		</ul>
 <?php /*		<p id="header_user_functions">Hi, <span id="header_username"><?php
 	if ($title !== '') print htmlspecialchars($title);
