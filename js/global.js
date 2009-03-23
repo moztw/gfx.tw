@@ -111,7 +111,7 @@ $(function () {
 	);
 	
 	var h = window.location.hash.substr(1);
-	if (h && $('#window_' + h)) {
+	if (h && $('#window_' + h).length) {
 		gfx.openDialog(h);
 	}
 	
