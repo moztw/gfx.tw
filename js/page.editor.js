@@ -431,21 +431,33 @@ gfx.page = {
 		if ($.browser.msie) {
 			gfx.message('error', 'alert', T.UI.USING_IE_TO_EDIT);
 		}
+
+		var bar = {
+			el : $('#editor_save'),
+			pl : $(document.createElement('div')),
+			doc : $(document)
+		};
+		bar.el.after(
+			bar.pl.attr({'id':'editor_save_placeholder'})
+			.css('height', bar.el.height())
+			.hide()
+		);
 		
 		$(window).bind(
 			'scroll',
 			function (e) {
-				var offset = $(document).scrollTop();
-				if (offset > 50) {
-					if (!$('#editor_save_placeholder').length) {
-						$('#editor_save').after(
-							$(document.createElement('div'))
-							.attr('id', 'editor_save_placeholder')
-							.css('height', $('#editor_save').height())
-						);
+				var pos;
+				if (bar.pl.is(':visible')) {
+					pos = bar.pl.offset().top;
+				} else {
+					pos = bar.el.offset().top;
+				}
+				if (bar.doc.scrollTop() > pos) {
+					if (bar.pl.not(':visible')) {
+						bar.pl.show();
 					}
 					//This will break in IE6
-					$('#editor_save').css(
+					bar.el.css(
 						{
 							'position' : 'fixed',
 							'top' : '0'
@@ -453,21 +465,21 @@ gfx.page = {
 					);
 					//non position: fixed solution.
 					/*
-					$('#editor_save').css(
+					bar.el.css(
 						{
 							'position' : 'absolute',
-							'top' : offset
+							'top' : bar.doc.scrollTop()
 						}
 					);
 					*/
 				} else {
-					$('#editor_save').css(
+					bar.el.css(
 						{
 							'position' : null, //This breaks IE7 ('static' works but not null )
 							'top' : null
 						}
 					);
-					$('#editor_save_placeholder').remove();
+					bar.pl.hide();
 				}
 			}
 		).scroll();
