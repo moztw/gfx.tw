@@ -7,6 +7,7 @@ $lang['gfx_message_auth_logout'] = "您已經登出：要清除所有認證，�
 
 $lang['gfx_message_not_logged_in'] = '您必須要先登入。';
 $lang['gfx_message_login_validation_failed'] = "認證失敗。";
+$lang['gfx_message_captcha_validation_failed'] = "認證碼輸入錯誤，請再試一次。";
 
 $lang['gfx_message_editor_notlogin'] = "您必須要登入才能編輯您的火狐推薦頁。";
 $lang['gfx_message_sticker_notlogin'] = "您必須要登入才能索取您的推薦貼紙。";

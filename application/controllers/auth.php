@@ -152,6 +152,42 @@ class Auth extends Controller {
 		);
 		header('Location: ' . site_url('editor'));
 	}
+	function challange() {
+		/*
+			A really weak captcha challange that doesn't involve reCaptcha or GD (to save memory)
+			Do not apply to anything that we really need to protect against robots.
+		*/
+		$this->load->config('gfx');
+		$b = rand(2, 99);
+		$a = rand($b, 99);
+		$OP = array('+', '-', 'x');
+		$op = rand(0, 2);
+		$t = time();
+		switch ($op) {
+			case 0:
+				$challange = md5(($a+$b) . ':' . $t . ':' . $this->config->item('gfx_token'));
+				break;
+			case 1:
+				$challange = md5(($a-$b) . ':' . $t . ':' . $this->config->item('gfx_token'));
+				break;
+			case 2:
+				$challange = md5(($a*$b) . ':' . $t . ':' . $this->config->item('gfx_token'));
+		}
+		header('Content-Type: text/javascript');
+		print json_encode(
+			array(
+				'challange' => $t . ':' . $challange,
+				'question' => $a . ' ' . $OP[$op] . ' ' . $b . ' ='
+			)
+		);
+	}
+	function forgetopenid() {
+		$this->load->helper('gfx');		
+		if (checkChallange('flashdata')) {
+			flashdata_message('TBD', 'highlight', 'info');
+		}
+		header('Location: ' . site_url('about'));
+	}
 }
 
 /* End of file auth.php */

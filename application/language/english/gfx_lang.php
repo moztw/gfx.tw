@@ -7,6 +7,7 @@ $lang['gfx_message_auth_logout'] = "You have been logged out. To clean up all yo
 
 $lang['gfx_message_not_logged_in'] = 'You have to log in first.';
 $lang['gfx_message_login_validation_failed'] = "Login validation failed.";
+$lang['gfx_message_captcha_validation_failed'] = "Captcha validation failed. Please try again.";
 
 $lang['gfx_message_editor_notlogin'] = "You have to login to edit your gfx personal page.";
 $lang['gfx_message_sticker_notlogin'] = "You have to login to get your personal stickers and badges.";

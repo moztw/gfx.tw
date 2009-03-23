@@ -349,6 +349,23 @@ var gfx = {
 				},
 				'#header li' : function () {
 					$(this).addClass('ui-state-hover');
+				},
+				'.challange-answer' : function () {
+					if ($('.challange-question').text()) return;
+					$.ajax(
+						{
+							url: '/auth/challange',
+							data: {},
+							beforeSend : function (xhr) { },
+							complete : function (xhr, status) { },
+							error: function (xhr, status, error) { },
+							success: function (result, status) {
+								if (result.challange && result.question)
+								$('.challange-token').val(result.challange);
+								$('.challange-question').text(result.question);
+							}
+						}
+					);
 				}
 			},
 			'mouseout' : {
@@ -358,7 +375,7 @@ var gfx = {
 				'#header li' : function () {
 					$(this).removeClass('ui-state-hover');
 				}
-			}			
+			}
 		},
 		'dialog' : {
 			'login' : {
@@ -400,12 +417,14 @@ var gfx = {
 				gfx.closeDialog('progress');
 			};
 
+			/* User page show addon details */
 			if ($('#groups-show-detail-box:checked').length) {
 				$('#groups').addClass('detailed');
 			} else {
 				$('#groups').removeClass('detailed');
 			}
 
+			/* Show messages */
 			var showMessage = function (o) {
 				o.slideDown(
 					500, 

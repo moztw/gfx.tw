@@ -70,6 +70,40 @@ function checkAuth($checkOrigin = false, $checkAdmin = false, $errorType = '') {
 	}
 	return $islogin;
 }
+function checkChallange($errorType = '') {
+	$CI =& get_instance();
+	while (true) {
+		if (!$CI->input->post('challange')
+			|| !$CI->input->post('answer')) {
+			$isValid = false;
+			break;
+		}
+		$C = explode(':', $CI->input->post('challange'), 2);
+		if (count($C) !== 2) {
+			$isValid = false;
+			break;
+		}
+		$CI->load->config('gfx');
+		if (intval($C[0]) < time() - 3*60*60
+			|| $C[1] !== md5($CI->input->post('answer') . ':' . intval($C[0]) . ':' . $CI->config->item('gfx_token'))) {
+			$isValid = false;
+			break;
+		}
+		$isValid = true;
+		break;
+	}
+	if (!$isValid) {
+		switch ($errorType) {
+			case 'json':
+				json_message('captcha_validation_failed');
+			break;
+			case 'flashdata':
+				flashdata_message('captcha_validation_failed');
+			break;
+		}
+	}
+	return $isValid;
+}
 function session_data_set($data, $msg = true) {
 	$CI =& get_instance();
 	if (isset($data['name']) && substr($data['name'], 0, 8) === '__temp__') {
@@ -122,4 +156,4 @@ function json_message($tag = 'unknown_message', $type = 'error', $icon = 'alert'
 }
 
 /* End of file gfx_helper.php */
-/* Location: ./system/applications/helpers/gfx_helper.php */ 
+/* Location: ./system/applications/helpers/gfx_helper.php */
