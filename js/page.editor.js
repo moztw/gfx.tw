@@ -87,11 +87,7 @@ gfx.page = {
 				gfx.page.changeAvatar('(default)', './images/keyhole.gif');
 			},
 			'#groups input' : function () {
-				if (this.checked) {
-					$(this).parent().removeClass('not-selected');
-				} else {
-					$(this).parent().addClass('not-selected');
-				}
+				$(this).parent().toggleClass('not-selected', !this.checked);
 				gfx.page.groupChanged = true;
 			},
 			'#groups .group-add-addon a' : function () {
@@ -509,11 +505,7 @@ gfx.page = {
 		}
 		$('#groups input').each(
 			function (i) {
-				if (this.checked) {
-					$(this).parent().removeClass('not-selected');
-				} else {
-					$(this).parent().addClass('not-selected');
-				}
+				$(this).parent().toggleClass('not-selected', !this.checked);
 			}
 		);
 		gfx.page.swfupload = new SWFUpload(
