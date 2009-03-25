@@ -26,4 +26,7 @@ $lang['gfx_message_dup_about_name'] = "About URL already in used.";
 $lang['gfx_message_about_deleted'] = "About page deleted.";
 $lang['gfx_message_about_updated'] = "About page updated, reload this page to see the result.";
 
+$lang['gfx_message_openid_query_processed'] = 'Your OpenID query is processed. In order to respect privacy of our users, we cannot tell you here if the e-mail has been sent or not.';
+$lang['gfx_email_subject_forgetopenid'] = 'OpenID Query Result from gfx.tw';
+
 ?>

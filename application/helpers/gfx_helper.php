@@ -70,15 +70,15 @@ function checkAuth($checkOrigin = false, $checkAdmin = false, $errorType = '') {
 	}
 	return $islogin;
 }
-function checkChallange($errorType = '') {
+function checkChallenge($errorType = '') {
 	$CI =& get_instance();
 	while (true) {
-		if (!$CI->input->post('challange')
+		if (!$CI->input->post('challenge')
 			|| !$CI->input->post('answer')) {
 			$isValid = false;
 			break;
 		}
-		$C = explode(':', $CI->input->post('challange'), 2);
+		$C = explode(':', $CI->input->post('challenge'), 2);
 		if (count($C) !== 2) {
 			$isValid = false;
 			break;

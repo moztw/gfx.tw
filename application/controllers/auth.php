@@ -152,41 +152,85 @@ class Auth extends Controller {
 		);
 		header('Location: ' . site_url('editor'));
 	}
-	function challange() {
+	function challenge() {
 		/*
-			A really weak captcha challange that doesn't involve reCaptcha or GD (to save memory)
+			A really weak captcha challenge that doesn't involve reCaptcha or GD (to save memory)
 			Do not apply to anything that we really need to protect against robots.
 		*/
 		$this->load->config('gfx');
-		$b = rand(2, 99);
-		$a = rand($b, 99);
+		$b = rand(2, 50);
+		$a = rand($b, 50);
 		$OP = array('+', '-', 'x');
 		$op = rand(0, 2);
 		$t = time();
 		switch ($op) {
 			case 0:
-				$challange = md5(($a+$b) . ':' . $t . ':' . $this->config->item('gfx_token'));
+				$challenge = md5(($a+$b) . ':' . $t . ':' . $this->config->item('gfx_token'));
 				break;
 			case 1:
-				$challange = md5(($a-$b) . ':' . $t . ':' . $this->config->item('gfx_token'));
+				$challenge = md5(($a-$b) . ':' . $t . ':' . $this->config->item('gfx_token'));
 				break;
 			case 2:
-				$challange = md5(($a*$b) . ':' . $t . ':' . $this->config->item('gfx_token'));
+				$challenge = md5(($a*$b) . ':' . $t . ':' . $this->config->item('gfx_token'));
 		}
 		header('Content-Type: text/javascript');
 		print json_encode(
 			array(
-				'challange' => $t . ':' . $challange,
+				'challenge' => $t . ':' . $challenge,
 				'question' => $a . ' ' . $OP[$op] . ' ' . $b . ' ='
 			)
 		);
 	}
 	function forgetopenid() {
-		$this->load->helper('gfx');		
-		if (checkChallange('flashdata')) {
-			flashdata_message('TBD', 'highlight', 'info');
+		$this->load->helper('gfx');
+		if (!checkChallenge('flashdata')) {
+			header('Location: ' . site_url('about/faq'));
+			exit();
 		}
-		header('Location: ' . site_url('about'));
+		//Due to privicy consideration, we will not show any onscreen message indicate email has been send or not.
+		//Therefore all the flashdata message will be the same from this point on.
+		$this->load->helper('email');
+		if (!valid_email($this->input->post('email'))) {
+			flashdata_message('openid_query_processed', 'highlight', 'info');
+			header('Location: ' . site_url('about/faq'));
+			exit();
+		}
+		$this->load->database();
+		$acs = $this->db->query('SELECT `login`, `name` FROM `users` WHERE `email` = ' . $this->db->escape($this->input->post('email')) . ';');
+		if ($acs->num_rows() !== 0) {
+			$this->load->library('email');
+			$this->email->initialize(
+				array(
+					'mailtype' => 'html'
+				)
+			);
+			$this->load->config('gfx');
+			$this->email->from($this->config->item('gfx_mail_from_add'), $this->config->item('gfx_mail_from_name'));
+			$this->email->to($this->input->post('email'));
+			$this->email->subject($this->lang->line('gfx_email_subject_forgetopenid'));
+			$data = array(
+				'ip' => $_SERVER['REMOTE_ADDR'],
+				'logins' => array(
+				)
+			);
+			foreach($acs->result_array() as $U) {
+				if (substr($U['name'], 0, 8) === '__temp__') {
+					unset($U['name']);
+				}
+				$data['logins'][] = $U;
+			}	
+			$this->email->message(
+				$this->load->view(
+					$this->config->item('language') . '/forgetopenid.php',
+					$data,
+					true
+				)
+			);
+			$this->email->send();
+			//echo $this->email->print_debugger();
+		}
+		flashdata_message('openid_query_processed', 'highlight', 'info');
+		header('Location: ' . site_url('about/faq'));
 	}
 }
 

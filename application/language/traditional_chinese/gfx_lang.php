@@ -26,4 +26,7 @@ $lang['gfx_message_dup_about_name'] = "網站簡介頁面網址重複，無法�
 $lang['gfx_message_about_deleted'] = "網站簡介頁面已刪除。";
 $lang['gfx_message_about_updated'] = "網站簡介頁面已更新，重新載入之後才能看到結果。";
 
+$lang['gfx_message_openid_query_processed'] = '已處理您的查詢要求，請檢查您的信箱。因為隱私權的考量，我們無法在此處告訴您是否有送出信件，請見諒。';
+$lang['gfx_email_subject_forgetopenid'] = '=?UTF-8?B?5L6G6Ieq5oqT54Gr54uQ57ay56uZ55qEIE9wZW5JRCDmn6XoqaI=?='; /* 來自抓火狐網站的 OpenID 查詢 */
+
 ?>

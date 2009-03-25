@@ -40,6 +40,11 @@ $config['gfx_amo_fetch_older_than_time'] = 7*24*60*60;
 /* Or it's older than a specific date stated here */
 $config['gfx_amo_fetch_older_than_date'] = strtotime('2009-03-07 10:00:00');
 
+/* The from: field for all the mails send from the server to the users */
+$config['gfx_mail_from_add'] = 'bot-no-reply@gfx.tw';
+/* Name */
+$config['gfx_mail_from_name'] = 'gfx.tw bot';
+
 /* The user should show on the home page. */
 $config['gfx_home_user'] = 'foxmosa';
 /* Bad names that user should not use as their gfx url.

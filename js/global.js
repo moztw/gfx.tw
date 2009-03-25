@@ -366,19 +366,19 @@ var gfx = {
 				'#header li, #newcomer-intro-login' : function () {
 					$(this).not('.ui-state-disabled').addClass('ui-state-hover');
 				},
-				'.challange-answer' : function () {
-					if ($('.challange-question').text()) return;
+				'.challenge-answer' : function () {
+					if ($('.challenge-question').text()) return;
 					$.ajax(
 						{
-							url: '/auth/challange',
+							url: '/auth/challenge',
 							data: {},
 							beforeSend : function (xhr) { },
 							complete : function (xhr, status) { },
 							error: function (xhr, status, error) { },
 							success: function (result, status) {
-								if (result.challange && result.question)
-								$('.challange-token').val(result.challange);
-								$('.challange-question').text(result.question);
+								if (result.challenge && result.question)
+								$('.challenge-token').val(result.challenge);
+								$('.challenge-question').text(result.question);
 							}
 						}
 					);
@@ -396,8 +396,8 @@ var gfx = {
 		'dialog' : {
 			'login' : {
 				'width' : 500,
-				'height' : 400,
-				'position' : ['center', 120]
+				'height' : 420,
+				'position' : ['center', 100]
 			},
 			'download' : {
 				'width' : 500,
@@ -453,6 +453,9 @@ var gfx = {
 				$('#visitor-intro').text(T.UI.INTRO_TEXT_FX_USER);
 				$('#newcomer-intro-login').removeClass('ui-state-disabled');
 			}
+			
+			/* Turn off some autocomplete */
+			$('.challenge-answer').attr('autocomplete','off');
 			
 			/* Show messages */
 			var showMessage = function (o) {
