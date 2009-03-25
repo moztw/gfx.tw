@@ -1,9 +1,9 @@
-	<div id="header">
-		<p id="header_top_link"><a href="<?php print base_url() ?>" title="回首頁">抓火狐</a></p>
 <?php
 if (isset($id)) {
 	$this->load->config('gfx');
 ?>
+	<div id="header">
+		<p id="header_top_link"><a href="<?php print base_url() ?>" title="回首頁">抓火狐</a></p>
 		<ul>
  <?php
 	if (substr($name, 0, 8) !== '__temp__') {
@@ -19,6 +19,7 @@ if (isset($id)) {
 <?php
 	}
 ?>
+			<li class="ui-corner-top ui-state-default"><a href="#" id="link-intro">更多...</a></li>
 			<li class="ui-corner-all ui-state-default"><a href="#" id="link_logout">登出</a></li>
 		</ul>
 <?php /*		<p id="header_user_functions">Hi, <span id="header_username"><?php
@@ -33,12 +34,38 @@ if (isset($id)) {
 ?><p id="link_manage" class="ui-state-default ui-corner-all"><a href="#"><span class="ui-icon ui-icon-gear">[*]</span>管理此頁</a></p><?php
 	}
 ?>
+	<div id="intro-block" class="ui-state-hover ui-corner-all header-block">
+		<div class="header-block-content ui-widget-content ui-corner-bottom">
+			<p class="header-block-title">抓火狐推薦頁，隨機發售！</p>
+<!--			<p class="header-block-desc" id="user-intro">看看更多推薦頁，看大家怎麼推薦 Firefox！</p>-->
+			<div class="random-avatar">
+				<p style="color: #999999">(隨機大頭預定地)</p>
+			</div>
+		</div>
+	</div>
 	<form id="logout_form" action="<?php print site_url('auth/logout'); ?>" method="post">
 		<input type="hidden" id="token" name="token" value="<?php print md5($id . $this->config->item('gfx_token')) ?>" />
 		<p><input type="submit" value="登出" /></p>
 	</form>
 <?php } else { ?>
-		<p id="header_login"><a href="#" id="link_login">使用 OpenID 登入</a>取得您獨一無二的火狐推薦頁！</p>
+	<div id="header" class="no-margin">
+		<p id="header_top_link"><a href="<?php print base_url() ?>" title="回首頁">抓火狐</a></p>
+		<ul>
+			<li class="ui-corner-all ui-state-default active ui-state-hover"><a href="#" id="link-newcomer-intro">了解本站</a></li>
+			<li class="ui-corner-all ui-state-default"><a href="#" id="link_login">使用 OpenID 登入</a></li>
+		</ul>
+	</div>
+	<div id="newcomer-intro" class="ui-widget message show no-auto">
+		<div class="ui-widget-content ui-corner-all"> 
+			<p><a href="#" class="ui-icon ui-icon-circle-close ui-corner-all">
+			</a><span class="ui-corner-all ui-state-default ui-state-disabled" id="newcomer-intro-login">立即加入，免註冊！</span>
+「抓火狐」是屬於您的 Firefox 推廣平台。</p>
+			<p class="message-desc" id="visitor-intro">&nbsp;</p>
+			<div class="random-avatar">
+				<p style="color: #999999">(隨機大頭預定地)</p>
+			</div>
+			<p class="message-desc" id="newcomer-link"><a href="/about">了解更多...</a></p>
+		</div>
 	</div>
 	<div id="window_login" class="window" title="登入">
 		<form action="<?php print site_url('auth/login'); ?>" method="post">

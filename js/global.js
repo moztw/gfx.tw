@@ -175,9 +175,10 @@ var gfx = {
 			'click' : {
 				'div.message div p a.ui-icon' : function () {
 					$(this).parents('.message').slideUp(500);
+					$('#link-' + $(this).parents('.message').attr('id')).parent().removeClass('active ui-state-hover');
 					return false;
 				},
-				'div.announcement div p a.ui-icon' : function () {
+				'div.announcement div p a.ui-icon:first' : function () {
 					$.ajax(
 						{
 							url: '/auth/skip_announcement',
@@ -191,13 +192,28 @@ var gfx = {
 						}
 					);
 				},
-				'#link_login' : function () {
-					gfx.openDialog('login');
-					$('#openid-identifier').focus();
+				'#link_login, #newcomer-intro-login' : function () {
+					if ($(this).not('.ui-state-disabled').length !== 0) {
+						gfx.openDialog('login');
+						$('#openid-identifier').focus();
+					}
 					return false;
 				},
 				'#link_logout' : function () {
 					$('#logout_form').submit();
+					return false;
+				},
+				'#link-intro' : function () {
+					/* show/hide instead of slide because strange margin issue */
+					var show = ($('#intro-block:visible').length === 0);
+					$('#intro-block').toggleClass('show', show);
+					$('#header').toggleClass('no-margin', show);
+					$(this).parent().toggleClass('active', show);
+					return false;
+				},
+				'#link-newcomer-intro' : function () {
+					$(this).parent().toggleClass('active', ($('#newcomer-intro:visible').length === 0));
+					$('#newcomer-intro').slideToggle(500);
 					return false;
 				},
 				'#groups-show-detail-box' : function () {
@@ -347,8 +363,8 @@ var gfx = {
 				'#link_manage a' : function () {
 					$(this).parent().addClass('ui-state-hover');
 				},
-				'#header li' : function () {
-					$(this).addClass('ui-state-hover');
+				'#header li, #newcomer-intro-login' : function () {
+					$(this).not('.ui-state-disabled').addClass('ui-state-hover');
 				},
 				'.challange-answer' : function () {
 					if ($('.challange-question').text()) return;
@@ -372,8 +388,8 @@ var gfx = {
 				'#link_manage a' : function () {
 					$(this).parent().removeClass('ui-state-hover');
 				},
-				'#header li' : function () {
-					$(this).removeClass('ui-state-hover');
+				'#header li, #newcomer-intro-login' : function () {
+					$(this).not('.active').removeClass('ui-state-hover');
 				}
 			}
 		},
@@ -424,17 +440,31 @@ var gfx = {
 				$('#groups').removeClass('detailed');
 			}
 
+			/* Show intro block if this is top block */
+			/*if (window.location.pathname === '/') {
+				this.bind.click['#link-intro'].apply($('#link-intro'));
+			}*/
+			
+			/* Show intro text */
+			if (!$.browser.mozilla) {
+				$('#visitor-intro').text(T.UI.INTRO_TEXT_NON_FX_USER);
+				$('#newcomer-intro-login').addClass('ui-state-disabled');
+			} else {
+				$('#visitor-intro').text(T.UI.INTRO_TEXT_FX_USER);
+				$('#newcomer-intro-login').removeClass('ui-state-disabled');
+			}
+			
 			/* Show messages */
 			var showMessage = function (o) {
 				o.slideDown(
 					500, 
 					function () {
-						showMessage($(this).next('.message'));
+						showMessage($(this).next('.message:not(.show):not(.no-auto)'));
 					}
 				);
 			}
 			
-			showMessage($('.message:first'));
+			showMessage($('.message:not(.show):not(.no-auto)'));
 
 			if (gfx.admin) {
 				$('#link_manage').show();

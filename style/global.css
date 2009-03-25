@@ -62,6 +62,11 @@ optgroup {
 	height: 38px;
 	color: #cccccc;
 }
+
+#header.no-margin {
+	margin: 0;
+}
+
 #header p {
 	margin: 0; padding: 0.5em;
 }
@@ -105,6 +110,10 @@ optgroup {
 	list-style: none;
 }
 
+#header ul li.active {
+	border-bottom-color: #5a9d1a!important;
+}
+
 #header ul li.ui-corner-top {
 	height: 30px;
 }
@@ -115,6 +124,45 @@ optgroup {
 #header ul li a {
 	display: block;
 	padding: 0.2em 0.5em 0.6em 0.5em;
+}
+
+.header-block {
+	display: none;
+	height: 230px; width: 898px;
+	margin: 0 0 10px 0;
+	border-top-color: #5a9d1a!important;
+}
+
+.header-block.show {
+	display: block;
+}
+
+.header-block .header-block-content {
+	margin: 10px 0 0 0; padding: 0 20px;
+	height: 218px;
+	font-weight: normal;
+}
+
+.header-block .header-block-title {
+	font-size: 1.2em;
+	margin: 0; padding: 1em 0;
+	font-weight: bold;
+	float: left;
+}
+
+.header-block .header-block-desc {
+	text-align: right;
+	margin: 0; padding: 1.5em 0;
+	float: right;
+}
+
+div.random-avatar {
+	clear: both;
+	height: 80px;
+	border: 1px dashed #999999;
+	/*background: transparent url('../images/ajax-progress.gif') center center no-repeat;*/
+	padding: 0!important;
+	margin: 0.5em 0;
 }
 
 #link_manage {
@@ -172,9 +220,19 @@ div.message {
 	width: 900px;
 	display: none;
 }
-div.message div {
-	padding: 0 0.7em;
+
+div.message.show {
+	display: block;
 }
+
+div.message div {
+	padding: 0.7em;
+}
+
+div.message div p {
+	margin: 4px;
+}
+
 div.message div p span.ui-icon {
 	float: left; margin-right: 0.3em;
 }
@@ -188,6 +246,31 @@ div.message div p a.ui-icon:hover {
 div.message div p a {
 	color: #000000;
 }
+
+div.message p.message-desc {
+	font-size: 0.66em;
+	font-weight: normal;
+}
+
+#newcomer-intro-login {
+	padding: 0.5em 0.3em;
+	margin: 0 0.3em;
+	float: left;
+	cursor: pointer;
+}
+
+#newcomer-link {
+	text-align: right;
+}
+
+#newcomer-link a {
+	text-decoration: none;
+}
+
+#newcomer-link a:hover {
+	text-decoration: underline;
+}
+
 
 #editor_save {
 	position: relative;
