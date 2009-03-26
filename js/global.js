@@ -597,7 +597,7 @@ var gfx = {
 				)*/.append(msg)
 			)
 		);
-		$('#header').after(o);
+		$('#header, #newcomer-intro, #intro-block').filter(':last').after(o);
 		o.slideDown(500);
 	},
 	'alert' : function (msg, tag) {
