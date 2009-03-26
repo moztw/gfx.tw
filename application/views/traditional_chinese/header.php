@@ -38,8 +38,7 @@ if (isset($id)) {
 		<div class="header-block-content ui-widget-content ui-corner-bottom">
 			<p class="header-block-title">抓火狐推薦頁，隨機發售！</p>
 <!--			<p class="header-block-desc" id="user-intro">看看更多推薦頁，看大家怎麼推薦 Firefox！</p>-->
-			<div class="random-avatar">
-				<p style="color: #999999">(隨機大頭預定地)</p>
+			<div class="random-avatars random-avatars-loading">
 			</div>
 		</div>
 	</div>
@@ -61,8 +60,7 @@ if (isset($id)) {
 			</a><span class="ui-corner-all ui-state-default ui-state-disabled" id="newcomer-intro-login">立即加入，免註冊！</span>
 「抓火狐」是屬於您的 Firefox 推廣平台。</p>
 			<p class="message-desc" id="visitor-intro">&nbsp;</p>
-			<div class="random-avatar">
-				<p style="color: #999999">(隨機大頭預定地)</p>
+			<div class="random-avatars random-avatars-loading">
 			</div>
 			<p class="message-desc" id="newcomer-link"><a href="/about">了解更多...</a></p>
 		</div>

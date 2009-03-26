@@ -209,11 +209,13 @@ var gfx = {
 					$('#intro-block').toggleClass('show', show);
 					$('#header').toggleClass('no-margin', show);
 					$(this).parent().toggleClass('active', show);
+					gfx.randomAvatar();
 					return false;
 				},
 				'#link-newcomer-intro' : function () {
 					$(this).parent().toggleClass('active', ($('#newcomer-intro:visible').length === 0));
 					$('#newcomer-intro').slideToggle(500);
+					gfx.randomAvatar();
 					return false;
 				},
 				'#groups-show-detail-box' : function () {
@@ -433,6 +435,9 @@ var gfx = {
 				gfx.closeDialog('progress');
 			};
 
+			/* Fill random avatars */
+			gfx.randomAvatar();
+			
 			/* User page show addon details */
 			if ($('#groups-show-detail-box:checked').length) {
 				$('#groups').addClass('detailed');
@@ -473,6 +478,65 @@ var gfx = {
 				$('#link_manage').show();
 			}
 		}
+	},
+	'randomAvatar' : function () {
+		var Avatar = function (d) {
+			return $(document.createElement('p')).append(
+				$(document.createElement('a')).attr(
+					'href', '/' + d.name
+				).append(
+					$(document.createElement('img')).one(
+						'load',
+						function () {
+							$(this).fadeIn(200).next().fadeIn(200, function () {
+								if (this.style.removeAttribute) {
+									/* IE text filter fix */
+									this.style.removeAttribute('filter');
+								}
+							});
+						}
+					)
+				).append(
+					$(document.createElement('span')).text(d.title)
+				)
+			);
+		};
+		$('.random-avatars:visible').each(
+			function (i, o) {
+				/* Remember we have not yet $.ajaxSetup so do fill some common variables */
+				if ($(o).children().length !== 0) {
+					return;
+				}
+				$.ajax(
+					{
+						url: '/user/list/random-avatars',
+						data: {},
+						type: 'POST',
+						timeout: 20000,
+						dataType: 'json',
+						beforeSend : function (xhr) { },
+						complete : function (xhr, status) { },
+						error: function (xhr, status, error) { },
+						success: function (result, status) {
+							if (!result.users) {
+								return;
+							}
+							$(o).removeClass('random-avatars-loading');
+							$.each(
+								result.users,
+								function () {
+									$(o).append(
+										new Avatar(this)
+									);
+									/* set src after append, make sure onload fires on IE */
+									$(o).find('p:last img').attr('src', this.avatar);
+								}
+							)
+						}
+					}
+				);
+			}
+		);
 	},
 	'openDialog' : function (id) {
 		//beforeopen is an option we made up so we check it ourselves.

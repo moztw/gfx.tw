@@ -104,6 +104,17 @@ function checkChallenge($errorType = '') {
 	}
 	return $isValid;
 }
+function avatarURL($avatar, $email, $conn = '&amp;') {
+	if (!$avatar) {
+		$avatar = './images/keyhole.gif';
+	} elseif ($avatar === '(gravatar)') {
+		$avatar = 'http://www.gravatar.com/avatar/' . md5($email) . '?s=65' . $conn . 'r=g' . $conn . 'd=' . urlencode(site_url('images/keyhole.gif'));
+	} else {
+		$avatar = './useravatars/' . $avatar;
+	}
+	return $avatar;
+}
+
 function session_data_set($data, $msg = true) {
 	$CI =& get_instance();
 	if (isset($data['name']) && substr($data['name'], 0, 8) === '__temp__') {

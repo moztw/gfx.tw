@@ -74,7 +74,10 @@ $route['feature/(:any)'] = "feature/view/$1";
 $route['feature/(:any)/inframe'] = "feature/view/$1/inframe";
 $route['sticker'] = "sticker";
 $route['auth/(:any)'] = "auth/$1";
+$route['user/list'] = "user/userlist";
+$route['user/list/(:any)'] = "user/userlist/$1";
 $route['user/(:any)'] = "user/$1";
+$route['user/(:any)/(:any)'] = "user/$1/$2";
 
 $route['(:any)'] = "user/view/$1";
 

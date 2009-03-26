@@ -9,7 +9,7 @@ class User extends Controller {
 		$this->load->config('gfx');
 		$this->view($this->config->item('gfx_home_user'));
 	}
-	function view($name) {
+	function view($name = '') {
 		/* xrds doc request, usually done by OpenID 2.0 op who checks "Relay Party" */
 		if (isset($_SERVER['HTTP_ACCEPT']) && strpos($_SERVER['HTTP_ACCEPT'], 'application/xrds+xml') !== false) {
 			header('X-XRDS-Location: ' . site_url('auth/xrds'));
@@ -169,6 +169,43 @@ class User extends Controller {
 		$this->load->library('cache');
 		$this->cache->remove($data->row()->name, 'user');
 		json_message('user_updated', 'highlight', 'info');
+	}
+	function userlist($type = '') { /* function name cannot be list() */
+		switch ($type) {
+			case 'random-avatars':
+				/*
+				Here is what we do: 
+				random a number, see if the cache exists, if so output it, if not then generate one then saves it.
+				these cache have short ttl because we do not check the data within against database.
+				*/
+				$this->load->library('cache');
+				$i = rand(0, 99);
+				$data = $this->cache->get($i, 'random-avatars');
+				if (!$data) {
+					$this->load->database();
+					$this->load->helper('gfx');
+					/*
+						Really expensive query, should change it right away should user > 1000 
+						or fill the cache by using crontab instead of user request
+					*/
+					$query = $this->db->query('SELECT `name`, `title`, `avatar`, `email` FROM `users` WHERE `avatar` != \'\' AND `name` NOT LIKE \'__temp__%\' ORDER BY RAND() LIMIT 10;');
+					$users = array();
+					foreach ($query->result_array() as $user) {
+						$users[] = array(
+							'name' => $user['name'],
+							'title' => $user['title'],
+							'avatar' => avatarURL($user['avatar'], $user['email'], '&')
+						);
+					}
+					$data = json_encode(array('users' => $users));
+					$this->cache->save($i, $data, 'random-avatars', 300);
+				}
+				header('Content-Type: text/javascript');
+				print $data;
+			break;
+			default:
+			json_message('Invalid List type');
+		}
 	}
 }
 

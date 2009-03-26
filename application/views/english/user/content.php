@@ -1,12 +1,7 @@
 <?php
 
-if (!$avatar) {
-	$avatar = './images/keyhole.gif';
-} elseif ($avatar === '(gravatar)') {
-	$avatar = 'http://www.gravatar.com/avatar/' . md5($email) . '?s=65&amp;r=g&amp;d=' . urlencode(site_url('images/keyhole_edit.gif'));
-} else {
-	$avatar = './useravatars/' . $avatar;
-}
+$this->load->helper('gfx');
+$avatar = avatarURL($avatar, $email);
 
 ?>
 	<div id="titleblock">
