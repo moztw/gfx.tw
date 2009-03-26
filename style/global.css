@@ -214,6 +214,20 @@ div.random-avatars a:hover span {
 	color: #000000;
 }
 
+p.message-link {
+	text-align: right;
+}
+
+p.message-link a {
+	text-decoration: none;
+	color: #000000;
+}
+
+p.message-link a:hover {
+	text-decoration: underline;
+	color: #000000;
+}
+
 #link_manage {
 	display: none;
 	position: fixed;
@@ -296,7 +310,7 @@ div.message div p a {
 	color: #000000;
 }
 
-div.message p.message-desc {
+div.message p.message-desc, div.message p.message-link {
 	font-size: 0.66em;
 	font-weight: normal;
 }
@@ -307,19 +321,6 @@ div.message p.message-desc {
 	float: left;
 	cursor: pointer;
 }
-
-#newcomer-link {
-	text-align: right;
-}
-
-#newcomer-link a {
-	text-decoration: none;
-}
-
-#newcomer-link a:hover {
-	text-decoration: underline;
-}
-
 
 #editor_save {
 	position: relative;

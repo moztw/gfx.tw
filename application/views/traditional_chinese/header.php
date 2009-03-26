@@ -40,6 +40,7 @@ if (isset($id)) {
 <!--			<p class="header-block-desc" id="user-intro">看看更多推薦頁，看大家怎麼推薦 Firefox！</p>-->
 			<div class="random-avatars random-avatars-loading">
 			</div>
+			<p class="message-link"><a href="/about">關於我們</a> | <a href="/about/legal">使用條款</a> | <a href="/about/faq">常見問題</a></p>
 		</div>
 	</div>
 	<form id="logout_form" action="<?php print site_url('auth/logout'); ?>" method="post">
@@ -62,7 +63,7 @@ if (isset($id)) {
 			<p class="message-desc" id="visitor-intro">&nbsp;</p>
 			<div class="random-avatars random-avatars-loading">
 			</div>
-			<p class="message-desc" id="newcomer-link"><a href="/about">了解更多...</a></p>
+			<p class="message-link"><a href="/about">關於我們</a> | <a href="/about/legal">使用條款</a> | <a href="/about/faq">常見問題</a></p>
 		</div>
 	</div>
 	<div id="window_login" class="window" title="登入">
