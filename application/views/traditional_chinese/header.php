@@ -19,8 +19,8 @@ if (isset($id)) {
 <?php
 	}
 ?>
-			<li class="ui-corner-top ui-state-default"><a href="#" id="link-intro">更多...</a></li>
-			<li class="ui-corner-all ui-state-default"><a href="#" id="link_logout">登出</a></li>
+			<li class="ui-corner-top ui-state-default ui-state-disabled"><a href="#" id="link-intro">更多...</a></li>
+			<li class="ui-corner-all ui-state-default ui-state-disabled"><a href="#" id="link_logout">登出</a></li>
 		</ul>
 <?php /*		<p id="header_user_functions">Hi, <span id="header_username"><?php
 	if ($title !== '') print htmlspecialchars($title);
@@ -52,7 +52,7 @@ if (isset($id)) {
 		<p id="header_top_link"><a href="<?php print base_url() ?>" title="回首頁">抓火狐</a></p>
 		<ul>
 			<li class="ui-corner-all ui-state-default active ui-state-hover"><a href="#" id="link-newcomer-intro">了解本站</a></li>
-			<li class="ui-corner-all ui-state-default"><a href="#" id="link_login">使用 OpenID 登入</a></li>
+			<li class="ui-corner-all ui-state-default ui-state-disabled"><a href="#" id="link_login">使用 OpenID 登入</a></li>
 		</ul>
 	</div>
 	<div id="newcomer-intro" class="ui-widget message show no-auto">

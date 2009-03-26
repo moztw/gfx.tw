@@ -449,6 +449,9 @@ var gfx = {
 			/*if (window.location.pathname === '/') {
 				this.bind.click['#link-intro'].apply($('#link-intro'));
 			}*/
+
+			/* visually enable all javascript buttons */
+			$('.ui-state-disabled').removeClass('ui-state-disabled');
 			
 			/* Show intro text */
 			if (!$.browser.mozilla) {
