@@ -156,13 +156,62 @@ optgroup {
 	float: right;
 }
 
-div.random-avatar {
+div.random-avatars {
 	clear: both;
-	height: 80px;
-	border: 1px dashed #999999;
+	height: 84px;
 	/*background: transparent url('../images/ajax-progress.gif') center center no-repeat;*/
 	padding: 0!important;
 	margin: 0.5em 0;
+}
+div.random-avatars.random-avatars-loading {
+	background: transparent url('../images/ajax-progress.gif') center center no-repeat;
+	border: 1px dashed #cccccc;
+}
+
+div.random-avatars p {
+	float: left;
+	width: 10%; overflow: hidden;
+	/* -1px insures that browsers won't overflow blocks */
+	margin: 0 -1px 0 0!important; padding: 0!important;
+	text-align: center;
+	position: relative;
+	height: 84px;
+}
+
+div.random-avatars a {
+	display: block;
+	height: 100%;
+	width: 100%;
+	text-decoration: none;
+}
+
+div.random-avatars a img {
+	display: block;
+	width: 55px; height: 55px; margin: 5px auto;
+	border: none;
+	display: none;
+}
+
+div.random-avatars a:hover img {
+	width: 65px; height: 65px; margin: 0 auto;
+}
+
+div.random-avatars a span {
+	display: block;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	font-size: 12px;
+	font-weight: bold;
+	color: #999999;
+	white-space: nowrap;
+	display: none;
+}
+
+div.random-avatars a:hover span {
+	font-size: 14px;
+	color: #000000;
 }
 
 #link_manage {
