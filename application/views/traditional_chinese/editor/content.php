@@ -42,18 +42,18 @@ $avatar = avatarURL($avatar, $email);
 			<div id="avatar_spfupload" class="avatar_icon">
 				<div id="avatar_spfupload_replace">&nbsp;</div>
 			</div>
-			<p>上傳照片</p>
+			<p>上傳照片檔案</p>
 		</div>
 		<div class="avatar_selection">
 			<div id="avatar_glavatar" class="avatar_icon">
-				<img src="<? print 'http://www.gravatar.com/avatar/' . md5($email) . '?s=60&amp;r=g&amp;d=' . urlencode(site_url('images/keyhole.gif')); ?>" alt="Gravatar" />
+				<img src="<? print 'http://www.gravatar.com/avatar/' . md5($email) . '?s=60&amp;r=g&amp;d=' . urlencode(site_url('images/avatar-default.png')); ?>" alt="Gravatar" />
 			</div>
 			<p><a href="http://www.gravatar.com/" class="newwindow">Gravatar</a>上的圖示</p>
 			<p>(<a href="#" id="change-email">修改 E-mail</a>)</p>
 		</div>
 		<div class="avatar_selection">
 			<div id="avatar_default" class="avatar_icon">
-				<img src="./images/keyhole.gif" alt="鑰匙孔小人" />
+				<img src="./images/avatar-default.png" alt="預設圖示" />
 			</div>
 			<p>預設圖示</p>
 		</div>

@@ -360,10 +360,16 @@ span.title-empty {
 }
 #titleblock #title-avatar {
 	position: absolute;
-	top: 50px; left: 270px;
+	top: 48px; left: 268px;
 	height: 65px; width: 65px;
+	border: 2px solid transparent;
 	overflow: hidden;
 }
+#titleblock #title-avatar.editable:hover {
+	background-color: #ccffff;
+	border: 2px solid #ccffff;
+}
+
 #titleblock #title-avatar img {
 	width: 65px;
 }
@@ -826,13 +832,26 @@ span.title-empty {
 	text-align: center;
 }
 #window_avatar .avatar_selection .avatar_icon {
-	height: 65px; width: 65px;
+	height: 69px; width: 69px;
 	margin: 1em auto;
 	cursor: pointer;
 }
 
+#window_avatar .avatar_selection .avatar_icon img {
+	height: 65px; width: 65px;
+	border: 2px solid transparent;
+}
+
+#window_avatar .avatar_selection .avatar_icon img:hover {
+	background-color: #ffffff;
+	border: 2px solid #cccccc;
+}
+
 #window_avatar .avatar_selection #avatar_spfupload {
-	background: transparent url('../images/keyhole_edit.gif') center center no-repeat;
+	background: transparent url('../images/avatar-edit.gif') center center no-repeat;
+}
+#window_avatar .avatar_selection #avatar_spfupload:hover {
+	background-color: #cccccc;
 }
 
 #window_avatar p {

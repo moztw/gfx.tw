@@ -84,7 +84,7 @@ gfx.page = {
 				gfx.page.changeAvatar('(gravatar)', $(this).children()[0].src);
 			},
 			'#avatar_default' : function () {
-				gfx.page.changeAvatar('(default)', './images/keyhole.gif');
+				gfx.page.changeAvatar('(default)', './images/avatar-default.png');
 			},
 			'#groups input' : function () {
 				$(this).parent().toggleClass('not-selected', !this.checked);
@@ -517,8 +517,8 @@ gfx.page = {
 				file_types_description : 'Images',
 				file_upload_limit : '0',
 				button_placeholder_id : 'avatar_spfupload_replace',
-				button_width: 65,
-				button_height: 65,
+				button_width: 69,
+				button_height: 69,
 				button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
 				button_cursor: SWFUpload.CURSOR.HAND,
 				flash_url : './swfupload/swfupload.swf',	// Relative to this file
