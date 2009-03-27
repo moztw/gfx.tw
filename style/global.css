@@ -192,7 +192,7 @@ div.random-avatars a img {
 	display: none;
 }
 
-div.random-avatars a:hover img {
+div.random-avatars a:hover img { /* This does not work in IE6, don't know why */
 	width: 65px; height: 65px; margin: 0 auto;
 }
 
@@ -361,11 +361,16 @@ span.title-empty {
 }
 #titleblock #title-avatar {
 	position: absolute;
-	top: 48px; left: 268px;
+	top: 50px; left: 270px;
 	height: 65px; width: 65px;
-	border: 2px solid transparent;
 	overflow: hidden;
 }
+
+#titleblock #title-avatar.editable {
+	top: 48px; left: 268px;
+	border: 2px solid transparent; /* IE6 doesn't understand this so we only do this at editable */
+}
+
 #titleblock #title-avatar.editable:hover {
 	background-color: #ccffff;
 	border: 2px solid #ccffff;
@@ -376,12 +381,12 @@ span.title-empty {
 }
 #titleblock #title-name, #titleblock #title-name-edit input {
 	position: absolute; left: 343px;
-	height: 40px; width: 260px;
-	font-size: 36px; line-height: 40px; font-weight: bold;
+	height: 44px; width: 260px;
+	font-size: 36px; line-height: 44px; font-weight: bold;
 	white-space: nowrap; overflow: hidden;
 }
 #titleblock #title-name {
-	top: 50px;
+	top: 48px;
 }
 
 #titleblock #title-name.bright {
@@ -389,7 +394,7 @@ span.title-empty {
 }
 
 #titleblock #title-name-edit input {
-	top: 45px;
+	top: 43px;
 	display: none;
 }
 #titleblock #title-name-edit input.empty {
@@ -398,9 +403,9 @@ span.title-empty {
 }
 #titleblock #title-1 {
 	position: absolute;
-	top: 98px; left: 343px;
-	height: 20px; width: 230px;
-	font-size: 18px; line-height: 20px;
+	top: 96px; left: 343px;
+	height: 24px; width: 230px;
+	font-size: 18px; line-height: 24px;
 	white-space: nowrap;
 }
 #titleblock #title-2 {
