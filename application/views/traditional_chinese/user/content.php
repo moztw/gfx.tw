@@ -1,5 +1,5 @@
 <?php
-
+$this->load->config('gfx');
 $this->load->helper('gfx');
 $avatar = avatarURL($avatar, $email);
 
@@ -73,19 +73,42 @@ foreach ($features as $feature) {
 <?php
 /* put it into a function scope */
 function addon($addon) {
+	$CI =& get_instance();
 	extract($addon);
 	if (!$icon_url) $icon_url = site_url('images/addon_default_icon.png');
-	if (!isset($xpi_url)) $xpi_url = '';
-	if (!$url && $amo_id) $url = 'https://addons.mozilla.org/zh-TW/firefox/addon/' . $amo_id;
-	elseif (!$url && !$amo_id) return;
+	if ($amo_id) {
+		$url = $CI->config->item('gfx_amo_url') . $amo_id;
+		$xpi_url = $CI->config->item('gfx_amo_xpi_url') . $amo_id;
+	}
+	if ($available && !$xpi_url) return;
 ?>
 		<div class="addon">
 <?php
-	if ($xpi_url) { ?>
-		<p class="install"><input type="checkbox" value="<?php print htmlspecialchars($xpi_url); ?>" id="addon-install-<?php print $id ?>" /><label for="addon-install-<?php print $id ?>">列入安裝清單</label></p>
+	if ($available) { ?>
+		<p class="install<?php
+		if ($amo_id) print ' amo-addon';
+		if ($os_0 === 'Y') print ' os_0';
+		if ($os_1 === 'Y') print ' os_1';
+		if ($os_2 === 'Y') print ' os_2';
+		if ($os_3 === 'Y') print ' os_3';
+		if ($os_4 === 'Y') print ' os_4';
+		if ($os_5 === 'Y') print ' os_5';
+?>">
+			<input type="checkbox" value="<?php print htmlspecialchars($xpi_url); ?>" id="install-<?php print $id ?>" /><label for="install-<?php print $id ?>">列入安裝清單</label>
+		</p>
 <?php
 	} else { ?>
-		<p class="install disabled"><input type="checkbox" id="addon-install-<?php print $id ?>" disabled="disabled" /><label for="addon-install-<?php print $id ?>">請至附加元件網站安裝</label></p>
+		<p class="install disabled<?php
+		if ($amo_id) print ' amo-addon';
+		if ($os_0 === 'Y') print ' os_0';
+		if ($os_1 === 'Y') print ' os_1';
+		if ($os_2 === 'Y') print ' os_2';
+		if ($os_3 === 'Y') print ' os_3';
+		if ($os_4 === 'Y') print ' os_4';
+		if ($os_5 === 'Y') print ' os_5';
+?>">
+			<input type="checkbox" disabled="disabled" id="install-<?php print $id ?>" /><label for="install-<?php print $id ?>"請至附加元件網站安裝</label>
+		</p>
 <?php 
 	}
 ?>

@@ -44,6 +44,7 @@ var T = {
 		TITLE_PLACEHOLDER: '{您的名字}',
 		CONFIRM_QUIT: '離開此頁會失去所有未儲存的資料！',
 		INFO_UPDATED: '個人介紹成功儲存。',
+		ADDON_OS_NO_MATCH: '不支援您的作業系統',
 		ADDON_ADD: '新增',
 		ADDON_ADD_CANT_DUP: '無法重複新增',
 		ADDON_DEL: '刪除',

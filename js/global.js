@@ -231,7 +231,7 @@ var gfx = {
 				},
 				'.download a' : function () {
 					gfx.openDialog('download');
-					var os = (/(win|mac|linux)/.exec(window.navigator.platform.toLowerCase()) || [null])[0];
+					var os = gfx.getOS();
 					var name = (/^\/([^\/\.\?]*)\??.*$/.exec(window.location.pathname) || [null, null])[1];
 					if (name === '') {
 						name = '(default)';
@@ -326,7 +326,7 @@ var gfx = {
 						gfx.alert('EXTINSTALL_NOT_FX');
 						return;
 					}
-					var o = $('#groups .install input:checked').not('[disabled]');
+					var o = $('#groups .install input:checked:not([disabled])');
 					if (!o.length) {
 						window.alert('EXTINSTALL_CHECKED_NOTHING');
 						return;
@@ -444,6 +444,60 @@ var gfx = {
 			} else {
 				$('#groups').removeClass('detailed');
 			}
+			
+			/* User page detect user OS and disable unsupported addons */
+			var os = 'Z';
+			switch (gfx.getOS()) {
+				case 'win':
+					os = '5';
+					break;
+				case 'mac':
+					os = '3';
+					break;
+				case 'linux':
+					os = '2';
+					break;
+			}
+			$('.addon .install').each(
+				function () {
+					var o = $(this);
+					if (os !== 'Z') {
+						if (!o.hasClass('os_0') && !o.hasClass('os_' + os)) {
+							o.addClass('disabled');
+							o.find('label').text(T.UI.ADDON_OS_NO_MATCH);
+							o.find('input').attr('disabled', 'disabled');
+						} else if (o.hasClass('amo-addon') && !o.hasClass('os_0')) {
+							o.find('input').get(0).value += '/platform:' + os;
+						}
+					} else {
+						//could be os_1 or os_4 (BSD or Solaris)
+						if (!o.hasClass('os_0') && !o.hasClass('os_1') && !o.hasClass('os_4')) {
+							o.addClass('disabled');
+							o.find('label').text(T.UI.ADDON_OS_NO_MATCH);
+							o.find('input').attr('disabled', 'disabled');
+						} else if (o.hasClass('amo-addon') && !o.hasClass('os_0')) {
+							if (o.hasClass('os_1') && !o.hasClass('os_4')) {
+								o.find('input').get(0).value += '/platform:1';
+							} else if (o.hasClass('os_4') && !o.hasClass('os_1')) {
+								o.find('input').get(0).value += '/platform:4';
+							} else {
+								//choose either of them would break another.
+								//just disable installation and ask them go to amo...
+								
+								//chances are its extremely unlikely to come to here
+								//people use non-win|osx|linux Firefox
+								//(which by the way is not even Mozilla-supported)
+								//looking for an addon that supports both BSD and Solaris
+								//but not all platforms...
+								
+								o.addClass('disabled');
+								o.find('input').attr('disabled', 'disabled');
+							}
+						}
+					}
+				}
+			);
+			
 
 			/* Show intro block if this is top block */
 			/*if (window.location.pathname === '/') {
@@ -473,7 +527,7 @@ var gfx = {
 						showMessage($(this).next('.message:not(.show):not(.no-auto)'));
 					}
 				);
-			}
+			};
 			
 			showMessage($('.message:not(.show):not(.no-auto)'));
 
@@ -622,6 +676,9 @@ var gfx = {
 		} else {
 			return false;
 		}
+	},
+	'getOS' : function () {
+		return (/(win|mac|linux)/.exec(window.navigator.platform.toLowerCase()) || [null])[0];
 	}
 };
 
