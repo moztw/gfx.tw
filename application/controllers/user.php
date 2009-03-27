@@ -178,6 +178,15 @@ class User extends Controller {
 				random a number, see if the cache exists, if so output it, if not then generate one then saves it.
 				these cache have short ttl because we do not check the data within against database.
 				*/
+				/*
+				Prevent users from sending requests at this URL less than 60 secs of peroid.
+				Responsible browsers will serve cache to xhr request if request took places less than 60 sec.
+				*/
+				header('Cache-Control: max-age=60, must-revalidate');
+			case 'random-avatars-reload':
+				/*
+				No Cache-Control header for this URL.
+				*/
 				$this->load->library('cache');
 				$i = rand(0, 99);
 				$data = $this->cache->get($i, 'random-avatars');

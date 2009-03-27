@@ -482,7 +482,7 @@ var gfx = {
 			}
 		}
 	},
-	'randomAvatar' : function () {
+	'randomAvatar' : function (reload) {
 		var Avatar = function (d) {
 			return $(document.createElement('p')).append(
 				$(document.createElement('a')).attr(
@@ -507,14 +507,15 @@ var gfx = {
 		$('.random-avatars:visible').each(
 			function (i, o) {
 				/* Remember we have not yet $.ajaxSetup so do fill some common variables */
-				if ($(o).children().length !== 0) {
+				if ($(o).children().length !== 0 && !reload) {
 					return;
 				}
+				$(o).empty().addClass('random-avatars-loading');
 				$.ajax(
 					{
-						url: '/user/list/random-avatars',
+						url: (reload)?'/user/list/random-avatars-reload':'/user/list/random-avatars',
 						data: {},
-						type: 'POST',
+						type: 'GET',
 						timeout: 20000,
 						dataType: 'json',
 						beforeSend : function (xhr) { },
