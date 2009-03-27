@@ -4,7 +4,6 @@ class Addon extends Controller {
 	function Addon() {
 		parent::Controller();
 		$this->load->scaffolding('addons');
-		$this->load->database();
 		$this->load->config('gfx');
 		$this->load->helper('gfx');
 	}
@@ -13,34 +12,35 @@ class Addon extends Controller {
 	}
 	function query() {
 		checkAuth(true, false, 'json');
-		//The user specific want to find the addon through fetch
+		$this->load->database();
+		//The user specific want to find the addon by its amo_id
 		if (is_numeric($this->input->post('q')) && $this->input->post('q') !== '0') {
-			$this->fetch($this->input->post('q'));
-			return;
+			$addons = $this->db->query('SELECT id, title, amo_id, amo_version, url, icon_url, description, fetched '
+			. 'FROM `addons` WHERE `amo_id` = ' . $this->db->escape($this->input->post('q')) . ';');
+			if ($addons->num_rows() === 0) {
+				//Couldn't find it, try to fetch from AMO site
+				$this->_update_amo_addon($this->input->post('q'), false, true);
+			}
+		} else {
+			/* since query is only used in editor, we only provide limit information */
+			$addons = $this->db->query('SELECT id, title, amo_id, amo_version, url, icon_url, description '
+			. 'FROM `addons` WHERE MATCH (`title`,`description`) AGAINST (' . $this->db->escape($this->input->post('q')) . ') ORDER BY `title` ASC;');
 		}
-		$addons = $this->db->query('SELECT * FROM `addons` WHERE MATCH (`title`,`description`) AGAINST (' . $this->db->escape($this->input->post('q')) . ') ORDER BY `title` ASC;');
 		$A = array();
 		foreach ($addons->result_array() as $addon) {
 			if ($addon['amo_id']) $addon['url'] = $this->config->item('gfx_amo_url') . $addon['amo_id'];
-			unset($addon['amo_id']);
 			$A[] = $addon;
 		}
 		//Pick one of the addons found and send to to re-fetch if it's too old
+		//addon picked by amo_id query will always be checked for age of the fetched data
 		$r = array_rand($A);
 		if (
-			isset($A[$r]) &&
+			count($A) !== 0 &&
 			isset($A[$r]['amo_id']) &&
 			strtotime($A[$r]['fetched']) < max(time()-$this->config->item('gfx_amo_fetch_older_than_time'), $this->config->item('gfx_amo_fetch_older_than_date'))
 			) {
-			$data = $this->get_amo_content($A[$r]['amo_id']);
-			if ($data) {
-				$A[$r] = array_merge(
-					array(
-						'id' => $A[$r]['id']
-					),
-					$data
-				);
-			}
+			$addon = $this->_update_amo_addon($A[$r]['amo_id'], $A[$r]['id'], true);
+			if ($addon) $A[$r] = $addon;
 		}
 		print json_encode(array('addons' => $A));
 	}
@@ -49,88 +49,103 @@ class Addon extends Controller {
 		if (!is_numeric($this->input->post('g'))) {
 			json_message('group_not_number');
 		}
-		$addons = $this->db->query('SELECT t1.*, t2.addon_id, COUNT(t2.id) FROM addons t1, u2a t2 '
+		$this->load->library('cache');
+		$A = $this->cache->get($this->input->post('g') ,'addons-suggest');
+		if ($A) {
+			print json_encode(array('addons' => $A));
+			exit();
+		}
+
+		$this->load->database();
+		/* since suggest is only used in editor, we only provide limit information */
+		$addons = $this->db->query('SELECT t1.id, t1.title, t1.amo_id, t1.amo_version, t1.url, t1.icon_url, t1.description, fetched '
+			. 'FROM addons t1, u2a t2 '
 			. 'WHERE t2.group_id =  ' . $this->db->escape($this->input->post('g')) . ' AND t1.id = t2.addon_id '
 			. 'GROUP BY t2.addon_id ORDER BY COUNT(t2.id) DESC, t1.title ASC;');
 		$A = array();
 		foreach ($addons->result_array() as $addon) {
 			if ($addon['amo_id']) $addon['url'] = $this->config->item('gfx_amo_url') . $addon['amo_id'];
-			//unset($addon['amo_id']);
 			$A[] = $addon;
 		}
 		//Pick one of the addons found and send to to re-fetch if it's too old
 		$r = array_rand($A);
-		if (isset($A[$r]['amo_id']) && 
-			strtotime($A[$r]['fetched']) < max(time()-$this->config->item('gfx_amo_fetch_older_than_time'), $this->config->item('gfx_amo_fetch_older_than_date'))) {
-			$data = $this->get_amo_content($A[$r]['amo_id']);
-			if ($data) {
-				$this->db->update('addons', $data, array('id' => $A[$r]['id']));
-				$A[$r] = array_merge(
-					array(
-						'id' => $A[$r]['id'],
-						'url' => $this->config->item('gfx_amo_url') . $data['amo_id']
-					),
-					$data
-				);
-			}
+		if (
+			count($A) !== 0 &&
+			isset($A[$r]['amo_id']) &&
+			strtotime($A[$r]['fetched']) < max(time()-$this->config->item('gfx_amo_fetch_older_than_time'), $this->config->item('gfx_amo_fetch_older_than_date'))
+			) {
+			$addon = $this->_update_amo_addon($A[$r]['amo_id'], $A[$r]['id'], true);
+			if ($addon) $A[$r] = $addon;
 		}
+		$this->cache->save($this->input->post('g') ,$A ,'addons-suggest', 300);
 		print json_encode(array('addons' => $A));
 	}
-	function fetch($amo_id) {
-		$addons = $this->db->get_where('addons', array('amo_id' => $amo_id), 1);
-		if (!$addons->num_rows()) {
-			$data = $this->get_amo_content($amo_id);
-			if (!$data) {
-				json_message('amo_fetch_failed');
-			}
-			$this->db->insert(
-				'addons',
-				$data
-			);
-			$A = array_merge(
-				array(
-					'id' => $this->db->insert_id()
-				),
-				$data
-			);
-		} elseif (strtotime($A[$r]['fetched']) < max(time()-$this->config->item('gfx_amo_fetch_older_than_time'), $this->config->item('gfx_amo_fetch_older_than_date'))) {
-			//re-fetch data from amo every week if someone query this addon
-			$data = $this->get_amo_content($amo_id);
-			$A = $addons->row_array();
-			if ($data) {
-				$A = array_merge(
-					array(
-						'id' => $A['id']
-					),
-					$data
-				);
-				$this->db->update('addons', $data, array('id' => $A['id']));
-			}// else { /* Fail? */ }
+	function forcefetch() {
+		checkAuth(true, true, 'json');
+		$addon = $this->db->query('SELECT id FROM `addons` WHERE `amo_id` = ' . $this->db->escape($this->input->post('amo_id')) . ';');
+		if ($addon->num_rows() === 0) {
+			//Couldn't find it, try to fetch from AMO site
+			$A = $this->_update_amo_addon($this->input->post('amo_id'), false, false);
 		} else {
-			$A = $addons->row_array();
+			$A = $this->_update_amo_addon($this->input->post('amo_id'), $addon->row()->id, false);
 		}
-		$A['url'] = $this->config->item('gfx_amo_url') . $A['amo_id'];
-		unset($A['amo_id']);
-		header('Content-Type: text/javascript');
-		print json_encode(array('addons' => array($A)));
+		if ($A) {
+			print json_encode(array('addons' => $A));
+		} else {
+			print json_encode(array('addons' => array()));
+		}
 	}
-	function get_amo_content($amo_id) {
+	function _update_amo_addon($amo_id, $id = false, $cleanoutput = true) {
+		/* Fetch the file */
 		//TBD: connection timeout
 		$html = @file_get_contents($this->config->item('gfx_amo_url') . $amo_id);
+		/* parse the file, return false if failed */
 		if (!preg_match($this->config->item('gfx_amo_title_regexp'), $html, $M)) {
 			return false;
 		}
 		preg_match($this->config->item('gfx_amo_desc_regexp'), $html, $D);
-		preg_match($this->config->item('gfx_amo_xpi_regexp'), $html, $X);
-		return array(
+
+		$A = array(
 			'title' => html_entity_decode($M[2], ENT_QUOTES, 'UTF-8'),
 			'amo_id' => $amo_id,
+			'url' => '',
+			'xpi_url' => '',
 			'amo_version' => html_entity_decode($M[3], ENT_QUOTES, 'UTF-8'),
 			'icon_url' => ($M[1] === '/img/default_icon.png')?'':'https://addons.mozilla.org' . $M[1],
-			'xpi_url' =>  (isset($X[1]))?'https://addons.mozilla.org' . $X[1]:'',
 			'description' => (isset($D[1]))?html_entity_decode($D[1], ENT_QUOTES, 'UTF-8'):'',
+			'available' => (preg_match($this->config->item('gfx_amo_is_exp_regexp'), $html) === 0)?'Y':'N',
+			'os_0' => (preg_match($this->config->item('gfx_amo_platform_0_regexp'), $html) === 1)?'Y':'N',
+			'os_1' => (preg_match($this->config->item('gfx_amo_platform_1_regexp'), $html) === 1)?'Y':'N',
+			'os_2' => (preg_match($this->config->item('gfx_amo_platform_2_regexp'), $html) === 1)?'Y':'N',
+			'os_3' => (preg_match($this->config->item('gfx_amo_platform_3_regexp'), $html) === 1)?'Y':'N',
+			'os_4' => (preg_match($this->config->item('gfx_amo_platform_4_regexp'), $html) === 1)?'Y':'N',
+			'os_5' => (preg_match($this->config->item('gfx_amo_platform_5_regexp'), $html) === 1)?'Y':'N',
 			'fetched' => date('Y-m-d H:m:s')
 		);
+		/* update/insert the record */
+		$this->load->database();
+		if ($id) {
+			$this->db->update('addons', $A, array('id' => $id));
+		} else {
+			$this->db->insert('addons', $A);
+			$A = array_merge(
+				array('id' => $this->db->insert_id()),
+				$data
+			);
+		}
+		if ($cleanoutput) {
+			/* clean up if asked for clean output */
+			$A['url'] = $this->config->item('gfx_amo_url') . $A['amo_id'];
+			unset($A['xpi_url']);
+			unset($A['available']);
+			unset($A['os_0']);
+			unset($A['os_1']);
+			unset($A['os_2']);
+			unset($A['os_3']);
+			unset($A['os_4']);
+			unset($A['os_5']);
+		}
+		return $A;
 	}
 }
 

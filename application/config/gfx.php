@@ -31,10 +31,21 @@ $config['gfx_downloadfallback'] = 'http://www.moztw.org/firefox/';
 
 /* AMO url where addon description,title,and xpi address can be fetched. Amo ID will be append. */
 $config['gfx_amo_url'] = 'https://addons.mozilla.org/zh-TW/firefox/addon/';
-/* RegExp to fetch title (version),description,and xpi */
+$config['gfx_amo_xpi_url'] = 'https://addons.mozilla.org/zh-TW/firefox/downloads/latest/';
+
+/* RegExp to fetch title (version), description */
 $config['gfx_amo_title_regexp'] = '/<h3 class=\"name\"[^>]*><img src=\"([\w\.\/\-]+)\" class=\"addon-icon\" alt=\"\" \/>([^<]+) ([\d\.a-z]+)<\/h3>/';
 $config['gfx_amo_desc_regexp'] = '/<p class=\"desc\"[^>]*>([^<]+)(<\/p>|<br \/>)/';
-$config['gfx_amo_xpi_regexp'] = '/<a href=\"([^\"]+)\"  id=\"installTrigger/';
+
+/* Some keyword to find out the support platforms */
+$config['gfx_amo_is_exp_regexp'] = '/class=\"addon exp\"/';
+$config['gfx_amo_platform_0_regexp'] = '/platform\-ALL/';
+$config['gfx_amo_platform_1_regexp'] = '/platform\-BSD/';
+$config['gfx_amo_platform_2_regexp'] = '/platform\-Linux/';
+$config['gfx_amo_platform_3_regexp'] = '/platform\-MacOSX/';
+$config['gfx_amo_platform_4_regexp'] = '/platform\-Solaris/';
+$config['gfx_amo_platform_5_regexp'] = '/platform\-Windows/';
+
 /* Only re-fetch add-ons after the data is that old (seconds) */
 $config['gfx_amo_fetch_older_than_time'] = 7*24*60*60;
 /* Or it's older than a specific date stated here */
