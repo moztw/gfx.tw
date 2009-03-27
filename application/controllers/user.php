@@ -189,8 +189,8 @@ class User extends Controller {
 				*/
 				$this->load->library('cache');
 				$i = rand(0, 99);
-				$data = $this->cache->get($i, 'random-avatars');
-				if (!$data) {
+				$users = $this->cache->get($i, 'random-avatars');
+				if (!$users) {
 					$this->load->database();
 					$this->load->helper('gfx');
 					/*
@@ -206,11 +206,10 @@ class User extends Controller {
 							'avatar' => avatarURL($user['avatar'], $user['email'], '&')
 						);
 					}
-					$data = json_encode(array('users' => $users));
-					$this->cache->save($i, $data, 'random-avatars', 300);
+					$this->cache->save($i, $users, 'random-avatars', 300);
 				}
 				header('Content-Type: text/javascript');
-				print $data;
+				print json_encode(array('users' => $users));
 			break;
 			default:
 			json_message('Invalid List type');
