@@ -29,8 +29,8 @@ var T = {
 		EDITOR_FORUM_CODE: '討論區認證碼認證失敗。',
 		EDITOR_FEATURE_COUNT: '請選三個你推薦別人使用 Firefox 的理由，三個就對了！',
 		EDITOR_FEATURE_ERROR: '推薦功能不是數字。',
-		EDITOR_GROUP_ERROR: '火狐屬性不是數字。',
-		EDITOR_GROUP_EMPTY: '必須要選擇一個以上的火狐屬性。',
+		EDITOR_GROUP_ERROR: '附加元件分類不是數字。',
+		EDITOR_GROUP_EMPTY: '必須要選擇一個以上的附加元件分類。',
 		EDITOR_ADDON_ERROR: '附加元件不是數字。',
 		EDITOR_AVATAR_WRONG_FILE_TYPE: '上傳的不是圖檔，無法使用。',
 		EDITOR_AVATAR_SIZE_TOO_LARGE: '上傳的檔案長寬太大了，請換小一點的圖片。'
