@@ -209,13 +209,17 @@ var gfx = {
 					$('#intro-block').toggleClass('show', show);
 					$('#header').toggleClass('no-margin', show);
 					$(this).parent().toggleClass('active', show);
-					gfx.randomAvatar();
+					if (show) gfx.randomAvatar(true);
 					return false;
 				},
 				'#link-newcomer-intro' : function () {
 					$(this).parent().toggleClass('active', ($('#newcomer-intro:visible').length === 0));
-					$('#newcomer-intro').slideToggle(500);
-					gfx.randomAvatar();
+					if ($('#newcomer-intro:visible').length === 0) {
+						$('#newcomer-intro').slideDown(500);
+						gfx.randomAvatar(true);
+					} else {
+						$('#newcomer-intro').slideUp(500);
+					}
 					return false;
 				},
 				'#groups-show-detail-box' : function () {
@@ -560,11 +564,12 @@ var gfx = {
 		};
 		$('.random-avatars:visible').each(
 			function (i, o) {
-				/* Remember we have not yet $.ajaxSetup so do fill some common variables */
 				if ($(o).children().length !== 0 && !reload) {
 					return;
 				}
-				$(o).empty().addClass('random-avatars-loading');
+				/* .children().hide() is a bit faster than .empty(); we need the buttons to response fast */
+				$(o).addClass('random-avatars-loading').children().hide();
+				/* Remember we might not yet $.ajaxSetup so do fill some common variables */
 				$.ajax(
 					{
 						url: (reload)?'/user/list/random-avatars-reload':'/user/list/random-avatars',
@@ -579,7 +584,7 @@ var gfx = {
 							if (!result.users) {
 								return;
 							}
-							$(o).removeClass('random-avatars-loading');
+							$(o).empty().removeClass('random-avatars-loading');
 							$.each(
 								result.users,
 								function () {
