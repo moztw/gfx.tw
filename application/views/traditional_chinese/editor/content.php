@@ -145,8 +145,8 @@ while(isset($features[$i])) {
 		<p>這個動作無法復原。若確定要刪除您的帳號，請按下面的按鈕。</p>
 	</div>
 	<div id="groups-title">
-		<h2><span class="title-placeholder">{您的名字}</span>的火狐屬性</h2>
-		<p>請在下方選擇符合您網際活動的屬性，並加入您推薦的附加元件：</p>
+		<h2><span class="title-placeholder">{您的名字}</span>推薦的附加元件</h2>
+		<p>請在下方選擇符合您想要推薦的附加元件類別，並為其加入您推薦的附加元件：</p>
 	</div>
 	<div id="groups" class="sortable">
 <?php
