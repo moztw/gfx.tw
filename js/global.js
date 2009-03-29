@@ -332,7 +332,7 @@ var gfx = {
 					}
 					var o = $('#groups .install input:checked:not([disabled])');
 					if (!o.length) {
-						window.alert('EXTINSTALL_CHECKED_NOTHING');
+						gfx.alert('EXTINSTALL_CHECKED_NOTHING');
 						return;
 					}
 					var l = {};
