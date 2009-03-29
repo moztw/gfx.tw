@@ -26,13 +26,19 @@ class User extends Controller {
 
 		if (!$data) {
 			$data = array();
-			if (!preg_match('/^[a-zA-Z0-9_\-]+$/', $name) || substr($name, 0, 8) === '__temp__') {
+			$this->load->config('gfx');
+			if (!preg_match('/^[a-zA-Z0-9_\-]+$/', $name)
+				|| strlen($name) < 3
+				|| strlen($name) > 200
+				|| substr($name, 0, 8) === '__temp__'
+				|| in_array($name, $this->config->item('gfx_badname'))
+			) {
 				show_404();
 			}
 			$this->load->database();
 			$user = $this->db->query('SELECT * FROM users WHERE `name` = ' . $this->db->escape($name) . ' LIMIT 1');
 			if ($user->num_rows() === 0) {
-				//TBD: pretty error for userpages
+				//TBD: pretty error for userpages, indicate this name is available
 				show_404();
 			}
 			$U = $user->row_array();
@@ -123,7 +129,7 @@ class User extends Controller {
 		$this->db->delete('u2f', array('id' => $id));
 		$this->db->delete('u2g', array('id' => $id));
 		$this->load->library('cache');
-		$this->cache->remove($data->row()->name, 'user');
+		$this->cache->remove(strtolower($data->row()->name), 'user');
 		$this->cache->remove($id, 'header');
 		$d = './userstickers/' . dechex(intval($id) >> 12) . '/' . dechex(intval($id) & (pow(2,12)-1)) . '/';
 		if (file_exists($d) && is_dir($d)) {

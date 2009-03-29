@@ -639,7 +639,7 @@ gfx.page = {
 				gfx.alert('EDITOR_NAME_LENGTH');
 				return false;
 			}
-			if (!/^[a-zA-Z0-9_\-]+$/.test(name)) {
+			if (!/^[a-zA-Z0-9_\-]+$/.test(name) || name.length < 3) {
 				gfx.alert('EDITOR_NAME_BAD');
 				return false;
 			}

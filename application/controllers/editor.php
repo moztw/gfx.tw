@@ -104,6 +104,7 @@ class Editor extends Controller {
 
 		$this->load->config('gfx');
 		if (!preg_match('/^[a-zA-Z0-9_\-]+$/', $this->input->post('name'))
+			|| strlen($this->input->post('name')) < 3
 			|| strlen($this->input->post('name')) > 200
 			|| substr($this->input->post('name'), 0, 8) === '__temp__'
 			|| in_array($this->input->post('name'), $this->config->item('gfx_badname'))
@@ -199,7 +200,7 @@ class Editor extends Controller {
 			}
 		}
 		$this->load->library('cache');
-		$this->cache->remove($this->input->post('name'), 'user');
+		$this->cache->remove(strtolower($this->input->post('name')), 'user');
 		$this->cache->remove($this->session->userdata('id'), 'header');
 		
 		//TBD: hide user id from user
