@@ -6,7 +6,7 @@ if (isset($id)) {
 		<p id="header_top_link"><a href="<?php print base_url() ?>" title="回首頁">抓火狐</a></p>
 		<ul>
  <?php
-	if (substr($name, 0, 8) !== '__temp__') {
+ 	if ($name) {
 ?>
 			<li class="ui-corner-top ui-state-default"><a href="<?php print site_url($name) ?>"><?php print htmlspecialchars($title); ?></a></li>
 <!--			<li class="ui-corner-top ui-state-default"><a href="<?php print site_url($name) ?>">我的頁面</a></li>-->

@@ -22,7 +22,7 @@ $avatar = avatarURL($avatar, $email);
 	<div id="titleblock">
 		<form id="title-name-form" action="#">
 			<h1>
-				<span id="title-avatar" class="editable"><img src="<?php print $avatar ?>" alt="[個人小圖示]" /></span>
+				<span id="title-avatar" class="editable" title="選擇個人圖示"><img src="<?php print $avatar ?>" alt="[個人小圖示]" /></span>
 				<span id="title-name" class="editable"><?php print htmlspecialchars($title) ?></span>
 				<span id="title-name-edit"><?php print form_input('title', $title); ?></span>
 				<span id="title-1">推薦您改用</span>
