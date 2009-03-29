@@ -219,8 +219,8 @@ class Editor extends Controller {
 			|| !file_exists($d . 'featurecard.png')) {
 			$F = array();
 			for ($i = 0; $i < 3; $i++) {
-				$feature = $this->db->query('SELECT name, title, description FROM features ' 
-				. 'WHERE `id` = ' . $data['feature_' . $i] . ';');
+				$feature = $this->db->query('SELECT features.name, features.title, features.description FROM features ' 
+				. 'INNER JOIN users ON features.id = users.feature_' . $i . ' WHERE users.id = ' . $this->session->userdata('id') . ';');
 				$F[] = $feature->row_array();
 				$feature->free_result();
 			}
