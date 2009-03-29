@@ -22,18 +22,24 @@ class Editor extends Controller {
 			header('Location: ' . base_url());
 			exit();
 		}
+		$U = $user->row_array();
+		$user->free_result();
+		unset($user);
+		if (substr($U['name'], 0, 8) === '__temp__') {
+			$U['name'] = '';
+		}
 		$allfeatures = $this->db->query('SELECT `id`, `name`, `title`, `description` FROM `features` ORDER BY `order` ASC;');
 		$F = array();
 		foreach ($allfeatures->result_array() as $feature) {
-			if ($feature['id'] === $user->row()->feature_0) $feature['user_order'] = 0;
-			elseif ($feature['id'] === $user->row()->feature_1) $feature['user_order'] = 1;
-			elseif ($feature['id'] === $user->row()->feature_2) $feature['user_order'] = 2;
+			for ($i = 0; $i < 3; $i++) {
+				if ($feature['id'] === $U['feature_' . $i]) $feature['user_order'] = $i;
+			}
 			$F[] = $feature;
 		}
 		$allfeatures->free_result();
 		unset($allfeatures, $feature);
 		$addons = $this->db->query('SELECT t1.*, t2.group_id FROM addons t1, u2a t2 '
-		. 'WHERE t2.addon_id = t1.id AND t2.user_id = ' . $user->row()->id . ' ORDER BY t2.order ASC;');
+		. 'WHERE t2.addon_id = t1.id AND t2.user_id = ' . $U['id'] . ' ORDER BY t2.order ASC;');
 		$A = array();
 		foreach ($addons->result_array() as $addon) {
 			if (!isset($A[$addon['group_id']])) $A[$addon['group_id']] = array();
@@ -54,8 +60,8 @@ class Editor extends Controller {
 		unset($groups, $group);
 
 		$data = array(
-			'meta' => $this->load->view($this->config->item('language') . '/editor/meta.php', $user->row_array(), true),
-			'content' => $this->load->view($this->config->item('language') . '/editor/content.php', array_merge($user->row_array(), array('allfeatures' => $F, 'allgroups' => $G, 'addons' => $A)), true),
+			'meta' => $this->load->view($this->config->item('language') . '/editor/meta.php', $U, true),
+			'content' => $this->load->view($this->config->item('language') . '/editor/content.php', array_merge($U, array('allfeatures' => $F, 'allgroups' => $G, 'addons' => $A)), true),
 			'script' => '	<script type="text/javascript" src="./js/page.editor.js" charset="UTF-8"></script>
 	<script type="text/javascript" src="./swfupload/swfupload-min.js" charset="UTF-8"></script>',
 			'db' => 'content '
@@ -63,11 +69,11 @@ class Editor extends Controller {
 
 		if ($this->session->userdata('admin') === 'Y') {
 			$this->load->_ci_cached_vars = array();
-			$data['admin'] = $this->load->view($this->config->item('language') . '/editor/admin.php', $user->row_array(), true);
+			$data['admin'] = $this->load->view($this->config->item('language') . '/editor/admin.php', $U, true);
 		}
 
 		$this->load->library('parser');
-		$this->parser->page($data, $this->session->userdata('id'), $user->row_array());
+		$this->parser->page($data, $this->session->userdata('id'), $U);
 	}
 	function save() {
 		$this->load->helper('gfx');

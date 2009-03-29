@@ -118,7 +118,7 @@ foreach ($features as $feature) {
 	</div>
 	<div id="window_info" class="window" title="編輯個人介紹">
 		<form id="info_form" action="#">
-			<p><label for="info_name">推薦頁網址：</label> <span class="form-prepend"><?php print base_url() ?></span><?php print form_input(array('id' =>'info_name', 'value' => (substr($name, 0, 8) === '__temp__')?'':$name)); ?>
+			<p><label for="info_name">推薦頁網址：</label> <span class="form-prepend"><?php print base_url() ?></span><?php print form_input(array('id' =>'info_name', 'value' => $name)); ?>
 			<span class="form-desc">您的推薦網頁的專用網址，需使用英數字。</span></p>
 			<p><label for="info_email">E-mail：</label> <?php print form_input(array('id' =>'info_email', 'value' => $email)); ?>
 			<span class="form-desc">不會公開；Glavatar 的圖示要在重新載入後才會變更。</span></p>
