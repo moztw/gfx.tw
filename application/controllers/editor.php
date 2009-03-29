@@ -22,15 +22,15 @@ class Editor extends Controller {
 			header('Location: ' . base_url());
 			exit();
 		}
-		$allfeatures = $this->db->query(
-			'SELECT features.id, features.name, features.title, features.description, G.user_id, G.order FROM features '
-			. 'LEFT OUTER JOIN '
-			. '( SELECT S.id, K.user_id, K.order FROM features AS S, u2f AS K WHERE S.id = K.feature_id AND K.user_id = ' . $this->session->userdata('id') . ' ) AS G '
-			. 'ON features.id = G.id ORDER BY features.order ASC;');
+		$allfeatures = $this->db->query('SELECT `id`, `name`, `title`, `description` FROM `features` ORDER BY `order` ASC;');
 		$F = array();
 		foreach ($allfeatures->result_array() as $feature) {
+			if ($feature['id'] === $user->row()->feature_0) $feature['user_order'] = 0;
+			elseif ($feature['id'] === $user->row()->feature_1) $feature['user_order'] = 1;
+			elseif ($feature['id'] === $user->row()->feature_2) $feature['user_order'] = 2;
 			$F[] = $feature;
 		}
+		$allfeatures->free_result();
 		unset($allfeatures, $feature);
 		$addons = $this->db->query('SELECT t1.*, t2.group_id FROM addons t1, u2a t2 '
 		. 'WHERE t2.addon_id = t1.id AND t2.user_id = ' . $user->row()->id . ' ORDER BY t2.order ASC;');
@@ -138,32 +138,22 @@ class Editor extends Controller {
 		} elseif ($this->input->post('forum') === '') {
 				$data['forum_id'] = '';
 				$data['forum_username'] = '';
-		}
-		if ($data) $this->db->update('users', $data, array('id' => $this->session->userdata('id')));
-		
+		}		
 		if ($this->input->post('features')) {
-			$query = $this->db->query('SELECT `id` FROM `u2f` WHERE `user_id` = ' . $this->session->userdata('id') . ' ORDER BY `order` ASC;');
-			$i = 0;
-			foreach ($this->input->post('features') as $f) { // don't care about the keys
-				if (!is_numeric($f)) {
+			$F = $this->input->post('features');
+			$v = 0;
+			for ($i = 0; $i < 3; $i++) {
+				if (!isset($F[$i+1]) || !is_numeric($F[$i+1])) {
 					json_message('EDITOR_FEATURE_ERROR');
 				}
-				if ($i < $query->num_rows()) {
-					$row = $query->row_array($i);
-					$this->db->update('u2f', array('feature_id' => $f, 'order' => $i+1), array('id' => $row['id']));
-				} else {
-					$this->db->insert('u2f', array('feature_id' => $f, 'order' => $i+1, 'user_id' => $this->session->userdata('id')));
-				}
-				$i++;
-				if ($i === 3) break;
+				$data['feature_' . $i] = $F[$i+1];
+				$v |= pow(2, $F[$i+1]);
 			}
-			while ($i < $query->num_rows()) {
-				if ($row = $query->row_array($i)) {
-					$this->db->delete('u2f', array('id' => $row['id']));
-				}
-				$i++;
-			}
+			$data['features_victor'] = $v;
 		}
+
+		if ($data) $this->db->update('users', $data, array('id' => $this->session->userdata('id')));
+
 		if ($this->input->post('groups')) {
 			$query = $this->db->query('SELECT `id` FROM `u2g` WHERE `user_id` = ' . $this->session->userdata('id') . ' ORDER BY `order` ASC;');
 			$i = 0;
@@ -220,13 +210,14 @@ class Editor extends Controller {
 			|| $this->input->post('features')
 			|| !file_exists($d . 'featurecard.html')
 			|| !file_exists($d . 'featurecard.png')) {
-			$features = $this->db->query('SELECT t1.name, t1.title FROM features t1, u2f t2 ' 
-			. 'WHERE t2.feature_id = t1.id AND t2.user_id = ' . $this->session->userdata('id') . ' ORDER BY t2.order ASC;');
 			$F = array();
-			foreach ($features->result_array() as $feature) {
-				$F[] = $feature;
+			for ($i = 0; $i < 3; $i++) {
+				$feature = $this->db->query('SELECT name, title, description FROM features ' 
+				. 'WHERE `id` = ' . $data['feature_' . $i] . ';');
+				$F[] = $feature->row_array();
+				$feature->free_result();
 			}
-			
+			unset($feature);
 			// featurecard.html
 			file_put_contents(
 				$d . 'featurecard.html',

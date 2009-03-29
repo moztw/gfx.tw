@@ -74,7 +74,7 @@ function featureselection($feature) {
 	extract($feature);
 ?>
 			<li><?php
-	print form_checkbox(array('id' => 'fs_' . $name, 'name' => 'fs_' . $id, 'checked' => isset($user_id)));
+	print form_checkbox(array('id' => 'fs_' . $name, 'name' => 'fs_' . $id, 'checked' => isset($user_order)));
 	print form_label($title, 'fs_' . $name, array('title' => $description));
 	unset($user_id);
 ?></li>
@@ -84,8 +84,8 @@ function featureselection($feature) {
 $features = array();
 foreach ($allfeatures as $feature) {
 	featureselection($feature);
-	if (isset($feature['order'])) {
-		$features[intval($feature['order'])] = $feature;
+	if (isset($feature['user_order'])) {
+		$features[$feature['user_order']] = $feature;
 	}
 }
 ?>
@@ -106,11 +106,8 @@ function feature($feature) {
 		</div>
 <?php
 }
-//cannot foreach
-$i = 1;
-while(isset($features[$i])) {
-	feature($features[$i]);
-	$i++;
+foreach ($features as $feature) {
+	feature($feature);
 }
 ?>
 	</div>

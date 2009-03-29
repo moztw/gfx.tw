@@ -22,48 +22,53 @@ class User extends Controller {
 		$this->load->library('cache');
 		$this->load->helper('gfx');
 		checkETag($name, 'user');
-		$data = $this->cache->get($name, 'user');
+		$data = $this->cache->get(strtolower($name), 'user');
 
 		if (!$data) {
 			$data = array();
-			$this->load->database();
 			if (!preg_match('/^[a-zA-Z0-9_\-]+$/', $name) || substr($name, 0, 8) === '__temp__') {
 				show_404();
 			}
+			$this->load->database();
 			$user = $this->db->query('SELECT * FROM users WHERE `name` = ' . $this->db->escape($name) . ' LIMIT 1');
 			if ($user->num_rows() === 0) {
 				//TBD: pretty error for userpages
 				show_404();
 			}
-			$features = $this->db->query('SELECT t1.name, t1.title, t1.description FROM features t1, u2f t2 ' 
-			. 'WHERE t2.feature_id = t1.id AND t2.user_id = ' . $user->row()->id . ' ORDER BY t2.order ASC;');
+			$U = $user->row_array();
+			$user->free_result();
 			$F = array();
-			foreach ($features->result_array() as $feature) {
-				$F[] = $feature;
+			for ($i = 0; $i < 3; $i++) {
+				$feature = $this->db->query('SELECT name, title, description FROM features ' 
+				. 'WHERE `id` = ' . $U['feature_' . $i] . ';');
+				$F[] = $feature->row_array();
+				$feature->free_result();
 			}
-			unset($features, $feature);
+			unset($feature);
 			$addons = $this->db->query('SELECT t1.*, t2.group_id FROM addons t1, u2a t2 '
-			. 'WHERE t2.addon_id = t1.id AND t2.user_id = ' . $user->row()->id . ' ORDER BY t2.order ASC;');
+			. 'WHERE t2.addon_id = t1.id AND t2.user_id = ' . $U['id'] . ' ORDER BY t2.order ASC;');
 			$A = array();
 			foreach ($addons->result_array() as $addon) {
 				if (!isset($A[$addon['group_id']])) $A[$addon['group_id']] = array();
 				$A[$addon['group_id']][] = $addon;
 			}
+			$addons->free_result();
 			unset($addons, $addon);
 			$groups = $this->db->query('SELECT t1.id, t1.name, t1.title, t1.description FROM groups t1, u2g t2 ' 
-			. 'WHERE t2.group_id = t1.id AND t2.user_id = ' . $user->row()->id . ' ORDER BY t2.order ASC;');
+			. 'WHERE t2.group_id = t1.id AND t2.user_id = ' . $U['id'] . ' ORDER BY t2.order ASC;');
 			$G = array();
 			foreach ($groups->result_array() as $group) {
 				if (!isset($A[$group['id']])) $A[$group['id']] = array();
 				$G[] = $group;
 			}
+			$groups->free_result();
 			unset($groups, $group);
 			$this->load->_ci_cached_vars = array(); //Clean up cached vars
-			$data['meta'] = $this->load->view($this->config->item('language') . '/user/meta.php', $user->row_array(), true);
-			$data['admin'] = $this->load->view($this->config->item('language') . '/user/admin.php', $user->row_array(), true);
-			$data['content'] = $this->load->view($this->config->item('language') . '/user/content.php', array_merge($user->row_array(), array('features' => $F, 'groups' => $G, 'addons' => $A)), true);
+			$data['meta'] = $this->load->view($this->config->item('language') . '/user/meta.php', $U, true);
+			$data['admin'] = $this->load->view($this->config->item('language') . '/user/admin.php', $U, true);
+			$data['content'] = $this->load->view($this->config->item('language') . '/user/content.php', array_merge($U, array('features' => $F, 'groups' => $G, 'addons' => $A)), true);
 			$this->load->config('gfx');
-			$data['expiry'] = $this->cache->save($user->row()->name, $data, 'user', $this->config->item('gfx_cache_time'));
+			$data['expiry'] = $this->cache->save(strtolower($U['name']), $data, 'user', $this->config->item('gfx_cache_time'));
 
 			$data['db'] = 'content ';
 		} else {
@@ -85,7 +90,7 @@ class User extends Controller {
 		}
 		
 		$this->load->library('parser');
-		if ($this->session->userdata('id') && isset($user) && $user->row()->id == $this->session->userdata('id')) {
+		if ($this->session->userdata('id') && isset($user) && $U['id'] == $this->session->userdata('id')) {
 			$this->parser->page($data, $this->session->userdata('id'), $user->row_array());
 		} else {
 			$this->parser->page($data, $this->session->userdata('id'));

@@ -19,23 +19,27 @@ class Sticker extends Controller {
 			header('Location: ' . base_url());
 			exit();
 		}
-		$features = $this->db->query('SELECT t1.name, t1.title FROM features t1, u2f t2 ' 
-		. 'WHERE t2.feature_id = t1.id AND t2.user_id = ' . $this->session->userdata('id') . ' ORDER BY t2.order ASC;');
+		$U = $user->row_array();
+		$user->free_result();
 		$F = array();
-		foreach ($features->result_array() as $feature) {
-			$F[] = $feature;
+		for ($i = 0; $i < 3; $i++) {
+			$feature = $this->db->query('SELECT name, title, description FROM features ' 
+			. 'WHERE `id` = ' . $U['feature_' . $i] . ';');
+			$F[] = $feature->row_array();
+			$feature->free_result();
 		}
-		if (substr($user->row()->name, 0, 8) === '__temp__') {
+		unset($feature);
+		if (substr($U['name'], 0, 8) === '__temp__') {
 			flashdata_message('sticker_nopage');
 			header('Location: ' . site_url('editor'));
 			exit();
 		}
 		$data = array(
-			'meta' => $this->load->view($this->config->item('language') . '/sticker/meta.php', $user->row_array(), true),
-			'content' => $this->load->view($this->config->item('language') . '/sticker/content.php', array_merge($user->row_array(), array('features' => $F)), true),
+			'meta' => $this->load->view($this->config->item('language') . '/sticker/meta.php', $U, true),
+			'content' => $this->load->view($this->config->item('language') . '/sticker/content.php', array_merge($U, array('features' => $F)), true),
 			'db' => 'content '
 		);
 		$this->load->library('parser');
-		$this->parser->page($data, $this->session->userdata('id'), $user->row_array());
+		$this->parser->page($data, $this->session->userdata('id'), $U);
 	}
 }
