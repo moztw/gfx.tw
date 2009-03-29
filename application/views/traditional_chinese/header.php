@@ -6,14 +6,15 @@ if (isset($id)) {
 		<p id="header_top_link"><a href="<?php print base_url() ?>" title="回首頁">抓火狐</a></p>
 		<ul>
  <?php
-	if (!$name || substr($name, 0, 8) !== '__temp__') {
+	if ($name && substr($name, 0, 8) !== '__temp__') {
+	/* State 2 header: logged in user with a page */
 ?>
 			<li class="ui-corner-top ui-state-default"><a href="<?php print site_url($name) ?>"><?php print htmlspecialchars($title); ?></a></li>
-<!--			<li class="ui-corner-top ui-state-default"><a href="<?php print site_url($name) ?>">我的頁面</a></li>-->
 			<li class="ui-corner-top ui-state-default"><a href="<?php print site_url('editor') ?>">編輯頁面</a></li>
 			<li class="ui-corner-top ui-state-default"><a href="<?php print site_url('sticker') ?>">宣傳貼紙</a></li>
 <?php
 	} else {
+	/* State 1 header: logged in user without a page */
 ?>
 			<li class="ui-corner-top ui-state-default"><a href="<?php print site_url('editor') ?>">編輯頁面</a></li>
 <?php
@@ -22,12 +23,6 @@ if (isset($id)) {
 			<li class="ui-corner-top ui-state-default ui-state-disabled"><a href="#" id="link-intro">更多...</a></li>
 			<li class="ui-corner-all ui-state-default ui-state-disabled"><a href="#" id="link_logout">登出</a></li>
 		</ul>
-<?php /*		<p id="header_user_functions">Hi, <span id="header_username"><?php
-	if ($title !== '') print htmlspecialchars($title);
-	elseif (strlen($login) > 40) print htmlspecialchars(substr($login, strpos($login, '//', 5)+2, 30)) . '...';
-	else print htmlspecialchars(rtrim(substr($login, strpos($login, '//', 5)+2), '/'));
- ?></span>(<a href="#" id="link_logout">登出</a>)</p>
- */ ?>
 	</div>
 <?php
 	if ($admin === 'Y') {
@@ -37,7 +32,6 @@ if (isset($id)) {
 	<div id="intro-block" class="ui-state-hover ui-corner-all header-block">
 		<div class="header-block-content ui-widget-content ui-corner-bottom">
 			<p class="header-block-title">抓火狐推薦頁，隨機發售！</p>
-<!--			<p class="header-block-desc" id="user-intro">看看更多推薦頁，看大家怎麼推薦 Firefox！</p>-->
 			<div class="random-avatars random-avatars-loading">
 			</div>
 			<p class="message-link"><a href="/about">關於我們</a> | <a href="/about/legal">使用條款</a> | <a href="/about/faq">常見問題</a></p>
@@ -47,7 +41,9 @@ if (isset($id)) {
 		<input type="hidden" id="token" name="token" value="<?php print md5($id . $this->config->item('gfx_token')) ?>" />
 		<p><input type="submit" value="登出" /></p>
 	</form>
-<?php } else { ?>
+<?php } else {
+	/* State 0 header: visiter (not logged in)= */
+?>
 	<div id="header" class="no-margin">
 		<p id="header_top_link"><a href="<?php print base_url() ?>" title="回首頁">抓火狐</a></p>
 		<ul>
