@@ -514,10 +514,8 @@ var gfx = {
 			/* Show intro text */
 			if (!$.browser.mozilla) {
 				$('#visitor-intro').text(T.UI.INTRO_TEXT_NON_FX_USER);
-				$('#newcomer-intro-login').addClass('ui-state-disabled');
 			} else {
 				$('#visitor-intro').text(T.UI.INTRO_TEXT_FX_USER);
-				$('#newcomer-intro-login').removeClass('ui-state-disabled');
 			}
 			
 			/* Turn off some autocomplete */

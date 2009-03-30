@@ -198,6 +198,10 @@ class User extends Controller {
 				/*
 				No Cache-Control header for this URL.
 				*/
+			case 'random-avatars-frame':
+				/*
+				Output webpage or json will be decided later.
+				*/
 				$this->load->library('cache');
 				$i = rand(0, 99);
 				$users = $this->cache->get($i, 'random-avatars');
@@ -219,8 +223,12 @@ class User extends Controller {
 					}
 					$this->cache->save($i, $users, 'random-avatars', 300);
 				}
-				header('Content-Type: text/javascript');
-				print json_encode(array('users' => $users));
+				if ($type === 'random-avatars-frame') {
+					$this->load->view($this->config->item('language') . '/user/random-avatars.php', array('users' => $users));
+				} else {
+					header('Content-Type: text/javascript');
+					print json_encode(array('users' => $users));
+				}
 			break;
 			default:
 			json_message('Invalid List type');

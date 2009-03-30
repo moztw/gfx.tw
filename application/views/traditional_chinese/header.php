@@ -54,11 +54,16 @@ if (isset($id)) {
 	<div id="newcomer-intro" class="ui-widget message show no-auto">
 		<div class="ui-widget-content ui-corner-all"> 
 			<p><a href="#" class="ui-icon ui-icon-circle-close ui-corner-all">
-			</a><span class="ui-corner-all ui-state-default ui-state-disabled" id="newcomer-intro-login">立即加入，免註冊！</span>
+			</a><span class="ui-corner-all ui-state-default" id="newcomer-intro-login">立即加入，免註冊！</span>
 「抓火狐」是屬於您的 Firefox 推廣平台。</p>
 			<p class="message-desc" id="visitor-intro">&nbsp;</p>
 			<div class="random-avatars random-avatars-loading">
 			</div>
+			<noscript>
+				<div class="random-avatars noscript">
+					<iframe src="/user/list/random-avatars-frame" border="0" frameborder="0"></iframe>
+				</div>
+			</noscript>
 			<p class="message-link"><a href="/about">關於我們</a> | <a href="/about/legal">使用條款</a> | <a href="/about/faq">常見問題</a></p>
 		</div>
 	</div>

@@ -161,14 +161,31 @@ div.random-avatars {
 	height: 84px;
 	/*background: transparent url('../images/ajax-progress.gif') center center no-repeat;*/
 	padding: 0!important;
-	margin: 0.5em 0;
+	margin: 6px 0;
 }
+
+body.random-avatars {
+	padding: 0; margin: 0;
+	background: #f0efea; color: #000000;
+}
+
 div.random-avatars.random-avatars-loading {
 	background: transparent url('../images/ajax-progress.gif') center center no-repeat;
 	border: 1px dashed #cccccc;
 }
 
-div.random-avatars p {
+div.random-avatars.noscript {
+	height: 90px;
+	margin-top: -94px;
+	background: #f0efea;
+}
+
+div.random-avatars.noscript iframe {
+	height: 90px; width: 100%;
+	border: none;
+}
+
+.random-avatars p {
 	float: left;
 	width: 10%; overflow: hidden;
 	/* -1px insures that browsers won't overflow blocks */
@@ -178,26 +195,24 @@ div.random-avatars p {
 	height: 84px;
 }
 
-div.random-avatars a {
+.random-avatars a {
 	display: block;
 	height: 100%;
 	width: 100%;
 	text-decoration: none;
 }
 
-div.random-avatars a img {
-	display: block;
+.random-avatars a img {
 	width: 55px; height: 55px; margin: 5px auto;
 	border: none;
 	display: none;
 }
 
-div.random-avatars a:hover img { /* This does not work in IE6, don't know why */
+.random-avatars a:hover img { /* This :hover does not work in IE6, don't know why */
 	width: 65px; height: 65px; margin: 0 auto;
 }
 
-div.random-avatars a span {
-	display: block;
+.random-avatars a span {
 	position: absolute;
 	bottom: 0;
 	left: 0;
@@ -209,9 +224,13 @@ div.random-avatars a span {
 	display: none;
 }
 
-div.random-avatars a:hover span {
+.random-avatars a:hover span {
 	font-size: 14px;
 	color: #000000;
+}
+
+body.random-avatars a img, body.random-avatars a span {
+	display: block;
 }
 
 p.message-link {
