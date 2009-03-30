@@ -371,9 +371,20 @@ var gfx = {
 				},
 				'#header li, #newcomer-intro-login' : function () {
 					$(this).not('.ui-state-disabled').addClass('ui-state-hover');
+				}
+			},
+			'mouseout' : {
+				'#link_manage a' : function () {
+					$(this).parent().removeClass('ui-state-hover');
 				},
+				'#header li, #newcomer-intro-login' : function () {
+					$(this).not('.active').removeClass('ui-state-hover');
+				}
+			},
+			'focus' : {
 				'.challenge-answer' : function () {
 					if ($('.challenge-question').text()) return;
+					$('.challenge-question').text('...')
 					$.ajax(
 						{
 							url: '/auth/challenge',
@@ -388,14 +399,6 @@ var gfx = {
 							}
 						}
 					);
-				}
-			},
-			'mouseout' : {
-				'#link_manage a' : function () {
-					$(this).parent().removeClass('ui-state-hover');
-				},
-				'#header li, #newcomer-intro-login' : function () {
-					$(this).not('.active').removeClass('ui-state-hover');
 				}
 			}
 		},
