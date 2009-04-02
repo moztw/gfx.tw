@@ -136,7 +136,7 @@ class Editor extends Controller {
 			&& $this->input->post('forum') !== '(keep-the-forum-username)'
 			&& $this->input->post('forum') !== '') {
 			$F = explode('::', $this->input->post('forum'), 3);
-			if (count($F) === 3 && $F[0] === substr(md5($F[1] . $F[2] . $this->config->item('gfx_forum_auth_token')), 16)) {
+			if (count($F) === 3 && $F[0] === substr(md5($F[1] . $F[2] . substr($this->input->post('token'), 0, 16) . $this->config->item('gfx_forum_auth_token')), 16)) {
 				$data['forum_id'] = $F[1];
 				$data['forum_username'] = $F[2];
 			} else {

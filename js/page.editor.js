@@ -424,6 +424,8 @@ gfx.page = {
 			);
 		}
 
+		$('#forum_auth').get(0).href += '?token=' + $('#token').val().substr(0, 16);
+
 		if ($.browser.msie) {
 			gfx.message('error', 'alert', T.UI.USING_IE_TO_EDIT);
 		}
