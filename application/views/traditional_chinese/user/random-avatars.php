@@ -26,7 +26,7 @@ function avatar($user) {
 	extract($user);
 ?>
 <p>
-	<a href="<?php print site_url($name);?>"><img src="<?php print htmlspecialchars($avatar); ?>" alt="<?php print htmlspecialchars($title); ?>" /><span><?php print htmlspecialchars($title); ?></span></a>
+	<a href="<?php print site_url($name);?>" target="_top"><img src="<?php print htmlspecialchars($avatar); ?>" alt="<?php print htmlspecialchars($title); ?>" /><span><?php print htmlspecialchars($title); ?></span></a>
 </p>
 <?php
 }
