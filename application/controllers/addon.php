@@ -23,7 +23,7 @@ class Addon extends Controller {
 			}
 		} else {
 			/* since query is only used in editor, we only provide limit information */
-			$addons = $this->db->query('SELECT id, title, amo_id, amo_version, url, icon_url, description '
+			$addons = $this->db->query('SELECT id, title, amo_id, amo_version, url, icon_url, description, fetched '
 			. 'FROM `addons` WHERE MATCH (`title`,`description`) AGAINST (' . $this->db->escape($this->input->post('q')) . ') ORDER BY `title` ASC;');
 		}
 		$A = array();
