@@ -3,7 +3,7 @@
 gfx.page = {
 	'bind' : {
 		'click' : {
-			'#editor_save_button' : function () {
+			'#editor-save-button' : function () {
 				//Dumb, but we cannot self-reference at this point.
 				gfx.page.savePage();
 			},
@@ -20,6 +20,7 @@ gfx.page = {
 			'#featureselection_save button:only-child' : function () {
 				var s = [];
 				gfx.page.featureChanged = true;
+				$('#editor-save button').attr('disabled', null);
 				$('#featureselection input:checked').each(
 					function (i) {
 						var t = $(this);
@@ -89,6 +90,7 @@ gfx.page = {
 			'#groups input' : function () {
 				$(this).parent().toggleClass('not-selected', !this.checked);
 				gfx.page.groupChanged = true;
+				$('#editor-save button').attr('disabled', null);
 			},
 			'#groups .group-add-addon a' : function () {
 				gfx.page.currentGroup = this.parentNode.parentNode.id.substr(2);
@@ -107,6 +109,7 @@ gfx.page = {
 					}
 				);
 				gfx.page.addonChanged = true;
+				$('#editor-save button').attr('disabled', null);
 				return false;
 			},
 			'#userinfo button, #change-email' : function () {
@@ -144,6 +147,7 @@ gfx.page = {
 					$('span.title-placeholder').removeClass('title-empty').text(this.value);
 					$(this).css('display', null);
 					gfx.page.infoChanged = true;
+					$('#editor-save button').attr('disabled', null);
 				} else {
 					$('#title-name').text(this.value);
 					$('span.title-placeholder').addClass('title-empty').text(T.UI.TITLE_PLACEHOLDER);
@@ -405,6 +409,7 @@ gfx.page = {
 			);
 			gfx.closeDialog('addons');
 			gfx.page.addonChanged = true;
+			$('#editor-save button').attr('disabled', null);
 		};
 		this.dialog['delete'].buttons[T.BUTTONS.DELETE_OK] = function () {
 			window.onbeforeunload = function (e) {
@@ -431,12 +436,12 @@ gfx.page = {
 		}
 
 		var bar = {
-			el : $('#editor_save'),
+			el : $('#editor-save'),
 			pl : $(document.createElement('div')),
 			doc : $(document)
 		};
 		bar.el.after(
-			bar.pl.attr({'id':'editor_save_placeholder'})
+			bar.pl.attr({'id':'editor-save-placeholder'})
 			.css('height', bar.el.height())
 			.hide()
 		);
@@ -445,13 +450,13 @@ gfx.page = {
 			'scroll',
 			function (e) {
 				var pos;
-				if (bar.pl.is(':visible')) {
+				if (bar.el.css('position') === 'fixed') {
 					pos = bar.pl.offset().top;
 				} else {
 					pos = bar.el.offset().top;
 				}
 				if (bar.doc.scrollTop() > pos) {
-					if (bar.pl.not(':visible')) {
+					if (bar.el.is(':visible')) {
 						bar.pl.show();
 					}
 					//This will break in IE6
@@ -481,6 +486,8 @@ gfx.page = {
 				}
 			}
 		).scroll();
+		
+		$('#editor-save button').attr('disabled', 'disabled');
 
 		window.onbeforeunload = function (e) {
 			if (
@@ -610,6 +617,7 @@ gfx.page = {
 				revert: 250,
 				update: function (e, ui) {
 					gfx.page.featureChanged = true;
+					$('#editor-save button').attr('disabled', null);
 				}
 			}
 		);
@@ -620,6 +628,7 @@ gfx.page = {
 				revert: 250,
 				update: function () {
 					gfx.page.groupChanged = true;
+					$('#editor-save button').attr('disabled', null);
 				}
 			}
 		);
@@ -631,6 +640,7 @@ gfx.page = {
 				connectWith: ['#groups .group-addons'],
 				update: function () {
 					gfx.page.addonChanged = true;
+					$('#editor-save button').attr('disabled', null);
 				}
 			}
 		);
@@ -666,6 +676,7 @@ gfx.page = {
 	},
 	'changeAvatar' : function (avatar, url) {
 		gfx.page.avatar = avatar;
+		$('#editor-save button').attr('disabled', null);
 		$('#title-avatar img:only-child').attr('src', url);
 		gfx.closeDialog('avatar');
 	},
@@ -733,6 +744,7 @@ gfx.page = {
 					= gfx.page.featureChanged
 					= gfx.page.groupChanged
 					= gfx.page.addonChanged = null;
+					$('#editor-save button').attr('disabled', 'disabled');
 
 					$('#window_userpage_url').attr('href', './' + result.name);
 					$('.name-placeholder').text(result.name);
@@ -741,6 +753,22 @@ gfx.page = {
 				}
 			}
 		);
+	},
+	'showBar' : function () {
+		var el = $('#editor-save').show();
+		$(window).scroll();
+	},
+	'hideBar' : function () {
+		var el = $('#editor-save').hide();
+		if (el.css('position') === 'fixed') {
+			$('#editor-save-placeholder').hide();
+			$(document).scrollTop(
+				$(document).scrollTop()
+				- el.height()
+		//		- parseInt(el.css('margin-top'))
+				- parseInt(el.css('margin-bottom'))
+			);
+		}
 	},
 	'Addon' : function (d, add, del) {
 		var o = $(document.createElement('div'))
@@ -832,6 +860,7 @@ gfx.page = {
 							}
 						);
 						gfx.page.addonChanged = true;
+						$('#editor-save button').attr('disabled', null);
 						return false;
 					}
 				)
