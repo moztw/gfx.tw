@@ -5,8 +5,8 @@ $this->load->helper('gfx');
 $avatar = avatarURL($avatar, $email);
 
 ?>
-	<div id="editor_save">
-		<p><button id="editor_save_button">儲存您的頁面</button>編輯完畢，儲存變更、領取宣傳貼紙！</p>
+	<div id="editor-save">
+		<p><button id="editor-save-button">儲存您的頁面</button>編輯完畢，儲存變更、領取宣傳貼紙！</p>
 	</div>
 	<div id="window_almostdone" class="window" title="快完成了...">
 		<p>請設定您的推薦網頁的專用網址，需使用英數字：</p>

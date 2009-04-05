@@ -81,6 +81,7 @@ class GFX_Parser extends CI_Parser {
 					. ':' . (($CI->session->userdata('hide_announcement'))?'Y':'N')
 				)
 			);
+			header('Cache-Control: private="Set-Cookie"');
 			//header('Last-Modified: ' . date('r', max($data['expiry'], $expiry)));
 		}
 		
