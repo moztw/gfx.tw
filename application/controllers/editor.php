@@ -82,14 +82,19 @@ class Editor extends Controller {
 		if ($this->input->post('name') === false) {
 			json_message('EDITOR_NAME_EMPTY');
 		}
-		if ($this->input->post('title') === false) {
-			json_message('EDITOR_TITLE_EMPTY');
-		}
 
 		$data = array(
-			'name' => $this->input->post('name'),
-			'title' => $this->input->post('title')
+			'name' => $this->input->post('name')
 		);
+		
+		if ($this->input->post('title')) {
+			$data['title'] = $this->input->post('title');
+		}
+
+		if ($this->input->post('ready')) {
+			$data['ready'] = $this->input->post('ready');
+		}
+		
 		if ($this->input->post('avatar')) {
 			$a = $this->input->post('avatar');
 			switch ($a) {
@@ -225,6 +230,14 @@ class Editor extends Controller {
 				$feature->free_result();
 			}
 			unset($feature);
+			
+			if (!$this->input->post('title')) {
+				$user = $this->db->query('SELECT title FROM `users` WHERE `id` = ' . $this->session->userdata('id') . ';');
+				$title = $user->row()->title;
+			} else {
+				$title = $this->input->post('title');
+			}
+			
 			// featurecard.html
 			file_put_contents(
 				$d . 'featurecard.html',
@@ -232,7 +245,7 @@ class Editor extends Controller {
 					$this->config->item('language') . '/userstickers/featurecard.php',
 					array(
 						'name' => $this->input->post('name'),
-						'title' => $this->input->post('title'),
+						'title' => $title,
 						'features' => $F
 					),
 					true
@@ -243,7 +256,7 @@ class Editor extends Controller {
 			$card = imagecreatefromgd2(
 				'./images/' . $this->config->item('language') . '/featurecard.gd2'
 			);
-			$D = imagettfbbox(14, 0, $this->config->item('gfx_sticker_font'), $this->input->post('title'));
+			$D = imagettfbbox(14, 0, $this->config->item('gfx_sticker_font'), $title);
 			imagettftext(
 				$card,
 				14,
@@ -252,23 +265,29 @@ class Editor extends Controller {
 				18,
 				imagecolorallocate($card, 0, 0, 0),
 				$this->config->item('gfx_sticker_font'),
-				$this->input->post('title')
+				$title
 			);
-			imagecopy(
-				$card,
-				imagecreatefromgd2('./stickerimages/features/' . $F[0]['name'] . '.gd2'),
-				52, 125,
-				0, 0, 150, 20);
-			imagecopy(
-				$card,
-				imagecreatefromgd2('./stickerimages/features/' . $F[1]['name'] . '.gd2'),
-				52, 144,
-				0, 0, 150, 20);
-			imagecopy(
-				$card,
-				imagecreatefromgd2('./stickerimages/features/' . $F[2]['name'] . '.gd2'),
-				52, 163,
-				0, 0, 150, 20);
+			if (file_exists('./stickerimages/features/' . $F[0]['name'] . '.gd2')) {
+				imagecopy(
+					$card,
+					imagecreatefromgd2('./stickerimages/features/' . $F[0]['name'] . '.gd2'),
+					52, 125,
+					0, 0, 150, 20);
+			}
+			if (file_exists('./stickerimages/features/' . $F[1]['name'] . '.gd2')) {
+				imagecopy(
+					$card,
+					imagecreatefromgd2('./stickerimages/features/' . $F[1]['name'] . '.gd2'),
+					52, 144,
+					0, 0, 150, 20);
+			}
+			if (file_exists('./stickerimages/features/' . $F[2]['name'] . '.gd2')) {
+				imagecopy(
+					$card,
+					imagecreatefromgd2('./stickerimages/features/' . $F[2]['name'] . '.gd2'),
+					52, 163,
+					0, 0, 150, 20);
+			}
 			imagepng($card, $d . 'featurecard.png');
 			imagedestroy($card);
 		}

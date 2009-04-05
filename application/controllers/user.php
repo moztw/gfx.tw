@@ -36,7 +36,7 @@ class User extends Controller {
 				show_404();
 			}
 			$this->load->database();
-			$user = $this->db->query('SELECT * FROM users WHERE `name` = ' . $this->db->escape($name) . ' LIMIT 1');
+			$user = $this->db->query('SELECT * FROM users WHERE `ready` = \'Y\' AND `name` = ' . $this->db->escape($name) . ' LIMIT 1');
 			if ($user->num_rows() === 0) {
 				//TBD: pretty error for userpages, indicate this name is available
 				show_404();
@@ -212,7 +212,7 @@ class User extends Controller {
 						Really expensive query, should change it right away should user > 1000 
 						or fill the cache by using crontab instead of user request
 					*/
-					$query = $this->db->query('SELECT `name`, `title`, `avatar`, `email` FROM `users` WHERE `avatar` != \'\' AND `name` NOT LIKE \'__temp__%\' ORDER BY RAND() LIMIT 10;');
+					$query = $this->db->query('SELECT `name`, `title`, `avatar`, `email` FROM `users` WHERE `avatar` != \'\' AND `ready` = \'Y\' ORDER BY RAND() LIMIT 10;');
 					$users = array();
 					foreach ($query->result_array() as $user) {
 						$users[] = array(

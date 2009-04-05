@@ -29,7 +29,7 @@ class Sticker extends Controller {
 			$feature->free_result();
 		}
 		unset($feature);
-		if (substr($U['name'], 0, 8) === '__temp__') {
+		if ($U['ready'] !== 'Y') {
 			flashdata_message('sticker_nopage');
 			header('Location: ' . site_url('editor'));
 			exit();

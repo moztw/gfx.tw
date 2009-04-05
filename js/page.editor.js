@@ -253,9 +253,6 @@ gfx.page = {
 			'height': 400,
 			'buttons' : {},
 			'position' : ['center', 120],
-			'beforeopen' : function () {
-				return gfx.page.validate.title($('#title-name').text());
-			},
 			'open' : function () {
 				gfx.page.info = {};
 				$.each(
@@ -360,8 +357,7 @@ gfx.page = {
 			//Gather data
 			//Save title because we have to make sure name and title are vaild at same time.
 			var d = {
-				'token' : $('#token').val(),
-				'title' : $('#title-name').text()
+				'token' : $('#token').val()
 			};
 			$.each(
 				['name', 'email', 'web', 'blog', 'forum', 'bio'],
@@ -685,7 +681,8 @@ gfx.page = {
 		var d = {
 			'token' : $('#token').val(),
 			'title' : $('#title-name').text(),
-			'name' : $('#info_name').val() || $('#name').val()
+			'name' : $('#info_name').val() || $('#name').val(),
+			'ready' : 'Y' /* indicate all informations checks out and the page is available to everyone */
 		};
 		var g = $('.group-title input:checked');
 		if (gfx.page.groupChanged && !g.length) {
