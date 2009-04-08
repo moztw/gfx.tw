@@ -66,19 +66,14 @@ $avatar = avatarURL($avatar, $email);
 		<p>依照<span class="title-placeholder">{您的名字}</span>的建議，加入附加元件改造屬於您的火狐！</p>
 	</div>
 	<div id="featureselection">
-		<p class="features-desc">請選三個你推薦別人使用 Firefox 的理由（確定後可以拖曳改變順序）：</p>
+		<p class="features-desc">請將想要推薦的功能拖放到您想要顯示的位置。</p>
 		<ul>
 <?php
 /* put it into a function scope */
 function featureselection($feature) {
 	extract($feature);
 ?>
-			<li><?php
-	print form_checkbox(array('id' => 'fs_' . $name, 'name' => 'fs_' . $id, 'checked' => isset($user_order)));
-	print form_label($title, 'fs_' . $name, array('title' => $description));
-	unset($user_id);
-?></li>
-
+			<li id="fs-<?php print $name; ?>"<?php if (isset($user_order)) print ' class="selected"';?> rel="fid-<?php print $id; ?>" title="<?php print htmlspecialchars($description); ?>"><?php print htmlspecialchars($title); ?></li>
 <?php
 }
 $features = array();
@@ -90,7 +85,7 @@ foreach ($allfeatures as $feature) {
 }
 ?>
 		</ul>
-		<p id="featureselection_save"><button>確定</button></p>
+		<p id="featureselection-clear"><button>全部重來</button></p>
 	</div>
 	<div id="features" class="sortable">
 <?php
@@ -106,8 +101,17 @@ function feature($feature) {
 		</div>
 <?php
 }
-foreach ($features as $feature) {
-	feature($feature);
+for ($i = 0; $i < 3; $i++) {
+	if (isset($features[$i])) feature($features[$i]);
+	else {
+?>
+		<div class="feature box">
+			<h2>&nbsp;</h2>
+			<p>&nbsp;</p>
+			<p class="link"><a href="#">More ...</a></p>
+		</div>
+<?php
+	}
 }
 ?>
 	</div>
