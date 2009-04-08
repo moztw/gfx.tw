@@ -34,7 +34,7 @@ class Auth extends Controller {
 		$response = $this->openid->getResponse();
 		switch ($response->status) {
 			case Auth_OpenID_CANCEL:
-				flashdata_message('auth_login_canceled', 'highlight', 'info:');
+				flashdata_message('auth_login_canceled', 'highlight', 'info');
 				header('Location: ' . base_url());
 				break;
 			case Auth_OpenID_FAILURE:
