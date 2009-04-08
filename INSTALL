@@ -1,5 +1,5 @@
 Enviroment:
-* apache2 mod_rewrite php5(?)
+* apache2 mod_rewrite php5(?) php5-gd php5-curl
 * lighttpd should be ok but you have to set up rewrite rule yourself.
 * writable /tmp (can be changed at application/config/openid.php
 * MySQL > 4.1 with fulltext search ability.
@@ -19,7 +19,9 @@ Install:
 3. Config db at application/config/database.php
 4. Create database and table structures by importing gfx.sql
 5. Create inital user at table `users`, feature selections at `features` and group selections `groups`
-6. sudo chown www-data:www-data useravatars system/cache userstickers (or chmod 777 if you cannot sudo)
+6. make these directory is writable: ./useravatars ./system/cache ./userstickers ./stickerimages/features
+7. Login as the initual admin user, click save on each of the features so gfx make badge & badge caches for you.
+8. Click save on editor page, so gfx can make the user stickers for you.
 
 On Production Site:
 1. Change $route['scaffolding_trigger']  to empty string in application/config/routes.php
@@ -30,7 +32,7 @@ Localisation:
 To localize this website,
 1. Create new directory for your locale in application/languages/, system/languages/, application/views/ and translating all files
    CodeIginter will spit error if any of the file is missing.
-   you might want to copy system/languages/english if you don't want to translate them; they don't really shows often.
+   you might want to copy system/languages/english if you don't want to translate them; they don't really show often.
 2. $cfg['language'] change application/config/config.php to your language.
 3. Some of the paramaters in application/config/gfx.php are locale-related. Do remember to change them.
 4. You might want to tweak style.css and some images, especially if the locale is RTL.
@@ -39,7 +41,10 @@ it's not pratical to preapre concentrate all locale to a huge table, nor possibl
 (this means it's safe to delete all other locale files if you don't need them)
 
 Known Issue:
-If your protect your setup with HTTP password (which may be seted in .htaccess),
-the following will break:
-* Avatar upload (due to inability of Flash plugin to share session with the browser)
-* OpenID 2.0 xrds authorization (the one that suppress Yahoo! login warning)
+1. If your protect your setup with HTTP password (which may be seted in .htaccess),
+   the following will break:
+   * Avatar upload (due to inability of Flash plugin to share session with the browser)
+   * OpenID 2.0 xrds authorization (the one that suppress Yahoo! login warning)
+2. Login into https openids will fail if your php-curl unable to get local issuer certificate,
+   you can try to verify that by wget the same https url, wget will complain the same thing.
+   On a ubuntu, you should install "ca-certificates" package.
