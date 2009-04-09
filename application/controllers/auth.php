@@ -50,9 +50,13 @@ class Auth extends Controller {
 					/* User exists */
 					$data = $user->row_array();
 				} else {
+					$this->load->config('gfx');
+					if ($this->config->item('gfx_require_pre_authorization')) {
+						header('Location: ' . site_url('about/closetest?claimed_id=' . urlencode($open_id)));
+						exit();
+					}
 					/* Create new user */
-					$sreg_resp = Auth_OpenID_SRegResponse::fromSuccessResponse($response);
-					$sreg = $sreg_resp->contents();
+					$sreg = Auth_OpenID_SRegResponse::fromSuccessResponse($response)->contents();
 					$data = array(
 						'login' => $open_id,
 						'name' => '__temp__' . md5($open_id . time()), /* require unique */

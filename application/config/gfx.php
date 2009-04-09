@@ -8,6 +8,9 @@ $config['gfx_site_wide_message'] = array(
 		'message' => '這是個預演(staging)站！請在試玩之後，提供畫面與程式操作互動的意見，謝謝！'
 	)
 );
+/* If given OpenID does not exist in the database,
+redirect user to a about/closetest page instead of create entry for her/him */
+$config['gfx_require_pre_authorization'] = false;
 /* This token is used to generate the md5 hash to be send back by POST requests so we can check it's origin.
 Change this on a live site will disable all forms; user would have to reload to get the new hash */
 $config['gfx_token'] = '--secret-token-good-day-fx';
