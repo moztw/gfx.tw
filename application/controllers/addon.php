@@ -23,8 +23,16 @@ class Addon extends Controller {
 			}
 		} else {
 			/* since query is only used in editor, we only provide limit information */
+			header('X-Line-No: 26');
 			$addons = $this->db->query('SELECT id, title, amo_id, amo_version, url, icon_url, description, fetched '
 			. 'FROM `addons` WHERE MATCH (`title`,`description`) AGAINST (' . $this->db->escape($this->input->post('q')) . ') ORDER BY `title` ASC;');
+			/* fulltest search doesn't give good result sometimes, so we trun to LIKE if none is found */
+			header('X-Trac: ' . strlen(trim($this->input->post('q'))));
+			if ($addons->num_rows() === 0 && strlen(trim($this->input->post('q'))) >= 3) {
+				header('X-Line-No: 30');
+				$addons = $this->db->query('SELECT id, title, amo_id, amo_version, url, icon_url, description, fetched '
+				. 'FROM `addons` WHERE `title` LIKE \'%' . $this->db->escape_str(trim($this->input->post('q'))) . '%\' ORDER BY `title` ASC;');
+			}
 		}
 		$A = array();
 		foreach ($addons->result_array() as $addon) {
@@ -37,6 +45,7 @@ class Addon extends Controller {
 		if (
 			count($A) !== 0 &&
 			isset($A[$r]['amo_id']) &&
+			$A[$r]['amo_id'] !== 0 &&
 			strtotime($A[$r]['fetched']) < max(time()-$this->config->item('gfx_amo_fetch_older_than_time'), $this->config->item('gfx_amo_fetch_older_than_date'))
 			) {
 			$addon = $this->_update_amo_addon($A[$r]['amo_id'], $A[$r]['id'], true);
@@ -72,6 +81,7 @@ class Addon extends Controller {
 		if (
 			count($A) !== 0 &&
 			isset($A[$r]['amo_id']) &&
+			$A[$r]['amo_id'] !== 0 &&
 			strtotime($A[$r]['fetched']) < max(time()-$this->config->item('gfx_amo_fetch_older_than_time'), $this->config->item('gfx_amo_fetch_older_than_date'))
 			) {
 			$addon = $this->_update_amo_addon($A[$r]['amo_id'], $A[$r]['id'], true);
@@ -96,6 +106,7 @@ class Addon extends Controller {
 		}
 	}
 	function _update_amo_addon($amo_id, $id = false, $cleanoutput = true) {
+		if ($amo_id == 0) return false;
 		/* Fetch from api first */
 		$xml = @file_get_contents($this->config->item('gfx_amo_api_url') . $amo_id);
 		if ($xml && strpos($xml, '<error>') !== false) {
