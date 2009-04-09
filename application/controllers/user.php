@@ -126,7 +126,6 @@ class User extends Controller {
 		/* Actual Deletion */
 		$this->db->delete('users', array('id' => $id));
 		$this->db->delete('u2a', array('id' => $id));
-		$this->db->delete('u2f', array('id' => $id));
 		$this->db->delete('u2g', array('id' => $id));
 		$this->load->library('cache');
 		$this->cache->remove(strtolower($data->row()->name), 'user');
