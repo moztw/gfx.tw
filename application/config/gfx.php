@@ -32,7 +32,13 @@ $config['gfx_downloadurl'] = 'http://download.mozilla.org/?product=firefox-3.0.8
 /* TBD: instead redirect to another webpage,show up a dialog and ask for the os from user? */
 $config['gfx_downloadfallback'] = 'http://www.moztw.org/firefox/';
 
-/* AMO url where addon description,title,and xpi address can be fetched. Amo ID will be append. */
+/* API fetch method, which does not support experimential addons
+  "0.1" is a fake api version number so that the api will output compatible_os information.
+*/
+$config['gfx_amo_api_url'] = 'https://services.addons.mozilla.org/zh-TW/firefox/api/0.1/addon/';
+
+/* fetch data by parse addon page;
+   AMO url where addon description,title,and xpi address can be fetched. Amo ID will be append. */
 $config['gfx_amo_url'] = 'https://addons.mozilla.org/zh-TW/firefox/addon/';
 $config['gfx_amo_xpi_url'] = 'https://addons.mozilla.org/zh-TW/firefox/downloads/latest/';
 
