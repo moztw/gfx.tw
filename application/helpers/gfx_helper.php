@@ -108,7 +108,7 @@ function avatarURL($avatar, $email, $conn = '&amp;') {
 	if (!$avatar) {
 		$avatar = '/images/avatar-default.png';
 	} elseif ($avatar === '(gravatar)') {
-		$avatar = 'http://www.gravatar.com/avatar/' . md5($email) . '?s=65' . $conn . 'r=g' . $conn . 'd=' . urlencode(site_url('images/avatar-default.png'));
+		$avatar = 'http://www.gravatar.com/avatar/' . md5($email) . '?s=65' . $conn . 'r=g' . $conn . 'd=identicon';
 	} else {
 		$avatar = '/useravatars/' . $avatar;
 	}
