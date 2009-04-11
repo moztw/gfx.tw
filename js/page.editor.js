@@ -679,7 +679,7 @@ gfx.page = {
 			'ready' : 'Y' /* indicate all informations checks out and the page is available to everyone */
 		};
 		var g = $('.group-title input:checked');
-		if (gfx.page.groupChanged && !g.length) {
+		if (!g.length) {
 			gfx.alert('EDITOR_GROUP_EMPTY');
 			return;
 		}
