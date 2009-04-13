@@ -109,7 +109,7 @@ class Addon extends Controller {
 		if ($amo_id == 0) return false;
 		/* Fetch from api first */
 		$xml = @file_get_contents($this->config->item('gfx_amo_api_url') . $amo_id);
-		if ($xml && strpos($xml, '<error>') !== false) {
+		if ($xml && strpos($xml, '<error>') === false) {
 			/*
 				a vaild xml file to parse
 				let's call DOMDocument class
@@ -137,7 +137,7 @@ class Addon extends Controller {
 			if (strpos($doc->getElementsByTagName('icon')->item(0)->firstChild->nodeValue, 'default_icon') === false) {
 				$A['icon_url'] = $doc->getElementsByTagName('icon')->item(0)->firstChild->nodeValue;
 			}
-			foreach ($doc->getElementsByTagName('all_compatible_os')->item(0)->childNodes as &$os) {
+			foreach ($doc->getElementsByTagName('all_compatible_os')->item(0)->childNodes as $os) {
 				if ($os->nodeName !== 'os') continue;
 				switch ($os->firstChild->nodeValue) {
 					case 'ALL':
