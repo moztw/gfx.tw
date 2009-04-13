@@ -27,7 +27,7 @@
 		<p>Not affiliated with Mozilla. Firefox and the Firefox logos are trademarks of the <a href="http://www.mozilla.org/">Mozilla Fundation</a>.</p>
 	</div>
 	<script type="text/javascript" src="<?php print site_url('js/jquery-1.3.2.min.js') ?>"></script>
-	<script type="text/javascript" src="<?php print site_url('js/jquery-ui-1.7.custom.min.js') ?>"></script>
+	<script type="text/javascript" src="<?php print site_url('js/jquery-ui.custom.min.js') ?>"></script>
 	<script type="text/javascript" src="<?php print site_url('js/text-zh-TW.js') ?>" charset="UTF-8"></script>
 	<script type="text/javascript" src="<?php print site_url('js/global.js') ?>" charset="UTF-8"></script>
 {script}

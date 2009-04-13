@@ -131,6 +131,7 @@ gfx.page = {
 							'q' : $('#addon_query').val().replace(/^https:\/\/addons.mozilla.org\/[\w\-]{5}\/firefox\/addon\/(\d+)$/, '$1')
 						},
 						success: function (result, status) {
+							$('#addon_query').focus();
 							if (gfx.ajaxError(result)) {
 								return;
 							}
