@@ -121,21 +121,6 @@ $(function () {
 			}
 		}
 	);
-
-	/* live all events */
-	$.each(
-		setting.live,
-		function (e, o) {
-			$.each(
-				o,
-				function (s, f) {
-					console.log(s, e, f);
-					$(s).live(e, f);
-				}
-			);
-		}
-	);
-
 	
 	var h = window.location.hash.substr(1);
 	if (h && $('#window_' + h).length) {
