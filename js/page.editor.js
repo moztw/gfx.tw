@@ -155,16 +155,6 @@ gfx.page = {
 				$('#editor-save button').attr('disabled', null);
 				return false;
 			}
-		},
-		'mousedown' : {
-			'.addon' : function () {
-				$('#groups').sortable('disable');
-			}
-		},
-		'mouseup' : {
-			'.addon' : function () {
-				$('#groups').sortable('enable');
-			}
 		}
 	},
 	'dialog' : {
