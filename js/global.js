@@ -18,36 +18,41 @@ $(function () {
 	/* Event binding list and dialog options list */
 	var setting = {
 		'bind' : {},
+		'live' : {},
 		'dialog' : {}
 	};
 	/* Run each "parts": copy their event binding and dialog options and loads them */
-	var m = ['global', 'page', 'admin'];
 	$.each(
-		m,
-		function () {
-			if (gfx[this]) {
-				if (gfx[this].bind) {
-					$.each(
-						gfx[this].bind,
-						function(e, o) {
-							$.extend(
-								setting.bind[e] || (setting.bind[e] = {}),
-								o
+		['global', 'page', 'admin'],
+		function (i, p) {
+			if (gfx[p]) {
+				$.each(
+					['bind', 'live', 'one'],
+					function (i, t) {
+						if (gfx[p][t]) {
+							$.each(
+								gfx[p][t],
+								function(e, o) {
+									$.extend(
+										setting[t][e] || (setting[t][e] = {}),
+										o
+									);
+								}
 							);
+							delete gfx[p][t];
 						}
-					);
-					delete gfx[this].bind;
-				}
-				if (gfx[this].dialog) {
+					}
+				);
+				if (gfx[p].dialog) {
 					$.extend(
 						setting.dialog,
-						gfx[this].dialog
+						gfx[p].dialog
 					);
-					delete gfx[this].dialog;
+					delete gfx[p].dialog;
 				}
-				if (gfx[this].onload) {
-					gfx[this].onload.apply(setting);
-					delete gfx[this].onload;
+				if (gfx[p].onload) {
+					gfx[p].onload.apply(setting);
+					delete gfx[p].onload;
 				}
 			}
 		}
@@ -99,16 +104,38 @@ $(function () {
 
 	/* bind all events */
 	$.each(
-		setting.bind,
+		['bind', 'live', 'one'],
+		function (i, t) {
+			if (setting[t]) {
+				$.each(
+					setting[t],
+					function (e, o) {
+						$.each(
+							o,
+							function (s, f) {
+								$(s)[t](e, f);
+							}
+						);
+					}
+				);
+			}
+		}
+	);
+
+	/* live all events */
+	$.each(
+		setting.live,
 		function (e, o) {
 			$.each(
 				o,
 				function (s, f) {
-					$(s).bind(e, f);
+					console.log(s, e, f);
+					$(s).live(e, f);
 				}
 			);
 		}
 	);
+
 	
 	var h = window.location.hash.substr(1);
 	if (h && $('#window_' + h).length) {
@@ -173,25 +200,6 @@ var gfx = {
 	'global' : {
 		'bind' : {
 			'click' : {
-				'div.message div p a.ui-icon' : function () {
-					$(this).parents('.message').slideUp(500);
-					$('#link-' + $(this).parents('.message').attr('id')).parent().removeClass('active ui-state-hover');
-					return false;
-				},
-				'div.announcement div p a.ui-icon:first' : function () {
-					$.ajax(
-						{
-							url: '/auth/skip_announcement',
-							data: {},
-							beforeSend : function (xhr) { },
-							complete : function (xhr, status) { },
-							error: function (xhr, status, error) { },
-							success: function (result, status) {
-								gfx.ajaxError(result);
-							}
-						}
-					);
-				},
 				'#link_login, #newcomer-intro-login' : function () {
 					if ($(this).not('.ui-state-disabled').length !== 0) {
 						gfx.openDialog('login');
@@ -229,10 +237,6 @@ var gfx = {
 						$('#groups').removeClass('detailed');
 					}
 				},
-				'a.newwindow' : function () {
-					window.open(this.href);
-					return false;
-				},
 				'.download a' : function () {
 					gfx.openDialog('download');
 					var os = gfx.getOS();
@@ -250,79 +254,6 @@ var gfx = {
 					*/
 					window.location.href = dl;
 
-					return false;
-				},
-				'#features p.link a' : function () {
-					var option = {
-						title: $(this).parents('.feature').find('h2').text(),
-						modal: true,
-						overlay: {
-							backgroundColor: '#000000',
-							opacity: 0.5
-						},
-						'width' : 800,
-						'height' : 500,
-						'show' : null, /* demenstion detection will fail */
-						'position' : ['center', 50],
-						'resizeStart' : function (e, ui) {
-							$(ui.element).find('.ui-dialog-content div').show();
-						},
-						'resizeStop' : function (e, ui) {
-							$(ui.element).find('.ui-dialog-content div').hide();
-						},
-						'resize' : function (e, ui) {
-							gfx.fillContainer(
-								$(ui.element).find('.ui-dialog-content iframe'),
-								$(ui.element).find('.ui-dialog-content')
-							);
-						},
-						'open' : function (e) {
-							gfx.fillContainer(
-								$(e.target).find('iframe'),
-								$(e.target)
-							);
-						},
-						'close' : function (e, ui) {
-							$(e.target).dialog('destroy').remove();
-						}
-					};
-					if ($('#link_manage').length) {
-						option.buttons = {};
-						option.buttons[T.BUTTONS.ADMIN_EDIT_FEATURE] = function () {
-							window.location.href = $('#iframe-feature iframe').attr('src') + '#admin';
-						};
-					}
-					$(document.createElement('div'))
-					.addClass('window').attr(
-						{
-							'id' : 'iframe-feature'
-						}
-					).append(
-						$(document.createElement('iframe')).attr(
-							{
-								src : this.href + '/inframe',
-								frameBorder: '0' /* IE7 */
-							}
-						).css(
-							{
-								border: 'none'
-							}
-						)
-					).append(
-						/* A div covers iframe so that mouseover can be detected when resizing
-						Won't work in IE7 coz its transparent */
-						$(document.createElement('div')).css(
-							{
-								width: '100%',
-								height: '100%',
-								position: 'absolute',
-								top: 0,
-								left: 0,
-								display: 'none'
-							}
-						)
-					).dialog(option);
-					
 					return false;
 				},
 				'#groups-install button' : function () {
@@ -399,6 +330,106 @@ var gfx = {
 							}
 						}
 					);
+				}
+			}
+		},
+		'live' : {
+			'click' : {
+				'div.message div p a.ui-icon' : function () {
+					$(this).parents('.message').slideUp(500);
+					$('#link-' + $(this).parents('.message').attr('id')).parent().removeClass('active ui-state-hover');
+					return false;
+				},
+				'div.announcement div p a.ui-icon:first' : function () {
+					$.ajax(
+						{
+							url: '/auth/skip_announcement',
+							data: {},
+							beforeSend : function (xhr) { },
+							complete : function (xhr, status) { },
+							error: function (xhr, status, error) { },
+							success: function (result, status) {
+								gfx.ajaxError(result);
+							}
+						}
+					);
+				},
+				'a.newwindow' : function () {
+					window.open(this.href);
+					return false;
+				},
+				'#features p.link a' : function () {
+					var option = {
+						title: $(this).parents('.feature').find('h2').text(),
+						modal: true,
+						overlay: {
+							backgroundColor: '#000000',
+							opacity: 0.5
+						},
+						'width' : 800,
+						'height' : 500,
+						'show' : null, /* demenstion detection will fail */
+						'position' : ['center', 50],
+						'resizeStart' : function (e, ui) {
+							$(ui.element).find('.ui-dialog-content div').show();
+						},
+						'resizeStop' : function (e, ui) {
+							$(ui.element).find('.ui-dialog-content div').hide();
+						},
+						'resize' : function (e, ui) {
+							gfx.fillContainer(
+								$(ui.element).find('.ui-dialog-content iframe'),
+								$(ui.element).find('.ui-dialog-content')
+							);
+						},
+						'open' : function (e) {
+							gfx.fillContainer(
+								$(e.target).find('iframe'),
+								$(e.target)
+							);
+						},
+						'close' : function (e, ui) {
+							$(e.target).dialog('destroy').remove();
+						}
+					};
+					if ($('#link_manage').length) {
+						option.buttons = {};
+						option.buttons[T.BUTTONS.ADMIN_EDIT_FEATURE] = function () {
+							window.location.href = $('#iframe-feature iframe').attr('src') + '#admin';
+						};
+					}
+					$(document.createElement('div'))
+					.addClass('window').attr(
+						{
+							'id' : 'iframe-feature'
+						}
+					).append(
+						$(document.createElement('iframe')).attr(
+							{
+								src : this.href + '/inframe',
+								frameBorder: '0' /* IE7 */
+							}
+						).css(
+							{
+								border: 'none'
+							}
+						)
+					).append(
+						/* A div covers iframe so that mouseover can be detected when resizing
+						Won't work in IE7 coz its transparent */
+						$(document.createElement('div')).css(
+							{
+								width: '100%',
+								height: '100%',
+								position: 'absolute',
+								top: 0,
+								left: 0,
+								display: 'none'
+							}
+						)
+					).dialog(option);
+					
+					return false;
 				}
 			}
 		},
@@ -549,7 +580,7 @@ var gfx = {
 				).append(
 					$(document.createElement('img')).one(
 						'load',
-						function () {
+						function () { /* won't work on live event so leave it here */
 							$(this).fadeIn(200).next().fadeIn(200, function () {
 								if (this.style.removeAttribute) {
 									/* IE text filter fix */
@@ -641,23 +672,16 @@ var gfx = {
 		.css('display', 'none')
 		.append(
 			$(document.createElement('div'))
-			.addClass('ui-state-' + type + ' ui-corner-all')
+			.addClass('ui-state-' + (type || 'highlight') + ' ui-corner-all')
 			.append(
 				$(document.createElement('p'))
 				.append(
 					$(document.createElement('a'))
 					.addClass('ui-icon ui-icon-circle-close ui-corner-all')
 					.attr('href', '#')
-					.bind(
-						'click',
-						function () {
-							$(this).parents('.message').slideUp(500);
-							return false;
-						}
-					)
 				)/*.append(
 					$(document.createElement('span'))
-					.addClass('ui-icon ui-icon-' + icon)
+					.addClass('ui-icon ui-icon-' + (icon || 'info'))
 				)*/.append(msg)
 			)
 		);
