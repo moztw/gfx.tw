@@ -33,7 +33,7 @@ gfx.page = {
 			'#groups input' : function () {
 				$(this).parent().toggleClass('not-selected', !this.checked);
 				gfx.page.groupChanged = true;
-				$('#editor-save button').attr('disabled', null);
+				gfx.page.blinkBar();
 			},
 			'#groups .group-add-addon a' : function () {
 				gfx.page.currentGroup = this.parentNode.parentNode.id.substr(2);
@@ -75,7 +75,7 @@ gfx.page = {
 					$('span.title-placeholder').removeClass('title-empty').text(this.value);
 					$(this).css('display', null);
 					gfx.page.infoChanged = true;
-					$('#editor-save button').attr('disabled', null);
+					gfx.page.blinkBar();
 				} else {
 					$('#title-name').text(this.value);
 					$('span.title-placeholder').addClass('title-empty').text(T.UI.TITLE_PLACEHOLDER);
@@ -152,7 +152,7 @@ gfx.page = {
 					}
 				);
 				gfx.page.addonChanged = true;
-				$('#editor-save button').attr('disabled', null);
+				gfx.page.blinkBar();
 				return false;
 			}
 		}
@@ -343,7 +343,7 @@ gfx.page = {
 			);
 			gfx.closeDialog('addons');
 			gfx.page.addonChanged = true;
-			$('#editor-save button').attr('disabled', null);
+			gfx.page.blinkBar();
 		};
 		this.dialog['delete'].buttons[T.BUTTONS.DELETE_OK] = function () {
 			window.onbeforeunload = function (e) {
@@ -420,8 +420,6 @@ gfx.page = {
 				}
 			}
 		).scroll();
-		
-		$('#editor-save button').attr('disabled', 'disabled');
 
 		window.onbeforeunload = function (e) {
 			if (
@@ -567,7 +565,7 @@ gfx.page = {
 				revert: 250,
 				update: function (e, ui) {
 					gfx.page.featureChanged = true;
-					$('#editor-save button').attr('disabled', null);
+					gfx.page.blinkBar();
 				}
 			}
 		)
@@ -596,7 +594,7 @@ gfx.page = {
 					b.find('p:first').text(d.description);
 					b.find('.link a').attr('href', './feature/' + d.name);
 					gfx.page.featureChanged = true;
-					$('#editor-save button').attr('disabled', null);
+					gfx.page.blinkBar();
 				},
 				over : function () {
 					$(this).css('opacity', 1);
@@ -613,7 +611,7 @@ gfx.page = {
 				revert: 250,
 				update: function () {
 					gfx.page.groupChanged = true;
-					$('#editor-save button').attr('disabled', null);
+					gfx.page.blinkBar();
 				}
 			}
 		);
@@ -625,7 +623,7 @@ gfx.page = {
 				connectWith: ['#groups .group-addons'],
 				update: function () {
 					gfx.page.addonChanged = true;
-					$('#editor-save button').attr('disabled', null);
+					gfx.page.blinkBar();
 				}
 			}
 		);
@@ -661,7 +659,7 @@ gfx.page = {
 	},
 	'changeAvatar' : function (avatar, url) {
 		gfx.page.avatar = avatar;
-		$('#editor-save button').attr('disabled', null);
+		gfx.page.blinkBar();
 		$('#title-avatar img:only-child').attr('src', url);
 		gfx.closeDialog('avatar');
 	},
@@ -734,7 +732,7 @@ gfx.page = {
 					= gfx.page.featureChanged
 					= gfx.page.groupChanged
 					= gfx.page.addonChanged = null;
-					$('#editor-save button').attr('disabled', 'disabled');
+					gfx.page.blinkBar();
 
 					$('#window_userpage_url').attr('href', './' + result.name);
 					$('.name-placeholder').text(result.name);
@@ -744,21 +742,25 @@ gfx.page = {
 			}
 		);
 	},
-	'showBar' : function () {
-		var el = $('#editor-save').show();
-		$(window).scroll();
-	},
-	'hideBar' : function () {
-		var el = $('#editor-save').hide();
-		if (el.css('position') === 'fixed') {
-			$('#editor-save-placeholder').hide();
-			$(document).scrollTop(
-				$(document).scrollTop()
-				- el.height()
-		//		- parseInt(el.css('margin-top'))
-				- parseInt(el.css('margin-bottom'))
-			);
-		}
+	'blinkBar' : function () {
+		$('#editor-save')
+		.animate(
+			{
+				opacity: 0.3
+			},
+			200
+		).animate(
+			{
+				opacity: 1
+			},
+			200,
+			function () {
+				if (this.style.removeAttribute) {
+					/* IE text filter fix */
+					this.style.removeAttribute('filter');
+				}
+			}
+		);
 	},
 	'Addon' : function (d, add, del) {
 		var o = $(document.createElement('div'))
