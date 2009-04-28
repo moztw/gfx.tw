@@ -674,6 +674,15 @@ span.title-empty {
 #groups .group p.group-add-addon {
 	float: right; 
 	margin: 1px;
+	font-size: 0.82em;
+}
+#groups .group p.group-add-addon a {
+	color: #000000;
+	text-decoration: none;
+}
+
+#groups .group p.group-add-addon span.ui-icon {
+	float: left;
 }
 
 #groups .group .group-addons {

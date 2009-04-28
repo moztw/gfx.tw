@@ -173,7 +173,7 @@ function group($group, $addons) {
 			<div class="group-title<?php print (isset($user_id))?'':' not-selected'; ?>" id="g_<?php print $id ?>">
 				<input type="checkbox" <?php print (isset($user_id))?'checked="checked"':''; ?>/>
 				<h3><?php print htmlspecialchars($title) ?></h3>
-				<p class="group-add-addon"><a href="#" title="在此屬性下新增附加元件">新增元件 <span class="ui-icon ui-icon-circle-plus">&nbsp;</span></a></p>
+				<p class="group-add-addon"><a href="#" title="在此屬性下新增附加元件"><span class="ui-icon ui-icon-circle-plus">&nbsp;</span>新增元件</a></p>
 				<p><?php print htmlspecialchars($description) ?></p>
 			</div>
 			<div class="group-addons">
