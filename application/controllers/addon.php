@@ -192,11 +192,15 @@ class Addon extends Controller {
 		$this->load->database();
 		if ($id) {
 			$this->db->update('addons', $A, array('id' => $id));
+			$A = array_merge(
+				array('id' => $id),
+				$A
+			);
 		} else {
 			$this->db->insert('addons', $A);
 			$A = array_merge(
 				array('id' => $this->db->insert_id()),
-				$data
+				$A
 			);
 		}
 		if ($cleanoutput) {
