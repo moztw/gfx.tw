@@ -89,7 +89,7 @@ optgroup {
 #header #header_top_link a {
 	/* background: has moved to language-*.css */
 	display: block;
-	position: relative; top: -13px;
+	position: relative; top: -9px;
 	text-indent: -10000px;
 }
 
