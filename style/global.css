@@ -540,6 +540,8 @@ span.title-empty {
 
 
 #features .feature .link {
+	display: none; /* temp solution */
+
 	position: absolute;
 	margin: 0; padding: 0;
 	top: 220px; left: 210px;
@@ -549,8 +551,7 @@ span.title-empty {
 }
 
 #features .feature .link a {
-	/* display: block; */
-	display: none; /* temp solution */
+	display: block;
 	width: 61px; height: 25px;
 }
 
