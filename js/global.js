@@ -620,7 +620,7 @@ var gfx = {
 	},
 	'openDialog' : function (id) {
 		//beforeopen is an option we made up so we check it ourselves.
-		if ($('#window_' + id).dialog('option', 'beforeopen')) {
+		if ($('#window_' + id).dialog('option', 'beforeopen').prototype) {
 			if ($('#window_' + id).dialog('option', 'beforeopen')()) {
 				$('#window_' + id).dialog('open');
 			}
