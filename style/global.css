@@ -809,6 +809,7 @@ span.title-empty {
 	float: right;
 	background-color: #ccffcc;
 	-moz-border-radius-bottomleft: 6px;
+	margin-top: -8px;
 }
 
 #featureselection {
