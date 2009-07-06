@@ -725,6 +725,7 @@ span.title-empty {
 }
 .addon {
 	margin: 1px 0;
+	padding: 8px 0;
 	background-color: #ffffff;
 	border: 2px solid #ccffcc;
 	-moz-border-radius: 6px;
