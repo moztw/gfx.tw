@@ -549,7 +549,8 @@ span.title-empty {
 }
 
 #features .feature .link a {
-	display: block;
+	/* display: block; */
+	display: none; /* temp solution */
 	width: 61px; height: 25px;
 }
 
