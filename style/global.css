@@ -265,7 +265,7 @@ p.message-link a:hover {
 
 #footer {
 	margin: 0; padding: 50px 0 10px 0;
-	background: #ffffff url('../images/userpage-block-bg-bottom.jpg') center top no-repeat;
+	background: #ffffff url('../images/userpage-block-bg-bottom.png') center top no-repeat;
 	clear: both;
 }
 
@@ -493,7 +493,7 @@ span.title-empty {
 }
 #features {
 	width: 900px; height: 272px; margin: 0; padding: 10px 0;
-	background: transparent url('../images/userpage-block-bg.jpg') center top repeat-y;
+	background: transparent url('../images/userpage-block-bg.png') center top repeat-y;
 }
 #features .feature {
 	float: left; width: 300px; height: 272px;
@@ -558,7 +558,7 @@ span.title-empty {
 #middleblock {
 	overflow: auto;
 	clear: both;
-	background: transparent url('../images/userpage-block-bg.jpg') left top repeat-y;
+	background: transparent url('../images/userpage-block-bg.png') left top repeat-y;
 	width: 860px;
 }
 
@@ -855,7 +855,7 @@ span.title-empty {
 }
 
 .pageblock {
-	background: transparent url('../images/userpage-block-bg.jpg') center top repeat-y;
+	background: transparent url('../images/userpage-block-bg.png') center top repeat-y;
 	margin: 0; padding: 0 0 1.5em 0;
 }
 .pageblock h1 {
