@@ -134,8 +134,18 @@ class Editor extends Controller {
 		$this->session->set_userdata(array('name' => $this->input->post('name')));
 		$data = array();
 		if ($this->input->post('email') !== false) $data['email'] = $this->input->post('email');
-		if ($this->input->post('web') !== false) $data['web'] = $this->input->post('web');
-		if ($this->input->post('blog') !== false) $data['blog'] = $this->input->post('blog');
+		if (
+			$this->input->post('web') !== false &&
+			strtolower(substr(trim($this->input->post('web')), 0, 11)) !== 'javascript:'
+		) {
+			$data['web'] = $this->input->post('web');
+		}
+		if (
+			$this->input->post('blog') !== false &&
+			strtolower(substr(trim($this->input->post('blog')), 0, 11)) !== 'javascript:'
+		) {
+			$data['blog'] = $this->input->post('blog');
+		}
 		if ($this->input->post('bio') !== false) $data['bio'] = $this->input->post('bio');
 		if ($this->input->post('forum') !== false
 			&& $this->input->post('forum') !== '(keep-the-forum-username)'
