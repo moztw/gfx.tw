@@ -300,11 +300,17 @@ gfx.page = {
 			$.each(
 				['name', 'email', 'web', 'blog', 'forum', 'bio'],
 				function () {
-					d[this] = $('#info_' + this).val();
+					d[this] = $.trim($('#info_' + this).val());
 				}
 			);
 			//check for errors
 			if (!gfx.page.validate.name(d.name)) {
+				return;
+			}
+			if (!gfx.page.validate.url(d.web)) {
+				return;
+			}
+			if (!gfx.page.validate.url(d.blog)) {
 				return;
 			}
 			//ajax send
@@ -655,6 +661,17 @@ gfx.page = {
 				return false;
 			}
 			return true;
+		},
+		'url' : function (url) {
+			url = $.trim(url);
+			if (
+				($.inArray(url.substr(0,url.indexOf(':')).toLowerCase(), ['http', 'https', 'telnet', 'irc', 'ftp', 'nntp']) === -1) &&
+				url !== ''
+			) {
+				gfx.alert('EDITOR_URL_BAD');
+				return false;
+			}
+			return true;
 		}
 	},
 	'changeAvatar' : function (avatar, url) {
@@ -743,23 +760,29 @@ gfx.page = {
 		);
 	},
 	'blinkBar' : function () {
-		$('#editor-save')
-		.animate(
-			{
-				opacity: 0.3
-			},
-			200
-		).animate(
-			{
-				opacity: 1
-			},
-			200,
+		gfx.page.blinkTimer && clearTimeout(gfx.page.blinkTimer);
+		gfx.page.blinkTimer = setTimeout(
 			function () {
-				if (this.style.removeAttribute) {
-					/* IE text filter fix */
-					this.style.removeAttribute('filter');
-				}
-			}
+				$('#editor-save')
+				.animate(
+					{
+						opacity: 0.3
+					},
+					200
+				).animate(
+					{
+						opacity: 1
+					},
+					200,
+					function () {
+						if (this.style.removeAttribute) {
+							/* IE text filter fix */
+							this.style.removeAttribute('filter');
+						}
+					}
+				);
+			},
+			2000
 		);
 	},
 	'Addon' : function (d, add, del) {

@@ -25,6 +25,7 @@ var T = {
 		EDITOR_NAME_EMPTY: '請輸入網址。',
 		EDITOR_NAME_BAD: '無法使用此網址作為您的推薦頁，請換一個。',
 		EDITOR_NAME_LENGTH: '網址太長了喔！',
+		EDITOR_URL_BAD: '不能接受此網址作為部落格/網頁網址。',
 		EDITOR_AVATAR_ERROR: '無法接受這個個人圖示網址。',
 		EDITOR_FORUM_CODE: '討論區認證碼認證失敗。',
 		EDITOR_FEATURE_COUNT: '請選三個你推薦別人使用 Firefox 的理由，三個就對了！',

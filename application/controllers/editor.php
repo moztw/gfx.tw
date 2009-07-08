@@ -136,13 +136,25 @@ class Editor extends Controller {
 		if ($this->input->post('email') !== false) $data['email'] = $this->input->post('email');
 		if (
 			$this->input->post('web') !== false &&
-			strtolower(substr(trim($this->input->post('web')), 0, 11)) !== 'javascript:'
+			(
+				in_array(
+					strtolower(substr($this->input->post('web'), 0, strpos($this->input->post('web') ,':'))),
+					array('http', 'https', 'telnet', 'irc', 'ftp', 'nntp')
+				) ||
+				$this->input->post('web') === ''
+			)
 		) {
 			$data['web'] = $this->input->post('web');
 		}
 		if (
 			$this->input->post('blog') !== false &&
-			strtolower(substr(trim($this->input->post('blog')), 0, 11)) !== 'javascript:'
+			(
+				in_array(
+					strtolower(substr($this->input->post('blog'), 0, strpos($this->input->post('blog') ,':'))),
+					array('http', 'https', 'telnet', 'irc', 'ftp', 'nntp')
+				) ||
+				$this->input->post('blog') === ''
+			)
 		) {
 			$data['blog'] = $this->input->post('blog');
 		}

@@ -25,6 +25,7 @@ var T = {
 		EDITOR_NAME_EMPTY: 'You have to provide an URL.',
 		EDITOR_NAME_BAD: 'We cannot accept your gfx URL. Please choose another one.',
 		EDITOR_NAME_LENGTH: 'The URL is too long.',
+		EDITOR_URL_BAD: 'Blog/Web URL is not acceptable.',
 		EDITOR_AVATAR_ERROR: 'This is not a vaild avatar URL.',
 		EDITOR_FORUM_CODE: 'Forum ID authorization failed.',
 		EDITOR_FEATURE_COUNT: 'Please select three features, three!',
