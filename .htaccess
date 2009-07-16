@@ -13,4 +13,4 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^userstickers/$ http://stage.gfx.tw/sticker [R,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^(.*)$ index.php/$1 [L]
+	RewriteRule ^(.*)$ index.php [L]
