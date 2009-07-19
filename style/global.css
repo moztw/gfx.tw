@@ -533,6 +533,9 @@ span.title-empty {
 #features #privicy {
 	background: transparent url('../images/feature-privicy.gif') center top no-repeat;
 }
+#features #profile-manager {
+	background: transparent url('../images/feature-profile-manager.gif') center top no-repeat;
+}
 #features #rss {
 	background: transparent url('../images/feature-rss.gif') center top no-repeat;
 }
