@@ -512,6 +512,9 @@ span.title-empty {
 #features #abar {
 	background: transparent url('../images/feature-abar.gif') center top no-repeat;
 }
+#features #color-management {
+	background: transparent url('../images/feature-color-management.gif') center top no-repeat;
+}
 #features #leading {
 	background: transparent url('../images/feature-leading.gif') center top no-repeat;
 }
@@ -536,11 +539,17 @@ span.title-empty {
 #features #search-data {
 	background: transparent url('../images/feature-search-data.gif') center top no-repeat;
 }
+#features #security {
+	background: transparent url('../images/feature-security.gif') center top no-repeat;
+}
 #features #standards {
 	background: transparent url('../images/feature-standards.gif') center top no-repeat;
 }
 #features #textzoom {
 	background: transparent url('../images/feature-textzoom.gif') center top no-repeat;
+}
+#features #tracemonkey {
+	background: transparent url('../images/feature-tracemonkey.gif') center top no-repeat;
 }
 
 #features .ui-sortable-placeholder {
