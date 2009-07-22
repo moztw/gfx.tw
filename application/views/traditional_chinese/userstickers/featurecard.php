@@ -21,61 +21,69 @@ html {
 	overflow: auto;
 }
 body {
-	width: 200px; border: none;
+	border: none;
+	margin: 0; padding: 0;
+}
+#box {
+	width: 200px; height: 250px; 
 	margin: 0 auto; padding: 0;
-	background-color: #ffffff; color: #000000;
+	background: #ffffff url('<?php print site_url('/stickerimages/featurecard-bg.png'); ?>') top center no-repeat; color: #000000;
 	font-size: 16px;
 	overflow: auto;
+	position: relative;
+}
+.hide {
+	text-indent: -10000px;
 }
 h1, p, a, ol, li {
 	font: 1em sans-serif;
 	line-height: 1.2em;
 	margin: 0; padding: 0;
 }
-p#logo a {
-	display: block;
-	background: transparent url('http://stage.gfx.tw/stickerimages/logo-wordmark-195x100.png') center center no-repeat;
-	height: 80px; width: 198px; margin: 0 1px;
-	text-indent: -10000px;
+ol {
+	list-style: none;
+	position: absolute;
+	top: 75px; left: 52px;
+	width: 148px; height: 88px;
 }
 li {
+	list-style: none;
 	list-style-position: inside;
-	padding: 0 0 0 2.2em;
-}
-h1 {
-	text-align: center;
-	font-weight: bold;
-	margin: 0.2em 0;
-}
-p#download a {
 	display: block;
-	text-align: center;
-	border: 2px solid #ccffcc;
-	background-color: #ccffcc;
-	color: #000000;
-	font-weight: bold;
-	text-decoration: none;
-	outline-width: 0;
-	margin: 0.5em 2em;
+	height: 22px; overflow: hidden;
 }
-p#download a:hover {
-	border: 2px outset #cccccc;
+#download {
+	display: block;
+	position: absolute;
+	left: 23px; top: 172px;
+	width: 154px; height: 56px;
+	color: #000000; text-decoration: none;
 }
-p#download a:active {
-	border: 2px inset #cccccc;
+#name {
+	display: block;
+	position: absolute;
+	left: 4px; top: 8px; height: 24px;
+	font-weight: bold; font-size: 1.2em;
+}
+#tell {
+	display: block;
+	position: absolute;
+	left: 4px; top: 32px;
+	font-size: 0.82em;
 }
 
 </style>
 <body>
-<h1><?php print htmlspecialchars($title) ?>推薦你使用</h1>
-<p id="logo"><a href="<?php print site_url($name); ?>" onclick="window.open(this.href); return false;">Mozilla Firefox</a></p>
-<ol>
+<div id="box">
+	<p class="hide">上網就用</p>
+	<h1 class="hide">Firefox</h1>
+	<ol>
 <?php
 
 function feature($feature) {
 	extract($feature);
 ?>
-	<li><?php print htmlspecialchars($title) ?></li>
+		<li><?php print htmlspecialchars($title) ?></li>
 
 <?
 }
@@ -84,8 +92,14 @@ foreach ($features as $feature) {
 	feature($feature);
 }
 ?>
-	<li>而且是免費的！</li>
-</ol>
-<p id="download"><a href="<?php print site_url($name); ?>" onclick="window.open(this.href); return false;">立即下載</a></p>
+		<li>而且是免費的！</li>
+	</ol>
+	<p>
+		<a id="download" href="<?php print site_url($name); ?>" onclick="window.open(this.href); return false;">
+			<span id="name"><?php print htmlspecialchars($title) ?></span>
+			<span id="tell">告訴你為什麼</span>
+		</a>
+	</p>
+</div>
 </body>
 </html>

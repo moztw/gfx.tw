@@ -17,8 +17,8 @@ $dir = site_url('/userstickers/' . dechex(intval($this->session->userdata('id'))
 			</div>
 			<div class="col">
 				<h2>小貼紙</h2>
-				<p><a href="<?php print site_url($name); ?>" title="連到我的抓火狐推薦頁！"><img src="<?php print site_url('stickerimages/logo-wordmark-195x100.png'); ?>" alt="Mozilla Firefox"/></a></p>
-				<textarea readonly="readonly">&lt;a href="<?php print site_url($name); ?>" title="連到我的抓火狐推薦頁！"&gt;&lt;img src="<?php print site_url('stickerimages/logo-wordmark-195x100.png'); ?>" alt="Mozilla Firefox"/&gt;&lt;/a&gt;</textarea>
+				<p><a href="<?php print site_url($name); ?>" title="連到我的抓火狐推薦頁！"><img style="margin: 5px auto; width: 200px; height: 100px" src="<?php print $dir ?>/smallsticker.png" alt="連到我的抓火狐推薦頁！" /></a></p>
+				<textarea readonly="readonly">&lt;a href="<?php print site_url($name); ?>" title="連到我的抓火狐推薦頁！"&gt;&lt;img src="<?php print $dir ?>/smallsticker.png" alt="連到我的抓火狐推薦頁！"/&gt;&lt;/a&gt;</textarea>
 <?php
 function featuresticker($feature, $user_name) {
 	extract($feature);

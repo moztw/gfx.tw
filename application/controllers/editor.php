@@ -278,13 +278,13 @@ class Editor extends Controller {
 			$card = imagecreatefromgd2(
 				'./images/' . $this->config->item('language') . '/featurecard.gd2'
 			);
-			$D = imagettfbbox(14, 0, $this->config->item('gfx_sticker_font'), $title);
+			/* $D = imagettfbbox(14, 0, $this->config->item('gfx_sticker_font'), $title);*/
 			imagettftext(
 				$card,
 				14,
 				0,
-				(200-($D[2]-$D[0]))/2,
-				18,
+				30, /*(200-($D[2]-$D[0]))/2,*/ /* centered */
+				197,
 				imagecolorallocate($card, 0, 0, 0),
 				$this->config->item('gfx_sticker_font'),
 				$title
@@ -293,25 +293,47 @@ class Editor extends Controller {
 				imagecopy(
 					$card,
 					imagecreatefromgd2('./stickerimages/features/' . $F[0]['name'] . '.gd2'),
-					52, 125,
+					55, 75,
 					0, 0, 150, 20);
 			}
 			if (file_exists('./stickerimages/features/' . $F[1]['name'] . '.gd2')) {
 				imagecopy(
 					$card,
 					imagecreatefromgd2('./stickerimages/features/' . $F[1]['name'] . '.gd2'),
-					52, 144,
+					55, 97,
 					0, 0, 150, 20);
 			}
 			if (file_exists('./stickerimages/features/' . $F[2]['name'] . '.gd2')) {
 				imagecopy(
 					$card,
 					imagecreatefromgd2('./stickerimages/features/' . $F[2]['name'] . '.gd2'),
-					52, 163,
+					55, 119,
 					0, 0, 150, 20);
 			}
+			imagealphablending($card, true);
+			imagesavealpha($card, true);
 			imagepng($card, $d . 'featurecard.png');
 			imagedestroy($card);
+
+			//smallsticker.png
+			$sticker = imagecreatefromgd2(
+				'./images/' . $this->config->item('language') . '/smallsticker.gd2'
+			);
+			/* $D = imagettfbbox(14, 0, $this->config->item('gfx_sticker_font'), $title);*/
+			imagettftext(
+				$sticker,
+				14,
+				0,
+				66, /*(200-($D[2]-$D[0]))/2,*/ /* centered */
+				70,
+				imagecolorallocate($sticker, 0, 0, 0),
+				$this->config->item('gfx_sticker_font'),
+				$title
+			);
+			imagealphablending($sticker, true);
+			imagesavealpha($sticker, true);
+			imagepng($sticker, $d . 'smallsticker.png');
+			imagedestroy($sticker);
 		}
 
 		header('Content-Type: text/javascript');
