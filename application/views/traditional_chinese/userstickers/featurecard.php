@@ -62,14 +62,14 @@ li {
 #name {
 	display: block;
 	position: absolute;
-	left: 4px; top: 8px; height: 24px;
-	font-weight: bold; font-size: 1.2em;
+	left: 6px; top: 10px; height: 22px;
+	font-weight: bold; font-size: 1.15em;
 }
 #tell {
 	display: block;
 	position: absolute;
-	left: 4px; top: 32px;
-	font-size: 0.82em;
+	left: 6px; top: 32px;
+	font-size: 0.85em;
 }
 
 </style>
