@@ -57,7 +57,7 @@ foreach ($features as $feature) {
 		<li><span class="item">部落格</span> <a class="blog value newwindow" href="<?php print htmlspecialchars($blog); ?>"  title="<?php print htmlspecialchars($blog); ?>"><?php print htmlspecialchars($blog); ?></a></li>
 <?php } ?>
 <?php if ($forum_username)  { ?>
-		<li><span class="item">MozTW 討論區 ID</span> <a class="forum-username value newwindow" href="http://forum.moztw.org/profile.php?mode=viewprofile&amp;u=<?php print htmlspecialchars($forum_id) ?>"><?php print htmlspecialchars($forum_username); ?></a></li>
+		<li><span class="item">MozTW 討論區 ID</span> <a class="forum-username value newwindow" href="http://forum.moztw.org/memberlist.php?mode=viewprofile&amp;u=<?php print htmlspecialchars($forum_id) ?>"><?php print htmlspecialchars($forum_username); ?></a></li>
 <?php } ?>
 <?php if ($bio)  { ?>
 		<li><span class="item">一行自介</span> <span class="bio value"><?php print htmlspecialchars($bio); ?></span></li>
