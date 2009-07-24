@@ -135,15 +135,22 @@ class Feature extends Controller {
 	}
 	function _update_feature_images($title, $name) {
 		$this->load->config('gfx');
-		//$D = imagettfbbox(12, 0, $this->config->item('gfx_sticker_font'), $title);
+
+		/* title gd2 cache */
 		$text = imagecreatetruecolor(150, 20);
 		imagesavealpha($text, true);
 		imagefill($text, 0, 0, imagecolorallocatealpha($text, 255, 255, 255, 127));
 		imagettftext($text, 12, 0, 0, 16, imagecolorallocate($text, 0, 0, 0), $this->config->item('gfx_sticker_font'), $title);
 		imagegd2($text, './stickerimages/features/' . $name . '.gd2');
 		//imagepng($text, './stickerimages/features/' . $name . '-text.png');
+
+		/* singlefeature sticker */
 		$bg = imagecreatefromgd2('./images/' . $this->config->item('language') . '/singlefeature.gd2');
-		imagecopy($bg, $text, 40, 6, 0 , 0, 150, 20);
+		imagealphablending($bg, true);
+		imagesavealpha($bg, true);
+
+		$D = imagettfbbox(12, 0, $this->config->item('gfx_sticker_font'), $title);
+		imagecopy($bg, $text, (150-($D[2]-$D[0]))/2, 7, 0, 0, 150, 20);
 		imagepng($bg, './stickerimages/features/' . $name . '.png');
 		imagedestroy($text);
 		imagedestroy($bg);
