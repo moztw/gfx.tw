@@ -322,9 +322,9 @@ class Editor extends Controller {
 			/* $D = imagettfbbox(14, 0, $this->config->item('gfx_sticker_font'), $title);*/
 			imagettftext(
 				$sticker,
-				14,
+				13,
 				0,
-				66, /*(200-($D[2]-$D[0]))/2,*/ /* centered */
+				67, /*(200-($D[2]-$D[0]))/2,*/ /* centered */
 				70,
 				imagecolorallocate($sticker, 0, 0, 0),
 				$this->config->item('gfx_sticker_font'),
