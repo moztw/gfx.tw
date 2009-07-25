@@ -3,7 +3,7 @@
 $this->load->helper('form');
 
 ?>
-	<script type="text/javascript" src="<?php print site_url('js/admin.editor.js'); ?>" charset="UTF-8"></script>
+	<script type="text/javascript" src="<?php print site_url('js/admin.editor.js' . $this->config->item('gfx_suffix')); ?>" charset="UTF-8"></script>
 <div class="window with-dialog" id="window_admin" title="網站管理">
 	<ul class="tabs">
 		<li class="ui-corner-top ui-state-default">使用者帳號</li>

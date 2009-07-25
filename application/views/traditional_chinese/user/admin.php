@@ -3,7 +3,7 @@
 $this->load->helper('form');
 
 ?>
-	<script type="text/javascript" src="<?php print site_url('js/admin.user.js'); ?>" charset="UTF-8"></script>
+	<script type="text/javascript" src="<?php print site_url('js/admin.user.js' . $this->config->item('gfx_suffix')); ?>" charset="UTF-8"></script>
 <div class="window" id="window_admin" title="管理使用者 ID#<?php print $id; ?>">
 	<form id="admin_form" action="#" method="post">
 		<p><label for="admin_login">Open ID 網址：</label> <?php print form_input(array('id' =>'admin_login', 'name' => 'login', 'value' => $login)); ?>

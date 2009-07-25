@@ -8,6 +8,10 @@ $config['gfx_site_wide_message'] = array(
 		'message' => '這是個預演(staging)站！請在試玩之後，提供畫面與程式操作互動的意見，謝謝！'
 	)
 );
+
+/* suffix of css/js files */
+$config['gfx_suffix'] = '?20090725';
+
 /* If given OpenID does not exist in the database,
 redirect user to a about/closetest page instead of create entry for her/him */
 $config['gfx_require_pre_authorization'] = false;
