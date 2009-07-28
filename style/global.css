@@ -108,6 +108,9 @@ optgroup {
 	float: left; display: block;
 	margin: 0 2px; padding: 0;
 	list-style: none;
+	-moz-box-shadow: 0 -1px 1px #333333;
+	-webkit-box-shadow: 0 -1px 1px #333333;
+	box-shadow: 0 -1px 1px #333333;
 }
 
 #header ul li.active {
@@ -400,13 +403,13 @@ span.title-empty {
 	width: 65px;
 }
 #titleblock #title-name, #titleblock #title-name-edit input {
-	position: absolute; left: 343px;
+	position: absolute; left: 344px;
 	height: 44px; width: 260px;
 	font-size: 36px; line-height: 44px; font-weight: bold;
 	white-space: nowrap; overflow: hidden;
 }
 #titleblock #title-name {
-	top: 48px;
+	top: 50px;
 }
 
 #titleblock #title-name.bright {
@@ -423,7 +426,7 @@ span.title-empty {
 }
 #titleblock #title-1 {
 	position: absolute;
-	top: 96px; left: 343px;
+	top: 96px; left: 344px;
 	height: 24px; width: 230px;
 	font-size: 18px; line-height: 24px;
 	white-space: nowrap;
@@ -457,12 +460,13 @@ span.title-empty {
 	position: absolute;
 	top: 15px; left: 65px;
 	height: 26px; width: 148px;
-	font-size: 26px; line-height: 30px;
+	font-size: 25px; line-height: 33px;
 }
 
 #titleblock .download .link a {
-	color: #000099;
+	color: #0000BB;
 	font-weight: bold;
+	text-decoration: none;
 }
 
 #titleblock .download .link a:hover {
@@ -562,16 +566,19 @@ span.title-empty {
 
 #features .feature h2 {
 	position: absolute;
-	margin: 0; padding: 0;
-	top: 30px; left: 100px;
-	font-size: 35px; line-height: 40px;
+	margin: 0;
+	padding: 0;
+	top: 35px;
+	left: 100px;
+	font-size: 35px; 
+	line-height: 40px;
 }
 
 #features .feature p {
 	position: absolute;
 	margin: 0; padding: 0;
-	top: 100px; left: 30px;
-	width: 240px; height: 125px;
+	top: 105px; left: 40px;
+	width: 230px; height: 125px;
 }
 
 
@@ -622,7 +629,9 @@ span.title-empty {
 #userinfo .item {
 	display: block;
 	font-weight: bold;
-	font-size: 0.92em; color: #666666;
+	font-size: 0.92em;
+	color: #666666;
+	line-height: 150%;
 }
 
 #userinfo .value {
@@ -664,7 +673,7 @@ span.title-empty {
 }
 
 #groups-title p, #groups-tail p {
-	margin: 1em;
+	margin: 0.5em 0.5em 0 0.5em;
 }
 
 #groups-title {
@@ -684,6 +693,7 @@ span.title-empty {
 	border: 2px solid #cccccc;
 	background-color: #ffffff;
 	-moz-border-radius: 6px;
+	margin: 0 1em 0 1em;
 }
 
 #groups .not-selected {
@@ -692,6 +702,7 @@ span.title-empty {
 
 #groups .group .group-title {
 	background-color: #eeeeee;
+	padding: 3px;
 }
 
 #groups .group .group-title input {
@@ -728,6 +739,7 @@ span.title-empty {
 	min-height: 1em;
 	height: 100%;
 	overflow: auto;
+	background-color:#EEEEEE;
 }
 
 #groups-install {
@@ -807,6 +819,7 @@ span.title-empty {
 
 .detailed .addon span {
 	padding-left: 50px;
+	margin-bottom: 5px;
 }
 
 .addon .add-addon {
@@ -838,6 +851,7 @@ span.title-empty {
 .detailed .addon .desc {
 	display: block;
 	padding-left: 50px;
+	line-height: 125%;
 }
 
 .addon .install {
