@@ -46,14 +46,14 @@ $avatar = avatarURL($avatar, $email);
 		</div>
 		<div class="avatar_selection">
 			<div id="avatar_glavatar" class="avatar_icon">
-				<img src="<? print 'http://www.gravatar.com/avatar/' . md5($email) . '?s=60&amp;r=g&amp;d=' . urlencode(site_url('images/avatar-default.png')); ?>" alt="Gravatar" />
+				<img src="<? print 'http://www.gravatar.com/avatar/' . md5($email) . '?s=60&amp;r=g&amp;d=' . urlencode(site_url('images/avatar-default.gif')); ?>" alt="Gravatar" />
 			</div>
 			<p><a href="http://www.gravatar.com/" class="newwindow">Gravatar</a>上的圖示</p>
 			<p>(<a href="#" id="change-email">修改 E-mail</a>)</p>
 		</div>
 		<div class="avatar_selection">
 			<div id="avatar_default" class="avatar_icon">
-				<img src="./images/avatar-default.png" alt="預設圖示" />
+				<img src="./images/avatar-default.gif" alt="預設圖示" />
 			</div>
 			<p>預設圖示</p>
 		</div>
