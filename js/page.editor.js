@@ -28,7 +28,7 @@ gfx.page = {
 				gfx.page.changeAvatar('(gravatar)', $(this).children()[0].src);
 			},
 			'#avatar_default' : function () {
-				gfx.page.changeAvatar('(default)', './images/avatar-default.png');
+				gfx.page.changeAvatar('(default)', './images/avatar-default.gif');
 			},
 			'#groups input' : function () {
 				$(this).parent().toggleClass('not-selected', !this.checked);
