@@ -160,18 +160,18 @@ gfx.page = {
 	'dialog' : {
 		'avatar' : {
 			'width' : 500,
-			'height' : 200,
+			'height' : 240,
 			'position' : ['center', 150]
 		},
 		'progress' : {
 			'width' : 244,
-			'height' : 40,
+			'height' : 75,
 			'buttons' : {},
 			'position' : [100, 100]
 		},
 		'almostdone' : {
 			'width' : 350,
-			'height' : 250,
+			'height' : 290,
 			'buttons' : {},
 			'position' : ['center', 150],
 			'open' : function () {
@@ -183,12 +183,12 @@ gfx.page = {
 		},
 		'editcomplete' : {
 			'width' : 400,
-			'height' : 200,
+			'height' : 240,
 			'position' : ['center', 200]
 		},
 		'info' : {
 			'width' : 600,
-			'height': 400,
+			'height': 440,
 			'buttons' : {},
 			'position' : ['center', 120],
 			'open' : function () {
@@ -215,7 +215,7 @@ gfx.page = {
 		},
 		'addons' : {
 			'width' : 800,
-			'height': 500,
+			'height': 540,
 			'buttons' : {},
 			'position' : ['center', 50],
 			'open' : function () {
@@ -265,7 +265,7 @@ gfx.page = {
 		},
 		'delete' : {
 			'width' : 400,
-			'height': 350,
+			'height': 390,
 			'buttons' : {},
 			'position' : ['center', 200],
 			'open' : function () {

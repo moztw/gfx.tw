@@ -421,24 +421,24 @@ var gfx = {
 		'dialog' : {
 			'login' : {
 				'width' : 500,
-				'height' : 420,
+				'height' : 460,
 				'position' : ['center', 100]
 			},
 			'download' : {
 				'width' : 500,
-				'height' : 320,
+				'height' : 360,
 				'position' : ['center', 130],
 				'buttons' : { }
 			},
 			'extinstall' : {
 				'width' : 300,
-				'height' : 250,
+				'height' : 290,
 				'position' : ['right', 'top'],
 				'buttons' : { }
 			},
 			'progress' : {
 				'width' : 244,
-				'height' : 40,
+				'height' : 75,
 				'buttons' : {},
 				'position' : [100, 100]
 			}
