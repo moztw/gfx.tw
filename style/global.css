@@ -12,6 +12,8 @@ html {
 body {
 	margin: 0 auto; padding: 0;
 	text-align: center;
+    font-size: 15px;
+    line-height:1.2em;
 }
 
 html > body {
@@ -755,7 +757,8 @@ span.title-empty {
 	float: right;
 	font-size: 1.2em;
 	font-weight: bold;
-	margin-top: -0.4em;
+	margin-top: -0.5em;
+    height: 1.5em;
 }
 
 
