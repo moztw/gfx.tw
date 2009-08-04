@@ -13,7 +13,10 @@ $dir = site_url('/userstickers/' . dechex(intval($this->session->userdata('id'))
 			<div class="col">
 				<h2>圖片宣傳小卡</h2>
 				<p><a href="<?php print site_url($name); ?>" title="連到我的抓火狐推薦頁！"><img style="margin: 5px auto; width: 200px; height: 250px" src="<?php print $dir ?>/featurecard.png" alt="連到我的抓火狐推薦頁！" /></a></p>
+				<p>HTML:</p>
 				<textarea readonly="readonly">&lt;a href="<?php print site_url($name); ?>" title="連到我的抓火狐推薦頁！"&gt;&lt;img style="margin: 5px auto; width: 200px; height: 250px" src="<?php print $dir; ?>/featurecard.png" alt="連到我的抓火狐推薦頁！"/&gt;&lt;/a&gt;</textarea>
+				<p>BBCode:</p>
+				<textarea readonly="readonly">[url=<?php print site_url($name); ?>][img]<?php print $dir ?>/featurecard.png[/img][/url]</textarea>
 			</div>
 			<div class="col">
 				<h2>小貼紙</h2>
@@ -33,8 +36,6 @@ foreach ($features as $feature) {
 ?>
 			</div>
 			<div class="desc">
-				<h2>使用方法</h2>
-				<p>請將下列 HTML 碼複製貼上到您部落格的側邊攔喔！</p>
-				<p>Blah...</p>
+				<hr style="clear: both" />
 			</div>
 	</div>
