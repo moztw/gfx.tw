@@ -210,7 +210,7 @@ class Auth extends Controller {
 			$this->email->to($this->input->post('email'));
 			$this->email->subject($this->lang->line('gfx_email_subject_forgetopenid'));
 			$data = array(
-				'ip' => $_SERVER['REMOTE_ADDR'],
+				'ip' => ($_SERVER['REMOTE_ADDR'] === '192.168.255.254')?$_SERVER['HTTP_X_FORWARDED_FOR']:$_SERVER['REMOTE_ADDR'],
 				'logins' => array(
 				)
 			);
