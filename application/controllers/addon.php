@@ -70,7 +70,7 @@ class Addon extends Controller {
 		$addons = $this->db->query('SELECT t1.id, t1.title, t1.amo_id, t1.amo_version, t1.url, t1.icon_url, t1.description, fetched '
 			. 'FROM addons t1, u2a t2 '
 			. 'WHERE t2.group_id =  ' . $this->db->escape($this->input->post('g')) . ' AND t1.id = t2.addon_id '
-			. 'GROUP BY t2.addon_id ORDER BY COUNT(t2.id) DESC, t1.title ASC;');
+			. 'GROUP BY t2.addon_id ORDER BY COUNT(t2.id) DESC, t1.title ASC LIMIT 15;');
 		$A = array();
 		foreach ($addons->result_array() as $addon) {
 			if ($addon['amo_id']) $addon['url'] = $this->config->item('gfx_amo_url') . $addon['amo_id'];
