@@ -339,6 +339,12 @@ var gfx = {
 						}
 					);
 				},
+				'#myid' : function () {
+					try {
+						pageTracker._trackEvent("External", "MyID.tw");
+					} catch (e) {
+					}
+				},
 				'a.newwindow' : function () {
 					window.open(this.href);
 					return false;

@@ -87,7 +87,7 @@ if (isset($id)) {
 					<option value="[帳號].wordpress.com">WordPress.com</option>
 				</optgroup>
 			</select></p>
-			<p>若您真的沒有任何 OpenID，或是不願意讓敝站帳號與之連結，您可以到 <a href="http://myid.tw/" class="newwindow">myID.tw</a> 申請一個屬於您的 OpenID。</p>
+			<p>若您真的沒有任何 OpenID，或是不願意讓敝站帳號與之連結，您可以到 <a href="http://myid.tw/" id="myid" class="newwindow">myID.tw</a> 申請一個屬於您的 OpenID。</p>
 			<p><strong>注意：</strong>您必須要分別登出服務商網站與抓火狐網站才能完全清除您的認證。</p>
 			<p><a href="/about/faq#forgetopenid">忘記使用過的 OpenID 嗎？</a></p>
 		</form>
