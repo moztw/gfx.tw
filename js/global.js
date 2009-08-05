@@ -274,7 +274,35 @@ var gfx = {
 					.parent()
 					.siblings('.tab-content').eq($(this).prevAll().length).show()
 					.siblings('.tab-content').hide();
-				}
+				},
+				'#push-plurk' : function () {
+					window.open(
+						'http://plurk.com/?status='
+						+ encodeURIComponent(T.UI.PUSH.replace('NAME', $('#title-name').text()) + this.href)
+					);
+					return false;
+				},
+				'#push-twitter' : function () {
+					window.open(
+						'http://twitter.com/home/?status='
+						+ encodeURIComponent(T.UI.PUSH.replace('NAME', $('#title-name').text()) + this.href)
+					);
+					return false;
+				},
+				'#push-plurk-mine' : function () {
+					window.open(
+						'http://plurk.com/?status='
+						+ encodeURIComponent(T.UI.PUSH_MINE.replace('NAME', $('#title-name').text()) + this.href)
+					);
+					return false;
+				},
+				'#push-twitter-mine' : function () {
+					window.open(
+						'http://twitter.com/home/?status='
+						+ encodeURIComponent(T.UI.PUSH_MINE.replace('NAME', $('#title-name').text()) + this.href)
+					);
+					return false;
+                                }
 			},
 			'change' : {
 				'#openid_sp' : function () {

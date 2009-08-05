@@ -15,8 +15,9 @@ $avatar = avatarURL($avatar, $email);
 	<div id="window_editcomplete" class="window" title="完成！">
 		<p>感謝您向大家推薦 Mozilla Firefox，接下來...</p>
 		<ul>
-			<li>看看<a id="window_userpage_url" href="#">您的個人推薦網頁</a></li>
+			<li>看看<a class="userpage-url" href="#">您的個人推薦網頁</a></li>
 			<li>領取<a href="./sticker">宣傳貼紙</a>，在部落格、論壇宣傳！</li>
+			 <li>噗到<a href="#" class="userpage-url" id="push-plurk-mine"><img src="http://www.plurk.com/favicon.ico" alt=" "/>噗浪</a>、推到<a href="#" class="userpage-url" id="push-twitter-mine"><img src="http://twitter.com/favicon.ico" alt=" " />推特</a>！</li>
 		</ul>
 	</div>
 	<div id="titleblock">

@@ -767,7 +767,14 @@ gfx.page = {
 					= gfx.page.addonChanged = null;
 					gfx.page.blinkBar();
 
-					$('#window_userpage_url').attr('href', './' + result.name);
+					$('.userpage-url').attr(
+						'href',
+						document.location.protocol
+						+ '//'
+						+ document.location.hostname
+						+ '/'
+						+ result.name
+					);
 					$('.name-placeholder').text(result.name);
 					gfx.closeDialog('almostdone');
 					gfx.openDialog('editcomplete');
