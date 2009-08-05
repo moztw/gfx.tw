@@ -339,6 +339,18 @@ var gfx = {
 						}
 					);
 				},
+				'#link-mozilla' : function () {
+					try {
+						pageTracker._trackEvent("External", "mozilla");
+					} catch (e) {
+					}
+				},
+				'#link-moztw' : function () {
+					try {
+						pageTracker._trackEvent("External", "moztw");
+					} catch (e) {
+					}
+				},
 				'#myid' : function () {
 					try {
 						pageTracker._trackEvent("External", "MyID.tw");
