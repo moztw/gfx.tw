@@ -473,7 +473,10 @@ gfx.page = {
 				// Event Handler Settings
 				'file_dialog_complete_handler' : function (n, q) {
 					if (n === 1 && q === 1) {
-						this.setButtonDisabled(true);
+						try {
+							this.setButtonDisabled(true);
+						} catch (e) {
+						}
 						window.setTimeout(
 							function () {
 								if (gfx.page.swfupload.getStats().in_progress !== 0) {
