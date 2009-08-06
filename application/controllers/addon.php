@@ -19,7 +19,11 @@ class Addon extends Controller {
 			. 'FROM `addons` WHERE `amo_id` = ' . $this->db->escape($this->input->post('q')) . ';');
 			if ($addons->num_rows() === 0) {
 				//Couldn't find it, try to fetch from AMO site
-				$this->_update_amo_addon($this->input->post('q'), false, true);
+				$addon = $this->_update_amo_addon($this->input->post('q'), false, true);
+				if ($addon) {
+					print json_encode(array('addons' => array($addon)));
+					exit;
+				}
 			}
 		} else {
 			/* since query is only used in editor, we only provide limit information */
