@@ -7,12 +7,12 @@ $dir = site_url('/userstickers/' . dechex(intval($this->session->userdata('id'))
 		<div class="content">
 			<div class="first-col">
 				<h2>HTML 宣傳小卡</h2>
-				<iframe style="margin: 5px auto; width: 200px; height: 250px" src="<?php print $dir ?>/featurecard.html"></iframe>
+				<iframe style="margin: 5px auto; width: 200px; height: 250px" src="<?php print $dir ?>/featurecard.html?<?php print strtotime($modified) ?>"></iframe>
 				<textarea readonly="readonly">&lt;iframe style="margin: 5px auto; width: 200px; height: 250px" src="<?php print $dir ?>/featurecard.html"&gt;&lt;/iframe&gt;</textarea>
 			</div>
 			<div class="col">
 				<h2>圖片宣傳小卡</h2>
-				<p><a href="<?php print site_url($name); ?>" title="連到我的抓火狐推薦頁！"><img style="margin: 5px auto; width: 200px; height: 250px" src="<?php print $dir ?>/featurecard.png" alt="連到我的抓火狐推薦頁！" /></a></p>
+				<p><a href="<?php print site_url($name); ?>" title="連到我的抓火狐推薦頁！"><img style="margin: 5px auto; width: 200px; height: 250px" src="<?php print $dir ?>/featurecard.png?<?php print strtotime($modified) ?>" alt="連到我的抓火狐推薦頁！" /></a></p>
 				<p>HTML:</p>
 				<textarea readonly="readonly">&lt;a href="<?php print site_url($name); ?>" title="連到我的抓火狐推薦頁！"&gt;&lt;img style="margin: 5px auto; width: 200px; height: 250px" src="<?php print $dir; ?>/featurecard.png" alt="連到我的抓火狐推薦頁！"/&gt;&lt;/a&gt;</textarea>
 				<p>BBCode:</p>
