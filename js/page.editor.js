@@ -483,8 +483,12 @@ gfx.page = {
 						);
 						window.setTimeout(
 							function () {
-								this.setButtonDisabled(true);
-								this.startUpload();
+								try {
+									gfx.page.swfupload.setButtonDisabled(true);
+									gfx.page.swfupload.startUpload();
+								} catch (e) {
+									window.alert('FLASH FAILED.');
+								}
 							},
 							100
 						);	
