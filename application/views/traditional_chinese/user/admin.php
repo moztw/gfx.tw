@@ -14,7 +14,7 @@ $this->load->helper('form');
 			<span class="form-desc">輸入相對於 /useravatars/ 的 URL 路徑；清空使用預設圖示，輸入<code>(gravatar)</code>使用 Gravatar。</span></p>
 		<p><label for="admin_admin">擁有管理者權限：</label> <input type="checkbox" id="admin_admin" name="admin" <?php if ($admin === 'Y') print 'checked="checked"' ?>/>
 			<span class="form-desc">使用者要重新登入才會出現管理介面。</span></p>
-		<p><label for="admin_shown">顯示：</label> <input type="checkbox" id="admin_admin" name="admin" <?php if ($shown === 'Y') print 'checked="checked"' ?>/>
+		<p><label for="admin_shown">顯示：</label> <input type="checkbox" id="admin_shown" name="shown" <?php if ($shown === 'Y') print 'checked="checked"' ?>/>
 			<span class="form-desc">在網站的隨機大頭等處秀出此頁。</span></p>
 	</form>
 </div>
