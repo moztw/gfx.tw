@@ -20,7 +20,8 @@ gfx.admin = {
 						'login' : $('#admin_login').val(),
 						'count' : $('#admin_count').val(),
 						'avatar' : $('#admin_avatar').val(),
-						'admin' : ($('#admin_admin:checked').length)?'Y':'N'
+						'admin' : ($('#admin_admin:checked').length)?'Y':'N',
+						'shown' : ($('#admin_shown:checked').length)?'Y':'N'
 					},
 					success: function (result, status) {
 						if (gfx.ajaxError(result)) {

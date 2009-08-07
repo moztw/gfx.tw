@@ -170,7 +170,8 @@ class User extends Controller {
 				'login' => $this->input->post('login'),
 				'count' => $this->input->post('count'),
 				'avatar' => $this->input->post('avatar'),
-				'admin' => $this->input->post('admin')
+				'admin' => $this->input->post('admin'),
+				'shown' => $this->input->post('shown')
 			),
 			array(
 				'id' => $this->input->post('id')
@@ -211,7 +212,7 @@ class User extends Controller {
 						Really expensive query, should change it right away should user > 1000 
 						or fill the cache by using crontab instead of user request
 					*/
-					$query = $this->db->query('SELECT `name`, `title`, `avatar`, `email` FROM `users` WHERE `avatar` != \'\' AND `ready` = \'Y\' ORDER BY RAND() LIMIT 10;');
+					$query = $this->db->query('SELECT `name`, `title`, `avatar`, `email` FROM `users` WHERE `avatar` != \'\' AND `ready` = \'Y\' AND `shown` = \'Y\' ORDER BY RAND() LIMIT 10;');
 					$users = array();
 					foreach ($query->result_array() as $user) {
 						$users[] = array(
