@@ -70,6 +70,7 @@ class User extends Controller {
 			$groups->free_result();
 			unset($groups, $group);
 			$this->load->_ci_cached_vars = array(); //Clean up cached vars
+			$data['name'] = $U['name'];
 			$data['meta'] = $this->load->view($this->config->item('language') . '/user/meta.php', $U, true);
 			$data['admin'] = $this->load->view($this->config->item('language') . '/user/admin.php', $U, true);
 			$data['content'] = $this->load->view($this->config->item('language') . '/user/content.php', array_merge($U, array('features' => $F, 'groups' => $G, 'addons' => $A)), true);
@@ -79,6 +80,12 @@ class User extends Controller {
 			$data['db'] = 'content ';
 		} else {
 			$data['expiry'] = $this->cache->get_expiry($name, 'user');
+		}
+
+		//name caps check
+                if (isset($data['name']) && $data['name'] !== $name) {
+			header('Location: ' . site_url($data['name']));
+			exit;
 		}
 
 		if ($this->session->userdata('admin') !== 'Y') {
