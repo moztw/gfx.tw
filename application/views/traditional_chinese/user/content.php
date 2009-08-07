@@ -63,7 +63,7 @@ foreach ($features as $feature) {
 		<li><span class="item">一行自介</span> <span class="bio value"><?php print htmlspecialchars($bio); ?></span></li>
 <?php } ?>
 	</ul>
-	<p>喜歡<?php print htmlspecialchars($title) ?>推薦的內容？<br /><a href="<?php print site_url($name) ?>" id="push-plurk"><img src="http://www.plurk.com/favicon.ico" alt="[]" />撲到撲浪</a>或<a href="<?php print site_url($name) ?>" id="push-twitter"><img src="http://twitter.com/favicon.ico" alt="[]" />推到推特</a>！</p>
+	<p>喜歡<?php print htmlspecialchars($title) ?>推薦的內容？<br /><a href="<?php print site_url($name) ?>" id="push-plurk"><img src="http://www.plurk.com/favicon.ico" alt="[]" /> 撲一下</a> <a href="<?php print site_url($name) ?>" id="push-twitter"><img src="http://twitter.com/favicon.ico" alt="[]" /> 推一下</a>！</p>
 	</div>
 	<div id="groups-title">
 		<h2><?php print htmlspecialchars($title) ?>推薦的附加元件</h2>
