@@ -262,6 +262,9 @@ var gfx = {
 						}
 					);
 					gfx.openDialog('extinstall');
+					try {
+						pageTracker._trackEvent("Addons", "install");
+					} catch (e) {}
 					window.InstallTrigger.install(l);
 				},
 				'#link_manage a' : function () {
