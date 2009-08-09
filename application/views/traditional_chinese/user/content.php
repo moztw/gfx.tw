@@ -77,16 +77,20 @@ foreach ($features as $feature) {
 function addon($addon) {
 	$CI =& get_instance();
 	extract($addon);
+	/* if there is no icon, insert the default one*/
 	if (!$icon_url) $icon_url = site_url('images/addon_default_icon.png');
+	/* if it's an AMO addon */
 	if ($amo_id) {
 		$url = $CI->config->item('gfx_amo_url') . $amo_id;
 		$xpi_url = $CI->config->item('gfx_amo_xpi_url') . $amo_id;
+	} elseif ($available === 'Y' && !$xpi_url) {
+		/* not a AMO addon and marked available BUT without an xpi url => don't show */
+		return;
 	}
-	if ($available && !$xpi_url) return;
 ?>
 		<div class="addon">
 <?php
-	if ($available) { ?>
+	if ($available === 'Y') { ?>
 		<p class="install<?php
 		if ($amo_id) print ' amo-addon';
 		if ($os_0 === 'Y') print ' os_0';
@@ -109,7 +113,7 @@ function addon($addon) {
 		if ($os_4 === 'Y') print ' os_4';
 		if ($os_5 === 'Y') print ' os_5';
 ?>">
-			<input type="checkbox" disabled="disabled" id="install-<?php print $id ?>" /><label for="install-<?php print $id ?>"請至附加元件網站安裝</label>
+			<input type="checkbox" disabled="disabled" id="install-<?php print $id ?>" /><label for="install-<?php print $id ?>">請至附加元件網站安裝</label>
 		</p>
 <?php 
 	}
