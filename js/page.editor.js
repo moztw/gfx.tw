@@ -24,7 +24,7 @@ gfx.page = {
 			'#title-avatar' : function () {
 				gfx.openDialog('avatar');
 			},
-			'#avatar_glavatar' : function () {
+			'#avatar_gravatar' : function () {
 				gfx.page.changeAvatar('(gravatar)', $(this).children()[0].src);
 			},
 			'#avatar_default' : function () {

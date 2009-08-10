@@ -46,7 +46,7 @@ $avatar = avatarURL($avatar, $email);
 			<p>上傳照片檔案</p>
 		</div>
 		<div class="avatar_selection">
-			<div id="avatar_glavatar" class="avatar_icon">
+			<div id="avatar_gravatar" class="avatar_icon">
 				<img src="<? print 'http://www.gravatar.com/avatar/' . md5($email) . '?s=60&amp;r=g&amp;d=' . urlencode(site_url('images/avatar-default.gif')); ?>" alt="Gravatar" />
 			</div>
 			<p><a href="http://www.gravatar.com/" class="newwindow">Gravatar</a>上的圖示</p>
@@ -126,7 +126,7 @@ for ($i = 0; $i < 3; $i++) {
 			<p><label for="info_name">推薦頁網址：</label> <span class="form-prepend"><?php print base_url() ?></span><?php print form_input(array('id' =>'info_name', 'value' => $name)); ?>
 			<span class="form-desc">您的推薦網頁的專用網址，需使用英數字。</span></p>
 			<p><label for="info_email">E-mail：</label> <?php print form_input(array('id' =>'info_email', 'value' => $email)); ?>
-			<span class="form-desc">不會公開；Glavatar 的圖示要在重新載入後才會變更。</span></p>
+			<span class="form-desc">不會公開；Gravatar 的圖示要在重新載入後才會變更。</span></p>
 			<p><label for="info_web">個人首頁：</label> <?php print form_input(array('id' =>'info_web', 'value' => $web)); ?></p>
 			<p><label for="info_blog">部落格：</label> <?php print form_input(array('id' =>'info_blog', 'value' => $blog)); ?></p>
 			<p><label for="info_password">討論區 ID 認證：</label> <?php print form_password(array('id' =>'info_forum', 'value' => ($forum_id && $forum_username)?'(keep-the-forum-username)':'')); ?>

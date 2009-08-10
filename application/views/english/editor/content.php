@@ -45,7 +45,7 @@ $avatar = avatarURL($avatar, $email);
 			<p>Upload picture</p>
 		</div>
 		<div class="avatar_selection">
-			<div id="avatar_glavatar" class="avatar_icon">
+			<div id="avatar_gravatar" class="avatar_icon">
 				<img src="<? print 'http://www.gravatar.com/avatar/' . md5($email) . '?s=60&amp;r=g&amp;d=' . urlencode(site_url('images/keyhole.gif')); ?>" alt="Gravatar" />
 			</div>
 			<p>Icon on <a href="http://www.gravatar.com/" class="newwindow">Gravatar</a></p>
@@ -124,7 +124,7 @@ while(isset($features[$i])) {
 			<p><label for="info_name">gfx URL:</label> <span class="form-prepend"><?php print base_url() ?></span><?php print form_input(array('id' =>'info_name', 'value' => (substr($name, 0, 8) === '__temp__')?'':$name)); ?>
 			<span class="form-desc">Your gfx URL; alphabets and numbers only.</span></p>
 			<p><label for="info_email">E-mail: </label> <?php print form_input(array('id' =>'info_email', 'value' => $email)); ?>
-			<span class="form-desc">Will not published; Glavatar avatar will change after reload.</span></p>
+			<span class="form-desc">Will not published; Gravatar avatar will change after reload.</span></p>
 			<p><label for="info_web">Website:</label> <?php print form_input(array('id' =>'info_web', 'value' => $web)); ?></p>
 			<p><label for="info_blog">Blog:</label> <?php print form_input(array('id' =>'info_blog', 'value' => $blog)); ?></p>
 			<p><label for="info_forum">Forum ID:</label> <?php print form_password(array('id' =>'info_forum', 'value' => ($forum_id && $forum_username)?'(keep-the-forum-username)':'')); ?>
