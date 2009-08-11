@@ -520,13 +520,16 @@ gfx.page = {
 				'upload_success_handler' : function (file, result) {
 					this.setButtonDisabled(false);
 					gfx.closeDialog('progress');
-					var o;
+					try {
+						console.log(file, result);
+					} catch (e) {
+					}
 					if (JSON && JSON.parse) {
 						/* Fx 3.5 Native JSON parser */
 						try {
-							o = JSON.parse(result);
+							result = JSON.parse(result);
 						} catch (e) {
-							o = null;
+							result = null;
 						}						
 					} else {
 						//Great, jQuery doen't have a JSON.decode function w/o HTTP request.
@@ -537,13 +540,10 @@ gfx.page = {
 							}
 							return eval('(' + string + ')');
 						};
-						o = decode(result);
+						result = decode(result);
 					}
-					if (!o) {
+					if (!result) {
 						gfx.alert(T.AJAX_ERROR.PARSE_RESPONSE, 'AJAX_ERROR_PARSE_RESPONSE');
-						if (gfx.global.debug) {
-							window.alert(result);
-						}
 					} else {
 						if (gfx.ajaxError(result)) {
 							return;
