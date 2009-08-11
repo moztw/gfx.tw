@@ -167,6 +167,9 @@ $(function () {
 					break;
 					case 'parsererror':
 					gfx.alert(T.AJAX_ERROR.PARSE_RESPONSE, 'AJAX_ERROR_PARSE_RESPONSE');
+					if (gfx.global.debug) {
+						window.alert(xhr.responseText);
+					}
 					break;
 					case 'error':
 					default:
@@ -174,6 +177,9 @@ $(function () {
 						gfx.alert(T.AJAX_ERROR.UNABLE_TO_CONNECT, 'AJAX_ERROR_UNABLE_TO_CONNECT');
 					} else {
 						gfx.alert(T.AJAX_ERROR.SERVER_RESPONSE, 'AJAX_ERROR_SERVER_RESPONSE');
+						if (gfx.global.debug) {
+							window.alert(xhr.responseText);
+						}
 					}
 				}
 			}

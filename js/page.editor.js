@@ -520,35 +520,30 @@ gfx.page = {
 				'upload_success_handler' : function (file, result) {
 					this.setButtonDisabled(false);
 					gfx.closeDialog('progress');
+					var o;
 					if (JSON && JSON.parse) {
-						/* Fx 3.1 Native JSON parser */
+						/* Fx 3.5 Native JSON parser */
 						try {
-							result = JSON.parse(result);
+							o = JSON.parse(result);
 						} catch (e) {
-							result = null;
+							o = null;
 						}						
 					} else {
 						//Great, jQuery doen't have a JSON.decode function w/o HTTP request.
 						//We get this from mootools source.
-						if (JSON && JSON.parse) {
-							//Firefox 3.1 JSON parser
-							try {
-								result = JSON.parse(result);
-							} catch (e) {
-								result = null;
+						var decode = function (string) {
+							if (!(/^[,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t]*$/).test(string.replace(/\\./g, '@').replace(/"[^"\\\n\r]*"/g, ''))) {
+								return null;
 							}
-						} else {
-							var decode = function (string) {
-								if (!(/^[,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t]*$/).test(string.replace(/\\./g, '@').replace(/"[^"\\\n\r]*"/g, ''))) {
-									return null;
-								}
-								return eval('(' + string + ')');
-							};
-							result = decode(result);
-						}
+							return eval('(' + string + ')');
+						};
+						o = decode(result);
 					}
-					if (!result) {
+					if (!o) {
 						gfx.alert(T.AJAX_ERROR.PARSE_RESPONSE, 'AJAX_ERROR_PARSE_RESPONSE');
+						if (gfx.global.debug) {
+							window.alert(result);
+						}
 					} else {
 						if (gfx.ajaxError(result)) {
 							return;
