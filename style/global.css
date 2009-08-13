@@ -961,10 +961,10 @@ span.title-empty {
 	border: 2px solid #cccccc;
 }
 
-#window_avatar .avatar_selection #avatar_spfupload {
+#window_avatar .avatar_selection #avatar_swfupload {
 	background: transparent url('../images/avatar-edit.gif') center center no-repeat;
 }
-#window_avatar .avatar_selection #avatar_spfupload:hover {
+#window_avatar .avatar_selection #avatar_swfupload:hover {
 	background-color: #cccccc;
 }
 

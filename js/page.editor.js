@@ -463,7 +463,7 @@ gfx.page = {
 				file_types : '*.jpg;*.jpeg;*.gif;*.png',
 				file_types_description : 'Images',
 				file_upload_limit : '0',
-				button_placeholder_id : 'avatar_spfupload_replace',
+				button_placeholder_id : 'avatar_swfupload_replace',
 				button_width: 69,
 				button_height: 69,
 				button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,

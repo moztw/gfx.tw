@@ -40,8 +40,8 @@ $avatar = avatarURL($avatar, $email);
 	</div>
 	<div id="window_avatar" class="window" title="選擇個人圖示">
 		<div class="avatar_selection">
-			<div id="avatar_spfupload" class="avatar_icon">
-				<div id="avatar_spfupload_replace">&nbsp;</div>
+			<div id="avatar_swfupload" class="avatar_icon">
+				<div id="avatar_swfupload_replace">&nbsp;</div>
 			</div>
 			<p>上傳照片檔案</p>
 		</div>

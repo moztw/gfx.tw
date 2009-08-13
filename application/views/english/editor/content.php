@@ -39,8 +39,8 @@ $avatar = avatarURL($avatar, $email);
 	</div>
 	<div id="window_avatar" class="window" title="Choose your personal avatar">
 		<div class="avatar_selection">
-			<div id="avatar_spfupload" class="avatar_icon">
-				<div id="avatar_spfupload_replace">&nbsp;</div>
+			<div id="avatar_swfupload" class="avatar_icon">
+				<div id="avatar_swfupload_replace">&nbsp;</div>
 			</div>
 			<p>Upload picture</p>
 		</div>
