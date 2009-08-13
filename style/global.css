@@ -5,6 +5,8 @@
 html {
 	overflow: auto;
 	border: none;
+	background-color: #ffffff;
+	color: #000000;
 }
 
 /* The body */
@@ -12,8 +14,8 @@ html {
 body {
 	margin: 0 auto; padding: 0;
 	text-align: center;
-    font-size: 15px;
-    line-height:1.2em;
+	font-size: 15px;
+	line-height:1.2em;
 }
 
 html > body {
