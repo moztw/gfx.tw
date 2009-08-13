@@ -967,7 +967,16 @@ span.title-empty {
 #window_avatar .avatar_selection #avatar_swfupload:hover {
 	background-color: #cccccc;
 }
-
+#window_avatar .avatar_selection .flash-desc {
+	display: none;
+}
+#window_avatar .avatar_selection.no-flash #avatar_swfupload {
+	opacity: 0.2;
+	cursor: not-allowed;
+}
+#window_avatar .avatar_selection.no-flash .flash-desc {
+	display: block;
+}
 #window_avatar p {
 	margin: 0;
 }

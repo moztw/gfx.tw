@@ -455,104 +455,122 @@ gfx.page = {
 				$(this).parent().toggleClass('not-selected', !this.checked);
 			}
 		);
-		gfx.page.swfupload = new SWFUpload(
-			{
-				'upload_url': window.location.href + '/upload',
-				// File Upload Settings
-				file_size_limit : 1024,	// 1MB
-				file_types : '*.jpg;*.jpeg;*.gif;*.png',
-				file_types_description : 'Images',
-				file_upload_limit : '0',
-				button_placeholder_id : 'avatar_swfupload_replace',
-				button_width: 69,
-				button_height: 69,
-				button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
-				button_cursor: SWFUpload.CURSOR.HAND,
-				flash_url : './swfupload/swfupload.swf',	// Relative to this file
-				debug : false,
-				// Event Handler Settings
-				'file_dialog_complete_handler' : function (n, q) {
-					if (n === 1 && q === 1) {
-						window.setTimeout(
-							function () {
-								if (gfx.page.swfupload.getStats().in_progress !== 0) {
-									gfx.openDialog('progress');
-								}
-							},
-							400
-						);
-						window.setTimeout(
-							function () {
-								try {
-									gfx.page.swfupload.setButtonDisabled(true);
-									gfx.page.swfupload.startUpload();
-								} catch (e) {
-									window.alert('FLASH FAILED.');
-								}
-							},
-							100
-						);	
-					}
-				},
-				'file_queue_error_handler' : function (file, error, msg) {
-					switch (error) {
-						case SWFUpload.QUEUE_ERROR.ZERO_BYTE_FILE:
-						gfx.alert(T.SWFUPLOAD.ZERO_BYTE_FILE || msg, 'SWFUPLOAD_ZERO_BYTE_FILE');
-						break;
-						case SWFUpload.QUEUE_ERROR.FILE_EXCEEDS_SIZE_LIMIT:
-						gfx.alert(T.SWFUPLOAD.FILE_EXCEEDS_SIZE_LIMIT || msg, 'SWFUPLOAD_FILE_EXCEEDS_SIZE_LIMIT');
-						break;
-						case SWFUpload.QUEUE_ERROR.INVALID_FILETYPE:
-						gfx.alert(T.SWFUPLOAD.INVALID_FILETYPE || msg, 'SWFUPLOAD_INVALID_FILETYPE');
-						break;
-						default:
-						gfx.alert(msg, 'SWFUPLOAD_UNKNOWN_QUERE_ERROR');
-						break;
-					}
-				},
-				'upload_error_handler' : function (file, error, msg) {
-					this.setButtonDisabled(false);
-					gfx.closeDialog('progress');
-					if (error !== SWFUpload.UPLOAD_ERROR.FILE_CANCELLED) {
-						gfx.alert(msg, 'SWFUPLOAD_UNKNOWN_UPLOAD_ERROR');
-					}
-				},
-				'upload_success_handler' : function (file, result) {
-					this.setButtonDisabled(false);
-					gfx.closeDialog('progress');
+		var Flash = (function(){
+			var version = ((function() {
+				var str;
+				try {
+					str = navigator.plugins['Shockwave Flash'].description;
+				} catch (e) {
 					try {
-						console.log(file, result);
-					} catch (e) {
-					}
-					if (JSON && JSON.parse) {
-						/* Fx 3.5 Native JSON parser */
-						try {
-							result = JSON.parse(result);
-						} catch (e) {
-							result = null;
-						}						
-					} else {
-						//Great, jQuery doen't have a JSON.decode function w/o HTTP request.
-						//We get this from mootools source.
-						var decode = function (string) {
-							if (!(/^[,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t]*$/).test(string.replace(/\\./g, '@').replace(/"[^"\\\n\r]*"/g, ''))) {
-								return null;
-							}
-							return eval('(' + string + ')');
-						};
-						result = decode(result);
-					}
-					if (!result) {
-						gfx.alert(T.AJAX_ERROR.PARSE_RESPONSE, 'AJAX_ERROR_PARSE_RESPONSE');
-					} else {
-						if (gfx.ajaxError(result)) {
-							return;
+						str = new ActiveXObject('ShockwaveFlash.ShockwaveFlash').GetVariable('$version');
+					} catch (e) {}
+				}
+				return str; 
+			})() || '0 r0').match(/\d+/g);
+			return {version: parseInt(version[0] || 0 + '.' + version[1], 10) || 0, build: parseInt(version[2], 10) || 0};
+		})();
+		if (Flash.version < 9) {
+			$('#avatar_swfupload').parent().addClass('no-flash')
+		} else { 
+			gfx.page.swfupload = new SWFUpload(
+				{
+					'upload_url': window.location.href + '/upload',
+					// File Upload Settings
+					file_size_limit : 1024,	// 1MB
+					file_types : '*.jpg;*.jpeg;*.gif;*.png',
+					file_types_description : 'Images',
+					file_upload_limit : '0',
+					button_placeholder_id : 'avatar_swfupload_replace',
+					button_width: 69,
+					button_height: 69,
+					button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
+					button_cursor: SWFUpload.CURSOR.HAND,
+					flash_url : './swfupload/swfupload.swf',	// Relative to this file
+					debug : false,
+					// Event Handler Settings
+					'file_dialog_complete_handler' : function (n, q) {
+						if (n === 1 && q === 1) {
+							window.setTimeout(
+								function () {
+									if (gfx.page.swfupload.getStats().in_progress !== 0) {
+										gfx.openDialog('progress');
+									}
+								},
+								400
+							);
+							window.setTimeout(
+								function () {
+									try {
+										gfx.page.swfupload.setButtonDisabled(true);
+										gfx.page.swfupload.startUpload();
+									} catch (e) {
+										window.alert('FLASH FAILED.');
+									}
+								},
+								100
+							);	
 						}
-						gfx.page.changeAvatar(result.img, './useravatars/' + result.img);
+					},
+					'file_queue_error_handler' : function (file, error, msg) {
+						switch (error) {
+							case SWFUpload.QUEUE_ERROR.ZERO_BYTE_FILE:
+							gfx.alert(T.SWFUPLOAD.ZERO_BYTE_FILE || msg, 'SWFUPLOAD_ZERO_BYTE_FILE');
+							break;
+							case SWFUpload.QUEUE_ERROR.FILE_EXCEEDS_SIZE_LIMIT:
+							gfx.alert(T.SWFUPLOAD.FILE_EXCEEDS_SIZE_LIMIT || msg, 'SWFUPLOAD_FILE_EXCEEDS_SIZE_LIMIT');
+							break;
+							case SWFUpload.QUEUE_ERROR.INVALID_FILETYPE:
+							gfx.alert(T.SWFUPLOAD.INVALID_FILETYPE || msg, 'SWFUPLOAD_INVALID_FILETYPE');
+							break;
+							default:
+							gfx.alert(msg, 'SWFUPLOAD_UNKNOWN_QUERE_ERROR');
+							break;
+						}
+					},
+					'upload_error_handler' : function (file, error, msg) {
+						this.setButtonDisabled(false);
+						gfx.closeDialog('progress');
+						if (error !== SWFUpload.UPLOAD_ERROR.FILE_CANCELLED) {
+							gfx.alert(msg, 'SWFUPLOAD_UNKNOWN_UPLOAD_ERROR');
+						}
+					},
+					'upload_success_handler' : function (file, result) {
+						this.setButtonDisabled(false);
+						gfx.closeDialog('progress');
+						try {
+							console.log(file, result);
+						} catch (e) {
+						}
+						if (JSON && JSON.parse) {
+							/* Fx 3.5 Native JSON parser */
+							try {
+								result = JSON.parse(result);
+							} catch (e) {
+								result = null;
+							}						
+						} else {
+							//Great, jQuery doen't have a JSON.decode function w/o HTTP request.
+							//We get this from mootools source.
+							var decode = function (string) {
+								if (!(/^[,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t]*$/).test(string.replace(/\\./g, '@').replace(/"[^"\\\n\r]*"/g, ''))) {
+									return null;
+								}
+								return eval('(' + string + ')');
+							};
+							result = decode(result);
+						}
+						if (!result) {
+							gfx.alert(T.AJAX_ERROR.PARSE_RESPONSE, 'AJAX_ERROR_PARSE_RESPONSE');
+						} else {
+							if (gfx.ajaxError(result)) {
+								return;
+							}
+							gfx.page.changeAvatar(result.img, './useravatars/' + result.img);
+						}
 					}
 				}
-			}
-		);
+			);
+		}
 		
 		$('#featureselection li').draggable(
 			{

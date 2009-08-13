@@ -43,7 +43,7 @@ $avatar = avatarURL($avatar, $email);
 			<div id="avatar_swfupload" class="avatar_icon">
 				<div id="avatar_swfupload_replace">&nbsp;</div>
 			</div>
-			<p>上傳照片檔案</p>
+			<p>上傳圖片檔案 <strong class="flash-desc">(請安裝最新版 <a href="http://www.adobe.com/flashplayer" class="newwindow">Flash Player</a>)</strong></p>
 		</div>
 		<div class="avatar_selection">
 			<div id="avatar_gravatar" class="avatar_icon">
