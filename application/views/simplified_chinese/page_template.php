@@ -8,7 +8,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 	<link rel="stylesheet" type="text/css" href="<?php print site_url('style/global.css' . $this->config->item('gfx_suffix')) ?>" />
 	<link rel="stylesheet" type="text/css" href="<?php print site_url('style/jquery-ui-1.7.custom.css' . $this->config->item('gfx_suffix')) ?>" />
-	<link rel="stylesheet" type="text/css" href="<?php print site_url('style/language-zh-TW.css' . $this->config->item('gfx_suffix')) ?>" />
+	<link rel="stylesheet" type="text/css" href="<?php print site_url('style/language-zh-CN.css' . $this->config->item('gfx_suffix')) ?>" />
 {meta}
 </head>
 <body>
@@ -28,7 +28,7 @@
 	</div>
 	<script type="text/javascript" src="<?php print site_url('js/jquery-1.3.2.min.js' . $this->config->item('gfx_suffix')) ?>"></script>
 	<script type="text/javascript" src="<?php print site_url('js/jquery-ui.custom.min.js' . $this->config->item('gfx_suffix')) ?>"></script>
-	<script type="text/javascript" src="<?php print site_url('js/text-zh-TW.js' . $this->config->item('gfx_suffix')) ?>" charset="UTF-8"></script>
+	<script type="text/javascript" src="<?php print site_url('js/text-zh-CN.js' . $this->config->item('gfx_suffix')) ?>" charset="UTF-8"></script>
 	<script type="text/javascript" src="<?php print site_url('js/global.js' . $this->config->item('gfx_suffix')) ?>" charset="UTF-8"></script>
 {script}
 {admin}
