@@ -6,7 +6,7 @@ $avatar = avatarURL($avatar, $email);
 
 ?>
 	<div id="editor-save">
-		<p><button id="editor-save-button">储存您的页面</button>编辑完毕，储存变更、领取宣传贴纸！</p>
+		<p><button id="editor-save-button">保存您的页面</button>编辑完毕，保存变更、领取宣传贴纸！</p>
 	</div>
 	<div id="window_almostdone" class="window" title="快完成了...">
 		<p>请设定您的推荐网页的专用网址，需使用英数字：</p>

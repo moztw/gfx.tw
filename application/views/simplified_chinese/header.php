@@ -48,7 +48,7 @@ if (isset($id)) {
 		<p id="header_top_link"><a href="<?php print base_url() ?>" title="回首页">抓火狐</a></p>
 		<ul>
 			<li class="ui-corner-all ui-state-default active ui-state-hover"><a href="#" id="link-newcomer-intro">了解本站</a></li>
-			<li class="ui-corner-all ui-state-default ui-state-disabled"><a href="#" id="link_login">使用 OpenID 登入</a></li>
+			<li class="ui-corner-all ui-state-default ui-state-disabled"><a href="#" id="link_login">使用 OpenID 登录</a></li>
 		</ul>
 	</div>
 	<div id="newcomer-intro" class="ui-widget message show no-auto">
@@ -67,14 +67,14 @@ if (isset($id)) {
 			<p class="message-link"><a href="/about">关于我们</a> | <a href="/about/legal">使用条款</a> | <a href="/about/faq">常见问题</a></p>
 		</div>
 	</div>
-	<div id="window_login" class="window" title="登入">
+	<div id="window_login" class="window" title="登录">
 		<form action="<?php print site_url('auth/login'); ?>" method="post">
-			<p><label for="openid-identifier">您的 OpenID 网址: </label><input type="text" name="openid-identifier" id="openid-identifier" value="" /> <input type="submit" value="登入" /></p>
+			<p><label for="openid-identifier">您的 OpenID 网址: </label><input type="text" name="openid-identifier" id="openid-identifier" value="" /> <input type="submit" value="登录" /></p>
 			<h3>OpenID 是什么？</h3>
-			<p>OpenID 让您使用其他网站的帐号登入敝站，避免再次记忆帐号与输入资料的困扰。若您曾在下列网站注册过，您可以在下方选择想要使用的 OpenID。</p>
+			<p>OpenID 让您使用其他网站的帐号登录敝站，避免再次记忆帐号与输入资料的困扰。若您曾在下列网站注册过，您可以在下方选择想要使用的 OpenID。</p>
 			<p><label for="openid_sp">OpenID 服务商：</label><select id="openid_sp">
 				<option value="" label="(选择服务商)" selected="selected">(选择服务商)</option>
-				<optgroup label="不需修改网址可直接登入">
+				<optgroup label="不需修改网址可直接登录">
 					<option value="https://www.google.com/accounts/o8/id">Google</option>
 					<option value="https://me.yahoo.com">Yahoo!</option>
 				</optgroup>

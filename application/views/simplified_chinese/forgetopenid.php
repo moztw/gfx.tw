@@ -10,7 +10,7 @@ We downgrade ourselves to send only HTML fragment instead of standard HTML doc a
 <div style="font: 0.92em sans-serif; background-color: #ffffff">
     <p>您好，</p>
     <p>来自 <?php print $ip ?> 的使用者查询了此 E-mail 帐号下，所有抓火狐页面所使用的 OpenID。
-    您现在可以复制下列的 OpenID，至抓火狐网站<a href="<?php print site_url('#login');?>">登入</a>，重新编辑您的抓火狐页面。</p>
+    您现在可以复制下列的 OpenID，至抓火狐网站<a href="<?php print site_url('#login');?>">登录</a>，重新编辑您的抓火狐页面。</p>
     <ol>
 <?php
     foreach ($logins as $L) {
@@ -30,7 +30,7 @@ We downgrade ourselves to send only HTML fragment instead of standard HTML doc a
                 <li>OpenID 网址：<?php print htmlspecialchars($L['login']); ?></li>
                 <li><form action="<?php print site_url('auth/login'); ?>" method="post">
                     <input type="hidden" name="openid-identifier" value="<?php print htmlspecialchars($L['login']); ?>" />
-                    <input type="submit" value="直接登入" />
+                    <input type="submit" value="直接登录" />
                 </form></li><?php
 ?>
             </ul>
