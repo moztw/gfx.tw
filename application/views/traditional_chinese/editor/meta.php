@@ -1,1 +1,1 @@
-	<title>編輯您的抓火狐推薦頁！</title>
+	<title>抓火狐 :: 編輯您的 Firefox 推薦頁面</title>
