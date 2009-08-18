@@ -188,9 +188,23 @@ var gfx = {
 				'#link_login, #newcomer-intro-login' : function () {
 					if ($(this).not('.ui-state-disabled').length !== 0) {
 						gfx.openDialog('login');
-						$('#openid-identifier').focus();
+						$('#openid-sp input:checked').click();
 					}
 					return false;
+				},
+				'#openid-sp input' : function () {
+					$('#openid-identifier').val(this.value);
+					if (!this.value) {
+						$('#window_login').removeClass('username nousername').addClass('direct');
+						$('#openid-identifier').focus().attr('readonly', false);
+					} else if (/\(username\)/.test(this.value)) {
+						$('#window_login').removeClass('direct nousername').addClass('username');
+						$('#openid-username input').focus().keyup();
+						$('#openid-identifier').attr('readonly', true);
+					} else {
+						$('#window_login').removeClass('direct username').addClass('nousername');
+						$('#openid-identifier').attr('readonly', true);
+					}
 				},
 				'#link_logout' : function () {
 					$('#logout_form').submit();
@@ -307,11 +321,6 @@ var gfx = {
 					return false;
                                 }
 			},
-			'change' : {
-				'#openid_sp' : function () {
-					$('#openid-identifier').val(this.value);
-				}
-			},
 			'mouseover' : {
 				'#link_manage a' : function () {
 					$(this).parent().addClass('ui-state-hover');
@@ -346,6 +355,22 @@ var gfx = {
 							}
 						}
 					);
+				}
+			},
+			'keyup' : {
+				'#openid-username input' : function () {
+					if (
+						$.inArray(
+							$.trim(this.value),
+							['', '(請直接輸入)', '(輸入帳號)']
+						)
+					) {
+						$('#openid-identifier').val(
+							$('#openid-sp input:checked').val().replace(/\(username\)/, $.trim(this.value))
+						);
+					} else {
+						$('#openid-identifier').val($('#openid-sp input:checked').val());
+					}
 				}
 			}
 		},
@@ -470,7 +495,7 @@ var gfx = {
 		'dialog' : {
 			'login' : {
 				'width' : 500,
-				'height' : 460,
+				'height' : 500,
 				'position' : ['center', 100]
 			},
 			'download' : {

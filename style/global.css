@@ -292,10 +292,56 @@ p.message-link a:hover {
 	text-decoration: underline;
 }
 
-input#openid-identifier {
+input.openid-identifier {
 	width: 340px;
 	background: #ffffff url('../images/openid-logo-transparent.png') left center no-repeat;
 	padding-left: 20px;
+}
+
+#window_login.username input.openid-identifier, #window_login.nousername input.openid-identifier {
+	background-color: #cccccc;
+}
+
+#openid-username, #openid-nousername {
+	display: none;
+	font-size: 85%; color: #666666;
+}
+
+#window_login.username #openid-username, #window_login.nousername #openid-nousername {
+	display: block;
+}
+
+#window_login ul {
+	padding-left: 1em;
+}
+
+#openid-username input {
+	background-color: #ffffff;
+}
+
+ul#openid-sp {
+	margin: 1em 0; padding: 0;
+	list-style: none;
+}
+
+ul#openid-sp li {
+	list-style: none;
+	float: left;
+	width: 33%;
+	margin: 0.2em 0;
+}
+
+ul#openid-sp .sprite {
+	float: left;
+	margin: 0 4px;
+}
+
+ul#openid-sp input {
+	float: left;
+}
+
+ul#openid-sp + * {
+	padding-top: 0.8em;
 }
 
 #logout_form {
@@ -933,8 +979,17 @@ span.title-empty {
 	overflow: auto;
 }
 
-#window_login label {
+#window_login p label {
+	display: block;
 	font-weight: bold;
+}
+
+#window_login li label {
+	cursor: pointer;
+}
+
+#window_login p, #window_login h3 {
+	clear: both;
 }
 
 #window_avatar .window_content {
@@ -1091,3 +1146,21 @@ span.title-empty {
 .sortable .feature, .sortable .group-title, .sortable .addon {
 	cursor: move;
 }
+
+.sprite {display: block; background: transparent url('../images/favicons.png') no-repeat; text-indent: -10000px; }
+.gfxtw { background-position: 0 0; width: 16px; height: 16px}
+.wordpress-com { background-position: -18px 0; width: 16px; height: 16px}
+.facebook { background-position: -36px 0; width: 16px; height: 16px}
+.twitter { background-position: -54px 0; width: 16px; height: 16px}
+.anobii { background-position: -72px 0; width: 16px; height: 16px}
+.netvibes { background-position: 0 -18px; width: 16px; height: 16px}
+.plurk { background-position: -18px -18px; width: 16px; height: 16px}
+.google { background-position: -36px -18px; width: 16px; height: 16px}
+.yahoo { background-position: -54px -18px; width: 16px; height: 16px}
+.myidtw { background-position: -72px -18px; width: 16px; height: 16px}
+.aim { background-position: 0 -36px; width: 16px; height: 16px}
+.livejournal { background-position: -18px -36px; width: 16px; height: 16px}
+.myopenid { background-position: -36px -36px; width: 16px; height: 16px}
+.typepad { background-position: -54px -36px; width: 16px; height: 16px}
+.wikipedia { background-position: -72px -36px; width: 16px; height: 16px}
+
