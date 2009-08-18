@@ -67,7 +67,7 @@ foreach ($features as $feature) {
 	</div>
 	<div id="groups-title">
 		<h2><?php print htmlspecialchars($title) ?>推薦的附加元件</h2>
-		<p>Firefox 有符合上網需求的基礎功能，若想加強它的能力，可安裝擴充套件。這些套件大多與 Firefox 完美整合，您只會感到 Firefox「長」出了一個功能，而不會當作使用另一套軟體。</p>
+		<p>Firefox 瀏覽器提供使用者上網所需的基本功能；除此之外，全球開發者更設計了各式各樣的附加元件，提供使用者自行增加牠的功能。這些附加元件大多與 Firefox 完美結合，讓您藉由這些有創意的附加元件，自訂您專屬的「火狐」！</p>
 		<p>以下是<?php print htmlspecialchars($title) ?>所推薦的附加元件：</p>
 		<p id="groups-show-detail"><input type="checkbox" id="groups-show-detail-box" checked="checked" /> <label for="groups-show-detail-box">顯示套件說明</label></p>
 	</div>

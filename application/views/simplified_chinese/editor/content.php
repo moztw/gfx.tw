@@ -64,7 +64,7 @@ $avatar = avatarURL($avatar, $email);
 		<p>下载将在几秒内开始，如果没有启动请按<a href="/download">这里</a>。</p>
 		<p>安装完毕后，别忘了使用 Firefox 连到：</p>
 		<p class="gfx-url"><?php print site_url('{您的推荐网址}') ?></p>
-		<p>依照<span class="title-placeholder">{您的名字}</span>的建议，加入附加元件改造属于您的火狐！</p>
+		<p>依照<span class="title-placeholder">{您的名字}</span>的建议，加入附加组件改造属于您的火狐！</p>
 	</div>
 	<div id="featureselection">
 		<p class="features-desc">请将想要推荐的功能拖放到您想要显示的位置。</p>
@@ -147,8 +147,8 @@ for ($i = 0; $i < 3; $i++) {
 		<p>这个动作无法复原。若确定要删除您的帐号，请按下面的按钮。</p>
 	</div>
 	<div id="groups-title">
-		<h2><span class="title-placeholder">{您的名字}</span>推荐的附加元件</h2>
-		<p>请在下方选择符合您想要推荐的附加元件类别，并为其加入您推荐的附加元件：</p>
+		<h2><span class="title-placeholder">{您的名字}</span>推荐的附加组件</h2>
+		<p>请在下方选择符合您想要推荐的附加组件类别，并为其加入您推荐的附加组件：</p>
 	</div>
 	<div id="groups" class="sortable">
 <?php
@@ -174,7 +174,7 @@ function group($group, $addons) {
 			<div class="group-title<?php print (isset($user_id))?'':' not-selected'; ?>" id="g_<?php print $id ?>">
 				<input type="checkbox" <?php print (isset($user_id))?'checked="checked"':''; ?>/>
 				<h3><?php print htmlspecialchars($title) ?></h3>
-				<p class="group-add-addon"><a href="#" title="在此属性下新增附加元件"><span class="ui-icon ui-icon-circle-plus">&nbsp;</span>新增元件</a></p>
+				<p class="group-add-addon"><a href="#" title="在此属性下新增附加组件"><span class="ui-icon ui-icon-circle-plus">&nbsp;</span>新增元件</a></p>
 				<p><?php print htmlspecialchars($description) ?></p>
 			</div>
 			<div class="group-addons">
@@ -193,14 +193,14 @@ foreach ($allgroups as $group) {
 ?>
 	</div>
 	<div id="groups-tail">
-			<p>直接从页面安装附加元件的说明会出现在这里。</p>
+			<p>直接从页面安装附加组件的说明会出现在这里。</p>
 	</div>
-	<div id="window_addons" class="window" title="新增附加元件">
+	<div id="window_addons" class="window" title="新增附加组件">
 		<form action="#" id="addon_query_form">
-			<p>搜寻: <?php print form_input(array('id' =>'addon_query', 'value' => '')); ?> <button type="submit">寻找附加元件</button></p>
+			<p>搜寻: <?php print form_input(array('id' =>'addon_query', 'value' => '')); ?> <button type="submit">寻找附加组件</button></p>
 		</form>
 		<p id="addon_query_desc">&nbsp;</p>
-		<p id="addon_query_notfound">没有找到任何附加元件，可能是因为您要找的附加元件从未被推荐过。您可以在搜寻拦贴上该附加元件在 <a href="https://addons.mozilla.org/" class="newwindow">Mozilla 附加元件</a>网站的网址直接推荐。</p>
+		<p id="addon_query_notfound">没有找到任何附加组件 ，可能是因为该附加组件从未被推荐过。您可以在上框中贴入其在 <a href="https://addons.mozilla.org/" class="newwindow">Firefox 附加组件</a>网站中的地址直接推荐。</p>
 		<div id="addon_query_result" class="detailed">&nbsp;</div>
 	</div>
 	<div id="window_progress" class="window" title="与伺服器通讯中...">

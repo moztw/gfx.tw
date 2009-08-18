@@ -24,7 +24,7 @@ $avatar = avatarURL($avatar, $email);
 		<p>下载将在几秒内开始，如果没有启动请按<a href="/download">这里</a>。</p>
 		<p>安装完毕后，别忘了使用 Firefox 连到：</p>
 		<p class="gfx-url"><?php print site_url($name) ?></p>
-		<p>依照<?php print htmlspecialchars($title) ?>的建议，加入附加元件改造属于您的火狐！</p>
+		<p>依照<?php print htmlspecialchars($title) ?>的建议，加入附加组件改造属于您的火狐！</p>
 	</div>
 	<div id="features">
 <?php
@@ -66,9 +66,9 @@ foreach ($features as $feature) {
 	<p>喜欢<?php print htmlspecialchars($title) ?>推荐的内容？<br /><a href="<?php print site_url($name) ?>" id="push-plurk"><img src="http://www.plurk.com/favicon.ico" alt="[]" /> 扑一下</a> <a href="<?php print site_url($name) ?>" id="push-twitter"><img src="http://twitter.com/favicon.ico" alt="[]" /> 推一下</a>！</p>
 	</div>
 	<div id="groups-title">
-		<h2><?php print htmlspecialchars($title) ?>推荐的附加元件</h2>
-		<p>Firefox 有符合上网需求的基础功能，若想加强它的能力，可安装扩充套件。这些套件大多与 Firefox 完美整合，您只会感到 Firefox“长”出了一个功能，而不会当作使用另一套软体。</p>
-		<p>以下是<?php print htmlspecialchars($title) ?>所推荐的附加元件：</p>
+		<h2><?php print htmlspecialchars($title) ?>推荐的附加组件</h2>
+		<p>Firefox 浏览器提供使用者上网所需的基本功能；除此之外，全球开发者更设计了各式各样的附加组件，提供使用者自行增加牠的功能。这些附加组件大多与 Firefox 完美结合，让您借由这些有创意的附加组件，自订您专属的「火狐」！</p>
+		<p>以下是<?php print htmlspecialchars($title) ?>所推荐的附加组件：</p>
 		<p id="groups-show-detail"><input type="checkbox" id="groups-show-detail-box" checked="checked" /> <label for="groups-show-detail-box">显示套件说明</label></p>
 	</div>
 	<div id="groups" class="detailed">
@@ -113,7 +113,7 @@ function addon($addon) {
 		if ($os_4 === 'Y') print ' os_4';
 		if ($os_5 === 'Y') print ' os_5';
 ?>">
-			<input type="checkbox" disabled="disabled" id="install-<?php print $id ?>" /><label for="install-<?php print $id ?>">请至附加元件网站安装</label>
+			<input type="checkbox" disabled="disabled" id="install-<?php print $id ?>" /><label for="install-<?php print $id ?>">请至附加组件网站安装</label>
 		</p>
 <?php 
 	}
@@ -160,16 +160,16 @@ foreach ($groups as $group) {
 ?>
 	</div>
 	<div id="groups-tail">
-		<p>这些附加元件的说明主要来自于 <a href="https://addons.mozilla.org/" class="newwindow">Mozilla 附加元件网站</a>，
+		<p>这些附加组件的说明主要来自于 <a href="https://addons.mozilla.org/" class="newwindow">Mozilla 附加组件网站</a>，
 由作者提供。</p>
 		<div id="groups-install">
-			<p><button>立刻安装</button>安装所有勾选的附加元件！</p>
-			<p>在 Mozilla 附加元件网站标示为“实验中”，或是安装前需特别同意使用条款、隐私权保护条款的扩充套件无法在此快速安装；请自行前往各扩充套件网页。</p>
+			<p><button>立刻安装</button>安装所有勾选的附加组件！</p>
+			<p>在 Mozilla 附加组件网站标示为“实验中”，或是安装前需特别同意使用条款、隐私权保护条款的扩充套件无法在此快速安装；请自行前往各扩充套件网页。</p>
 			<p>
 		</div>
 	</div>
 	</div>
 	<div id="window_extinstall" class="window" title="正在安装...">
-		<p><strong>请点选右上角出现的“允许”按钮，允许敝站为您安装附加元件。</strong></p>
+		<p><strong>请点选右上角出现的“允许”按钮，允许敝站为您安装附加组件。</strong></p>
 		<p>根据您所勾选的元件数量，Firefox 可能需要一些时间确认档案后才会出现“软体安装”通知。</p>
 	</div>

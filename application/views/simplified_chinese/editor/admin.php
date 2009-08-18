@@ -9,7 +9,7 @@ $this->load->helper('form');
 		<li class="ui-corner-top ui-state-default">统计</li>
 		<li class="ui-corner-top ui-state-default">使用者帐号</li>
 		<li class="ui-corner-top ui-state-default">功能推荐</li>
-		<li class="ui-corner-top ui-state-default">附加元件</li>
+		<li class="ui-corner-top ui-state-default">附加组件</li>
 		<li class="ui-corner-top ui-state-default">说明文件</li>
 	</ul>
 	<div class="tab-content ui-widget-content">
