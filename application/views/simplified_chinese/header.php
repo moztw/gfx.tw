@@ -55,7 +55,7 @@ if (isset($id)) {
 		<div class="ui-widget-content ui-corner-all"> 
 			<p><a href="#" class="ui-icon ui-icon-circle-close ui-corner-all">
 			</a><span class="ui-corner-all ui-state-default" id="newcomer-intro-login">立即加入，免注册！</span>
-“抓火狐”是属于您的 Firefox 推广平台。</p>
+「抓火狐」是属于您的 Firefox 推广平台。</p>
 			<p class="message-desc" id="visitor-intro">&nbsp;</p>
 			<div class="random-avatars random-avatars-loading">
 			</div>
@@ -69,27 +69,31 @@ if (isset($id)) {
 	</div>
 	<div id="window_login" class="window" title="登录">
 		<form action="<?php print site_url('auth/login'); ?>" method="post">
-			<p><label for="openid-identifier">您的 OpenID 网址: </label><input type="text" name="openid-identifier" id="openid-identifier" value="" /> <input type="submit" value="登录" /></p>
+			<p><label for="openid-identifier">选择您的 OpenID 帐号，或直接输入网址：</label>
+			<input type="text" name="openid-identifier" id="openid-identifier" class="openid-identifier" value="" /> <input type="submit" value="登录" />
+			<span id="openid-username">使用者名称：<input type="text" size="12" /></span>
+			<span id="openid-nousername">点选「登录」按钮开始登录。</span>
+			</p>
+			<ul id="openid-sp">
+				<li><label><input type="radio" name="username" value="" checked="checked" />(直接输入)</label></li>
+				<li><label><input type="radio" name="username" value="https://www.google.com/accounts/o8/id"/><span class="sprite google"></span>Google</label></li>
+				<li><label><input type="radio" name="username" value="https://me.yahoo.com"/><span class="sprite yahoo"></span>Yahoo!</label></li>
+				<li><label><input type="radio" name="username" value="openid.aol.com/(username)"/><span class="sprite aim"></span>AIM</label></li>
+				<li><label><input type="radio" name="username" value="(username).livejournal.com"/><span class="sprite livejournal"></span>LiveJournal</label></li>
+				<li><label><input type="radio" name="username" value="(username).myid.tw"/><span class="sprite myidtw"></span>myID.tw</label></li>
+				<li><label><input type="radio" name="username" value="(username).myopenid.com"/><span class="sprite myopenid"></span>myOpenID</label></li>
+				<li><label><input type="radio" name="username" value="profile.typekey.com/(username)"/><span class="sprite typepad"></span>TypePad</label></li>
+				<li><label><input type="radio" name="username" value="(username).wordpress.com"/><span class="sprite wordpress-com"></span>WordPress.com</label></li>
+			</ul>
 			<h3>OpenID 是什么？</h3>
-			<p>OpenID 让您使用其他网站的帐号登录敝站，避免再次记忆帐号与输入资料的困扰。若您曾在下列网站注册过，您可以在下方选择想要使用的 OpenID。</p>
-			<p><label for="openid_sp">OpenID 服务商：</label><select id="openid_sp">
-				<option value="" label="(选择服务商)" selected="selected">(选择服务商)</option>
-				<optgroup label="不需修改网址可直接登录">
-					<option value="https://www.google.com/accounts/o8/id">Google</option>
-					<option value="https://me.yahoo.com">Yahoo!</option>
-				</optgroup>
-				<optgroup label="需在网址加入帐号">
-					<option value="openid.aol.com/[帐号]">AIM</option>
-					<option value="[帐号].livejournal.com">LiveJournal</option>
-					<option value="[帐号].myid.tw">myID.tw</option>
-					<option value="[帐号].myopenid.com">myOpenID</option>
-					<option value="profile.typekey.com/[帐号]">TypePad</option>
-					<option value="[帐号].wordpress.com">WordPress.com</option>
-				</optgroup>
-			</select></p>
-			<p>若您真的没有任何 OpenID，或是不愿意让敝站帐号与之连结，您可以到 <a href="http://myid.tw/" id="myid" class="newwindow">myID.tw</a> 申请一个属于您的 OpenID。</p>
-			<p><strong>注意：</strong>您必须要分别登出服务商网站与抓火狐网站才能完全清除您的认证。</p>
-			<p><a href="/about/faq#forgetopenid">忘记使用过的 OpenID 吗？</a></p>
+			<p>OpenID 让您使用其他网站的帐号登录敝站，避免再次记忆帐号与输入资料的困扰。</p>
+			<ul>
+				<li>若曾在上列网站注册，请选择想要使用的 OpenID。</li>
+				<li>若没有任何 OpenID，或是不愿意让敝站帐号与之连结，您可以至 <a href="http://myid.tw/" id="myid" class="newwindow">myID.tw</a> 申请一个属于您的 OpenID。</li>
+				<li>认证的过程<strong>抓火狐网站不会取得您的帐号密码</strong>，请放心。</li>
+				<li>您必须<strong>要分别登出 OpenID 帐号网站与抓火狐网站才能完全清除您的认证。</strong></li>
+			</ul>
+			<p><a href="/about/faq#forgetopenid">忘记曾用哪个 OpenID 登录吗？</a></p>
 		</form>
 	</div>
 <?php
