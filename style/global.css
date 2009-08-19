@@ -432,6 +432,15 @@ span.title-empty {
 #titleblock h1 {
 	font-size: 1em;
 }
+
+#titleblock #title-avatar-textarea {
+        position: absolute;
+	margin: 0; padding: 0;
+        top: 44px; left: 264px;
+        height: 72px; width: 72px;
+        overflow: hidden; 
+}
+
 #titleblock #title-avatar {
 	position: absolute;
 	top: 50px; left: 270px;
@@ -467,7 +476,7 @@ span.title-empty {
 }
 
 #titleblock #title-name-edit input {
-	top: 43px;
+	top: 44px;
 	display: none;
 }
 #titleblock #title-name-edit input.empty {
