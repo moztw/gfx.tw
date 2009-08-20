@@ -71,7 +71,7 @@ gfx.page = {
 		'blur' : {
 			'#title-name-edit input' : function () {
 				if (this.value !== '') {
-					/* $('#title-name').text(this.value).css('display', null); */
+					$('#title-name').text(this.value); /* .css('display', null); */
 					$('span.title-placeholder').removeClass('title-empty').text(this.value);
 					/* $(this).css('display', null); */
 					gfx.page.infoChanged = true;
