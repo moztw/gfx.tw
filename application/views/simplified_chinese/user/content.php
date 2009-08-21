@@ -51,10 +51,10 @@ foreach ($features as $feature) {
 	<ul>
 		<li><span class="item">抓火狐网址</span> <a class="gfxurl value" href="<?php print site_url($name); ?>"><?php print site_url($name); ?></a></li>
 <?php if ($web)  { ?>
-		<li><span class="item">网站</span> <a class="web value newwindow" href="<?php print htmlspecialchars($web); ?>" title="<?php print htmlspecialchars($web); ?>"><?php print htmlspecialchars($web); ?></a></li>
+		<li><span class="item">网站</span> <a class="web value newwindow" href="<?php print htmlspecialchars($web); ?>" title="<?php print htmlspecialchars($web); ?>" rel="me nofollow"><?php print htmlspecialchars($web); ?></a></li>				
 <?php } ?>
 <?php if ($blog)  { ?>
-		<li><span class="item">部落格</span> <a class="blog value newwindow" href="<?php print htmlspecialchars($blog); ?>"  title="<?php print htmlspecialchars($blog); ?>"><?php print htmlspecialchars($blog); ?></a></li>
+		<li><span class="item">部落格</span> <a class="blog value newwindow" href="<?php print htmlspecialchars($blog); ?>" title="<?php print htmlspecialchars($blog); ?>" rel="me nofollow"><?php print htmlspecialchars($blog); ?></a></li>
 <?php } ?>
 <?php if ($forum_username)  { ?>
 		<li><span class="item">MozTW 讨论区 ID</span> <a class="forum-username value newwindow" href="http://forum.moztw.org/memberlist.php?mode=viewprofile&amp;u=<?php print htmlspecialchars($forum_id) ?>"><?php print htmlspecialchars($forum_username); ?></a></li>

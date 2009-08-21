@@ -23,12 +23,13 @@ $avatar = avatarURL($avatar, $email);
 	<div id="titleblock">
 		<form id="title-name-form" action="#">
 			<h1>
-				<span id="title-avatar" class="editable" title="选择个人图示"><img src="<?php print $avatar ?>" alt="[个人小图示]" /></span>
+				<input type="text" id="title-avatar-textarea" />
+				<span id="title-avatar" class="editable" title="选择个人图示"><img src="<?php print $avatar ?>" alt="[個人小圖示]" /></span>
 				<span id="title-name" class="editable"><?php print htmlspecialchars($title) ?></span>
 				<span id="title-name-edit"><?php print form_input('title', $title); ?></span>
 				<span id="title-1">推荐您改用</span>
 				<span id="title-2">Firefox</span>
-				<span id="title-3">看网页！</span>
+				<span id="title-3">看网页！</span>				
 			</h1>
 		</form>
 		<div class="download">
@@ -47,7 +48,7 @@ $avatar = avatarURL($avatar, $email);
 		</div>
 		<div class="avatar_selection">
 			<div id="avatar_gravatar" class="avatar_icon">
-				<img src="<? print 'http://www.gravatar.com/avatar/' . md5($email) . '?s=60&amp;r=g&amp;d=' . urlencode(site_url('images/avatar-default.gif')); ?>" alt="Gravatar" />
+				<img src="<? print 'http://www.gravatar.com/avatar/' . md5($email) . '?s=60&amp;r=g&amp;d=identicon'; ?>" alt="Gravatar" />				
 			</div>
 			<p><a href="http://www.gravatar.com/" class="newwindow">Gravatar</a>上的图示</p>
 			<p>(<a href="#" id="change-email">修改 E-mail</a>)</p>
