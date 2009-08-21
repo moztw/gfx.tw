@@ -495,12 +495,12 @@ var gfx = {
 		'dialog' : {
 			'login' : {
 				'width' : 500,
-				'height' : 500,
+				'height' : 425,
 				'position' : ['center', 100]
 			},
 			'download' : {
 				'width' : 500,
-				'height' : 360,
+				'height' : 340,
 				'position' : ['center', 130],
 				'buttons' : { }
 			},
