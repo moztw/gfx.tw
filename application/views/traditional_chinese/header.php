@@ -89,9 +89,8 @@ if (isset($id)) {
 			<p>OpenID 讓您使用其他網站的帳號登入敝站，避免再次記憶帳號與輸入資料的困擾。</p>
 			<ul>
 				<li>若曾在上列網站註冊，請選擇想要使用的 OpenID。</li>
-				<li>若沒有任何 OpenID，或是不願意讓敝站帳號與之連結，您可以至 <a href="http://myid.tw/" id="myid" class="newwindow">myID.tw</a> 申請一個屬於您的 OpenID。</li>
+				<li>若沒有任何 OpenID，您可以至 <a href="http://myid.tw/" id="myid" class="newwindow">myID.tw</a> 申請一個屬於您的 OpenID。</li>
 				<li>認證的過程<strong>抓火狐網站不會取得您的帳號密碼</strong>，請放心。</li>
-				<li>您必須<strong>要分別登出 OpenID 帳號網站與抓火狐網站才能完全清除您的認證。</strong></li>
 			</ul>
 			<p><a href="/about/faq#forgetopenid">忘記曾用哪個 OpenID 登入嗎？</a></p>
 		</form>
