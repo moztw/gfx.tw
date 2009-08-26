@@ -48,7 +48,7 @@ $avatar = avatarURL($avatar, $email);
 		</div>
 		<div class="avatar_selection">
 			<div id="avatar_gravatar" class="avatar_icon">
-				<img src="<? print 'http://www.gravatar.com/avatar/' . md5($email) . '?s=60&amp;r=g&amp;d=identicon'; ?>" alt="Gravatar" />
+				<img src="<? print 'http://www.gravatar.com/avatar/' . md5($email) . '?s=60&amp;r=g&amp;d=wavatar'; ?>" alt="Gravatar" />
 			</div>
 			<p><a href="http://www.gravatar.com/" class="newwindow">Gravatar</a>上的圖示</p>
 			<p>(<a href="#" id="change-email">修改 E-mail</a>)</p>
