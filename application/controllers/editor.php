@@ -242,7 +242,9 @@ class Editor extends Controller {
 
 		if ($infoChanged
 			|| $this->input->post('features')
-			|| !file_exists($d . 'featurecard.png')) {
+			|| !file_exists($d . 'featurecard.png')
+			|| !file_exists($d . 'featurecard-h.png')
+		) {
 			$F = array();
 			for ($i = 0; $i < 3; $i++) {
 				$feature = $this->db->query('SELECT features.name, features.title, features.description FROM features ' 
