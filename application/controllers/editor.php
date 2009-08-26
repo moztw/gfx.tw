@@ -242,7 +242,6 @@ class Editor extends Controller {
 
 		if ($infoChanged
 			|| $this->input->post('features')
-			|| !file_exists($d . 'featurecard.html')
 			|| !file_exists($d . 'featurecard.png')) {
 			$F = array();
 			for ($i = 0; $i < 3; $i++) {
@@ -315,6 +314,47 @@ class Editor extends Controller {
 			imagepng($card, $d . 'featurecard.png');
 			imagedestroy($card);
 
+			// featurecard-h.png
+			$card = imagecreatefromgd2(
+				'./images/' . $this->config->item('language') . '/featurecard-h.gd2'
+			);
+			/* $D = imagettfbbox(14, 0, $this->config->item('gfx_sticker_font'), $title);*/
+			imagettftext(
+				$card,
+				11.5,
+				0,
+				350, /*(200-($D[2]-$D[0]))/2,*/ /* centered */
+				28,
+				imagecolorallocate($card, 0, 0, 0),
+				$this->config->item('gfx_sticker_font'),
+				$title
+			);
+			if (file_exists('./stickerimages/features/' . $F[0]['name'] . '.gd2')) {
+				imagecopy(
+					$card,
+					imagecreatefromgd2('./stickerimages/features/' . $F[0]['name'] . '.gd2'),
+					186, 9,
+					0, 0, 150, 20);
+			}
+			if (file_exists('./stickerimages/features/' . $F[1]['name'] . '.gd2')) {
+				imagecopy(
+					$card,
+					imagecreatefromgd2('./stickerimages/features/' . $F[1]['name'] . '.gd2'),
+					186, 31,
+					0, 0, 150, 20);
+			}
+			if (file_exists('./stickerimages/features/' . $F[2]['name'] . '.gd2')) {
+				imagecopy(
+					$card,
+					imagecreatefromgd2('./stickerimages/features/' . $F[2]['name'] . '.gd2'),
+					272, 9,
+					0, 0, 150, 20);
+			}
+			imagealphablending($card, true);
+			imagesavealpha($card, true);
+			imagepng($card, $d . 'featurecard-h.png');
+			imagedestroy($card);
+
 			//smallsticker.png
 			$sticker = imagecreatefromgd2(
 				'./images/' . $this->config->item('language') . '/smallsticker.gd2'
@@ -333,6 +373,26 @@ class Editor extends Controller {
 			imagealphablending($sticker, true);
 			imagesavealpha($sticker, true);
 			imagepng($sticker, $d . 'smallsticker.png');
+			imagedestroy($sticker);
+
+			//smallsticker2.png
+			$sticker = imagecreatefromgd2(
+				'./images/' . $this->config->item('language') . '/smallsticker2.gd2'
+			);
+			/* $D = imagettfbbox(14, 0, $this->config->item('gfx_sticker_font'), $title);*/
+			imagettftext(
+				$sticker,
+				11.5,
+				0,
+				57, /*(200-($D[2]-$D[0]))/2,*/ /* centered */
+				65,
+				imagecolorallocate($sticker, 0, 0, 0),
+				$this->config->item('gfx_sticker_font'),
+				$title
+			);
+			imagealphablending($sticker, true);
+			imagesavealpha($sticker, true);
+			imagepng($sticker, $d . 'smallsticker2.png');
 			imagedestroy($sticker);
 		}
 
