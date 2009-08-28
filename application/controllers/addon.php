@@ -111,6 +111,7 @@ class Addon extends Controller {
 	}
 	function _update_amo_addon($amo_id, $id = false, $cleanoutput = true) {
 		if ($amo_id == 0) return false;
+		header('X-MSG: Fetch addon from AMO');
 		/* Fetch from api first */
 		$xml = @file_get_contents($this->config->item('gfx_amo_api_url') . $amo_id);
 		if ($xml && strpos($xml, '<error>') === false) {
@@ -118,6 +119,7 @@ class Addon extends Controller {
 				a vaild xml file to parse
 				let's call DOMDocument class
 			*/
+			header('X-MSG: Got XML');
 			$doc = new DOMDocument();
 			$doc->loadXML($xml);
 			$dom->preserveWhiteSpace = false;
@@ -170,18 +172,20 @@ class Addon extends Controller {
 			$html = @file_get_contents($this->config->item('gfx_amo_url') . $amo_id);
 			/* parse the file, return false if failed */
 			if (!preg_match($this->config->item('gfx_amo_title_regexp'), $html, $M)) {
+				header('X-MSG: got html but w/o title');
 				return false;
 			}
+			header('X-MSG: got html');
 			preg_match($this->config->item('gfx_amo_desc_regexp'), $html, $D);
 
 			$A = array(
-				'title' => html_entity_decode($M[2], ENT_QUOTES, 'UTF-8'),
+				'title' => html_entity_decode(trim(strip_tags($M[2])), ENT_QUOTES, 'UTF-8'),
 				'amo_id' => $amo_id,
 				'url' => '',
 				'xpi_url' => '',
-				'amo_version' => html_entity_decode($M[3], ENT_QUOTES, 'UTF-8'),
+				'amo_version' => html_entity_decode(trim(strip_tags($M[3])), ENT_QUOTES, 'UTF-8'),
 				'icon_url' => ($M[1] === '/img/default_icon.png')?'':'https://addons.mozilla.org' . $M[1],
-				'description' => (isset($D[1]))?html_entity_decode($D[1], ENT_QUOTES, 'UTF-8'):'',
+				'description' => (isset($D[1]))?html_entity_decode(trim(strip_tags($D[1])), ENT_QUOTES, 'UTF-8'):'',
 				'available' => (preg_match($this->config->item('gfx_amo_is_exp_regexp'), $html) === 0)?'Y':'N',
 				'os_0' => (preg_match($this->config->item('gfx_amo_platform_0_regexp'), $html) === 1)?'Y':'N',
 				'os_1' => (preg_match($this->config->item('gfx_amo_platform_1_regexp'), $html) === 1)?'Y':'N',
@@ -191,6 +195,8 @@ class Addon extends Controller {
 				'os_5' => (preg_match($this->config->item('gfx_amo_platform_5_regexp'), $html) === 1)?'Y':'N',
 				'fetched' => date('Y-m-d H:m:s')
 			);
+			#var_dump($A);
+			#exit();
 		}
 		/* update/insert the record */
 		$this->load->database();
