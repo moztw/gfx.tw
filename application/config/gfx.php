@@ -47,11 +47,11 @@ $config['gfx_amo_url'] = 'https://addons.mozilla.org/zh-TW/firefox/addon/';
 $config['gfx_amo_xpi_url'] = 'https://addons.mozilla.org/zh-TW/firefox/downloads/latest/';
 
 /* RegExp to fetch title (version), description */
-$config['gfx_amo_title_regexp'] = '/<h3 class=\"name\"[^>]*><img src=\"([\w\.\/\-]+)\" class=\"addon-icon\" alt=\"\" \/>([^<]+) ([\d\.a-z]+)<\/h3>/';
-$config['gfx_amo_desc_regexp'] = '/<p class=\"desc\"[^>]*>([^<]+)(<\/p>|<br \/>)/';
+$config['gfx_amo_title_regexp'] = '/<h2.*?class="addon">.*?<img src="(.*?)".*?\/>.*?<span>(.*?)([\d\.a-z]+)\s+<\/span>/s';
+$config['gfx_amo_desc_regexp'] = '/<div id="addon-summary".*?>.*?<p.*?>(.*?)<\/p>.*?<\/div>/s';
 
 /* Some keyword to find out the support platforms */
-$config['gfx_amo_is_exp_regexp'] = '/class=\"addon exp\"/';
+$config['gfx_amo_is_exp_regexp'] = '/class=\"primary exp\"/';
 $config['gfx_amo_platform_0_regexp'] = '/platform\-ALL/';
 $config['gfx_amo_platform_1_regexp'] = '/platform\-BSD/';
 $config['gfx_amo_platform_2_regexp'] = '/platform\-Linux/';
