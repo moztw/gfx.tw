@@ -52,7 +52,6 @@ var T = {
 		ADDON_DEL: '刪除',
 		ADDON_SUGGEST_LIST: '或是從下面選擇最多人在此屬性推薦的附加元件 ...',
 		ADDON_SEARCH_RESULT: '搜尋結果：',
-		PUSH: '這是 NAME 推薦 Firefox 的理由 ',
 		PUSH_MINE: '我推薦大家使用 Firefox ',
 		ADMIN_DELETEUSER_CONFIRM: '確定要刪除這個帳號？',
 		ADMIN_FACEOFF_CONFIRM: '切換到帳號之後，您必須登出才能變回自己。您確定嗎？',

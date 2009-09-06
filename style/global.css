@@ -657,6 +657,45 @@ span.title-empty {
 	width: 61px; height: 25px;
 }
 
+#floatblock {
+	position: absolute;
+	margin-top: 10px;
+	margin-left: 868px;
+	width: 66px;
+	background-color: #e0e0ff;
+	padding: 2px;
+	-moz-border-radius: 5px;
+}
+#floatblock.fixed {
+	position: fixed;
+	top: 0;
+}
+#floatblock p {
+	font-weight: bold;
+	padding: 2px 0;
+	margin: 0;
+}
+#floatblock ul {
+	list-style: none;
+	margin: auto 0;
+	padding: 0;
+}
+#floatblock ul li {
+	list-style: none;
+	padding: 4px 0;
+}
+#floatblock .sprite {
+	float: left; margin-right: 4px;
+}
+#floatblock a {
+	text-decoration: none;
+	color: #333333;
+}
+#floatblock a:hover {
+	text-decoration: underline;
+	color: #000000;
+}
+
 #middleblock {
 	overflow: auto;
 	clear: both;
