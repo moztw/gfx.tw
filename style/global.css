@@ -661,9 +661,9 @@ span.title-empty {
 	position: absolute;
 	margin-top: 10px;
 	margin-left: 868px;
-	width: 66px;
+	width: 16px;
 	background-color: #e0e0ff;
-	padding: 2px;
+	padding: 5px;
 	-moz-border-radius: 5px;
 }
 #floatblock.fixed {
@@ -685,7 +685,7 @@ span.title-empty {
 	padding: 4px 0;
 }
 #floatblock .sprite {
-	float: left; margin-right: 4px;
+	margin-right: 4px;
 }
 #floatblock a {
 	text-decoration: none;
@@ -722,6 +722,7 @@ span.title-empty {
 
 #userinfo li {
 	list-style: none;
+	margin-bottom: 5px;
 }
 
 #userinfo .item {
