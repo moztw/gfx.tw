@@ -21,8 +21,9 @@ gfx.page = {
 				$('#features .feature').attr('id', null).addClass('box');
 				$('#featureselection li').removeClass('selected');
 			},
-			'#title-avatar' : function () {
+			'#title-avatar, #title-avatar-textarea' : function () {
 				gfx.openDialog('avatar');
+				return false;
 			},
 			'#avatar_gravatar' : function () {
 				gfx.page.changeAvatar('(gravatar)', $(this).children()[0].src);
