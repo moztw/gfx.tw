@@ -22,6 +22,14 @@ print $this->db->query('SELECT COUNT(`id`) AS count FROM `users`;')->row()->coun
 print $this->db->query('SELECT COUNT(`id`) AS count FROM `users` WHERE `ready` = \'Y\';')->row()->count;
 ?>
 </li>
+			<li>隨機露出人數：<?php
+print $this->db->query('SELECT COUNT(`id`) AS count FROM `users` WHERE `avatar` != \'\' AND `ready` = \'Y\' AND `shown` = \'Y\';')->row()->count;
+?>
+</li>
+			<li>推薦頁使用上傳頭像功能數量：<?php
+print $this->db->query('SELECT COUNT(`id`) AS count FROM `users` WHERE `avatar` != \'\' AND `avatar` != \'(gravatar)\' AND `ready` = \'Y\';')->row()->count;
+?>
+</li>
 			<li>總下載數（每位使用者從 1 開始）：<?php
 print $this->db->query('SELECT SUM(`count`) AS count FROM `users`;')->row()->count;
 ?>
