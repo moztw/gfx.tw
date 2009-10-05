@@ -1,10 +1,5 @@
 RewriteEngine On
 
-#AuthName "gfx.tw staging site"
-#AuthType Basic
-#AuthUserFile "/home/timdream/gfx/stage/htpasswd"
-#require valid-user
-
 #Don't do it the other way around coz lots of POST will get redirected.
 RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
@@ -14,3 +9,4 @@ RewriteRule ^userstickers/$ http://stage.gfx.tw/sticker [R,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteRule ^(.*)$ index.php [L]
+

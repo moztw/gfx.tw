@@ -155,7 +155,7 @@ class Auth extends Controller {
 	}
 	function challenge() {
 		/*
-			A really weak captcha challenge that doesn't involve reCaptcha or GD (to save memory)
+			A really --weak-- useless captcha challenge that doesn't involve reCaptcha or GD (to save memory)
 			Do not apply to anything that we really need to protect against robots.
 		*/
 		$this->load->config('gfx');
@@ -184,10 +184,10 @@ class Auth extends Controller {
 	}
 	function forgetopenid() {
 		$this->load->helper('gfx');
-		if (!checkChallenge('flashdata')) {
+		/*if (!checkChallenge('flashdata')) {
 			header('Location: ' . site_url('about/faq'));
 			exit();
-		}
+		}*/
 		//Due to privicy consideration, we will not show any onscreen message indicate email has been send or not.
 		//Therefore all the flashdata message will be the same from this point on.
 		$this->load->helper('email');

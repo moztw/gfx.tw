@@ -292,6 +292,20 @@ var gfx = {
 					.siblings('.tab-content').eq($(this).prevAll().length).show()
 					.siblings('.tab-content').hide();
 				},
+				'#push-plurk' : function () {
+					window.open(
+						'http://plurk.com/?status='
+						+ encodeURIComponent(T.UI.PUSH.replace('NAME', $('#title-name').text()) + this.href)
+					);
+					return false;
+				},
+				'#push-twitter' : function () {
+					window.open(
+						'http://twitter.com/home/?status='
+						+ encodeURIComponent(T.UI.PUSH.replace('NAME', $('#title-name').text()) + this.href)
+					);
+					return false;
+				},
 				'#push-plurk-mine' : function () {
 					window.open(
 						'http://plurk.com/?status='
@@ -580,28 +594,7 @@ var gfx = {
 					}
 				}
 			);
-			/* scroll floatblock on user pages */
-			try {
-				/* crafted code that breaks in IE6 */
-				document.body.style.position = 'fixed';
-				document.body.style.position = null;
 			
-				var $middleblock = $('#middleblock');
-				var $doc = $(document);
-				var $floatblock = $('#floatblock');
-				$(window).bind(
-					'scroll',
-					function () {
-						/* this will break in IE6 */
-						$floatblock.toggleClass(
-							'fixed',
-							($doc.scrollTop() > $middleblock.offset().top)
-						);
-					}
-				);
-			} catch (e) {
-				/* don't scroll for IE6 users since they won't promote gfx pages with us (?) */
-			}
 
 			/* Show intro block if this is top block */
 			/*if (window.location.pathname === '/') {

@@ -11,7 +11,7 @@
 |	http://example.com/
 |
 */
-$config['base_url']	= "http://stage.gfx.tw/";
+$config['base_url']	= "http://gfx.tw/";
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +41,7 @@ $config['index_page'] = "";
 | 'ORIG_PATH_INFO'	Uses the ORIG_PATH_INFO
 |
 */
+
 $config['uri_protocol']	= "REDIRECT_URL";
 
 /*
@@ -217,7 +218,7 @@ $config['cache_path'] = '';
 | enabled you MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = "l6OW7px3CtIMsoy9SQbG";
+$config['encryption_key'] = "ZFw4RWTt56uPK2QS";
 
 /*
 |--------------------------------------------------------------------------

@@ -41,7 +41,7 @@
 */
 
 $route['default_controller'] = "user";
-$route['scaffolding_trigger'] = "tmd";
+$route['scaffolding_trigger'] = "";
 
 /* We must explicitly define all routes here because the last route will overwrite them all */
 
