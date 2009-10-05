@@ -439,6 +439,7 @@ span.title-empty {
         top: 44px; left: 264px;
         height: 72px; width: 72px;
         overflow: hidden; 
+	cursor: pointer;
 }
 
 #titleblock #title-avatar {

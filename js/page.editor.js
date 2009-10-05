@@ -23,6 +23,7 @@ gfx.page = {
 			},
 			'#title-avatar, #title-avatar-textarea' : function () {
 				gfx.openDialog('avatar');
+				return false;
 			},
 			'#avatar_gravatar' : function () {
 				gfx.page.changeAvatar('(gravatar)', $(this).children()[0].src);
