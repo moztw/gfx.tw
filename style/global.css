@@ -662,7 +662,7 @@ span.title-empty {
 	position: absolute;
 	margin-top: 10px;
 	margin-left: 868px;
-	width: 66px;
+	width: 85px;
 	background-color: #e0e0ff;
 	padding: 2px;
 	-moz-border-radius: 5px;
@@ -684,6 +684,7 @@ span.title-empty {
 #floatblock ul li {
 	list-style: none;
 	padding: 4px 0;
+	font-size: 14px;
 }
 #floatblock .sprite {
 	float: left; 

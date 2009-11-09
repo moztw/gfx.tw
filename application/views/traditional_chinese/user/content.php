@@ -51,7 +51,7 @@ foreach ($features as $feature) {
 			<li><a class="newwindow" title="分享到 Facebook" href="http://www.facebook.com/sharer.php?u=<?php
 /* Facebook fetches sticker image and description from <head> */
 print urlencode(site_url($name));
-?>"><span class="sprite facebook"></span>臉書</a></li>
+?>"><span class="sprite facebook"></span>Facebook</a></li>
 			<li><a class="newwindow" title="噗到 Plurk" href="http://plurk.com/?status=<?php 
 print urlencode('推薦您和' . htmlspecialchars($title) . '一起抓火狐，使用 Firefox 逛網頁！ ' 
 	. site_url(
@@ -63,7 +63,7 @@ print urlencode('推薦您和' . htmlspecialchars($title) . '一起抓火狐，�
 ?>"><span class="sprite plurk"></span>噗浪</a></li>
 			<li><a class="newwindow" title="推到 Twitter" href="http://twitter.com/home/?status=<?php
 print urlencode('推薦您和' . htmlspecialchars($title) . '一起抓火狐，使用 Firefox 逛網頁！ ' . site_url($name));
-?>"><span class="sprite twitter"></span>推特</a></li>
+?>"><span class="sprite twitter"></span>Twitter</a></li>
 			<li><a class="newwindow" title="推薦到 Funp" href="http://funp.com/push/submit/?via=tools&amp;url=<?
 /* TBD: push sticker image and description to funp */
 print urlencode(site_url($name));
