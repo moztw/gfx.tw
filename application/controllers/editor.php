@@ -104,6 +104,9 @@ class Editor extends Controller {
 				case '(gravatar)':
 				$data['avatar'] = '(gravatar)';
 				break;
+				case '(myidtw)':
+				$data['avatar'] = '(myidtw)';
+				break;
 				default:
 				if (preg_match('/^[0-9a-z\/]+\.(gif|jpg|jpeg|png)$/i', $a) && file_exists('./useravatars/' . $a)) {
 					$data['avatar'] = $a;

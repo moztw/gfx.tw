@@ -26,10 +26,15 @@ gfx.page = {
 				return false;
 			},
 			'#avatar_gravatar' : function () {
+				if ($(this).parent().is('.disabled')) return false;
 				gfx.page.changeAvatar('(gravatar)', $(this).children()[0].src);
 			},
 			'#avatar_default' : function () {
 				gfx.page.changeAvatar('(default)', './images/avatar-default.gif');
+			},
+			'#avatar_myidtw' : function () {
+				if ($(this).parent().is('.disabled')) return false;
+				gfx.page.changeAvatar('(myidtw)', $(this).children()[0].src);
 			},
 			'#groups input' : function () {
 				$(this).parent().toggleClass('not-selected', !this.checked);
@@ -160,8 +165,8 @@ gfx.page = {
 	},
 	'dialog' : {
 		'avatar' : {
-			'width' : 500,
-			'height' : 240,
+			'width' : 600,
+			'height' : 300,
 			'position' : ['center', 150]
 		},
 		'progress' : {
@@ -472,7 +477,7 @@ gfx.page = {
 			return {version: parseInt(version[0] || 0 + '.' + version[1], 10) || 0, build: parseInt(version[2], 10) || 0};
 		})();
 		if (Flash.version < 9) {
-			$('#avatar_swfupload').parent().addClass('no-flash')
+			$('#avatar_swfupload').parent().addClass('disabled')
 		} else { 
 			gfx.page.swfupload = new SWFUpload(
 				{

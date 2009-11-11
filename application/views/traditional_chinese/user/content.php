@@ -1,7 +1,7 @@
 <?php
 $this->load->config('gfx');
 $this->load->helper('gfx');
-$avatar = avatarURL($avatar, $email);
+$avatar = avatarURL($avatar, $email, $login);
 
 ?>
 	<div id="titleblock">

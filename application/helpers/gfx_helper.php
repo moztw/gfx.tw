@@ -104,12 +104,18 @@ function checkChallenge($errorType = '') {
 	}
 	return $isValid;
 }
-function avatarURL($avatar, $email, $conn = '&amp;') {
-	if (!$avatar) {
+function avatarURL($avatar, $email, $login, $conn = '&amp;') {
+	switch ($avatar) {
+		case '':
 		$avatar = '/images/avatar-default.gif';
-	} elseif ($avatar === '(gravatar)') {
+		break;
+		case '(gravatar)':
 		$avatar = 'http://www.gravatar.com/avatar/' . md5($email) . '?s=65' . $conn . 'r=g' . $conn . 'd=wavatar';
-	} else {
+		break;
+		case '(myidtw)':
+		$avatar = 'http://myid.tw/plugin/gethead?name=' . urlencode($login) . $conn . 'type=s' . $conn . 'mode=302';
+		break;
+		default:
 		$avatar = '/useravatars/' . $avatar;
 	}
 	return $avatar;
