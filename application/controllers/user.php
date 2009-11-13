@@ -219,13 +219,13 @@ class User extends Controller {
 						Really expensive query, should change it right away should user > 1000 
 						or fill the cache by using crontab instead of user request
 					*/
-					$query = $this->db->query('SELECT `name`, `title`, `avatar`, `email` FROM `users` WHERE `avatar` != \'\' AND `ready` = \'Y\' AND `shown` = \'Y\' ORDER BY RAND() LIMIT 10;');
+					$query = $this->db->query('SELECT `login`, `name`, `title`, `avatar`, `email` FROM `users` WHERE `avatar` != \'\' AND `ready` = \'Y\' AND `shown` = \'Y\' ORDER BY RAND() LIMIT 10;');
 					$users = array();
 					foreach ($query->result_array() as $user) {
 						$users[] = array(
 							'name' => $user['name'],
 							'title' => $user['title'],
-							'avatar' => avatarURL($user['avatar'], $user['email'], '&')
+							'avatar' => avatarURL($user['avatar'], $user['email'], $user['login'], '&')
 						);
 					}
 					$this->cache->save($i, $users, 'random-avatars', 300);

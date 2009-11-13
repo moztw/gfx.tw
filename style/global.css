@@ -1049,13 +1049,15 @@ span.title-empty {
 }
 #window_avatar .avatar_selection {
 	float: left;
-	width: 33%; height: 100%; overflow: hidden;
-	text-align: center;
+	width: 50%; height: 90px; overflow: hidden;
+	margin: 0.5em 0; padding: 0;
 }
 #window_avatar .avatar_selection .avatar_icon {
 	height: 69px; width: 69px;
-	margin: 1em auto;
+	margin: 10px 10px 10px 1px; /* Must >= 1px */
+	padding: 0;
 	cursor: pointer;
+	float: left;
 }
 
 #window_avatar .avatar_selection .avatar_icon img {
@@ -1068,21 +1070,40 @@ span.title-empty {
 	border: 2px solid #cccccc;
 }
 
+#window_avatar .avatar_selection .avatar_desc {
+	font-weight: bold;
+	font-size: 1.1em;
+	line-height: 1.1em;
+	padding-bottom: 0.1em;
+}
+
 #window_avatar .avatar_selection #avatar_swfupload {
 	background: transparent url('../images/avatar-edit.gif') center center no-repeat;
 }
 #window_avatar .avatar_selection #avatar_swfupload:hover {
 	background-color: #cccccc;
 }
-#window_avatar .avatar_selection .flash-desc {
+#window_avatar .avatar_selection .avatar_disabled_desc {
 	display: none;
 }
-#window_avatar .avatar_selection.no-flash #avatar_swfupload {
+#window_avatar .avatar_selection.disabled .avatar_icon {
 	opacity: 0.2;
 	cursor: not-allowed;
 }
-#window_avatar .avatar_selection.no-flash .flash-desc {
+#window_avatar .avatar_selection.disabled .avatar_desc, #window_avatar .avatar_selection.disabled p, #window_avatar .avatar_selection.disabled a {
+	color: #808080;
+}
+#window_avatar .avatar_selection.disabled .avatar_disabled_desc {
 	display: block;
+	color: #800000;
+	background-color: #ffffcc;
+	border: 1px solid #800000;
+	margin: 5px 5px auto 80px;
+	padding: 2px;
+	text-align: center;
+}
+#window_avatar .avatar_selection.disabled .avatar_disabled_desc a {
+	color: #800000;
 }
 #window_avatar p {
 	margin: 0;

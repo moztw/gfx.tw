@@ -2,7 +2,7 @@
 
 $this->load->config('gfx');
 $this->load->helper('gfx');
-$avatar = avatarURL($avatar, $email);
+$avatar = avatarURL($avatar, $email, $login);
 
 ?>
 	<div id="editor-save">
@@ -41,23 +41,57 @@ $avatar = avatarURL($avatar, $email);
 	</div>
 	<div id="window_avatar" class="window" title="選擇個人圖示">
 		<div class="avatar_selection">
-			<div id="avatar_swfupload" class="avatar_icon">
-				<div id="avatar_swfupload_replace">&nbsp;</div>
-			</div>
-			<p>上傳圖片檔案 <strong class="flash-desc">(請安裝最新版 <a href="http://www.adobe.com/flashplayer" class="newwindow">Flash Player</a>)</strong></p>
-		</div>
-		<div class="avatar_selection">
-			<div id="avatar_gravatar" class="avatar_icon">
-				<img src="<? print 'http://www.gravatar.com/avatar/' . md5($email) . '?s=60&amp;r=g&amp;d=wavatar'; ?>" alt="Gravatar" />
-			</div>
-			<p><a href="http://www.gravatar.com/" class="newwindow">Gravatar</a>上的圖示</p>
-			<p>(<a href="#" id="change-email">修改 E-mail</a>)</p>
-		</div>
-		<div class="avatar_selection">
 			<div id="avatar_default" class="avatar_icon">
 				<img src="./images/avatar-default.gif" alt="預設圖示" />
 			</div>
-			<p>預設圖示</p>
+			<p class="avatar_desc">預設圖示</p>
+			<p>使用預設圖示的話會錯過很多好玩的事情喔！</p>
+		</div>
+		<div class="avatar_selection">
+			<div id="avatar_swfupload" class="avatar_icon">
+				<div id="avatar_swfupload_replace">&nbsp;</div>
+			</div>
+			<p class="avatar_desc">上傳圖片檔案</p>
+			<p>從您的電腦上傳圖片檔案作為個人圖示。</p>
+			<p id="avatar_disabled_desc_swfupload" class="avatar_disabled_desc">請安裝最新版 <a href="http://www.adobe.com/flashplayer" class="newwindow">Flash Player</a></strong></p>
+		</div>
+<?php
+if ($email) {
+?>
+		<div class="avatar_selection">
+<?php
+} else {
+?>
+		<div class="avatar_selection disabled">
+<?php
+}
+?>
+			<div id="avatar_gravatar" class="avatar_icon">
+				<img src="<?php print 'http://www.gravatar.com/avatar/' . md5($email) . '?s=60&amp;r=g&amp;d=wavatar'; ?>" alt="Gravatar" />
+			</div>
+			<p class="avatar_desc"> Gravatar 頭像</p>
+			<p>使用 <a href="http://www.gravatar.com/" class="newwindow">Gravatar</a> 上的個人圖示或是 E-mail 雜湊圖片。</p>
+			<p id="avatar_disabled_desc_gravatar" class="avatar_disabled_desc">請先<a href="#" id="change-email">輸入 E-mail</a></p>
+		</div>
+<?php
+if (preg_match('/myid\.tw\/$/', $login)) { ?>
+		<div class="avatar_selection">
+			<div id="avatar_myidtw" class="avatar_icon">
+				<img src="<?php print 'http://myid.tw/plugin/gethead?name=' . urlencode($login) . '&amp;type=s&amp;mode=302'; ?>" alt="MyID.tw 個人圖像" />
+
+<?php
+} else { ?>
+		<div class="avatar_selection disabled">
+			<div id="avatar_myidtw" class="avatar_icon">
+				<img src="http://myid.tw/images/userimage.jpg" alt="MyID.tw 個人圖像" />
+
+
+<?php
+} ?>
+			</div>
+			<p class="avatar_desc">MyID.tw 個人圖像</p>
+			<p>使用您在 <a href="https://myid.tw/" class="newwindow">MyID.tw</a> 上傳的個人圖像當作圖示。</p>
+			<p id="avatar_disabled_desc_myidtw" class="avatar_disabled_desc">僅供 MyID.tw 使用者使用</p>
 		</div>
 	</div>
 	<div id="window_download" class="window" title="正在啟動下載...">
