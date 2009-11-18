@@ -81,6 +81,9 @@ class Auth extends Controller {
 						$data['avatar'] = '(gravatar)';
 						$data['email'] = $sreg['email'];
 					}
+					if (preg_match('/myid\.tw\/$/', $data['login'])) {
+						$data['avatar'] = '(myidtw)';
+					}
 					$this->db->insert('users', $data);
 					$data['id'] = $this->db->insert_id();
 					$this->db->insert('u2g', array('user_id' => $data['id'], 'group_id' => '1', 'order' => '1'));
