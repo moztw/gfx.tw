@@ -581,8 +581,10 @@ var gfx = {
 			);
 			/* scroll floatblock on user pages */
 			try {
-				/* crafted code that breaks in IE6 */
-				document.body.style.position = 'fixed';
+				/* Crafted code that makes all IEs throw error, not just IE6
+ 				   couldn't find a way to detect IE6 with feature detection...
+ 				 */
+				document.body.style.position = 'frak';
 				document.body.style.position = '';
 			
 				var $middleblock = $('#middleblock');
@@ -599,7 +601,7 @@ var gfx = {
 					}
 				);
 			} catch (e) {
-				/* don't scroll for IE6 users since they won't promote gfx pages with us (?) */
+				/* don't scroll for IE users since they won't promote gfx pages with us (?) */
 			}
 
 			/* Show intro block if this is top block */
