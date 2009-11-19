@@ -70,7 +70,7 @@ if ($email) {
 				<img src="<?php print 'http://www.gravatar.com/avatar/' . md5($email) . '?s=60&amp;r=g&amp;d=wavatar'; ?>" alt="Gravatar" />
 			</div>
 			<p class="avatar_desc"> Gravatar 頭像</p>
-			<p>使用 <a href="http://www.gravatar.com/" class="newwindow">Gravatar</a> 上的個人圖示或是 E-mail 雜湊圖片。</p>
+			<p>使用 <a href="http://www.gravatar.com/" id="link-gravatar" class="newwindow">Gravatar</a> 上的個人圖示或是 E-mail 雜湊圖片。</p>
 			<p id="avatar_disabled_desc_gravatar" class="avatar_disabled_desc">請先<a href="#" id="change-email">輸入 E-mail</a></p>
 		</div>
 <?php
@@ -90,7 +90,7 @@ if (preg_match('/myid\.tw\/$/', $login)) { ?>
 } ?>
 			</div>
 			<p class="avatar_desc">MyID.tw 個人圖像</p>
-			<p>使用您在 <a href="https://myid.tw/" class="newwindow">MyID.tw</a> 上傳的個人圖像當作圖示。</p>
+			<p>使用您在 <a href="https://myid.tw/" id="link-myidtw" class="newwindow">MyID.tw</a> 上傳的個人圖像當作圖示。</p>
 			<p id="avatar_disabled_desc_myidtw" class="avatar_disabled_desc">僅供 MyID.tw 使用者使用</p>
 		</div>
 	</div>
