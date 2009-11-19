@@ -294,7 +294,7 @@ gfx.page = {
 		this.dialog.almostdone.buttons[T.BUTTONS.ALMOSTDONE_OK] = gfx.page.savePage;
 		this.dialog.info.buttons[T.BUTTONS.INFO_SAVE] = function () {
 			if (!$('#info_name').val()) {
-				gfx.alert(T.ALERT.EDITOR_NAME_EMPTY);
+				gfx.alert('EDITOR_NAME_EMPTY');
 				$('#info_name').focus();
 				return;
 			}
@@ -511,7 +511,7 @@ gfx.page = {
 										gfx.page.swfupload.setButtonDisabled(true);
 										gfx.page.swfupload.startUpload();
 									} catch (e) {
-										window.alert('FLASH FAILED.');
+										gfx.alert('EDITOR_UPLOAD_FLASH_FAILED');
 									}
 								},
 								100

@@ -190,6 +190,7 @@ var gfx = {
 						gfx.openDialog('login');
 						$('#openid-sp input:checked').click();
 					}
+					gfx.tracker('Buttons', $(this).attr('id'));
 					return false;
 				},
 				'#openid-sp input' : function () {
@@ -216,7 +217,10 @@ var gfx = {
 					$('#intro-block').toggleClass('show', show);
 					$('#header').toggleClass('no-margin', show);
 					$(this).parent().toggleClass('active', show);
-					if (show) gfx.randomAvatar(true);
+					if (show) {
+						gfx.randomAvatar(true);
+						gfx.tracker('Buttons', $(this).attr('id'));
+					}
 					return false;
 				},
 				'#link-newcomer-intro' : function () {
@@ -224,12 +228,14 @@ var gfx = {
 					if ($('#newcomer-intro:visible').length === 0) {
 						$('#newcomer-intro').slideDown(500);
 						gfx.randomAvatar(true);
+						gfx.tracker('Buttons', $(this).attr('id'));
 					} else {
 						$('#newcomer-intro').slideUp(500);
 					}
 					return false;
 				},
 				'#groups-show-detail-box' : function () {
+					gfx.tracker('Buttons', $(this).attr('id'));
 					if (this.checked) {
 						$('#groups').addClass('detailed');
 					} else {
@@ -251,6 +257,7 @@ var gfx = {
 					/*
 						setTimeout(function () {window.location.href = dl; }, 100);
 					*/
+					gfx.tracker('Download', 'Firefox');
 					window.location.href = dl;
 
 					return false;
@@ -276,9 +283,7 @@ var gfx = {
 						}
 					);
 					gfx.openDialog('extinstall');
-					try {
-						pageTracker._trackEvent("Addons", "install");
-					} catch (e) {}
+					gfx.tracker('Download', 'Addons');
 					window.InstallTrigger.install(l);
 				},
 				'#link_manage a' : function () {
@@ -382,22 +387,16 @@ var gfx = {
 					);
 				},
 				'#link-mozilla' : function () {
-					try {
-						pageTracker._trackEvent("External", "mozilla");
-					} catch (e) {
-					}
+					gfx.tracker('External', 'mozilla');
 				},
 				'#link-moztw' : function () {
-					try {
-						pageTracker._trackEvent("External", "moztw");
-					} catch (e) {
-					}
+					gfx.tracker('External', 'moztw');
 				},
-				'#myid' : function () {
-					try {
-						pageTracker._trackEvent("External", "MyID.tw");
-					} catch (e) {
-					}
+				'#link-myidtw' : function () {
+					gfx.tracker('External', 'MyID.tw');
+				},
+				'#link-gravatar' : function () {
+					gfx.tracker('External', 'Gravatar');
 				},
 				'a.newwindow' : function () {
 					window.open(this.href);
@@ -708,6 +707,7 @@ var gfx = {
 		} else {
 			$('#window_' + id).dialog('open');
 		}
+		gfx.tracker('Dialog', id);
 	},
 	'closeDialog' : function (id) {
 		$('#window_' + id).dialog("close");
@@ -760,6 +760,9 @@ var gfx = {
 			msg = T.ALERT[msg];
 		}
 		window.alert(msg);
+		if (tag) {
+			gfx.tracker('Alert', tag);
+		}
 		/* tag is reserved for record user actions */
 	},
 	'ajaxError' : function (result) {
@@ -775,6 +778,14 @@ var gfx = {
 	},
 	'getOS' : function () {
 		return (/(win|mac|linux)/.exec(window.navigator.platform.toLowerCase()) || [null])[0];
+	},
+	'tracker' : function (category, action, optional_label, optional_value) {
+		try {
+			pageTracker._trackEvent(category, action, optional_label, optional_value);
+		} catch (e) {}
+		try {
+			console.log('tracker', category, action, optional_label, optional_value);
+		} catch (e) {}
 	}
 };
 
