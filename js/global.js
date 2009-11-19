@@ -583,7 +583,7 @@ var gfx = {
 			try {
 				/* crafted code that breaks in IE6 */
 				document.body.style.position = 'fixed';
-				document.body.style.position = null;
+				document.body.style.position = '';
 			
 				var $middleblock = $('#middleblock');
 				var $doc = $(document);
