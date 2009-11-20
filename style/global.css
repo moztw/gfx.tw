@@ -152,9 +152,8 @@ optgroup {
 
 .header-block .header-block-title {
 	font-size: 1.2em;
-	margin: 0; padding: 1em 0;
+	margin: 0; padding: 1em 0.85em;
 	font-weight: bold;
-	float: left;
 }
 
 .header-block .header-block-desc {
@@ -661,7 +660,7 @@ span.title-empty {
 #floatblock {
 	position: absolute;
 	margin-top: 10px;
-	margin-left: 868px;
+	margin-left: 856px;
 	width: 85px;
 	background-color: #e0e0ff;
 	padding: 2px;
@@ -703,7 +702,7 @@ span.title-empty {
 	overflow: auto;
 	clear: both;
 	background: transparent url('../images/userpage-block-bg.png') left top repeat-y;
-	width: 860px;
+	width: 850px;
 }
 
 #userinfo {
@@ -752,7 +751,7 @@ span.title-empty {
 	white-space: normal;
 }
 #groups {
-	float: right; width: 572px;
+	float: right; width: 562px;
 	border: 4px solid #ffff99;
 	border-top: none;
 	border-bottom: none;
@@ -765,7 +764,7 @@ span.title-empty {
 }
 
 #groups-title, #groups-tail {
-	float: right; width: 572px;
+	float: right; width: 562px;
 	border: 4px solid #ffff99;
 	background-color: #ffffcc;
 }
