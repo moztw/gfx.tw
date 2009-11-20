@@ -16,7 +16,7 @@ print '<?xml version="1.0" encoding="UTF-8"?>';
 <body>
 {header}
 {messages}
-<div class="ui-widget message show{announcement}">
+<div class="ui-widget message show{announcement}" rel="{rel}">
 	<div class="ui-state-{type} ui-corner-all"> 
 		<p><a href="#" class="ui-icon ui-icon-circle-close ui-corner-all"></a><!--<span class="ui-icon ui-icon-{icon}"></span>-->
 {message}</p>
