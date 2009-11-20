@@ -365,14 +365,15 @@ gfx.page = {
 		};
 
 		if (window.postMessage) {
-			window.addEventListener(
-				'message',
-				function (e) {
-					$('#info_forum').val(e.data);
-					$('#forum_auth_iframe').css('display', null).empty();
-				},
-				false
-			);
+			var onMsg = function (e) {
+				$('#info_forum').val(e.data);
+				$('#forum_auth_iframe').css('display', null).empty();
+			};
+			if (window.addEventListener) {
+				window.addEventListener('message', onMsg, false);
+			}/* else if (window.attachEvent) { // IE8
+				window.attachEvent('onmessage', onMsg);
+			}*/
 		}
 
 		$('#forum_auth').get(0).href += '?token=' + $('#token').val().substr(0, 16);
