@@ -243,10 +243,12 @@ class Editor extends Controller {
 		$d = './userstickers/' . dechex(intval($this->session->userdata('id')) >> 12) . '/' . dechex(intval($this->session->userdata('id') & (pow(2,12)-1))) . '/';
 		@mkdir($d, 0755, true);
 
-		if ($infoChanged
-			|| $this->input->post('features')
-			|| !file_exists($d . 'featurecard.png')
-			|| !file_exists($d . 'featurecard-h.png')
+		if (
+			($infoChanged
+				|| $this->input->post('features')
+				|| !file_exists($d . 'featurecard.png')
+				|| !file_exists($d . 'featurecard-h.png')
+			) && $data['ready']
 		) {
 			$F = array();
 			for ($i = 0; $i < 3; $i++) {
