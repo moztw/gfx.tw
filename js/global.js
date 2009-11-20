@@ -634,6 +634,18 @@ var gfx = {
 			
 			showMessage($('.message:not(.show):not(.no-auto)'));
 
+			/* msg tracker */
+			$('.message').each(
+				function () {
+					var r = $(this).attr('rel');
+					if (r) {
+						gfx.tracker('Alert', 'message_' + r);
+					}
+				}
+			);
+
+			/* Admin button */
+
 			if (gfx.admin) {
 				$('#link_manage').show();
 			}
@@ -734,7 +746,7 @@ var gfx = {
 			element.width(w);
 		}
 	},
-	'message' : function (type, icon, msg) {
+	'message' : function (type, icon, msg, tag) {
 		var o = $(document.createElement('div'))
 		.addClass('ui-widget message')
 		.css('display', 'none')
@@ -755,6 +767,11 @@ var gfx = {
 		);
 		$('#header, #newcomer-intro, #intro-block').filter(':last').after(o);
 		o.slideDown(500);
+
+		if (tag) {
+			gfx.tracker('Alert', 'message_' + tag.toLowerCase());
+		}
+
 	},
 	'alert' : function (msg, tag) {
 		if (T.ALERT[msg]) {

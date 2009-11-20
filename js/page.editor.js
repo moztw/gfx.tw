@@ -335,7 +335,7 @@ gfx.page = {
 							}
 						);
 						$('.name-placeholder').text(result.name);
-						gfx.message('highlight', 'info', T.UI.INFO_UPDATED);
+						gfx.message('highlight', 'info', T.UI.INFO_UPDATED, 'INFO_UPDATED');
 						gfx.closeDialog('info');
 					}
 				}
@@ -378,7 +378,7 @@ gfx.page = {
 		$('#forum_auth').get(0).href += '?token=' + $('#token').val().substr(0, 16);
 
 		if ($.browser.msie) {
-			gfx.message('error', 'alert', T.UI.USING_IE_TO_EDIT);
+			gfx.message('error', 'alert', T.UI.USING_IE_TO_EDIT, 'USING_IE_TO_EDIT');
 		}
 
 		var bar = {

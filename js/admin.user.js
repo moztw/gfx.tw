@@ -30,7 +30,8 @@ gfx.admin = {
 						gfx.message(
 							result.message.type,
 							result.message.icon,
-							result.message.msg
+							result.message.msg,
+							result.message.tag
 						);
 						gfx.closeDialog('admin');
 					}
