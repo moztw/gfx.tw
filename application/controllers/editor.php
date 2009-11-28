@@ -248,7 +248,7 @@ class Editor extends Controller {
 				|| $this->input->post('features')
 				|| !file_exists($d . 'featurecard.png')
 				|| !file_exists($d . 'featurecard-h.png')
-			) && $data['ready']
+			) && ($this->db->query('SELECT ready FROM users WHERE id = ' . $this->session->userdata('id') . ';')->row()->ready === 'Y')
 		) {
 			$F = array();
 			for ($i = 0; $i < 3; $i++) {
