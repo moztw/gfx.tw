@@ -49,6 +49,7 @@ class Auth extends Controller {
 				if ($user->num_rows() !== 0) {
 					/* User exists */
 					$data = $user->row_array();
+					flashdata_message('auth_login', 'highlight', 'info');
 				} else {
 					$this->load->config('gfx');
 					if ($this->config->item('gfx_require_pre_authorization')) {
@@ -56,6 +57,7 @@ class Auth extends Controller {
 						exit();
 					}
 					/* Create new user */
+					flashdata_message('auth_login_new', 'highlight', 'info');
 					$sreg = Auth_OpenID_SRegResponse::fromSuccessResponse($response)->contents();
 					$data = array(
 						'login' => $open_id,
@@ -95,7 +97,8 @@ class Auth extends Controller {
 						'name' => $data['name'],
 						'admin' => $data['admin'],
 						'hide_announcement' => ''
-					)
+					),
+					false
 				);
 				header('Location: ' . site_url('editor'));
 		}

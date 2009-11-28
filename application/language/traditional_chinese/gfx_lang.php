@@ -1,6 +1,7 @@
 <?php
 
 $lang['gfx_message_auth_login'] = "登入成功。";
+$lang['gfx_message_auth_login_new'] = "登入成功。";
 $lang['gfx_message_auth_login_canceled'] = "已取消登入。";
 $lang['gfx_message_auth_login_failed'] = "登入失敗；請再試一次。";
 $lang['gfx_message_auth_logout'] = "您已經登出：要清除所有認證，請別忘了到您的 OpenID 服務商網站登出。";
