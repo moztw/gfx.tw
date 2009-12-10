@@ -395,7 +395,7 @@ div.message p.message-desc, div.message p.message-link {
 
 #editor-save {
 	position: relative;
-	background: transparent url('../images/editor-save.gif') center top no-repeat;
+	background: transparent url('../images/editor-save.png') center top no-repeat;
 	margin: 10px 0 20px 0; padding: 0;
 	width: 900px; z-index: 2;
 }
@@ -563,9 +563,15 @@ span.title-empty {
 	position: relative;
 	background: transparent url('../images/feature-empty.gif') center top no-repeat;
 }
+#features > .feature {
+	background: transparent url('../images/feature-empty.png') center top no-repeat;
+}
 
 #features .box {
 	background: transparent url('../images/feature-dragbox.gif') center top no-repeat;
+}
+#features > .box {
+	background: transparent url('../images/feature-dragbox.png') center top no-repeat;
 }
 
 #features .box * {
@@ -618,9 +624,60 @@ span.title-empty {
 	background: transparent url('../images/feature-tracemonkey.gif') center top no-repeat;
 }
 
+#features > #abar {
+	background: transparent url('../images/feature-abar.png') center top no-repeat;
+}
+#features > #color-management {
+	background: transparent url('../images/feature-color-management.png') center top no-repeat;
+}
+#features > #leading {
+	background: transparent url('../images/feature-leading.png') center top no-repeat;
+}
+#features > #multiple-selection {
+	background: transparent url('../images/feature-multiple-selection.png') center top no-repeat;
+}
+#features > #openandfree {
+	background: transparent url('../images/feature-openandfree.png') center top no-repeat;
+}
+#features > #personalization {
+	background: transparent url('../images/feature-personalization.png') center top no-repeat;
+}
+#features > #private-browsing {
+	background: transparent url('../images/feature-private-browsing.png') center top no-repeat;
+}
+#features > #privicy {
+	background: transparent url('../images/feature-privicy.png') center top no-repeat;
+}
+#features > #profile-manager {
+	background: transparent url('../images/feature-profile-manager.png') center top no-repeat;
+}
+#features > #rss {
+	background: transparent url('../images/feature-rss.png') center top no-repeat;
+}
+#features > #search-data {
+	background: transparent url('../images/feature-search-data.png') center top no-repeat;
+}
+#features > #security {
+	background: transparent url('../images/feature-security.png') center top no-repeat;
+}
+#features > #standards {
+	background: transparent url('../images/feature-standards.png') center top no-repeat;
+}
+#features > #textzoom {
+	background: transparent url('../images/feature-textzoom.png') center top no-repeat;
+}
+#features > #tracemonkey {
+	background: transparent url('../images/feature-tracemonkey.png') center top no-repeat;
+}
+
+
 #features .ui-sortable-placeholder {
 	visibility: visible!important;
 	background: transparent url('../images/feature-dragbox.gif') center top no-repeat;
+}
+
+#features > .ui-sortable-placeholder {
+	background: transparent url('../images/feature-dragbox.png') center top no-repeat;
 }
 
 #features .feature h2 {
@@ -1077,7 +1134,7 @@ span.title-empty {
 }
 
 #window_avatar .avatar_selection #avatar_swfupload {
-	background: transparent url('../images/avatar-edit.gif') center center no-repeat;
+	background: transparent url('../images/avatar-edit.png') center center no-repeat;
 }
 #window_avatar .avatar_selection #avatar_swfupload:hover {
 	background-color: #cccccc;
