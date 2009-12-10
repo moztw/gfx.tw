@@ -407,7 +407,7 @@ div.message p.message-desc, div.message p.message-link {
 
 #editor-save p {
 	position: relative; top: 10px;
-	background: transparent url('../images/editor-save.gif') center bottom no-repeat;
+	background: transparent url('../images/editor-save.png') center bottom no-repeat;
 	margin: 0; padding: 0 0.5em 10px 0.5em;
 	overflow: auto; clear: both;
 }
