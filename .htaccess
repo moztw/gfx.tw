@@ -3,9 +3,9 @@ RewriteEngine On
 #Don't do it the other way around coz lots of POST will get redirected.
 RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
-		RewriteRule ^(.*)/$ http://stage.gfx.tw/$1 [R,L]
+		RewriteRule ^(.*)/$ http://gfx.tw/$1 [R,L]
 
-RewriteRule ^userstickers/$ http://stage.gfx.tw/sticker [R,L]
+RewriteRule ^userstickers/$ http://gfx.tw/sticker [R,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteRule ^(.*)$ index.php [L]
