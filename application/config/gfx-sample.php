@@ -34,7 +34,7 @@ Thanks to bug 398366,do remember to change the version every time new version co
 $config['gfx_downloadurl'] = 'http://download.mozilla.org/?product=firefox-3.5&lang=zh-TW&os=';
 /* Where user will be redirect to if Javascript and User-agent both failed to detect os */
 /* TBD: instead redirect to another webpage,show up a dialog and ask for the os from user? */
-$config['gfx_downloadfallback'] = 'http://www.moztw.org/firefox/';
+$config['gfx_downloadfallback'] = 'http://moztw.org/firefox/';
 
 /* API fetch method, which does not support experimential addons
   "0.1" is a fake api version number so that the api will output compatible_os information.
