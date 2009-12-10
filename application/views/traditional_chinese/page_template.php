@@ -12,6 +12,21 @@ print '<?xml version="1.0" encoding="UTF-8"?>';
 	<link rel="stylesheet" type="text/css" href="<?php print site_url('style/jquery-ui-1.7.custom.css' . $this->config->item('gfx_suffix')) ?>" />
 	<link rel="stylesheet" type="text/css" href="<?php print site_url('style/language-zh-TW.css' . $this->config->item('gfx_suffix')) ?>" />
 {meta}
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(
+ ['_setAccount', 'UA-1035080-11'],
+ ['_trackPageview']
+);
+
+(function() {
+ var ga = document.createElement('script');
+ ga.src = 'http://www.google-analytics.com/ga.js';
+ ga.setAttribute('async', 'true');
+ document.documentElement.firstChild.appendChild(ga);
+})();
+
+</script>
 </head>
 <body>
 {header}
@@ -34,13 +49,6 @@ print '<?xml version="1.0" encoding="UTF-8"?>';
 	<script type="text/javascript" src="<?php print site_url('js/global.js' . $this->config->item('gfx_suffix')) ?>" charset="UTF-8"></script>
 {script}
 {admin}
-	<script src="http://www.google-analytics.com/ga.js" type="text/javascript"></script>
-	<script type="text/javascript">
-	try {
-		var pageTracker = _gat._getTracker("UA-1035080-11");
-		pageTracker._trackPageview();
-		} catch(err) {}
-	</script>
 	<!-- <?php print 'Elapsed Time: ' . $this->benchmark->elapsed_time() . ', Memory usage: ' . $this->benchmark->memory_usage(); ?>, from DB: {db} -->
 	</body>
 </html>
