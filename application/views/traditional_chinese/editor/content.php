@@ -17,8 +17,32 @@ $avatar = avatarURL($avatar, $email, $login);
 		<ul>
 			<li>看看<a class="userpage-url" href="#">您的個人推薦網頁</a></li>
 			<li>領取<a href="./sticker">宣傳貼紙</a>，在部落格、論壇宣傳！</li>
-			 <li>噗到<a href="#" class="userpage-url" id="push-plurk-mine"><img src="http://www.plurk.com/favicon.ico" alt=" "/>噗浪</a>、推到<a href="#" class="userpage-url" id="push-twitter-mine"><img src="http://twitter.com/favicon.ico" alt=" " />推特</a>！</li>
 		</ul>
+		<div class="shareblock">
+			<p>和大家分享您的抓火狐推薦頁！</p>
+			<ul>
+				<li><a class="newwindow" title="分享到 Facebook" href="http://www.facebook.com/sharer.php?u=<?php
+/* Facebook fetches sticker image and description from <head> */
+print urlencode(site_url('PLACEHOLDER'));
+?>"><span class="sprite facebook"></span>Facebook</a></li>
+				<li><a class="newwindow" title="噗到 Plurk" href="http://plurk.com/?status=<?php
+print urlencode('來跟我一起抓火狐，使用 Firefox 逛網頁！ '
+        . site_url(
+                '/userstickers/' . dechex(intval($id) >> 12) . '/' . dechex(intval($id & (pow(2,12)-1)))
+        )
+        . '/featurecard.png '
+        . site_url($name)
+);
+?>"><span class="sprite plurk"></span>噗浪</a></li>
+				<li><a class="newwindow" title="推到 Twitter" href="http://twitter.com/home/?status=<?php
+print urlencode('來跟我一起抓火狐，使用 Firefox 逛網頁！ ' . site_url('PLACEHOLDER'));
+?>"><span class="sprite twitter"></span>Twitter</a></li>
+				<li><a class="newwindow" title="推薦到 Funp" href="http://funp.com/push/submit/?via=tools&amp;url=<?
+/* TBD: push sticker image and description to funp */
+print urlencode(site_url('PLACEHOLDER'));
+?>"><span class="sprite funp"></span>推推王</a></li>
+			</ul>
+		</div>
 	</div>
 	<div id="titleblock">
 		<form id="title-name-form" action="#">
