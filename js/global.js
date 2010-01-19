@@ -12,7 +12,7 @@ JavaScript code orgenisation:
 	* bind all events and reate all dialogs
 
 */
-/*global window, document, $, T */
+/*global window, document, $, T, InstallTrigger */
 
 $(function () {
 	/* Event binding list and dialog options list */
@@ -284,7 +284,8 @@ var gfx = {
 					);
 					gfx.openDialog('extinstall');
 					gfx.tracker('Download', 'Addons');
-					window.InstallTrigger.install(l);
+					/* Note: window.InstallTrigger.install() exists but won't work in Fx3.6 */
+					InstallTrigger.install(l);
 				},
 				'#link_manage a' : function () {
 					gfx.openDialog('admin');
