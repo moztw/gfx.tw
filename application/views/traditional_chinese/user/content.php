@@ -45,7 +45,7 @@ foreach ($features as $feature) {
 }
 ?>
 	</div>
-	<div id="floatblock">
+	<div id="floatblock" class="shareblock">
 		<p title="和<?php print htmlspecialchars($title) ?>一起推薦 Firefox！">分享</p>
 		<ul>
 			<li><a class="newwindow" title="分享到 Facebook" href="http://www.facebook.com/sharer.php?u=<?php

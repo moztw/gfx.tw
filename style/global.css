@@ -719,38 +719,52 @@ span.title-empty {
 	margin-top: 10px;
 	margin-left: 856px;
 	width: 85px;
-	background-color: #e0e0ff;
-	padding: 2px;
-	-moz-border-radius: 5px;
 }
+
 #floatblock.fixed {
 	position: fixed;
 	top: 0;
 }
-#floatblock p {
+
+.shareblock {
+	background-color: #e0e0ff;
+	padding: 2px;
+	-moz-border-radius: 5px;
+}
+#window_editcomplete .shareblock {
+	margin: 0 10%;
+}
+.shareblock p {
 	font-weight: bold;
 	padding: 2px 0;
 	margin: 0;
 }
-#floatblock ul {
+.shareblock ul {
 	list-style: none;
 	margin: auto 0;
 	padding: 0;
 }
-#floatblock ul li {
+#window_editcomplete .shareblock ul {
+	overflow: auto;
+}
+.shareblock ul li {
 	list-style: none;
 	padding: 4px 0;
 	font-size: 14px;
 }
-#floatblock .sprite {
+#window_editcomplete .shareblock ul li {
+	float: left;
+	width: 50%;
+}
+.shareblock .sprite {
 	float: left; 
 	margin-right: 4px;
 }
-#floatblock a {
+.shareblock a {
 	text-decoration: none;
 	color: #333333;
 }
-#floatblock a:hover {
+.shareblock a:hover {
 	text-decoration: underline;
 	color: #000000;
 }

@@ -805,6 +805,15 @@ gfx.page = {
 						+ '/'
 						+ result.name
 					);
+					$('.shareblock a').each(
+						function () {
+							$this = $(this);
+							if (!$this.data('href')) {
+								$this.data('href', $this.attr('href'));
+							}
+							$this.attr('href', $this.data('href').replace(/PLACEHOLDER/g, result.name));
+						}
+					);
 					$('.name-placeholder').text(result.name);
 					gfx.closeDialog('almostdone');
 					gfx.openDialog('editcomplete');
