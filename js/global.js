@@ -480,7 +480,7 @@ var gfx = {
 		},
 		'dialog' : {
 			'login' : {
-				'width' : 500,
+				'width' : 520,
 				'height' : 425,
 				'position' : ['center', 100]
 			},
