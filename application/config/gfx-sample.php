@@ -31,7 +31,7 @@ $config['gfx_sticker_font'] = '/usr/share/fonts/truetype/ttf-custom/LiHei Pro.tt
 Usually this goes to Mozilla load balancing bouncer (i.e. download.mozilla.org)
 "os" variable will append to the end
 Thanks to bug 398366,do remember to change the version every time new version comes out */
-$config['gfx_downloadurl'] = 'http://download.mozilla.org/?product=firefox-3.5&lang=zh-TW&os=';
+$config['gfx_downloadurl'] = 'http://download.mozilla.org/?product=firefox-3.6&lang=zh-TW&os=';
 /* Where user will be redirect to if Javascript and User-agent both failed to detect os */
 /* TBD: instead redirect to another webpage,show up a dialog and ask for the os from user? */
 $config['gfx_downloadfallback'] = 'http://moztw.org/firefox/';
