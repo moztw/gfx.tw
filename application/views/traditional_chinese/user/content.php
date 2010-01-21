@@ -14,7 +14,7 @@ $avatar = avatarURL($avatar, $email, $login);
 		</h1>
 		<div class="download">
 			<p class="link"><a href="/download">免費下載</a></p>
-			<p class="version">3.5 系列最新版</p>
+			<p class="version">3.6 系列最新版</p>
 		</div>
 		<p class="count"><?php print htmlspecialchars($title) ?>已經推薦<?php print $count ?>人使用了！</p>
 		<p class="desc">您的網際生活將因 Firefox 更加豐富有趣！Firefox 有許多特色，協助您完成工作、找到資訊。正因為它如此實用，<?php print htmlspecialchars($title) ?>願意推薦您改用 Firefox！以下是<?php print htmlspecialchars($title) ?>最喜歡 Firefox 的三大特點：</p>
