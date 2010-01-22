@@ -695,6 +695,7 @@ span.title-empty {
 	margin: 0; padding: 0;
 	top: 100px; left: 40px;
 	width: 230px; height: 125px;
+	text-align: justify;
 }
 
 

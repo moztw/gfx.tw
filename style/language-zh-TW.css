@@ -5,10 +5,13 @@ input, select, textarea, button, option, optgroup,
 .ui-widget,
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {
 	font-family: 
-		'蘋果儷中黑','Apple LiGothic Medium',
-		'微軟正黑體', 'Microsoft JhengHei',
-		'Arial', 'Verdana','Segoe UI','新細明體','PMingLiu',
+		'Arial', 'Verdana','Segoe UI',
+/*		'微軟正黑體', 'Microsoft JhengHei', */
 		sans-serif;
+}
+
+.header-block-title, .message, .link, h1, h2, h3, h1 input, #groups-install button, .addon span {
+	font-family: 'Arial', 'Verdana','Segoe UI', '微軟正黑體', 'Microsoft JhengHei', sans-serif;
 }
 
 body {
