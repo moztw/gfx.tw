@@ -434,10 +434,12 @@ class Editor extends Controller {
 			list($width, $height, $type) = getimagesize($data['full_path']);
 			if (!in_array($type, array(IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG))) {
 				unlink($data['full_path']);
+				$this->load->helper('gfx');
 				json_message('EDITOR_AVATAR_WRONG_FILE_TYPE');
 			}
 			if ($width > 500 || $height > 500) {
 				unlink($data['full_path']);
+				$this->load->helper('gfx');
 				json_message('EDITOR_AVATAR_SIZE_TOO_LARGE');
 			}
 			//Success!
