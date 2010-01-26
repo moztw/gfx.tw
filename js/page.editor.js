@@ -1,4 +1,4 @@
-/*global window, document, $, T, gfx, SWFUpload */
+/*global window, document, $, T, gfx */
 
 gfx.page = {
 	'bind' : {
@@ -89,6 +89,11 @@ gfx.page = {
 				}
 			}
 		},
+		'change' : {
+			'#avatar_fileupload input' : function () {
+				gfx.page.uploadFile(this.files);
+			}
+		},
 		'mouseover' : {
 			'#title-name.editable' : function () {
 				$(this).addClass('bright');
@@ -142,6 +147,54 @@ gfx.page = {
 				$('#title-name-edit input').blur();
 				return false;
 			}
+		},
+		'dragenter' : {
+			'body' : function (ev) {
+				if (window.FileReader) {
+					$('#window_avatar').addClass('dropindication').removeClass('removepending');
+					$('#title-avatar').addClass('dropindation');
+				}
+			},
+			'#window_avatar' : function () {
+				$('#window_avatar').addClass('dropenter');
+			}
+		},
+		'dragleave' : {
+			'body' : function (ev) {
+				if (window.FileReader) {
+					$('#window_avatar').addClass('removepending');
+					//Must use setTimeout and "pending" condition otherwise ondrop event won't fire
+					setTimeout(
+						function () {
+							$('#window_avatar.removepending').removeClass('dropindication removepending');
+						},
+						0
+					);
+					$('#title-avatar').removeClass('dropindation');
+				}
+			},
+			'#window_avatar' : function () {
+				$('#window_avatar').removeClass('dropenter');
+			}
+		},
+		'dragover' : {
+			'#title-avatar, #window_avatar' : function (ev) {
+				return false;
+			}
+		},
+		'drop' : {
+			'#title-avatar, #window_avatar' : function (ev) { 
+				// No '#avatar_fileupload input' coz file input cannot receive drop event.
+				// No '#dropzone' coz it disappears as soon as removeClass runs.
+				if (!ev.originalEvent.dataTransfer.files) {
+					//Supports drag drop events but not file reading. (Safari as of now)
+					return false;
+				}
+				// $('#title-avatar').addClass('dropindation'); //cannot do that coz abort()
+				$('#window_avatar').removeClass('dropindication');
+				gfx.page.uploadFile(ev.originalEvent.dataTransfer.files);
+				return false;
+			}
 		}
 	},
 	'live' : {
@@ -168,12 +221,6 @@ gfx.page = {
 			'width' : 600,
 			'height' : 300,
 			'position' : ['center', 150]
-		},
-		'progress' : {
-			'width' : 244,
-			'height' : 75,
-			'buttons' : {},
-			'position' : [100, 100]
 		},
 		'almostdone' : {
 			'width' : 350,
@@ -280,17 +327,6 @@ gfx.page = {
 		}
 	},
 	'onload' : function () {
-		this.dialog.progress.buttons[T.BUTTONS.PROGRESS_FORCESTOP] = function () {
-			if (gfx.xhr) {
-				gfx.xhr.abort();
-			}
-			//because Flash object doesn't init before openDialog(avatar);
-			try {
-				gfx.page.swfupload.cancelUpload();
-			} catch (e) {
-			}
-			gfx.closeDialog('progress');
-		};
 		this.dialog.almostdone.buttons[T.BUTTONS.ALMOSTDONE_OK] = gfx.page.savePage;
 		this.dialog.info.buttons[T.BUTTONS.INFO_SAVE] = function () {
 			if (!$('#info_name').val()) {
@@ -463,123 +499,11 @@ gfx.page = {
 				$(this).parent().toggleClass('not-selected', !this.checked);
 			}
 		);
-		var Flash = (function(){
-			var version = ((function() {
-				var str;
-				try {
-					str = navigator.plugins['Shockwave Flash'].description;
-				} catch (e) {
-					try {
-						str = new ActiveXObject('ShockwaveFlash.ShockwaveFlash').GetVariable('$version');
-					} catch (e) {}
-				}
-				return str; 
-			})() || '0 r0').match(/\d+/g);
-			return {version: parseInt(version[0] || 0 + '.' + version[1], 10) || 0, build: parseInt(version[2], 10) || 0};
-		})();
-		if (Flash.version < 9) {
-			$('#avatar_swfupload').parent().addClass('disabled')
-		} else { 
-			gfx.page.swfupload = new SWFUpload(
-				{
-					'upload_url': window.location.href + '/upload',
-					// File Upload Settings
-					file_size_limit : 1024,	// 1MB
-					file_types : '*.jpg;*.jpeg;*.gif;*.png',
-					file_types_description : 'Images',
-					file_upload_limit : '0',
-					button_placeholder_id : 'avatar_swfupload_replace',
-					button_width: 69,
-					button_height: 69,
-					button_window_mode: SWFUpload.WINDOW_MODE.TRANSPARENT,
-					button_cursor: SWFUpload.CURSOR.HAND,
-					flash_url : './swfupload/swfupload.swf',	// Relative to this file
-					debug : false,
-					// Event Handler Settings
-					'file_dialog_complete_handler' : function (n, q) {
-						if (n === 1 && q === 1) {
-							window.setTimeout(
-								function () {
-									if (gfx.page.swfupload.getStats().in_progress !== 0) {
-										gfx.openDialog('progress');
-									}
-								},
-								400
-							);
-							window.setTimeout(
-								function () {
-									try {
-										gfx.page.swfupload.setButtonDisabled(true);
-										gfx.page.swfupload.startUpload();
-									} catch (e) {
-										gfx.alert('EDITOR_UPLOAD_FLASH_FAILED');
-									}
-								},
-								100
-							);	
-						}
-					},
-					'file_queue_error_handler' : function (file, error, msg) {
-						switch (error) {
-							case SWFUpload.QUEUE_ERROR.ZERO_BYTE_FILE:
-							gfx.alert(T.SWFUPLOAD.ZERO_BYTE_FILE || msg, 'SWFUPLOAD_ZERO_BYTE_FILE');
-							break;
-							case SWFUpload.QUEUE_ERROR.FILE_EXCEEDS_SIZE_LIMIT:
-							gfx.alert(T.SWFUPLOAD.FILE_EXCEEDS_SIZE_LIMIT || msg, 'SWFUPLOAD_FILE_EXCEEDS_SIZE_LIMIT');
-							break;
-							case SWFUpload.QUEUE_ERROR.INVALID_FILETYPE:
-							gfx.alert(T.SWFUPLOAD.INVALID_FILETYPE || msg, 'SWFUPLOAD_INVALID_FILETYPE');
-							break;
-							default:
-							gfx.alert(msg, 'SWFUPLOAD_UNKNOWN_QUERE_ERROR');
-							break;
-						}
-					},
-					'upload_error_handler' : function (file, error, msg) {
-						this.setButtonDisabled(false);
-						gfx.closeDialog('progress');
-						if (error !== SWFUpload.UPLOAD_ERROR.FILE_CANCELLED) {
-							gfx.alert(msg, 'SWFUPLOAD_UNKNOWN_UPLOAD_ERROR');
-						}
-					},
-					'upload_success_handler' : function (file, result) {
-						this.setButtonDisabled(false);
-						gfx.closeDialog('progress');
-						try {
-							console.log(file, result);
-						} catch (e) {
-						}
-						if (JSON && JSON.parse) {
-							/* Fx 3.5 Native JSON parser */
-							try {
-								result = JSON.parse(result);
-							} catch (e) {
-								result = null;
-							}						
-						} else {
-							//Great, jQuery doen't have a JSON.decode function w/o HTTP request.
-							//We get this from mootools source.
-							var decode = function (string) {
-								if (!(/^[,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t]*$/).test(string.replace(/\\./g, '@').replace(/"[^"\\\n\r]*"/g, ''))) {
-									return null;
-								}
-								return eval('(' + string + ')');
-							};
-							result = decode(result);
-						}
-						if (!result) {
-							gfx.alert(T.AJAX_ERROR.PARSE_RESPONSE, 'AJAX_ERROR_PARSE_RESPONSE');
-						} else {
-							if (gfx.ajaxError(result)) {
-								return;
-							}
-							gfx.page.changeAvatar(result.img, './useravatars/' + result.img);
-						}
-					}
-				}
-			);
+	
+		if (!$('#avatar_fileupload input').get(0).files) {
+			$('#avatar_fileupload').parent().addClass('disabled');
 		}
-		
+	
 		$('#featureselection li').draggable(
 			{
 				revert: 'invalid',
@@ -704,10 +628,115 @@ gfx.page = {
 			return true;
 		}
 	},
+	//Upload file using file API, "files" = File List obj.
+	'uploadFile' : function (files) {
+		if (files.length !== 1) {
+			//User did not drop exactly one file but multipole files, or text, links.
+			//(No alert)
+			return false;
+		}
+		var info = { //HTML 5 File API || Gecko 1.9 File Obj
+			'type' : files[0].type || '',
+			'size' : files[0].size || files[0].fileSize,
+			'name' : files[0].name || files[0].fileName
+		};
+		if (info.type && !info.type.match(/^image\/(gif|png|jpeg)$/)) {
+		//User did not drop supported file
+			gfx.alert(T.FILEUPLOAD.INVALID_FILETYPE, 'FILEUPLOAD_INVALID_FILETYPE');
+			return false;
+		}
+		//If MIME is empty stream (unknown type)
+		if (!info.type) info.type = 'application/octet-stream';
+
+		if (info.size > (1 << 20)) { //1MB
+			gfx.alert(T.FILEUPLOAD.FILE_EXCEEDS_SIZE_LIMIT, 'FILEUPLOAD_FILE_EXCEEDS_SIZE_LIMIT');
+			return false;
+		}
+
+		//Workaround for fixme below; replace non-ASCII chars in filenames
+		info.name = info.name.replace(/[^\x20-\x7E]/g, '_');
+
+		var bd = 'gfx-xhrupload-' + parseInt(Math.random()*(2 << 16));
+		var xhrupload = function (bin) {
+			//This is an overwritten $.ajax that supports 'binary' option.
+			gfx.xhr = $.ajax(
+				{
+					url: './editor/upload',
+					contentType: 'multipart/form-data, boundary=' + bd,
+					processData: false,
+					timeout: 1200000, //2 min
+					data: '--' + bd + '\n' // RFC 1867 Format, simulate form file upload
+					+ 'content-disposition: form-data; name="Filedata";'
+					+ ' filename="' + info.name + '"\n' // fixme: RFC 1522 encoding for non-US ASCII filenames
+					+ 'Content-Type: ' + info.type + '\n\n'
+					+ bin + '\n\n'
+					+ '--' + bd + '--',
+					binary: true,
+					success: function (result, status) {
+						if (!result) {
+							gfx.alert(T.AJAX_ERROR.PARSE_RESPONSE, 'AJAX_ERROR_PARSE_RESPONSE');
+						} else {
+							if (gfx.ajaxError(result)) {
+								return;
+							}
+							gfx.page.changeAvatar(result.img, './useravatars/' + result.img);
+						}
+					}
+				}
+			);
+		};
+		if (window.FileReader) {
+			// HTML5 File API (Firefox 3.6)
+			var reader = new FileReader();
+			reader.onloadend = function (ev) {
+				xhrupload(ev.target.result);
+			};
+			reader.onerror = function (ev) {
+				if (ev.target.error) {
+					switch (ev.target.error) {
+						case 8:
+						gfx.alert(T.FILEUPLOAD.NOT_FOUND, 'FILEUPLOAD_NOT_FOUND');
+						break;
+						case 24:
+						gfx.alert(T.FILEUPLOAD.NOT_READABLE, 'FILEUPLOAD_NOT_READABLE');
+						break;
+						case 18:
+						gfx.alert(T.FILEUPLOAD.SECURITY, 'FILEUPLOAD_SECURITY');
+						break;
+						case 20: //User Abort
+						break;
+					}
+				}
+			}
+			reader.readAsBinaryString(files[0]);
+		} else {
+			// Non-standard File Object (Firefox 3.0/3.5)
+			try {
+				xhrupload(files[0].getAsBinary());
+			} catch (e) {
+				//Have no idea what's wrong, but give user a feedback anyway.
+				gfx.alert(T.FILEUPLOAD.NOT_READABLE, 'FILEUPLOAD_NOT_READABLE');
+			}	
+		}
+	},
 	'changeAvatar' : function (avatar, url) {
 		gfx.page.avatar = avatar;
 		gfx.page.blinkBar();
-		$('#title-avatar img:only-child').attr('src', url);
+		$('#title-avatar img:only-child')
+		.hide()
+		.one(
+			'load',
+			function () {
+				$(this).fadeIn(
+					100,
+					function () {
+						$(this).css('display', null);
+					}
+				);
+			}
+		).attr('src', url);
+		//$('#title-avatar').removeClass('dropindation');
+		$('#avatar_fileupload input').val('');
 		gfx.closeDialog('avatar');
 	},
 	'savePage' : function () {
@@ -915,3 +944,285 @@ gfx.page = {
 		return o;
 	}
 };
+
+$.extend(
+	{
+	// http://code.jquery.com/jquery-1.3.2.js
+	// Overwrite $.ajax funtion, with only 2 lines of changes to support xhr.sendAsBinary (triggers using 'binary' option).
+	ajax: function( s ) {
+		// Extend the settings, but re-extend 's' so that it can be
+		// checked again later (in the test suite, specifically)
+		s = jQuery.extend(true, s, jQuery.extend(true, {}, jQuery.ajaxSettings, s));
+		var jsonp, jsre = /=\?(&|$)/g, status, data,
+			type = s.type.toUpperCase();
+
+		// convert data if not already a string
+		if ( s.data && s.processData && typeof s.data !== "string" )
+			s.data = jQuery.param(s.data);
+
+		// Handle JSONP Parameter Callbacks
+		if ( s.dataType == "jsonp" ) {
+			if ( type == "GET" ) {
+				if ( !s.url.match(jsre) )
+					s.url += (s.url.match(/\?/) ? "&" : "?") + (s.jsonp || "callback") + "=?";
+			} else if ( !s.data || !s.data.match(jsre) )
+				s.data = (s.data ? s.data + "&" : "") + (s.jsonp || "callback") + "=?";
+			s.dataType = "json";
+		}
+
+		// Build temporary JSONP function
+		if ( s.dataType == "json" && (s.data && s.data.match(jsre) || s.url.match(jsre)) ) {
+			jsonp = "jsonp" + jsc++;
+
+			// Replace the =? sequence both in the query string and the data
+			if ( s.data )
+				s.data = (s.data + "").replace(jsre, "=" + jsonp + "$1");
+			s.url = s.url.replace(jsre, "=" + jsonp + "$1");
+
+			// We need to make sure
+			// that a JSONP style response is executed properly
+			s.dataType = "script";
+
+			// Handle JSONP-style loading
+			window[ jsonp ] = function(tmp){
+				data = tmp;
+				success();
+				complete();
+				// Garbage collect
+				window[ jsonp ] = undefined;
+				try{ delete window[ jsonp ]; } catch(e){}
+				if ( head )
+					head.removeChild( script );
+			};
+		}
+
+		if ( s.dataType == "script" && s.cache == null )
+			s.cache = false;
+
+		if ( s.cache === false && type == "GET" ) {
+			var ts = now();
+			// try replacing _= if it is there
+			var ret = s.url.replace(/(\?|&)_=.*?(&|$)/, "$1_=" + ts + "$2");
+			// if nothing was replaced, add timestamp to the end
+			s.url = ret + ((ret == s.url) ? (s.url.match(/\?/) ? "&" : "?") + "_=" + ts : "");
+		}
+
+		// If data is available, append data to url for get requests
+		if ( s.data && type == "GET" ) {
+			s.url += (s.url.match(/\?/) ? "&" : "?") + s.data;
+
+			// IE likes to send both get and post data, prevent this
+			s.data = null;
+		}
+
+		// Watch for a new set of requests
+		if ( s.global && ! jQuery.active++ )
+			jQuery.event.trigger( "ajaxStart" );
+
+		// Matches an absolute URL, and saves the domain
+		var parts = /^(\w+:)?\/\/([^\/?#]+)/.exec( s.url );
+
+		// If we're requesting a remote document
+		// and trying to load JSON or Script with a GET
+		if ( s.dataType == "script" && type == "GET" && parts
+			&& ( parts[1] && parts[1] != location.protocol || parts[2] != location.host )){
+
+			var head = document.getElementsByTagName("head")[0];
+			var script = document.createElement("script");
+			script.src = s.url;
+			if (s.scriptCharset)
+				script.charset = s.scriptCharset;
+
+			// Handle Script loading
+			if ( !jsonp ) {
+				var done = false;
+
+				// Attach handlers for all browsers
+				script.onload = script.onreadystatechange = function(){
+					if ( !done && (!this.readyState ||
+							this.readyState == "loaded" || this.readyState == "complete") ) {
+						done = true;
+						success();
+						complete();
+
+						// Handle memory leak in IE
+						script.onload = script.onreadystatechange = null;
+						head.removeChild( script );
+					}
+				};
+			}
+
+			head.appendChild(script);
+
+			// We handle everything using the script element injection
+			return undefined;
+		}
+
+		var requestDone = false;
+
+		// Create the request object
+		var xhr = s.xhr();
+
+		// Open the socket
+		// Passing null username, generates a login popup on Opera (#2865)
+		if( s.username )
+			xhr.open(type, s.url, s.async, s.username, s.password);
+		else
+			xhr.open(type, s.url, s.async);
+
+		// Need an extra try/catch for cross domain requests in Firefox 3
+		try {
+			// Set the correct header, if data is being sent
+			if ( s.data )
+				xhr.setRequestHeader("Content-Type", s.contentType);
+			// Set the If-Modified-Since header, if ifModified mode.
+			if ( s.ifModified )
+				xhr.setRequestHeader("If-Modified-Since",
+					jQuery.lastModified[s.url] || "Thu, 01 Jan 1970 00:00:00 GMT" );
+
+			// Set header so the called script knows that it's an XMLHttpRequest
+			xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+
+			// Set the Accepts header for the server, depending on the dataType
+			xhr.setRequestHeader("Accept", s.dataType && s.accepts[ s.dataType ] ?
+				s.accepts[ s.dataType ] + ", */*" :
+				s.accepts._default );
+		} catch(e){}
+
+		// Allow custom headers/mimetypes and early abort
+		if ( s.beforeSend && s.beforeSend(xhr, s) === false ) {
+			// Handle the global AJAX counter
+			if ( s.global && ! --jQuery.active )
+				jQuery.event.trigger( "ajaxStop" );
+			// close opended socket
+			xhr.abort();
+			return false;
+		}
+
+		if ( s.global )
+			jQuery.event.trigger("ajaxSend", [xhr, s]);
+
+		// Wait for a response to come back
+		var onreadystatechange = function(isTimeout){
+			// The request was aborted, clear the interval and decrement jQuery.active
+			if (xhr.readyState == 0) {
+				if (ival) {
+					// clear poll interval
+					clearInterval(ival);
+					ival = null;
+					// Handle the global AJAX counter
+					if ( s.global && ! --jQuery.active )
+						jQuery.event.trigger( "ajaxStop" );
+				}
+			// The transfer is complete and the data is available, or the request timed out
+			} else if ( !requestDone && xhr && (xhr.readyState == 4 || isTimeout == "timeout") ) {
+				requestDone = true;
+
+				// clear poll interval
+				if (ival) {
+					clearInterval(ival);
+					ival = null;
+				}
+
+				status = isTimeout == "timeout" ? "timeout" :
+					!jQuery.httpSuccess( xhr ) ? "error" :
+					s.ifModified && jQuery.httpNotModified( xhr, s.url ) ? "notmodified" :
+					"success";
+
+				if ( status == "success" ) {
+					// Watch for, and catch, XML document parse errors
+					try {
+						// process the data (runs the xml through httpData regardless of callback)
+						data = jQuery.httpData( xhr, s.dataType, s );
+					} catch(e) {
+						status = "parsererror";
+					}
+				}
+
+				// Make sure that the request was successful or notmodified
+				if ( status == "success" ) {
+					// Cache Last-Modified header, if ifModified mode.
+					var modRes;
+					try {
+						modRes = xhr.getResponseHeader("Last-Modified");
+					} catch(e) {} // swallow exception thrown by FF if header is not available
+
+					if ( s.ifModified && modRes )
+						jQuery.lastModified[s.url] = modRes;
+
+					// JSONP handles its own success callback
+					if ( !jsonp )
+						success();
+				} else
+					jQuery.handleError(s, xhr, status);
+
+				// Fire the complete handlers
+				complete();
+
+				if ( isTimeout )
+					xhr.abort();
+
+				// Stop memory leaks
+				if ( s.async )
+					xhr = null;
+			}
+		};
+
+		if ( s.async ) {
+			// don't attach the handler to the request, just poll it instead
+			var ival = setInterval(onreadystatechange, 13);
+
+			// Timeout checker
+			if ( s.timeout > 0 )
+				setTimeout(function(){
+					// Check to see if the request is still happening
+					if ( xhr && !requestDone )
+						onreadystatechange( "timeout" );
+				}, s.timeout);
+		}
+
+		// Send the data
+		try {
+			if (s.binary && xhr.sendAsBinary) {
+				xhr.sendAsBinary(s.data);
+			} else {
+				xhr.send(s.data);
+			}
+		} catch(e) {
+			jQuery.handleError(s, xhr, null, e);
+		}
+
+		// firefox 1.5 doesn't fire statechange for sync requests
+		if ( !s.async )
+			onreadystatechange();
+
+		function success(){
+			// If a local callback was specified, fire it and pass it the data
+			if ( s.success )
+				s.success( data, status );
+
+			// Fire the global callback
+			if ( s.global )
+				jQuery.event.trigger( "ajaxSuccess", [xhr, s] );
+		}
+
+		function complete(){
+			// Process result
+			if ( s.complete )
+				s.complete(xhr, status);
+
+			// The request was completed
+			if ( s.global )
+				jQuery.event.trigger( "ajaxComplete", [xhr, s] );
+
+			// Handle the global AJAX counter
+			if ( s.global && ! --jQuery.active )
+				jQuery.event.trigger( "ajaxStop" );
+		}
+
+		// return XMLHttpRequest to allow aborting the request etc.
+		return xhr;
+	}
+	}
+);
+

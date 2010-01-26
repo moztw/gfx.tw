@@ -62,8 +62,7 @@ class Editor extends Controller {
 		$data = array(
 			'meta' => $this->load->view($this->config->item('language') . '/editor/meta.php', $U, true),
 			'content' => $this->load->view($this->config->item('language') . '/editor/content.php', array_merge($U, array('allfeatures' => $F, 'allgroups' => $G, 'addons' => $A)), true),
-			'script' => '	<script type="text/javascript" src="./js/page.editor.js' . $this->config->item('gfx_suffix') . '" charset="UTF-8"></script>
-	<script type="text/javascript" src="./swfupload/swfupload-min.js' . $this->config->item('gfx_suffix') . '" charset="UTF-8"></script>',
+			'script' => '	<script type="text/javascript" src="./js/page.editor.js' . $this->config->item('gfx_suffix') . '" charset="UTF-8"></script>',
 			'db' => 'content '
 		);
 
@@ -431,7 +430,7 @@ class Editor extends Controller {
 		} else {
 			$data = $this->upload->data();
 			//Check is image or not ourselves
-			list($width, $height, $type) = getimagesize($data['full_path']);
+			list($width, $height, $type) = @getimagesize($data['full_path']);
 			if (!in_array($type, array(IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG))) {
 				unlink($data['full_path']);
 				$this->load->helper('gfx');
