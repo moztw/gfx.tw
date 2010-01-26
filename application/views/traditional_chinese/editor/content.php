@@ -64,6 +64,7 @@ print urlencode(site_url('PLACEHOLDER'));
 		<p class="desc">您的網際生活將因 Firefox 更加豐富有趣！Firefox 有許多特色，協助您完成工作、找到資訊。正因為它如此實用，<span class="title-placeholder">{您的名字}</span>願意推薦您改用 Firefox！以下是<span class="title-placeholder">{您的名字}</span>最喜歡 Firefox 的三大特點：</p>
 	</div>
 	<div id="window_avatar" class="window" title="選擇個人圖示">
+		<div id="dropzone">&nbsp;</div>
 		<div class="avatar_selection">
 			<div id="avatar_default" class="avatar_icon">
 				<img src="./images/avatar-default.gif" alt="預設圖示" />
@@ -72,12 +73,12 @@ print urlencode(site_url('PLACEHOLDER'));
 			<p>使用預設圖示的話會錯過很多好玩的事情喔！</p>
 		</div>
 		<div class="avatar_selection">
-			<div id="avatar_swfupload" class="avatar_icon">
-				<div id="avatar_swfupload_replace">&nbsp;</div>
+			<div id="avatar_fileupload" class="avatar_icon">
+				<input type="file" />
 			</div>
 			<p class="avatar_desc">上傳圖片檔案</p>
 			<p>從您的電腦上傳圖片檔案作為個人圖示。</p>
-			<p id="avatar_disabled_desc_swfupload" class="avatar_disabled_desc">請安裝最新版 <a href="http://www.adobe.com/flashplayer" class="newwindow">Flash Player</a></strong></p>
+			<p id="avatar_disabled_desc_fileupload" class="avatar_disabled_desc">限 Firefox 使用 (File API)</p>
 		</div>
 <?php
 if ($email) {

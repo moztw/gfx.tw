@@ -458,6 +458,14 @@ span.title-empty {
 	border: 2px solid #ccffff;
 }
 
+#titleblock #title-avatar.dropindation {
+	background: url("../images/avatar-edit.png") no-repeat scroll center center transparent
+}
+
+#titleblock #title-avatar.dropindation img {
+	display: none;
+}
+
 #titleblock #title-avatar img {
 	width: 65px;
 }
@@ -1115,9 +1123,31 @@ span.title-empty {
 	clear: both;
 }
 
+#window_avatar {
+	position: relative;
+}
+
 #window_avatar .window_content {
 	height: 100%;
 }
+
+#window_avatar #dropzone {
+	position: absolute;
+	top: 10px; left: 10px; right: 10px; bottom: 10px; z-index: 2;
+	border: 4px dashed #cccccc;
+	background: #ffffff url("../images/avatar-edit.png") no-repeat scroll center center;
+	opacity: 0.8;
+	-moz-border-radius: 10px;
+	display: none;
+}
+
+#window_avatar.dropenter #dropzone {
+	opacity: 1;
+}
+#window_avatar.dropindication #dropzone {
+	display: block;
+}
+
 #window_avatar .avatar_selection {
 	float: left;
 	width: 50%; height: 90px; overflow: hidden;
@@ -1127,7 +1157,6 @@ span.title-empty {
 	height: 69px; width: 69px;
 	margin: 10px 10px 10px 1px; /* Must >= 1px */
 	padding: 0;
-	cursor: pointer;
 	float: left;
 }
 
@@ -1141,6 +1170,11 @@ span.title-empty {
 	border: 2px solid #cccccc;
 }
 
+#window_avatar .avatar_selection.disabled .avatar_icon img:hover {
+	background-color: transparent;
+	border: 2px solid transparent;
+}
+
 #window_avatar .avatar_selection .avatar_desc {
 	font-weight: bold;
 	font-size: 1.1em;
@@ -1148,11 +1182,28 @@ span.title-empty {
 	padding-bottom: 0.1em;
 }
 
-#window_avatar .avatar_selection #avatar_swfupload {
+#window_avatar .avatar_selection #avatar_fileupload {
 	background: transparent url('../images/avatar-edit.png') center center no-repeat;
+	position: relative; overflow: hidden;
+	width: 65px; height: 65px;
+	border: 2px solid transparent;
 }
-#window_avatar .avatar_selection #avatar_swfupload:hover {
-	background-color: #cccccc;
+#window_avatar .avatar_selection #avatar_fileupload:hover {
+	background-color: #ffffff;
+	border: 2px solid #cccccc;
+}
+#window_avatar .avatar_selection.disabled #avatar_fileupload:hover {
+	background-color: transparent;
+	border: 2px solid transparent;
+}
+#window_avatar .avatar_selection #avatar_fileupload input {
+	font-size: 100px;
+	opacity: 0;
+	position: absolute;
+	right: 0;
+}
+#window_avatar .avatar_selection.disabled input {
+	display: none;
 }
 #window_avatar .avatar_selection .avatar_disabled_desc {
 	display: none;

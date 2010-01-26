@@ -6,11 +6,13 @@ var T = {
 		UNABLE_TO_CONNECT: '無法連線伺服器，請檢查網路連線並再試一次。',
 		SERVER_RESPONSE: '伺服器錯誤，請通知管理員。'
 	},
-	/* swfupload pre-upload errors */
-	SWFUPLOAD: {
-		ZERO_BYTE_FILE: '檔案的大小為 0 。',
+	/* file upload pre-upload errors */
+	FILEUPLOAD: {
 		FILE_EXCEEDS_SIZE_LIMIT: '檔案超過限制大小。',
-		INVALID_FILETYPE: '無法接受此檔案格式。'
+		INVALID_FILETYPE: '無法接受此檔案格式。',
+		NOT_FOUND: '找不到檔案。',
+		NOT_READABLE: '無法讀取此檔案。',
+		SECURITY: '您沒有讀取此檔案的權限。'
 	},
 	/* alert messages (errors only) */
 	ALERT: {

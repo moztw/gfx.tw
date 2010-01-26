@@ -498,9 +498,9 @@ var gfx = {
 			},
 			'progress' : {
 				'width' : 244,
-				'height' : 75,
-				'buttons' : {},
-				'position' : [100, 100]
+				'height' : 150,
+				'position' : [100, 100],
+				'buttons' : { }
 			}
 		},
 		'onload' : function () {
@@ -791,6 +791,10 @@ var gfx = {
 				T.ALERT[result.message.tag] || result.message.msg,
 				result.message.tag || false
 			);
+			return true;
+		} else if (result.error) {
+			//Legacy alert w/o tag
+			gfx.alert(result.error);
 			return true;
 		} else {
 			return false;
