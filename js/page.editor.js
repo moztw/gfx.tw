@@ -500,7 +500,11 @@ gfx.page = {
 			}
 		);
 	
-		if (!$('#avatar_fileupload input').get(0).files) {
+		if (
+		!$('#avatar_fileupload input').get(0).files // No file list
+		|| !window.XMLHttpRequest // No native XMLHttpRequest
+		|| !((new XMLHttpRequest()).sendAsBinary) // No Gecko sendAsBinary function
+		) {
 			$('#avatar_fileupload').parent().addClass('disabled');
 		}
 	
