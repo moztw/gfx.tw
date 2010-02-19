@@ -64,7 +64,6 @@ if (isset($id)) {
 					<iframe src="/user/list/random-avatars-frame" border="0" frameborder="0"></iframe>
 				</div>
 			</noscript>
-			<p class="message-link"><a href="/about">關於我們</a> | <a href="/about/legal">使用條款</a> | <a href="/about/faq">常見問題</a></p>
 		</div>
 	</div>
 	<div id="window_login" class="window" title="登入">
