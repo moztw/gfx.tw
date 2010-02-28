@@ -168,7 +168,7 @@ function json_message($tag = 'unknown_message', $type = 'error', $icon = 'alert'
 	} else {
 		$message['msg'] = 'Unknown message (' . $tag . ').';
 	}
-	print json_encode(array('message' => $message));
+	$CI->load->view('json.php', array('jsonObj' => array('message' => $message)));
 	exit();
 }
 

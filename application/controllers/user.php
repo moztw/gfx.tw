@@ -14,7 +14,7 @@ class User extends Controller {
 		if (isset($_SERVER['HTTP_ACCEPT']) && strpos($_SERVER['HTTP_ACCEPT'], 'application/xrds+xml') !== false) {
 			header('X-XRDS-Location: ' . site_url('auth/xrds'));
 			header('Content-Type: text/plain');
-			print 'You should find the location of xrds doc in the header. I could place a <meta> tag here but I am lazy and you are dumb.';
+			//print 'You should find the location of xrds doc in the header. I could place a <meta> tag here but I am lazy and you are dumb.';
 			//TBD: <meta http-equiv="X-XRDS-Location" content=""/>
 			exit();
 		}
@@ -233,8 +233,7 @@ class User extends Controller {
 				if ($type === 'random-avatars-frame') {
 					$this->load->view($this->config->item('language') . '/user/random-avatars.php', array('users' => $users));
 				} else {
-					header('Content-Type: text/javascript');
-					print json_encode(array('users' => $users));
+					$this->load->view('json.php', array('jsonObj' => array('users' => $users)));
 				}
 			break;
 			default:

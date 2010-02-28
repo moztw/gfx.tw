@@ -402,10 +402,11 @@ class Editor extends Controller {
 			imagedestroy($sticker);
 		}
 
-		header('Content-Type: text/javascript');
-		print json_encode(
-			array(
-				'name' => $this->input->post('name')
+		$this->load->view('json.php', 
+			array('jsonObj' => 
+				array(
+					'name' => $this->input->post('name')
+				)
 			)
 		);
 	}
@@ -425,8 +426,7 @@ class Editor extends Controller {
 			)
 		);
 		if (!$this->upload->do_upload('Filedata')) {
-			print json_encode(array('error' => $this->upload->display_errors('','')));
-//			print json_encode(array('error' => json_encode($this->upload->data())));
+			$this->load->view('json.php', array('jsonObj' => array('error' => $this->upload->display_errors('',''))));
 		} else {
 			$data = $this->upload->data();
 			//Check is image or not ourselves
@@ -442,12 +442,11 @@ class Editor extends Controller {
 				json_message('EDITOR_AVATAR_SIZE_TOO_LARGE');
 			}
 			//Success!
-			header('Content-Type: text/javascript');
-			print json_encode(
+			$this->load->view('json.php', array('jsonObj' => 
 				array(
 					'img' => $subdir . $data['file_name']
 				)
-			);
+			));
 		}
 	}
 }

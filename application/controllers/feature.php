@@ -7,9 +7,9 @@ class Feature extends Controller {
 	}
 	function index() {
 		//TBD: a nice feature list.
-		//show_404();
-		header('Content-Type: text/plain');
-		print 'TBD';
+		show_404();
+		//header('Content-Type: text/plain');
+		//print 'TBD';
 	}
 	function view($id, $type = '') {
 		/* Redirect numeric id */
@@ -59,6 +59,7 @@ class Feature extends Controller {
 				$expiry = $this->cache->get_expiry($id, 'feature-inframe');
 			}
 			header('ETag: ' . md5($expiry));
+			//TBD: this will introduce GZip error
 			print $data;
 			break;
 			default:
@@ -92,7 +93,8 @@ class Feature extends Controller {
 		}
 	}
 	function delete() {
-		print 'TBD';
+		show_404();
+		//print 'TBD';
 	}
 	function update() {
 		$this->load->config('gfx');
