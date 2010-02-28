@@ -21,7 +21,9 @@ class Addon extends Controller {
 				//Couldn't find it, try to fetch from AMO site
 				$addon = $this->_update_amo_addon($this->input->post('q'), false, true);
 				if ($addon) {
-					print json_encode(array('addons' => array($addon)));
+					$this->load->view('json.php', array('jsonObj' => 
+						array('addons' => array($addon)))
+					);
 					exit;
 				}
 			}
@@ -55,7 +57,7 @@ class Addon extends Controller {
 			$addon = $this->_update_amo_addon($A[$r]['amo_id'], $A[$r]['id'], true);
 			if ($addon) $A[$r] = $addon;
 		}
-		print json_encode(array('addons' => $A));
+		$this->load->view('json.php', array('jsonObj' => array('addons' => $A)));
 	}
 	function suggest() {
 		checkAuth(true, false, 'json');
@@ -65,7 +67,7 @@ class Addon extends Controller {
 		$this->load->library('cache');
 		$A = $this->cache->get($this->input->post('g') ,'addons-suggest');
 		if ($A) {
-			print json_encode(array('addons' => $A));
+			$this->load->view('json.php', array('jsonObj' => array('addons' => $A)));
 			exit();
 		}
 
@@ -92,7 +94,7 @@ class Addon extends Controller {
 			if ($addon) $A[$r] = $addon;
 		}
 		$this->cache->save($this->input->post('g') ,$A ,'addons-suggest', 300);
-		print json_encode(array('addons' => $A));
+		$this->load->view('json.php', array('jsonObj' => array('addons' => $A)));
 	}
 	function forcefetch() {
 		checkAuth(true, true, 'json');
@@ -104,9 +106,9 @@ class Addon extends Controller {
 			$A = $this->_update_amo_addon($this->input->post('amo_id'), $addon->row()->id, false);
 		}
 		if ($A) {
-			print json_encode(array('addons' => $A));
+			$this->load->view('json.php', array('jsonObj' => array('addons' => $A)));
 		} else {
-			print json_encode(array('addons' => array()));
+			$this->load->view('json.php', array('jsonObj' => array('addons' => array())));
 		}
 	}
 	function _update_amo_addon($amo_id, $id = false, $cleanoutput = true) {

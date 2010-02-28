@@ -159,41 +159,8 @@ class Auth extends Controller {
 		);
 		header('Location: ' . site_url('editor'));
 	}
-	function challenge() {
-		/*
-			A really --weak-- useless captcha challenge that doesn't involve reCaptcha or GD (to save memory)
-			Do not apply to anything that we really need to protect against robots.
-		*/
-		$this->load->config('gfx');
-		$b = rand(2, 50);
-		$a = rand($b, 50);
-		$OP = array('+', '-', 'x');
-		$op = rand(0, 2);
-		$t = time();
-		switch ($op) {
-			case 0:
-				$challenge = md5(($a+$b) . ':' . $t . ':' . $this->config->item('gfx_token'));
-				break;
-			case 1:
-				$challenge = md5(($a-$b) . ':' . $t . ':' . $this->config->item('gfx_token'));
-				break;
-			case 2:
-				$challenge = md5(($a*$b) . ':' . $t . ':' . $this->config->item('gfx_token'));
-		}
-		header('Content-Type: text/javascript');
-		print json_encode(
-			array(
-				'challenge' => $t . ':' . $challenge,
-				'question' => $a . ' ' . $OP[$op] . ' ' . $b . ' ='
-			)
-		);
-	}
 	function forgetopenid() {
 		$this->load->helper('gfx');
-		/*if (!checkChallenge('flashdata')) {
-			header('Location: ' . site_url('about/faq'));
-			exit();
-		}*/
 		//Due to privicy consideration, we will not show any onscreen message indicate email has been send or not.
 		//Therefore all the flashdata message will be the same from this point on.
 		$this->load->helper('email');
