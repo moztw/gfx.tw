@@ -76,6 +76,7 @@ Should include all controller and reserve url for future functions */
 $config['gfx_badname'] = array(
 	'about',
 	'addons',
+	'api',
 	'auth',
 	'badge',
 	'badges',
