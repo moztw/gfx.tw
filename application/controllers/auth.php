@@ -161,10 +161,6 @@ class Auth extends Controller {
 	}
 	function forgetopenid() {
 		$this->load->helper('gfx');
-		if (!checkChallenge('flashdata')) {
-			header('Location: ' . site_url('about/faq'));
-			exit();
-		}
 		//Due to privicy consideration, we will not show any onscreen message indicate email has been send or not.
 		//Therefore all the flashdata message will be the same from this point on.
 		$this->load->helper('email');

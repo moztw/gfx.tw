@@ -70,40 +70,6 @@ function checkAuth($checkOrigin = false, $checkAdmin = false, $errorType = '') {
 	}
 	return $islogin;
 }
-function checkChallenge($errorType = '') {
-	$CI =& get_instance();
-	while (true) {
-		if (!$CI->input->post('challenge')
-			|| !$CI->input->post('answer')) {
-			$isValid = false;
-			break;
-		}
-		$C = explode(':', $CI->input->post('challenge'), 2);
-		if (count($C) !== 2) {
-			$isValid = false;
-			break;
-		}
-		$CI->load->config('gfx');
-		if (intval($C[0]) < time() - 3*60*60
-			|| $C[1] !== md5($CI->input->post('answer') . ':' . intval($C[0]) . ':' . $CI->config->item('gfx_token'))) {
-			$isValid = false;
-			break;
-		}
-		$isValid = true;
-		break;
-	}
-	if (!$isValid) {
-		switch ($errorType) {
-			case 'json':
-				json_message('captcha_validation_failed');
-			break;
-			case 'flashdata':
-				flashdata_message('captcha_validation_failed');
-			break;
-		}
-	}
-	return $isValid;
-}
 function avatarURL($avatar, $email, $login, $conn = '&amp;') {
 	switch ($avatar) {
 		case '':
