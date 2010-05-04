@@ -399,7 +399,8 @@ var gfx = {
 				'#link-gravatar' : function () {
 					gfx.tracker('External', 'Gravatar');
 				},
-				'a.newwindow' : function () {
+				'a.newwindow' : function (ev) {
+					if (ev.button !== 0) return true;
 					window.open(this.href);
 					return false;
 				},
