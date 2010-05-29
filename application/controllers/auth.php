@@ -25,7 +25,7 @@ class Auth extends Controller {
 			site_url($this->config->item('openid_policy'))
 		);
 		//$this->openid->set_pape(true, $pape_policy_uris);
-		$this->openid->authenticate($this->input->post('openid-identifier'));
+		$this->openid->authenticate($this->input->post('openid-identifier'), false);
 	}
 	function check() {
 		$this->config->load('openid');
@@ -41,6 +41,10 @@ class Auth extends Controller {
 				flashdata_message('auth_login_failed');
 				header('Location: ' . base_url());
 				break;
+			//case Auth_OpenID_SETUP_NEEDED:	//Only happens in checkid_immediate mode
+			//	flashdata_message('Auth_OpenID_SETUP_NEEDED');
+			//	header('Location: ' . base_url());
+			//	break;
 			case Auth_OpenID_SUCCESS:
 				$open_id = $response->getDisplayIdentifier();
 

@@ -88,7 +88,7 @@ class Openid{
     }
     }
     
-    function authenticate($openId)
+    function authenticate($openId, $immediate = false)
     {
     $consumer = $this->_getConsumer();
         $authRequest = $consumer->begin($openId);
@@ -146,7 +146,7 @@ class Openid{
     // form to send a POST request to the server.
     if ($authRequest->shouldSendRedirect())
     {
-        $redirect_url = $authRequest->redirectURL($this->trust_root, $this->request_to);
+        $redirect_url = $authRequest->redirectURL($this->trust_root, $this->request_to, $immediate);
 
         // If the redirect URL can't be built, display an error
         // message.
@@ -164,7 +164,7 @@ class Openid{
     {
         // Generate form markup and render it.
         $form_id = 'openid_message';
-        $form_html = $authRequest->formMarkup($this->trust_root, $this->request_to, false, array('id' => $form_id));
+        $form_html = $authRequest->formMarkup($this->trust_root, $this->request_to, $immediate, array('id' => $form_id));
 
         // Display an error if the form markup couldn't be generated;
         // otherwise, render the HTML.
