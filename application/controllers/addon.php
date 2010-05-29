@@ -113,93 +113,61 @@ class Addon extends Controller {
 	}
 	function _update_amo_addon($amo_id, $id = false, $cleanoutput = true) {
 		if ($amo_id == 0) return false;
-		header('X-MSG: Fetch addon from AMO');
-		/* Fetch from api first */
+		/* fetch data from AMO */
 		$xml = @file_get_contents($this->config->item('gfx_amo_api_url') . $amo_id);
-		if ($xml && strpos($xml, '<error>') === false) {
-			/*
-				a vaild xml file to parse
-				let's call DOMDocument class
-			*/
-			header('X-MSG: Got XML');
-			$doc = new DOMDocument();
-			$doc->loadXML($xml);
-			$dom->preserveWhiteSpace = false;
-			$A = array(
-				'title' => $doc->getElementsByTagName('name')->item(0)->firstChild->nodeValue,
-				'amo_id' => $amo_id,
-				'url' => '',
-				'xpi_url' => '',
-				'amo_version' => $doc->getElementsByTagName('version')->item(0)->firstChild->nodeValue,
-				'icon_url' => '',
-				'description' => $doc->getElementsByTagName('summary')->item(0)->firstChild->nodeValue,
-				'available' => 'Y', /* Alway available */
-				'os_0' => 'N',
-				'os_1' => 'N',
-				'os_2' => 'N',
-				'os_3' => 'N',
-				'os_4' => 'N',
-				'os_5' => 'N',
-				'fetched' => date('Y-m-d H:m:s')
-			);
-			if (strpos($doc->getElementsByTagName('icon')->item(0)->firstChild->nodeValue, 'default_icon') === false) {
-				$A['icon_url'] = $doc->getElementsByTagName('icon')->item(0)->firstChild->nodeValue;
-			}
-			foreach ($doc->getElementsByTagName('all_compatible_os')->item(0)->childNodes as $os) {
-				if ($os->nodeName !== 'os') continue;
-				switch ($os->firstChild->nodeValue) {
-					case 'ALL':
-						$A['os_0'] = 'Y';
-						break;
-					case 'BSD_OS':
-						$A['os_1'] = 'Y';
-						break;
-					case 'Linux':
-						$A['os_2'] = 'Y';
-						break;
-					case 'Darwin':
-						$A['os_3'] = 'Y';
-						break;
-					case 'SunOS':
-						$A['os_4'] = 'Y';
-						break;
-					case 'WINNT':
-						$A['os_5'] = 'Y';
-						break;
-				}
-			}
-		} else {
-			/* Fetch from addon page */
-			//TBD: connection timeout
-			$html = @file_get_contents($this->config->item('gfx_amo_url') . $amo_id);
-			/* parse the file, return false if failed */
-			if (!preg_match($this->config->item('gfx_amo_title_regexp'), $html, $M)) {
-				header('X-MSG: got html but w/o title');
-				return false;
-			}
-			header('X-MSG: got html');
-			preg_match($this->config->item('gfx_amo_desc_regexp'), $html, $D);
-
-			$A = array(
-				'title' => html_entity_decode(trim(strip_tags($M[2])), ENT_QUOTES, 'UTF-8'),
-				'amo_id' => $amo_id,
-				'url' => '',
-				'xpi_url' => '',
-				'amo_version' => html_entity_decode(trim(strip_tags($M[3])), ENT_QUOTES, 'UTF-8'),
-				'icon_url' => ($M[1] === '/img/default_icon.png')?'':'https://addons.mozilla.org' . $M[1],
-				'description' => (isset($D[1]))?html_entity_decode(trim(strip_tags($D[1])), ENT_QUOTES, 'UTF-8'):'',
-				'available' => (preg_match($this->config->item('gfx_amo_is_exp_regexp'), $html) === 0)?'Y':'N',
-				'os_0' => (preg_match($this->config->item('gfx_amo_platform_0_regexp'), $html) === 1)?'Y':'N',
-				'os_1' => (preg_match($this->config->item('gfx_amo_platform_1_regexp'), $html) === 1)?'Y':'N',
-				'os_2' => (preg_match($this->config->item('gfx_amo_platform_2_regexp'), $html) === 1)?'Y':'N',
-				'os_3' => (preg_match($this->config->item('gfx_amo_platform_3_regexp'), $html) === 1)?'Y':'N',
-				'os_4' => (preg_match($this->config->item('gfx_amo_platform_4_regexp'), $html) === 1)?'Y':'N',
-				'os_5' => (preg_match($this->config->item('gfx_amo_platform_5_regexp'), $html) === 1)?'Y':'N',
-				'fetched' => date('Y-m-d H:m:s')
-			);
-			#var_dump($A);
-			#exit();
+		if ($xml && strpos($xml, '<error>') !== false) {
+			return false;
 		}
+		$doc = new DOMDocument();
+		$doc->loadXML($xml);
+		$dom->preserveWhiteSpace = false;
+		$A = array(
+			'title' => $doc->getElementsByTagName('name')->item(0)->firstChild->nodeValue,
+			'amo_id' => $amo_id,
+			'url' => '',
+			'xpi_url' => '',
+			'amo_version' => $doc->getElementsByTagName('version')->item(0)->firstChild->nodeValue,
+			'icon_url' => '',
+			'description' => $doc->getElementsByTagName('summary')->item(0)->firstChild->nodeValue,
+			'available' => 'Y',
+			'os_0' => 'N',
+			'os_1' => 'N',
+			'os_2' => 'N',
+			'os_3' => 'N',
+			'os_4' => 'N',
+			'os_5' => 'N',
+			'fetched' => date('Y-m-d H:m:s')
+		);
+		if ($doc->getElementsByTagName('status')->item(0)->getAttribute('id') !== '4') {
+			$A['available'] = 'N';	
+		}
+		if (strpos($doc->getElementsByTagName('icon')->item(0)->firstChild->nodeValue, 'default_icon') === false) {
+			$A['icon_url'] = $doc->getElementsByTagName('icon')->item(0)->firstChild->nodeValue;
+		}
+		foreach ($doc->getElementsByTagName('all_compatible_os')->item(0)->childNodes as $os) {
+			if ($os->nodeName !== 'os') continue;
+			switch ($os->firstChild->nodeValue) {
+				case 'ALL':
+					$A['os_0'] = 'Y';
+					break;
+				case 'BSD_OS':
+					$A['os_1'] = 'Y';
+					break;
+				case 'Linux':
+					$A['os_2'] = 'Y';
+					break;
+				case 'Darwin':
+					$A['os_3'] = 'Y';
+					break;
+				case 'SunOS':
+					$A['os_4'] = 'Y';
+					break;
+				case 'WINNT':
+					$A['os_5'] = 'Y';
+					break;
+			}
+		}
+
 		/* update/insert the record */
 		$this->load->database();
 		if ($id) {
