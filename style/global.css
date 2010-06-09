@@ -739,6 +739,8 @@ span.title-empty {
 	background-color: #e0e0ff;
 	padding: 2px;
 	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
 }
 #window_editcomplete .shareblock {
 	margin: 0 10%;
@@ -791,6 +793,8 @@ span.title-empty {
 	border: 4px solid #cccccc;
 	background-color: #ffffff;
 	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+	border-radius: 20px;
 }
 
 #userinfo h2 {
@@ -861,12 +865,20 @@ span.title-empty {
 	border-bottom: none;
 	-moz-border-radius-topleft: 20px;
 	-moz-border-radius-topright: 20px;
+	-webkit-border-radius-topleft: 20px;
+	-webkit-border-radius-topright: 20px;
+	border-radius-topleft: 20px;
+	border-radius-topright: 20px;
 }
 
 #groups-tail {
 	border-top: none;
 	-moz-border-radius-bottomleft: 20px;
 	-moz-border-radius-bottomright: 20px;
+	-webkit-border-radius-bottomleft: 20px;
+	-webkit-border-radius-bottomright: 20px;
+	border-radius-bottomleft: 20px;
+	border-radius-bottomright: 20px;
 }
 
 #groups .group {
@@ -930,6 +942,8 @@ span.title-empty {
 	border: 2px solid #99ff99;
 	background-color: #c4fea1;
 	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
 }
 
 #groups-install button {
@@ -954,6 +968,8 @@ span.title-empty {
 	border: 2px solid #cccccc;
 	background-color: #ffffff;
 	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
 }
 .addon {
 	margin: 1px 0;
@@ -961,6 +977,8 @@ span.title-empty {
 	background-color: #ffffff;
 	border: 2px solid #ccffcc;
 	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
 	overflow: hidden;
 	clear: both;
 }
@@ -1041,6 +1059,8 @@ span.title-empty {
 	float: right;
 	background-color: #ccffcc;
 	-moz-border-radius-bottomleft: 6px;
+	-webkit-border-radius-bottomleft: 6px;
+	border-radius-bottomleft: 6px;
 	margin-top: -8px;
 }
 
@@ -1070,6 +1090,8 @@ span.title-empty {
 	background: transparent url(../images/feature-empty.gif) no-repeat scroll center center;
 	border: 2px solid #ffffff;
 	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
 	font-weight: bold;
 	text-align: center;
 }
