@@ -15,13 +15,13 @@ class Auth extends Controller {
 		}
 		$this->config->load('openid');
 
-		$this->openid->set_request_to(site_url($this->config->item('openid_request_to')));
+		$this->openid->set_request_to(site_url('auth/check'));
 		$this->openid->set_trust_root(base_url());
 		$this->openid->set_args(null);
 		$this->openid->set_sreg(
 			true,
-			$this->config->item('openid_required'),
-			$this->config->item('openid_optional'),
+			array('nickname'),
+			array('fullname', 'email'),
 			site_url($this->config->item('openid_policy'))
 		);
 		//$this->openid->set_pape(true, $pape_policy_uris);
@@ -30,7 +30,7 @@ class Auth extends Controller {
 	function check() {
 		$this->config->load('openid');
 		$this->load->helper('gfx');
-		$this->openid->set_request_to(site_url($this->config->item('openid_request_to')));
+		$this->openid->set_request_to(site_url('auth/check'));
 		$response = $this->openid->getResponse();
 		switch ($response->status) {
 			case Auth_OpenID_CANCEL:
