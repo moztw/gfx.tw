@@ -65,7 +65,41 @@ print $this->db->query('SELECT COUNT(`id`) AS count FROM `addons`;')->row()->cou
 		}
 ?>
 		</ul>
-
+		<h3>OpenID 使用統計</h3>
+		<ul>
+			<li>Google：<?php 
+print $this->db->query('SELECT COUNT(`id`) AS count FROM `users` WHERE `login` LIKE \'%google.com%\';')->row()->count;
+?>
+</li>
+			<li>Yahoo!：<?php 
+print $this->db->query('SELECT COUNT(`id`) AS count FROM `users` WHERE `login` LIKE \'%yahoo.com%\';')->row()->count;
+?>
+</li>
+			<li>AIM：<?php 
+print $this->db->query('SELECT COUNT(`id`) AS count FROM `users` WHERE `login` LIKE \'%aol.com%\';')->row()->count;
+?>
+</li>
+			<li>LiveJournal：<?php 
+print $this->db->query('SELECT COUNT(`id`) AS count FROM `users` WHERE `login` LIKE \'%livejournal.com%\';')->row()->count;
+?>
+</li>
+			<li>myID.tw：<?php 
+print $this->db->query('SELECT COUNT(`id`) AS count FROM `users` WHERE `login` LIKE \'%myid.tw%\';')->row()->count;
+?>
+</li>
+			<li>myOpenID：<?php 
+print $this->db->query('SELECT COUNT(`id`) AS count FROM `users` WHERE `login` LIKE \'%myopenid.com%\';')->row()->count;
+?>
+</li>
+			<li>TypePad：<?php 
+print $this->db->query('SELECT COUNT(`id`) AS count FROM `users` WHERE `login` LIKE \'%typekey.com%\';')->row()->count;
+?>
+</li>
+			<li>WordPress.com：<?php 
+print $this->db->query('SELECT COUNT(`id`) AS count FROM `users` WHERE `login` LIKE \'%wordpress.com%\';')->row()->count;
+?>
+</li>
+		</ul>
 	</div>
 <!--	<div class="tab-content ui-widget-content">
 		<p>Users</p>
