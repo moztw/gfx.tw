@@ -17,6 +17,9 @@ class Openid{
   var $sreg_optional = null;
   var $sreg_policy = null;
   
+  var $ax_enable = false;
+  var $ax_types = array();
+
   var $pape_enable = false;
   var $pape_policy_uris = null;
   
@@ -43,8 +46,15 @@ class Openid{
     require_once "Auth/OpenID/Consumer.php";
     require_once "Auth/OpenID/FileStore.php";
     require_once "Auth/OpenID/SReg.php";
+    require_once "Auth/OpenID/AX.php";
     require_once "Auth/OpenID/PAPE.php";
   }
+
+    function set_ax($enable, $types)
+    {
+    $this->ax_enable = $enable;
+    $this->ax_types = $types;
+    }
     
     function set_sreg($enable, $required = null, $optional = null, $policy = null)
     {
@@ -112,7 +122,19 @@ class Openid{
             $this->_set_message(true,'openid_sreg_failed');
         }
     }
-      
+    
+    if ($this->ax_enable) {
+        $ax_request = new Auth_OpenID_AX_FetchRequest;
+        if ($ax_request) {
+            foreach ($this->ax_types as $alias => &$type_url) {
+                $ax_request->add(Auth_OpenID_AX_AttrInfo::make($type_url, 1, 1, $alias));
+            }
+            $authRequest->addExtension($ax_request);
+        } else {
+            $this->_set_message(true,'openid_ax_failed');
+        }
+    }
+ 
     if ($this->pape_enable)
     {
         $pape_request = new Auth_OpenID_PAPE_Request($this->pape_policy_uris);

@@ -24,6 +24,14 @@ class Auth extends Controller {
 			array('fullname', 'email'),
 			site_url($this->config->item('openid_policy'))
 		);
+		$this->openid->set_ax(
+			true,
+			array(
+				'firstname' => 'http://axschema.org/namePerson/first',
+				'email' => 'http://axschema.org/contact/email',
+				'lastname' => 'http://axschema.org/namePerson/last'
+                        )
+                );
 		//$this->openid->set_pape(true, $pape_policy_uris);
 		$this->openid->authenticate($this->input->post('openid-identifier'), false);
 	}
@@ -50,10 +58,25 @@ class Auth extends Controller {
 
 				$this->load->database();
 				$user = $this->db->get_where('users', array('login' => $open_id));
+				$sreg = Auth_OpenID_SRegResponse::fromSuccessResponse($response)->contents();
+				$ax_response = Auth_OpenID_AX_FetchResponse::fromSuccessResponse($response);
+				if ($ax_response) {
+					$ax = $ax_response->data;
+				} else {
+					$ax = array();
+				}
 				if ($user->num_rows() !== 0) {
 					/* User exists */
 					$data = $user->row_array();
 					flashdata_message('auth_login', 'highlight', 'info');
+
+					if (isset($sreg['email'])) {
+                                                $data['email'] = $sreg['email'];
+						$this->db->update('users', array('email' => $sreg['email']), array('id' => $data['id']));
+                                        } elseif (isset($ax['http://axschema.org/contact/email'])) {
+                                                $data['email'] = $ax['http://axschema.org/contact/email'][0];
+						$this->db->update('users', array('email' => $ax['http://axschema.org/contact/email'][0]), array('id' => $data['id']));
+                                        }
 				} else {
 					$this->load->config('gfx');
 					if ($this->config->item('gfx_require_pre_authorization')) {
@@ -62,7 +85,6 @@ class Auth extends Controller {
 					}
 					/* Create new user */
 					flashdata_message('auth_login_new', 'highlight', 'info');
-					$sreg = Auth_OpenID_SRegResponse::fromSuccessResponse($response)->contents();
 					$data = array(
 						'login' => $open_id,
 						'name' => '__temp__' . md5($open_id . time()), /* require unique */
@@ -82,10 +104,15 @@ class Auth extends Controller {
 						$data['title'] = $sreg['fullname'];
 					} elseif (isset($sreg['nickname'])) {
 						$data['title'] = $sreg['nickname'];
+					} elseif (isset($ax['http://axschema.org/namePerson/first'])) {
+						$data['title'] = $ax['http://axschema.org/namePerson/first'][0];
 					}
 					if (isset($sreg['email'])) {
 						$data['avatar'] = '(gravatar)';
 						$data['email'] = $sreg['email'];
+					} elseif (isset($ax['http://axschema.org/contact/email'])) {
+						$data['avatar'] = '(gravatar)';
+						$data['email'] = $ax['http://axschema.org/contact/email'][0];
 					}
 					if (preg_match('/myid\.tw\/$/', $data['login'])) {
 						$data['avatar'] = '(myidtw)';
