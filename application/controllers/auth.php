@@ -70,13 +70,15 @@ class Auth extends Controller {
 					$data = $user->row_array();
 					flashdata_message('auth_login', 'highlight', 'info');
 
-					if (isset($sreg['email'])) {
-                                                $data['email'] = $sreg['email'];
-						$this->db->update('users', array('email' => $sreg['email']), array('id' => $data['id']));
-                                        } elseif (isset($ax['http://axschema.org/contact/email'])) {
-                                                $data['email'] = $ax['http://axschema.org/contact/email'][0];
-						$this->db->update('users', array('email' => $ax['http://axschema.org/contact/email'][0]), array('id' => $data['id']));
-                                        }
+					if (!$data['email']) {
+						if (isset($sreg['email'])) {
+        	                                        $data['email'] = $sreg['email'];
+							$this->db->update('users', array('email' => $sreg['email']), array('id' => $data['id']));
+                        	                } elseif (isset($ax['http://axschema.org/contact/email'])) {
+                                	                $data['email'] = $ax['http://axschema.org/contact/email'][0];
+							$this->db->update('users', array('email' => $ax['http://axschema.org/contact/email'][0]), array('id' => $data['id']));
+	                                        }
+					}
 				} else {
 					$this->load->config('gfx');
 					if ($this->config->item('gfx_require_pre_authorization')) {
