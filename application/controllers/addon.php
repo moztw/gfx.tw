@@ -128,7 +128,7 @@ class Addon extends Controller {
 			'xpi_url' => '',
 			'amo_version' => $doc->getElementsByTagName('version')->item(0)->firstChild->nodeValue,
 			'icon_url' => '',
-			'description' => $doc->getElementsByTagName('summary')->item(0)->firstChild->nodeValue,
+			'description' => strip_tags($doc->getElementsByTagName('summary')->item(0)->firstChild->nodeValue),
 			'available' => 'Y',
 			'os_0' => 'N',
 			'os_1' => 'N',
