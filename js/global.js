@@ -277,7 +277,8 @@ var gfx = {
 						function (i) {
 							var a = $(this).parents('.addon');
 							l[a.find('a span').attr('title')] = {
-								URL : this.value,
+								URL: this.value,
+								Hash: $(this).attr('data-hash'),
 								IconURL: a.find('a img').attr('src')
 							};
 						}

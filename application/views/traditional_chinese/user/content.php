@@ -106,7 +106,7 @@ function addon($addon) {
 	/* if it's an AMO addon */
 	if ($amo_id) {
 		$url = $CI->config->item('gfx_amo_url') . $amo_id;
-		$xpi_url = $CI->config->item('gfx_amo_xpi_url') . $amo_id;
+		if (!$xpi_url) $xpi_url = $CI->config->item('gfx_amo_xpi_url') . $amo_id;
 	} elseif ($available === 'Y' && !$xpi_url) {
 		/* not a AMO addon and marked available BUT without an xpi url => don't show */
 		return;
@@ -124,7 +124,7 @@ function addon($addon) {
 		if ($os_4 === 'Y') print ' os_4';
 		if ($os_5 === 'Y') print ' os_5';
 ?>">
-			<input type="checkbox" value="<?php print htmlspecialchars($xpi_url); ?>" id="install-<?php print $id ?>" /><label for="install-<?php print $id ?>">列入安裝清單</label>
+			<input type="checkbox" data-hash="<?php print htmlspecialchars($xpi_hash); ?>" value="<?php print htmlspecialchars($xpi_url); ?>" id="install-<?php print $id ?>" /><label for="install-<?php print $id ?>">列入安裝清單</label>
 		</p>
 <?php
 	} else { ?>
