@@ -53,15 +53,11 @@ print $this->db->query('SELECT COUNT(`id`) AS count FROM `addons`;')->row()->cou
 		<ul>
 <?php
 		foreach (
-			$this->db->query('SELECT `id`, `title` FROM `features` ORDER BY `order` ASC;')->result_array()
+			$this->db->query('SELECT features.title, count(users.id) AS count FROM features, users WHERE users.feature_0=features.id OR users.feature_1=features.id OR users.feature_2 = features.id GROUP BY features.id ORDER BY count DESC;')->result_array()
 			as
 			$feature
 		) {
-			print '<li>' . htmlspecialchars($feature['title']) . '：';
-			print intval($this->db->query('SELECT COUNT(`id`) AS count FROM `users` WHERE `feature_0` = ' . $feature['id'] . ' AND `ready` = \'Y\';')->row()->count) +
-				intval($this->db->query('SELECT COUNT(`id`) AS count FROM `users` WHERE `feature_1` = ' . $feature['id'] . ' AND `ready` = \'Y\';')->row()->count) +
-				intval($this->db->query('SELECT COUNT(`id`) AS count FROM `users` WHERE `feature_2` = ' . $feature['id'] . ' AND `ready` = \'Y\';')->row()->count);
-			print '</li>';
+			print '<li>' . htmlspecialchars($feature['title']) . '：' . $feature['count'] . '</li>';
 		}
 ?>
 		</ul>
