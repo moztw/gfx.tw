@@ -47,11 +47,11 @@ if (isset($id)) {
 	<div id="header" class="no-margin">
 		<p id="header_top_link"><a href="<?php print base_url() ?>" title="回首頁">抓火狐</a></p>
 		<ul>
-			<li class="ui-corner-all ui-state-default active ui-state-hover"><a href="#" id="link-newcomer-intro">了解本站</a></li>
+			<li class="ui-corner-all ui-state-default ui-state-disabled"><a href="#" id="link-newcomer-intro">了解本站</a></li>
 			<li class="ui-corner-all ui-state-default ui-state-disabled"><a href="#" id="link_login">使用 OpenID 登入</a></li>
 		</ul>
 	</div>
-	<div id="newcomer-intro" class="ui-widget message show no-auto">
+	<div id="newcomer-intro" class="ui-widget message no-auto">
 		<div class="ui-widget-content ui-corner-all"> 
 			<p><a href="#" class="ui-icon ui-icon-circle-close ui-corner-all">
 			</a><span class="ui-corner-all ui-state-default" id="newcomer-intro-login">立即加入，免註冊！</span>
