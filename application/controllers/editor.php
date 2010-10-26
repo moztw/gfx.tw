@@ -80,6 +80,7 @@ class Editor extends Controller {
 
 		if ($this->input->post('name') === false) {
 			json_message('EDITOR_NAME_EMPTY');
+			return;
 		}
 
 		$data = array(
@@ -111,6 +112,7 @@ class Editor extends Controller {
 					$data['avatar'] = $a;
 				} else {
 					json_message('EDITOR_AVATAR_ERROR');
+					return;
 				}
 			}
 		}
@@ -126,6 +128,7 @@ class Editor extends Controller {
 				. ' AND `id` != ' . $this->session->userdata('id'))
 				->num_rows() !== 0) {
 			json_message('EDITOR_NAME_BAD');
+			return;
 		}
 		$this->db->update('users', $data, array('id' => $this->session->userdata('id')));
 		if ($this->db->affected_rows() === 1) {
@@ -170,10 +173,11 @@ class Editor extends Controller {
 				$data['forum_username'] = $F[2];
 			} else {
 				json_message('EDITOR_FORUM_CODE');
+				return;
 			}
 		} elseif ($this->input->post('forum') === '') {
-				$data['forum_id'] = '';
-				$data['forum_username'] = '';
+			$data['forum_id'] = '';
+			$data['forum_username'] = '';
 		}		
 		if ($this->input->post('features')) {
 			$F = $this->input->post('features');
@@ -181,6 +185,7 @@ class Editor extends Controller {
 			for ($i = 0; $i < 3; $i++) {
 				if (!isset($F[$i+1]) || !is_numeric($F[$i+1])) {
 					json_message('EDITOR_FEATURE_ERROR');
+					return;
 				}
 				$data['feature_' . $i] = $F[$i+1];
 				$v |= pow(2, $F[$i+1]);
@@ -196,6 +201,7 @@ class Editor extends Controller {
 			foreach ($this->input->post('groups') as $g) { // don't care about the keys
 				if (!is_numeric($g)) {
 					json_message('EDITOR_GROUP_ERROR');
+					return;
 				}
 				if ($i < $query->num_rows()) {
 					$row = $query->row_array($i);
@@ -218,6 +224,7 @@ class Editor extends Controller {
 			foreach ($this->input->post('addons') as $a) { // don't care about the keys
 				if (!is_numeric($a['id'])) {
 					json_message('EDITOR_ADDON_ERROR');
+					return;
 				}
 				if ($i < $query->num_rows()) {
 					$row = $query->row_array($i);
@@ -435,11 +442,13 @@ class Editor extends Controller {
 				unlink($data['full_path']);
 				$this->load->helper('gfx');
 				json_message('EDITOR_AVATAR_WRONG_FILE_TYPE');
+				return;
 			}
 			if ($width > 500 || $height > 500) {
 				unlink($data['full_path']);
 				$this->load->helper('gfx');
 				json_message('EDITOR_AVATAR_SIZE_TOO_LARGE');
+				return;
 			}
 			//Success!
 			$this->load->view('json.php', array('jsonObj' => 

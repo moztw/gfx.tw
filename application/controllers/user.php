@@ -163,12 +163,14 @@ class User extends Controller {
 			. ' AND `login` = ' . $this->db->escape($this->input->post('login')) . ';');
 		if ($data->num_rows() !== 0) {
 			json_message('dup_login');
+			return;
 		}
 		$data->free_result();
 		/* Check whether user exists and his/her name */
 		$data = $this->db->query('SELECT `name` FROM `users` WHERE `id` = ' . $this->input->post('id') . ';');
 		if ($data->num_rows() === 0) {
 			json_message('no_such_user');
+			return;
 		}
 		/* Update data */
 		$this->db->update(

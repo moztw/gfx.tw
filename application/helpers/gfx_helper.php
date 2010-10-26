@@ -135,7 +135,6 @@ function json_message($tag = 'unknown_message', $type = 'error', $icon = 'alert'
 		$message['msg'] = 'Unknown message (' . $tag . ').';
 	}
 	$CI->load->view('json.php', array('jsonObj' => array('message' => $message)));
-	exit();
 }
 
 /* End of file gfx_helper.php */

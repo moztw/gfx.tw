@@ -63,6 +63,7 @@ class Addon extends Controller {
 		checkAuth(true, false, 'json');
 		if (!is_numeric($this->input->post('g'))) {
 			json_message('group_not_number');
+			return;
 		}
 		$this->load->library('cache');
 		$A = $this->cache->get($this->input->post('g') ,'addons-suggest');

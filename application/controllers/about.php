@@ -55,12 +55,14 @@ class About extends Controller {
 		/* About name cannot collide function name */
 		if (in_array($this->input->post('name'), array('update', 'delete'))) {
 			json_message('error_about_name');
+			return;
 		}
 		/* Check whether name already used */
 		$data = $this->db->query('SELECT `name` FROM `aboutpages` WHERE `id` != ' . $this->input->post('id')
 			. ' AND `name` = ' . $this->db->escape($this->input->post('name')) . ';');
 		if ($data->num_rows() !== 0) {
 			json_message('dup_about_name');
+			return;
 		}
 		$data->free_result();
 				

@@ -103,12 +103,14 @@ class Feature extends Controller {
 		/* Feature name cannot collide function name */
 		if (in_array($this->input->post('name'), array('update', 'delete'))) {
 			json_message('error_feature_name');
+			return;
 		}
 		/* Check whether name already used */
 		$data = $this->db->query('SELECT `name` FROM `features` WHERE `id` != ' . $this->input->post('id')
 			. ' AND `name` = ' . $this->db->escape($this->input->post('name')) . ';');
 		if ($data->num_rows() !== 0) {
 			json_message('dup_feature_name');
+			return;
 		}
 		$data->free_result();
 		
