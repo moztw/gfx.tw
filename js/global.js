@@ -139,7 +139,10 @@ $(function () {
 			type: 'POST',
 			timeout: 20000,
 			dataType: 'json',
-			beforeSend : function (xhr) {
+			beforeSend: function (xhr, s) {
+				return s.__beforeSend.call(this, xhr, s);
+			},
+			__beforeSend: function (xhr) {
 				if (gfx.xhr) {
 					gfx.xhr.abort();
 				}

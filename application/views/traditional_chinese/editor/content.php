@@ -78,7 +78,7 @@ print urlencode(site_url('PLACEHOLDER'));
 			</div>
 			<p class="avatar_desc">上傳圖片檔案</p>
 			<p>從您的電腦上傳圖片檔案作為個人圖示。</p>
-			<p id="avatar_disabled_desc_fileupload" class="avatar_disabled_desc">限 Firefox 使用 (File API)</p>
+			<p id="avatar_disabled_desc_fileupload" class="avatar_disabled_desc">僅供 HTML5 瀏覽器使用</p>
 		</div>
 <?php
 if ($email) {

@@ -501,17 +501,25 @@ gfx.page = {
 		);
 	
 		if (
-		!$('#avatar_fileupload input').get(0).files // No file list
-		|| !window.XMLHttpRequest // No native XMLHttpRequest
-		|| !(XMLHttpRequest.prototype.sendAsBinary) // No Gecko sendAsBinary function
+		!(window.File && window.File.prototype.readAsBinary) // unable to read File using Fx3.0/3.5 function
+		&& !window.FileReader // or FileReader in Fx36
+		&& !window.FormData // or FormData in Webkit and Fx40
 		) {
 			$('#avatar_fileupload').parent().addClass('disabled');
 		} else {
 			// Overwrite xhr.send; make $.ajax run xhr.sendAsBinary instead
 			// Seems no harm to send text content as binary.
-			XMLHttpRequest.prototype.send = function (data) {
-				return this.sendAsBinary(data);
-			};
+			if (XMLHttpRequest.prototype.sendAsBinary) {
+				XMLHttpRequest.prototype._send = XMLHttpRequest.prototype.send;
+				XMLHttpRequest.prototype.send = function (data) {
+					if (typeof data === 'string') {
+						return this.sendAsBinary(data);
+					} else {
+						// data is a FormData object, should not be sent using sendAsBinary
+						return this._send(data);
+					}
+				};
+			}
 		}
 	
 		$('#featureselection li').draggable(
@@ -655,47 +663,87 @@ gfx.page = {
 			gfx.alert(T.FILEUPLOAD.INVALID_FILETYPE, 'FILEUPLOAD_INVALID_FILETYPE');
 			return false;
 		}
-		//If MIME is empty stream (unknown type)
-		if (!info.type) info.type = 'application/octet-stream';
-
 		if (info.size > (1 << 20)) { //1MB
 			gfx.alert(T.FILEUPLOAD.FILE_EXCEEDS_SIZE_LIMIT, 'FILEUPLOAD_FILE_EXCEEDS_SIZE_LIMIT');
 			return false;
 		}
 
-		//Workaround for fixme below; replace non-ASCII chars in filenames
-		info.name = info.name.replace(/[^\x20-\x7E]/g, '_');
+		var xhrupload = function (data) {
+			if (typeof data === 'string') {
+				//data is the file content; construct form and sendAsBinary
 
-		var bd = 'gfx-xhrupload-' + parseInt(Math.random()*(2 << 16));
-		var xhrupload = function (bin) {
-			//This is an overwritten $.ajax that supports 'binary' option.
-			gfx.xhr = $.ajax(
-				{
-					url: './editor/upload',
-					contentType: 'multipart/form-data, boundary=' + bd,
-					processData: false,
-					timeout: 1200000, //2 min
-					data: '--' + bd + '\n' // RFC 1867 Format, simulate form file upload
-					+ 'content-disposition: form-data; name="Filedata";'
-					+ ' filename="' + info.name + '"\n' // fixme: RFC 1522 encoding for non-US ASCII filenames
-					+ 'Content-Type: ' + info.type + '\n\n'
-					+ bin + '\n\n'
-					+ '--' + bd + '--',
-					binary: true,
-					success: function (result, status) {
-						if (!result) {
-							gfx.alert(T.AJAX_ERROR.PARSE_RESPONSE, 'AJAX_ERROR_PARSE_RESPONSE');
-						} else {
-							if (gfx.ajaxError(result)) {
-								return;
+				var bd = 'gfx-xhrupload-' + parseInt(Math.random()*(2 << 16));
+
+				//If MIME is empty stream (unknown type)
+				if (!info.type) info.type = 'application/octet-stream';
+
+				//Convert non-ASCII name to UTF-8 bytes
+				info.name_enc = unescape(encodeURIComponent(info.name));
+
+				//This is an overwritten $.ajax that supports 'binary' option.
+				gfx.xhr = $.ajax(
+					{
+						url: './editor/upload',
+						contentType: 'multipart/form-data, boundary=' + bd,
+						processData: false,
+						timeout: 1200000, //2 min
+						data: '--' + bd + '\n' // RFC 1867 Format, simulate form file upload
+						+ 'content-disposition: form-data; name="Filedata";'
+						+ ' filename="' + info.name_enc + '"\n'
+						+ 'Content-Type: ' + info.type + '\n\n'
+						+ data + '\n\n'
+						+ '--' + bd + '--',
+						binary: true,
+						success: function (result, status) {
+							if (!result) {
+								gfx.alert(T.AJAX_ERROR.PARSE_RESPONSE, 'AJAX_ERROR_PARSE_RESPONSE');
+							} else {
+								if (gfx.ajaxError(result)) {
+									return;
+								}
+								gfx.page.changeAvatar(result.img, './useravatars/' + result.img);
 							}
-							gfx.page.changeAvatar(result.img, './useravatars/' + result.img);
 						}
 					}
-				}
-			);
+				);
+			} else {
+				//data is FormData
+				gfx.xhr = $.ajax(
+					{
+						url: './editor/upload',
+						contentType: null,
+						timeout: 1200000, //2 min
+						data: null,
+						beforeSend: function (xhr, s) {
+							s.data = data;
+							if (s.__beforeSend) return s.__beforeSend.call(this, xhr, s);
+						},
+						success: function (result, status) {
+							if (!result) {
+								gfx.alert(T.AJAX_ERROR.PARSE_RESPONSE, 'AJAX_ERROR_PARSE_RESPONSE');
+							} else {
+								if (gfx.ajaxError(result)) {
+									return;
+								}
+								gfx.page.changeAvatar(result.img, './useravatars/' + result.img);
+							}
+						}
+					}
+				);
+			}
 		};
-		if (window.FileReader) {
+		if (window.FormData) {
+			// HTML5 FormData Interface (Fx4, Webkit)
+			var formdata = new FormData(); 
+			try {
+				formdata.append('Filedata', files[0]);
+				xhrupload(formdata);
+			} catch (e) {
+				gfx.alert(T.FILEUPLOAD.NOT_READABLE, 'FILEUPLOAD_NOT_READABLE');
+			}
+
+			
+		} else if (window.FileReader) {
 			// HTML5 File API (Firefox 3.6)
 			var reader = new FileReader();
 			reader.onloadend = function (ev) {
