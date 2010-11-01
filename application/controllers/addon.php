@@ -123,14 +123,14 @@ class Addon extends Controller {
 		$doc->loadXML($xml);
 		$dom->preserveWhiteSpace = false;
 		$A = array(
-			'title' => $doc->getElementsByTagName('name')->item(0)->firstChild->nodeValue,
+			'title' => $doc->getElementsByTagName('name')->item(0)->firstChild->nodeValue, //plain text, proven by amo#36710
 			'amo_id' => $amo_id,
 			'url' => '',
 			'xpi_url' => $doc->getElementsByTagName('install')->item(0)->firstChild->nodeValue,
 			'xpi_hash' => $doc->getElementsByTagName('install')->item(0)->getAttribute('hash'),
 			'amo_version' => $doc->getElementsByTagName('version')->item(0)->firstChild->nodeValue,
 			'icon_url' => '',
-			'description' => strip_tags($doc->getElementsByTagName('summary')->item(0)->firstChild->nodeValue),
+			'description' => html_entity_decode(strip_tags($doc->getElementsByTagName('summary')->item(0)->firstChild->nodeValue), ENT_QUOTES, 'UTF-8'), // HTML fragment, strip tags then decode entities to generate plain text.
 			'available' => 'Y',
 			'os_0' => 'N',
 			'os_1' => 'N',
