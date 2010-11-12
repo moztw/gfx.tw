@@ -1122,6 +1122,12 @@ span.title-empty {
 	min-height: 273px;
 }
 
+#openid_message {
+	padding: 300px 100px 0;
+	background: transparent url('../images/openid-icon-250x250.png') center 30px no-repeat;
+	text-align: right;
+}
+
 .window {
 	display: none;
 }

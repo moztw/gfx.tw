@@ -33,7 +33,21 @@ class Auth extends Controller {
                         )
                 );
 		//$this->openid->set_pape(true, $pape_policy_uris);
-		$this->openid->authenticate($this->input->post('openid-identifier'), false);
+		if ($html = $this->openid->authenticate($this->input->post('openid-identifier'), false)) {
+			$content = array(
+				'title' => $this->lang->line('gfx_auth_login_title'),
+				'name' => 'openid_login',
+				'content' => $html
+			);
+			$this->load->library('parser');
+			$this->parser->page(
+				array(
+					'meta' => $this->load->view('page/meta.php', $content, true),
+					'content' => $this->load->view('page/content.php', $content, true),
+					'script' => '<script type="text/javascript">document.getElementById("openid_message").submit()</script>'
+				)
+			);
+		}
 	}
 	function check() {
 		$this->config->load('openid');

@@ -28,5 +28,5 @@ $lang['gfx_message_about_updated'] = "About page updated, reload this page to se
 
 $lang['gfx_message_openid_query_processed'] = 'Your OpenID query is processed. In order to respect privacy of our users, we cannot tell you here if the e-mail has been sent or not.';
 $lang['gfx_email_subject_forgetopenid'] = 'OpenID Query Result from gfx.tw';
-
+$lang['gfx_auth_login_title'] = 'Redirecting to the OpenID providor ...';
 ?>
