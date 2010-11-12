@@ -17,7 +17,7 @@ $avatar = avatarURL($avatar, $email, $login);
 			<p class="version">3.6 系列最新版</p>
 		</div>
 		<p class="count"><?php print htmlspecialchars($title) ?>已經推薦<?php print $count ?>人使用了！</p>
-		<p class="desc">您的網際生活將因 Firefox 更加豐富有趣！Firefox 有許多特色，協助您完成工作、找到資訊。正因為它如此實用，<?php print htmlspecialchars($title) ?>願意推薦您改用 Firefox！以下是<?php print htmlspecialchars($title) ?>最喜歡 Firefox 的三大特點：</p>
+		<p class="desc">您的網際生活將因 Firefox 更加豐富有趣！Firefox 有許多特色，協助您完成工作、找到資訊。正因為它如此實用，<strong><?php print htmlspecialchars($title) ?></strong>願意推薦您<strong>改用 Firefox</strong>！以下是<strong><?php print htmlspecialchars($title) ?></strong>最喜歡 Firefox 的三大特點：</p>
 	</div>
 	<div id="window_download" class="window" title="正在啟動下載...">
 		<h2>感謝您下載 Firefox！</h2>
@@ -184,12 +184,10 @@ foreach ($groups as $group) {
 ?>
 	</div>
 	<div id="groups-tail">
-		<p>這些附加元件的說明主要來自於 <a href="https://addons.mozilla.org/" class="newwindow">Mozilla 附加元件網站</a>，
-由作者提供。</p>
+		<p>附加元件的說明來自 <a href="https://addons.mozilla.org/" class="newwindow">Mozilla 附加元件網站</a>，由作者提供。</p>
 		<div id="groups-install">
 			<p><button>立刻安裝</button>安裝所有勾選的附加元件！</p>
-			<p>在 Mozilla 附加元件網站標示為「實驗中」，或是安裝前需特別同意使用條款、隱私權保護條款的擴充套件無法在此快速安裝；請自行前往各擴充套件網頁。</p>
-			<p>
+			<p>未經過 Mozilla 審核，或是有特別的使用條款、隱私權保護條款的附加元件無法在此快速安裝；請前往各附加元件的網頁。</p>
 		</div>
 	</div>
 	</div>

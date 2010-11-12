@@ -61,7 +61,7 @@ print urlencode(site_url('PLACEHOLDER'));
 			<p class="version">3.6 系列最新版</p>
 		</div>
 		<p class="count">{您的推薦指數會在這裡出現}</p>
-		<p class="desc">您的網際生活將因 Firefox 更加豐富有趣！Firefox 有許多特色，協助您完成工作、找到資訊。正因為它如此實用，<span class="title-placeholder">{您的名字}</span>願意推薦您改用 Firefox！以下是<span class="title-placeholder">{您的名字}</span>最喜歡 Firefox 的三大特點：</p>
+		<p class="desc">您的網際生活將因 Firefox 更加豐富有趣！Firefox 有許多特色，協助您完成工作、找到資訊。正因為它如此實用，<strong class="title-placeholder">{您的名字}</strong>願意推薦您<strong>改用 Firefox</strong>！以下是<strong class="title-placeholder">{您的名字}</strong>最喜歡 Firefox 的三大特點：</p>
 	</div>
 	<div id="window_avatar" class="window" title="選擇個人圖示">
 		<div id="dropzone">&nbsp;</div>

@@ -78,13 +78,13 @@ gfx.page = {
 			'#title-name-edit input' : function () {
 				if (this.value !== '') {
 					$('#title-name').text(this.value); /* .css('display', null); */
-					$('span.title-placeholder').removeClass('title-empty').text(this.value);
+					$('.title-placeholder').removeClass('title-empty').text(this.value);
 					/* $(this).css('display', null); */
 					gfx.page.infoChanged = true;
 					gfx.page.blinkBar();
 				} else {
 					$('#title-name').text(this.value);
-					$('span.title-placeholder').addClass('title-empty').text(T.UI.TITLE_PLACEHOLDER);
+					$('.title-placeholder').addClass('title-empty').text(T.UI.TITLE_PLACEHOLDER);
 					$(this).addClass('empty').val(T.UI.EMPTY_TITLE);
 				}
 			}
@@ -489,10 +489,10 @@ gfx.page = {
 		$('#title-name').css('display', 'none');
 		if ($('#title-name').text() === '') {
 			$('#title-name-edit input').css('display', 'block').addClass('empty').val(T.UI.EMPTY_TITLE);
-			$('span.title-placeholder').addClass('title-empty').text(T.UI.TITLE_PLACEHOLDER);
+			$('.title-placeholder').addClass('title-empty').text(T.UI.TITLE_PLACEHOLDER);
 		} else {
 			$('#title-name-edit input').css('display', 'block').removeClass('empty').val($('#title-name').text());
-			$('span.title-placeholder').text($('#title-name').text());
+			$('.title-placeholder').text($('#title-name').text());
 		}
 		$('#groups input').each(
 			function (i) {
