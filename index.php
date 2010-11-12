@@ -9,7 +9,13 @@
 | For more info visit:  http://www.php.net/error_reporting
 |
 */
-	error_reporting(E_ALL);
+/*
+
+ Development Value: E_ALL ( Not E_ALL | E_STRICT even in php5 coz CI doesn't support it )
+ Production Value: 0
+
+*/
+        error_reporting(E_ALL);
 
 /*
 |---------------------------------------------------------------

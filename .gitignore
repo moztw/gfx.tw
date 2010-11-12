@@ -1,4 +1,12 @@
 # htaccess
 .htaccess
 
-# 
+# Untrack config
+application/config/database.php
+application/config/gfx.php
+
+# Untrack var files
+stickerimages/features
+system/cache
+useravatars
+userstickers

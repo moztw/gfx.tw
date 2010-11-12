@@ -11,7 +11,7 @@
 |	http://example.com/
 |
 */
-$config['base_url']	= "http://stage.gfx.tw/";
+$config['base_url']	= 'http' . ((isset($_SERVER['HTTPS']))?'s':'') . '://' . $_SERVER['HTTP_HOST'] . '/';
 
 /*
 |--------------------------------------------------------------------------
