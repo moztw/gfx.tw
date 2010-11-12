@@ -9,7 +9,7 @@ $lang['scaff_delete']			= '刪除';
 $lang['scaff_view_all']			= '檢視全部';
 $lang['scaff_yes']				= '是';
 $lang['scaff_no']				= '否';
-$lang['scaff_no_data']			= '目前資料表沒有資料存在.';
+$lang['scaff_no_data']			= '目前資料表沒有資料存在。';
 $lang['scaff_del_confirm']		= '你確定要刪除以下資料:';
 
 

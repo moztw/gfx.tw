@@ -11,11 +11,11 @@
 */
 /*
 
- Development Value: E_ALL ( Not E_ALL | E_STRICT even in php5 coz CI doesn't support it )
+ Development Value: E_ALL | E_STRICT
  Production Value: 0
 
 */
-        error_reporting(E_ALL);
+        error_reporting(E_ALL | E_STRICT);
 
 /*
 |---------------------------------------------------------------
