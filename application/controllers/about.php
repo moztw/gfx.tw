@@ -33,9 +33,9 @@ class About extends Controller {
 			}
 			$this->load->config('gfx');
 			$data = array(
-				'meta' => $this->load->view($this->config->item('language') . '/about/meta.php', $about->row_array(), true),
-				'content' => $this->load->view($this->config->item('language') . '/about/content.php', $about->row_array(), true),
-				'admin' => $this->load->view($this->config->item('language') . '/about/admin.php', $about->row_array(), true)
+				'meta' => $this->load->view('about/meta.php', $about->row_array(), true),
+				'content' => $this->load->view('about/content.php', $about->row_array(), true),
+				'admin' => $this->load->view('about/admin.php', $about->row_array(), true)
 			);
 			$data['expiry'] = $this->cache->save($about->row()->name, $data, 'about', $this->config->item('gfx_cache_time'));
 			$data['db'] = 'content ';

@@ -71,9 +71,9 @@ class User extends Controller {
 			unset($groups, $group);
 			$this->load->_ci_cached_vars = array(); //Clean up cached vars
 			$data['name'] = $U['name'];
-			$data['meta'] = $this->load->view($this->config->item('language') . '/user/meta.php', $U, true);
-			$data['admin'] = $this->load->view($this->config->item('language') . '/user/admin.php', $U, true);
-			$data['content'] = $this->load->view($this->config->item('language') . '/user/content.php', array_merge($U, array('features' => $F, 'groups' => $G, 'addons' => $A)), true);
+			$data['meta'] = $this->load->view('user/meta.php', $U, true);
+			$data['admin'] = $this->load->view('user/admin.php', $U, true);
+			$data['content'] = $this->load->view('user/content.php', array_merge($U, array('features' => $F, 'groups' => $G, 'addons' => $A)), true);
 			$this->load->config('gfx');
 			$data['expiry'] = $this->cache->save(strtolower($U['name']), $data, 'user', $this->config->item('gfx_cache_time'));
 
@@ -233,7 +233,7 @@ class User extends Controller {
 					$this->cache->save($i, $users, 'random-avatars', 300);
 				}
 				if ($type === 'random-avatars-frame') {
-					$this->load->view($this->config->item('language') . '/user/random-avatars.php', array('users' => $users));
+					$this->load->view('user/random-avatars.php', array('users' => $users));
 				} else {
 					$this->load->view('json.php', array('jsonObj' => array('users' => $users)));
 				}
