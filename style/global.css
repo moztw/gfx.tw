@@ -740,6 +740,7 @@ span.title-empty {
 	padding: 2px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
+	-o-border-radius: 5px;
 	border-radius: 5px;
 }
 #window_editcomplete .shareblock {
@@ -794,6 +795,7 @@ span.title-empty {
 	background-color: #ffffff;
 	-moz-border-radius: 20px;
 	-webkit-border-radius: 20px;
+	-o-border-radius: 20px;
 	border-radius: 20px;
 }
 
@@ -865,28 +867,53 @@ span.title-empty {
 	border-bottom: none;
 	-moz-border-radius-topleft: 20px;
 	-moz-border-radius-topright: 20px;
-	-webkit-border-radius-topleft: 20px;
-	-webkit-border-radius-topright: 20px;
-	border-radius-topleft: 20px;
-	border-radius-topright: 20px;
+	-webkit-border-top-left-radius: 20px;
+	-webkit-border-top-right-radius: 20px;
+	-o-border-top-left-radius: 20px;
+	-o-border-top-right-radius: 20px;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
 }
 
 #groups-tail {
 	border-top: none;
 	-moz-border-radius-bottomleft: 20px;
 	-moz-border-radius-bottomright: 20px;
-	-webkit-border-radius-bottomleft: 20px;
-	-webkit-border-radius-bottomright: 20px;
-	border-radius-bottomleft: 20px;
-	border-radius-bottomright: 20px;
+	-webkit-border-bottom-left-radius: 20px;
+	-webkit-border-bottom-right-radius: 20px;
+	-o-border-bottom-left-radius: 20px;
+	-o-border-bottom-right-radius: 20px;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
 }
 
 #groups .group {
 	clear: both;
 	border: 2px solid #cccccc;
-	background-color: #ffffff;
-	-moz-border-radius: 6px;
+	background-color: #eee;
 	margin: 0 1em 0 1em;
+}
+
+#groups .group:first-child {
+	-moz-border-radius-topleft: 6px;
+	-moz-border-radius-topright: 6px;
+	-webkit-top-left-border-radius: 6px;
+	-webkit-top-right-border-radius: 6px;
+	-o-top-left-border-radius: 6px;
+	-o-top-right-border-radius: 6px;
+	top-left-border-radius: 6px;
+	top-right-border-radius: 6px;
+}
+
+#groups .group:last-child {
+	-moz-border-radius-bottomleft: 6px;
+	-moz-border-radius-bottomright: 6px;
+	-webkit-bottom-left-border-radius: 6px;
+	-webkit-bottom-right-border-radius: 6px;
+	-o-bottom-left-border-radius: 6px;
+	-o-bottom-right-border-radius: 6px;
+	bottom-left-border-radius: 6px;
+	bottom-right-border-radius: 6px;
 }
 
 #groups .not-selected {
@@ -894,7 +921,6 @@ span.title-empty {
 }
 
 #groups .group .group-title {
-	background-color: #eeeeee;
 	padding: 3px;
 }
 
@@ -932,7 +958,6 @@ span.title-empty {
 	min-height: 1em;
 	height: 100%;
 	overflow: auto;
-	background-color:#EEEEEE;
 }
 
 #groups-install {
@@ -943,6 +968,7 @@ span.title-empty {
 	background-color: #c4fea1;
 	-moz-border-radius: 6px;
 	-webkit-border-radius: 6px;
+	-o-border-radius: 6px;
 	border-radius: 6px;
 }
 
@@ -969,6 +995,7 @@ span.title-empty {
 	background-color: #ffffff;
 	-moz-border-radius: 6px;
 	-webkit-border-radius: 6px;
+	-o-border-radius: 6px;
 	border-radius: 6px;
 }
 .addon {
@@ -976,11 +1003,19 @@ span.title-empty {
 	padding: 8px 0;
 	background-color: #ffffff;
 	border: 2px solid #ccffcc;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 6px;
-	border-radius: 6px;
 	overflow: hidden;
 	clear: both;
+}
+
+.group:last-child .addon:last-child {
+	-moz-border-radius-bottomleft: 4px;
+	-moz-border-radius-bottomright: 4px;
+	-webkit-border-bottom-left-radius: 4px;
+	-webkit-border-bottom-right-radius: 4px;
+	-o-border-bottom-left-radius: 4px;
+	-o-border-bottom-right-radius: 4px;
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
 }
 
 .group-addons .ui-sortable-placeholder {
@@ -1058,9 +1093,10 @@ span.title-empty {
 	display: block;
 	float: right;
 	background-color: #ccffcc;
-	-moz-border-radius-bottomleft: 6px;
-	-webkit-border-radius-bottomleft: 6px;
-	border-radius-bottomleft: 6px;
+	-moz-border-radius-bottomleft: 4px;
+	-webkit-border-bottom-left-radius: 4px;
+	-o-border-bottom-left-radius: 4px;
+	border-bottom-left-radius: 4px;
 	margin-top: -8px;
 }
 
@@ -1180,6 +1216,9 @@ span.title-empty {
 	background: #ffffff url("../images/avatar-edit.png") no-repeat scroll center center;
 	opacity: 0.8;
 	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-o-border-radius: 10px;
+	border-radius: 10px;
 	display: none;
 }
 
