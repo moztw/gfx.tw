@@ -436,20 +436,22 @@ span.title-empty {
 }
 
 #titleblock {
-	background: transparent url('../images/titleblock.png') center top no-repeat;
-	height: 308px;
+	background: transparent url('../images/userpage-block-bg.png') center top repeat-y;
 	position: relative;
 }
 #titleblock h1 {
+	background: transparent url('../images/titleblock.png') center top no-repeat;
+	height: 308px;
 	font-size: 1em;
+	padding: 0; margin: 0 0 -101px 0;
 }
 
 #titleblock #title-avatar-textarea {
-        position: absolute;
+	position: absolute;
 	margin: 0; padding: 0;
-        top: 44px; left: 264px;
-        height: 72px; width: 72px;
-        overflow: hidden; 
+	top: 44px; left: 264px;
+	height: 72px; width: 72px;
+	overflow: hidden; 
 	cursor: pointer;
 	text-align: center;
 }
@@ -571,10 +573,19 @@ span.title-empty {
 }
 
 #titleblock .desc {
-	position: absolute;
-	top: 209px; left: 268px;
-	height: 75px; width: 540px;
+	margin: 0; padding: 0 0 0 268px;
+	width: 540px;
 }
+
+#titleblock .desc textarea {
+	width: 100%;
+	overflow: visible;
+}
+
+#titleblock .desc p {
+	margin: 0; padding: 0.5em 0;
+}
+
 #features {
 	width: 900px; height: 272px; margin: 0; padding: 10px 0;
 	background: transparent url('../images/userpage-block-bg.png') center top repeat-y;
