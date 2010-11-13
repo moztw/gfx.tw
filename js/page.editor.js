@@ -858,6 +858,7 @@ gfx.page = {
 			'token' : $('#token').val(),
 			'title' : (!$('#title-name-edit > input').hasClass('empty'))?$('#title-name-edit > input').val():'',
 			'name' : $('#info_name').val() || $('#name').val(),
+			'recommendation' : (!$('#recommendation-edit > textarea').hasClass('empty'))?$('#recommendation-edit > textarea').val():'',
 			'ready' : 'Y' /* indicate all informations checks out and the page is available to everyone */
 		};
 		//check for errors round 1
