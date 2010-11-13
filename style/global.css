@@ -574,9 +574,7 @@ span.title-empty {
 
 #titleblock .desc textarea {
 	width: 100%;
-	height: auto;
-	min-height: 1.2em;
-	overflow: auto;
+	height: 4.2em;
 }
 
 #titleblock .desc textarea.empty {
