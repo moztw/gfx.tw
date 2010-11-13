@@ -490,12 +490,16 @@ gfx.page = {
 					function (i, el) {
 						var $el = $(el);
 						var isEmpty = ($.trim(el.value) === '' || el.value === settings.placeholderText);
+						var html5PlaceholderSupport = ('placeholder' in el);
+						if (html5PlaceholderSupport) {
+							$el.attr('placeholder', settings.placeholderText);
+						}
 						$el.bind(
 							'blur',
 							function () {
 								var isEmpty = ($.trim(this.value) === '');
 								$el.toggleClass(settings.emptyClassName, isEmpty);
-								if (isEmpty) {
+								if (!html5PlaceholderSupport && isEmpty) {
 									$el.val(settings.placeholderText);
 								}
 								setFollower.call(this, isEmpty);
@@ -504,14 +508,14 @@ gfx.page = {
 						).bind(
 							'focus paste drop',
 							function () {
-								if (el.value === settings.placeholderText) {
+								if (!html5PlaceholderSupport && el.value === settings.placeholderText) {
 									// FIXME: ppl who use placeholderText as content
 									el.value = '';
 								}
 								$el.removeClass(settings.emptyClass);
 							}
 						).toggleClass(settings.emptyClassName, isEmpty);
-						if (isEmpty) el.value = settings.placeholderText;
+						if (!html5PlaceholderSupport && isEmpty) el.value = settings.placeholderText;
 						setFollower.call(this, isEmpty);
 					}
 				);
