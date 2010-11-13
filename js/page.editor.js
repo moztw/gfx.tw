@@ -527,6 +527,9 @@ gfx.page = {
 			{
 				placeholderText: T.UI.EMPTY_RECOMMENDATION,
 				blur: function (isEmpty) {
+					if (!isEmpty) {
+						this.value = this.value.replace(/\n+/g, ' ');
+					}
 					gfx.page.infoChanged = true;
 					gfx.page.blinkBar();
 				}
