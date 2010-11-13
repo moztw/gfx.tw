@@ -856,7 +856,7 @@ gfx.page = {
 		//Gather data
 		var d = {
 			'token' : $('#token').val(),
-			'title' : $('#title-name-edit > input').val(),
+			'title' : (!$('#title-name-edit > input').hasClass('empty'))?$('#title-name-edit > input').val():'',
 			'name' : $('#info_name').val() || $('#name').val(),
 			'ready' : 'Y' /* indicate all informations checks out and the page is available to everyone */
 		};
