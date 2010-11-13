@@ -494,13 +494,8 @@ span.title-empty {
 	top: 50px;
 }
 
-#titleblock #title-name.bright {
-	background-color: #ccffff;
-}
-
 #titleblock #title-name-edit input {
 	top: 44px;
-	display: none;
 }
 #titleblock #title-name-edit input.empty {
 	color: #cccccc;
@@ -579,7 +574,14 @@ span.title-empty {
 
 #titleblock .desc textarea {
 	width: 100%;
-	overflow: visible;
+	height: auto;
+	min-height: 1.2em;
+	overflow: auto;
+}
+
+#titleblock .desc textarea.empty {
+	color: #999;
+	height: 1.2em;
 }
 
 #titleblock .desc p {

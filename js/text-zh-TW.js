@@ -46,6 +46,7 @@ var T = {
 		INTRO_TEXT_NON_FX_USER: '來看看大家推薦您改用 Firefox 的理由！',
 		USING_IE_TO_EDIT: '不覺得用 IE 編輯抓火狐推薦頁有點諷刺嗎？好啦，認真說，編輯頁用 IE 應該會壞掉，所以改用 Firefox 吧。',
 		EMPTY_TITLE: '在這裡輸入暱稱',
+		EMPTY_RECOMMENDATION: '加一些您自己對 Firefox 的評語 ...',
 		TITLE_PLACEHOLDER: '{您的名字}',
 		CONFIRM_QUIT: '離開此頁會失去所有未儲存的資料！',
 		INFO_UPDATED: '個人介紹成功儲存。',
