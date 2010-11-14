@@ -228,7 +228,7 @@ class Auth extends Controller {
 			}	
 			$this->email->message(
 				$this->load->view(
-					$this->config->item('language') . '/forgetopenid.php',
+					'forgetopenid.php',
 					$data,
 					true
 				)

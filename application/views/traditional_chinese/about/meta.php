@@ -1,1 +1,0 @@
-	<title>抓火狐 :: <?php print htmlspecialchars($title) ?></title>

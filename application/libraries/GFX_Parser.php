@@ -66,7 +66,7 @@ class GFX_Parser extends CI_Parser {
 			}
 			$data['db'] .= 'header ';
 			$CI->load->_ci_cached_vars = array(); //Clean up cached vars
-			$data['header'] = $CI->load->view($CI->config->item('language') . '/header.php', $user, true);
+			$data['header'] = $CI->load->view('header.php', $user, true);
 			$expiry = $CI->cache->save($session_id, $data['header'], 'header', $CI->config->item('gfx_cache_time'));
 		} else {
 			$expiry = $CI->cache->get_expiry($session_id, 'header');
@@ -88,7 +88,7 @@ class GFX_Parser extends CI_Parser {
 		}
 		
 		//Print out the entire page
-		$this->parse($CI->config->item('language') . '/page_template', $data);
+		$this->parse('page_template', $data);
 	}
 }
 

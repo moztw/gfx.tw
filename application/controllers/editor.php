@@ -60,15 +60,15 @@ class Editor extends Controller {
 		unset($groups, $group);
 
 		$data = array(
-			'meta' => $this->load->view($this->config->item('language') . '/editor/meta.php', $U, true),
-			'content' => $this->load->view($this->config->item('language') . '/editor/content.php', array_merge($U, array('allfeatures' => $F, 'allgroups' => $G, 'addons' => $A)), true),
+			'meta' => $this->load->view('editor/meta.php', $U, true),
+			'content' => $this->load->view('editor/content.php', array_merge($U, array('allfeatures' => $F, 'allgroups' => $G, 'addons' => $A)), true),
 			'script' => '	<script type="text/javascript" src="./js/page.editor.js' . $this->config->item('gfx_suffix') . '" charset="UTF-8"></script>',
 			'db' => 'content '
 		);
 
 		if ($this->session->userdata('admin') === 'Y') {
 			$this->load->_ci_cached_vars = array();
-			$data['admin'] = $this->load->view($this->config->item('language') . '/editor/admin.php', $U, true);
+			$data['admin'] = $this->load->view('editor/admin.php', $U, true);
 		}
 
 		$this->load->library('parser');
@@ -276,7 +276,7 @@ class Editor extends Controller {
 			file_put_contents(
 				$d . 'featurecard.html',
 				$this->load->view(
-					$this->config->item('language') . '/userstickers/featurecard.php',
+					'userstickers/featurecard.php',
 					array(
 						'name' => $this->input->post('name'),
 						'title' => $title,

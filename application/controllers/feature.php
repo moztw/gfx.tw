@@ -52,7 +52,7 @@ class Feature extends Controller {
 				if ($feature->num_rows() === 0) {
 					show_404();
 				}
-				$data = $this->load->view($this->config->item('language') . '/feature/inframe.php', $feature->row_array(), true);
+				$data = $this->load->view('feature/inframe.php', $feature->row_array(), true);
 				$this->load->config('gfx');
 				$expiry = $this->cache->save($feature->row()->name, $data, 'feature-inframe', $this->config->item('gfx_cache_time'));
 			} else {
@@ -75,9 +75,9 @@ class Feature extends Controller {
 				}
 				$this->load->config('gfx');
 				$data = array(
-					'meta' => $this->load->view($this->config->item('language') . '/feature/meta.php', $feature->row_array(), true),
-					'content' => $body = $this->load->view($this->config->item('language') . '/feature/content.php', $feature->row_array(), true),
-					'admin' =>$this->load->view($this->config->item('language') . '/feature/admin.php', $feature->row_array(), true)
+					'meta' => $this->load->view('feature/meta.php', $feature->row_array(), true),
+					'content' => $body = $this->load->view('feature/content.php', $feature->row_array(), true),
+					'admin' =>$this->load->view('feature/admin.php', $feature->row_array(), true)
 				);
 				$data['expiry'] = $this->cache->save($feature->row()->name, $data, 'feature', $this->config->item('gfx_cache_time'));
 				$data['db'] = 'content ';

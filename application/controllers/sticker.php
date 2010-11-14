@@ -35,8 +35,8 @@ class Sticker extends Controller {
 			exit();
 		}
 		$data = array(
-			'meta' => $this->load->view($this->config->item('language') . '/sticker/meta.php', $U, true),
-			'content' => $this->load->view($this->config->item('language') . '/sticker/content.php', array_merge($U, array('features' => $F)), true),
+			'meta' => $this->load->view('sticker/meta.php', $U, true),
+			'content' => $this->load->view('sticker/content.php', array_merge($U, array('features' => $F)), true),
 			'db' => 'content '
 		);
 		$this->load->library('parser');
