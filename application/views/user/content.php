@@ -48,7 +48,7 @@ foreach ($features as $feature) {
 	<div id="floatblock" class="shareblock">
 		<p title="和<?php print htmlspecialchars($title) ?>一起推薦 Firefox！">分享</p>
 		<ul>
-			<li><a class="newwindow" title="分享到 Facebook" href="http://www.facebook.com/sharer.php?u=<?php
+			<li><a class="newwindow" title="分享到 Facebook" href="https://www.facebook.com/sharer.php?u=<?php
 /* Facebook fetches sticker image and description from <head> */
 print urlencode(site_url($name));
 ?>"><span class="sprite facebook"></span>Facebook</a></li>
@@ -61,7 +61,7 @@ print urlencode('推薦您和' . htmlspecialchars($title) . '一起抓火狐，�
 	. site_url($name)
 );
 ?>"><span class="sprite plurk"></span>噗浪</a></li>
-			<li><a class="newwindow" title="推到 Twitter" href="http://twitter.com/home/?status=<?php
+			<li><a class="newwindow" title="推到 Twitter" href="https://twitter.com/home/?status=<?php
 print urlencode('推薦您和' . htmlspecialchars($title) . '一起抓火狐，使用 Firefox 逛網頁！ ' . site_url($name));
 ?>"><span class="sprite twitter"></span>Twitter</a></li>
 			<li><a class="newwindow" title="哞到 MURMUR" href="http://murmur.tw/?sharelink=<?
