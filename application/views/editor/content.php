@@ -108,7 +108,7 @@ if (preg_match('/myid\.tw\/$/', $login)) { ?>
 } else { ?>
 		<div class="avatar_selection disabled">
 			<div id="avatar_myidtw" class="avatar_icon">
-				<img src="http://myid.tw/images/userimage.jpg" alt="MyID.tw 個人圖像" />
+				<img src="./images/avatar-default.gif" alt="MyID.tw 個人圖像" />
 
 
 <?php
