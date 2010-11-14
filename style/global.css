@@ -330,6 +330,18 @@ ul#openid-sp li {
 	margin: 0.2em 0;
 }
 
+ul#openid-sp li label {
+	display: block;
+	width: 100%;
+}
+ul#openid-sp li label:hover {
+	background-color: #ffffe0;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-o-border-radius: 4px;
+	border-radius: 4px;
+}
+
 ul#openid-sp .sprite {
 	float: left;
 	margin: 0 4px;
