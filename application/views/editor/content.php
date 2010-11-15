@@ -21,7 +21,7 @@ $avatar = avatarURL($avatar, $email, $login);
 		<div class="shareblock">
 			<p>和大家分享您的抓火狐推薦頁！</p>
 			<ul>
-				<li><a class="newwindow" title="分享到 Facebook" href="http://www.facebook.com/sharer.php?u=<?php
+				<li><a class="newwindow" title="分享到 Facebook" href="https://www.facebook.com/sharer.php?u=<?php
 /* Facebook fetches sticker image and description from <head> */
 print urlencode(site_url('PLACEHOLDER'));
 ?>"><span class="sprite facebook"></span>Facebook</a></li>
@@ -34,13 +34,12 @@ print urlencode('來跟我一起抓火狐，使用 Firefox 逛網頁！ '
         . site_url($name)
 );
 ?>"><span class="sprite plurk"></span>噗浪</a></li>
-				<li><a class="newwindow" title="推到 Twitter" href="http://twitter.com/home/?status=<?php
+				<li><a class="newwindow" title="推到 Twitter" href="https://twitter.com/home/?status=<?php
 print urlencode('來跟我一起抓火狐，使用 Firefox 逛網頁！ ' . site_url('PLACEHOLDER'));
 ?>"><span class="sprite twitter"></span>Twitter</a></li>
-				<li><a class="newwindow" title="推薦到 Funp" href="http://funp.com/push/submit/?via=tools&amp;url=<?
-/* TBD: push sticker image and description to funp */
-print urlencode(site_url('PLACEHOLDER'));
-?>"><span class="sprite funp"></span>推推王</a></li>
+				<li><a class="newwindow" title="哞到 MURMUR" href="http://murmur.tw/?sharelink=<?
+print urlencode(site_url('PLACEHOLDER')); /* MURMUR doesn't parse meta */
+?>"><span class="sprite murmur"></span>MURMUR</a></li>
 			</ul>
 		</div>
 	</div>
@@ -61,7 +60,7 @@ print urlencode(site_url('PLACEHOLDER'));
 			<p class="version">3.6 系列最新版</p>
 		</div>
 		<p class="count">{您的推薦指數會在這裡出現}</p>
-		<p class="desc">您的網際生活將因 Firefox 更加豐富有趣！Firefox 有許多特色，協助您完成工作、找到資訊。正因為它如此實用，<span class="title-placeholder">{您的名字}</span>願意推薦您改用 Firefox！以下是<span class="title-placeholder">{您的名字}</span>最喜歡 Firefox 的三大特點：</p>
+		<p class="desc">您的網際生活將因 Firefox 更加豐富有趣！Firefox 有許多特色，協助您完成工作、找到資訊。正因為它如此實用，<strong class="title-placeholder">{您的名字}</strong>願意推薦您<strong>改用 Firefox</strong>！以下是<strong class="title-placeholder">{您的名字}</strong>最喜歡 Firefox 的三大特點：</p>
 	</div>
 	<div id="window_avatar" class="window" title="選擇個人圖示">
 		<div id="dropzone">&nbsp;</div>

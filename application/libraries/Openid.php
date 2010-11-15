@@ -184,9 +184,8 @@ class Openid{
     }
     else
     {
-        // Generate form markup and render it.
-        $form_id = 'openid_message';
-        $form_html = $authRequest->formMarkup($this->trust_root, $this->request_to, $immediate, array('id' => $form_id));
+        // Generate form markup and return it.
+        $form_html = $authRequest->formMarkup($this->trust_root, $this->request_to, $immediate, array('id' => 'openid_message'));
 
         // Display an error if the form markup couldn't be generated;
         // otherwise, render the HTML.
@@ -196,15 +195,7 @@ class Openid{
         }
         else
         {
-            $page_contents = array(
-               "<html><head><title>",
-               "OpenID transaction in progress",
-               "</title></head>",
-               "<body onload='document.getElementById(\"".$form_id."\").submit()'>",
-               $form_html,
-               "</body></html>");
-
-            print implode("\n", $page_contents);
+			return $form_html;
         }
     }
 

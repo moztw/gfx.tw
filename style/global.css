@@ -298,7 +298,7 @@ input.openid-identifier {
 }
 
 #window_login.username input.openid-identifier, #window_login.nousername input.openid-identifier {
-	background-color: #cccccc;
+	background-color: #eee;
 }
 
 #openid-username, #openid-nousername {
@@ -328,6 +328,18 @@ ul#openid-sp li {
 	float: left;
 	width: 33%;
 	margin: 0.2em 0;
+}
+
+ul#openid-sp li label {
+	display: block;
+	width: 100%;
+}
+ul#openid-sp li label:hover {
+	background-color: #ffffe0;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-o-border-radius: 4px;
+	border-radius: 4px;
 }
 
 ul#openid-sp .sprite {
@@ -740,6 +752,7 @@ span.title-empty {
 	padding: 2px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
+	-o-border-radius: 5px;
 	border-radius: 5px;
 }
 #window_editcomplete .shareblock {
@@ -794,6 +807,7 @@ span.title-empty {
 	background-color: #ffffff;
 	-moz-border-radius: 20px;
 	-webkit-border-radius: 20px;
+	-o-border-radius: 20px;
 	border-radius: 20px;
 }
 
@@ -865,28 +879,53 @@ span.title-empty {
 	border-bottom: none;
 	-moz-border-radius-topleft: 20px;
 	-moz-border-radius-topright: 20px;
-	-webkit-border-radius-topleft: 20px;
-	-webkit-border-radius-topright: 20px;
-	border-radius-topleft: 20px;
-	border-radius-topright: 20px;
+	-webkit-border-top-left-radius: 20px;
+	-webkit-border-top-right-radius: 20px;
+	-o-border-top-left-radius: 20px;
+	-o-border-top-right-radius: 20px;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
 }
 
 #groups-tail {
 	border-top: none;
 	-moz-border-radius-bottomleft: 20px;
 	-moz-border-radius-bottomright: 20px;
-	-webkit-border-radius-bottomleft: 20px;
-	-webkit-border-radius-bottomright: 20px;
-	border-radius-bottomleft: 20px;
-	border-radius-bottomright: 20px;
+	-webkit-border-bottom-left-radius: 20px;
+	-webkit-border-bottom-right-radius: 20px;
+	-o-border-bottom-left-radius: 20px;
+	-o-border-bottom-right-radius: 20px;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
 }
 
 #groups .group {
 	clear: both;
 	border: 2px solid #cccccc;
-	background-color: #ffffff;
-	-moz-border-radius: 6px;
+	background-color: #eee;
 	margin: 0 1em 0 1em;
+}
+
+#groups .group:first-child {
+	-moz-border-radius-topleft: 6px;
+	-moz-border-radius-topright: 6px;
+	-webkit-top-left-border-radius: 6px;
+	-webkit-top-right-border-radius: 6px;
+	-o-top-left-border-radius: 6px;
+	-o-top-right-border-radius: 6px;
+	top-left-border-radius: 6px;
+	top-right-border-radius: 6px;
+}
+
+#groups .group:last-child {
+	-moz-border-radius-bottomleft: 6px;
+	-moz-border-radius-bottomright: 6px;
+	-webkit-bottom-left-border-radius: 6px;
+	-webkit-bottom-right-border-radius: 6px;
+	-o-bottom-left-border-radius: 6px;
+	-o-bottom-right-border-radius: 6px;
+	bottom-left-border-radius: 6px;
+	bottom-right-border-radius: 6px;
 }
 
 #groups .not-selected {
@@ -894,7 +933,6 @@ span.title-empty {
 }
 
 #groups .group .group-title {
-	background-color: #eeeeee;
 	padding: 3px;
 }
 
@@ -932,7 +970,6 @@ span.title-empty {
 	min-height: 1em;
 	height: 100%;
 	overflow: auto;
-	background-color:#EEEEEE;
 }
 
 #groups-install {
@@ -943,6 +980,7 @@ span.title-empty {
 	background-color: #c4fea1;
 	-moz-border-radius: 6px;
 	-webkit-border-radius: 6px;
+	-o-border-radius: 6px;
 	border-radius: 6px;
 }
 
@@ -969,6 +1007,7 @@ span.title-empty {
 	background-color: #ffffff;
 	-moz-border-radius: 6px;
 	-webkit-border-radius: 6px;
+	-o-border-radius: 6px;
 	border-radius: 6px;
 }
 .addon {
@@ -976,11 +1015,19 @@ span.title-empty {
 	padding: 8px 0;
 	background-color: #ffffff;
 	border: 2px solid #ccffcc;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 6px;
-	border-radius: 6px;
 	overflow: hidden;
 	clear: both;
+}
+
+.group:last-child .addon:last-child {
+	-moz-border-radius-bottomleft: 4px;
+	-moz-border-radius-bottomright: 4px;
+	-webkit-border-bottom-left-radius: 4px;
+	-webkit-border-bottom-right-radius: 4px;
+	-o-border-bottom-left-radius: 4px;
+	-o-border-bottom-right-radius: 4px;
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
 }
 
 .group-addons .ui-sortable-placeholder {
@@ -1058,28 +1105,41 @@ span.title-empty {
 	display: block;
 	float: right;
 	background-color: #ccffcc;
-	-moz-border-radius-bottomleft: 6px;
-	-webkit-border-radius-bottomleft: 6px;
-	border-radius-bottomleft: 6px;
+	-moz-border-radius-bottomleft: 4px;
+	-webkit-border-bottom-left-radius: 4px;
+	-o-border-bottom-left-radius: 4px;
+	border-bottom-left-radius: 4px;
 	margin-top: -8px;
 }
 
 #featureselection {
 	width: 820px; margin: 0 40px; padding: 0;
-	background: #ccffcc url('../images/featureselection-corner-top.gif') top center no-repeat;
+	background-color: #ccffcc;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	-o-border-radius: 10px;
+	border-radius: 10px;
+	position: relative;
 }
-#featureselection p, #featureselection ul {
-	margin: 0; padding: 0;
+
+/* clearfix */
+#featureselection:after {
+	content: ".";
+	display: block;
+	height: 0;
+	font-size:0;
+	clear: both;
+	visibility:hidden;
 }
 
 #featureselection .features-desc {
 	float: left;
-	width: 190px; margin: 10px;
+	width: 190px; margin: 10px; padding: 0;
 }
 
 #featureselection ul {
 	float: right;
-	width: 590px; margin: 10px;
+	width: 590px; margin: 10px; padding: 0;
 	list-style: none;
 }
 #featureselection li {
@@ -1091,6 +1151,7 @@ span.title-empty {
 	border: 2px solid #ffffff;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
+	-o-border-radius: 4px;
 	border-radius: 4px;
 	font-weight: bold;
 	text-align: center;
@@ -1101,11 +1162,12 @@ span.title-empty {
 	cursor: auto;
 }
 
-#featureselection #featureselection-clear {
-	clear: both;
-	text-align: right;
-	padding: 0 10px 10px 10px;
-	background: #ccffcc url('../images/featureselection-corner-bottom.gif') bottom center no-repeat;
+#featureselection-clear {
+	text-align: left;
+	padding: 0;
+	margin: 0;
+	position: absolute;
+	bottom: 10px; left: 10px;
 }
 
 .pageblock {
@@ -1120,6 +1182,12 @@ span.title-empty {
 .pageblock .content {
 	margin: 0; padding: 0 90px 0 110px;
 	min-height: 273px;
+}
+
+#openid_message {
+	padding: 250px 200px 0;
+	background: transparent url('../images/ajax-progress.gif') center center no-repeat;
+	text-align: right;
 }
 
 .window {
@@ -1160,6 +1228,9 @@ span.title-empty {
 	background: #ffffff url("../images/avatar-edit.png") no-repeat scroll center center;
 	opacity: 0.8;
 	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-o-border-radius: 10px;
+	border-radius: 10px;
 	display: none;
 }
 
@@ -1365,20 +1436,20 @@ span.title-empty {
 	cursor: move;
 }
 
-.sprite {display: block; background: transparent url('../images/favicons.png?2') no-repeat; text-indent: -10000px; }
+.sprite {display: block; background: transparent url('../images/favicons.png?3') no-repeat; text-indent: -10000px; }
 .gfxtw { background-position: 0 0; width: 16px; height: 16px}
-.google { background-position: -20px 0; width: 16px; height: 16px}
-.yahoo { background-position: -40px 0; width: 16px; height: 16px}
-.openid { background-position: -60px 0; width: 16px; height: 16px}
-.pixnet { background-position: 0 -20px; width: 16px; height: 16px}
-.wordpress-com { background-position: -20px -20px; width: 16px; height: 16px}
-.myidtw { background-position: -40px -20px; width: 16px; height: 16px}
-.aim { background-position: -60px -20px; width: 16px; height: 16px}
-.livejournal { background-position: 0 -40px; width: 16px; height: 16px}
-.myopenid { background-position: -20px -40px; width: 16px; height: 16px}
-.typepad { background-position: -40px -40px; width: 16px; height: 16px}
-.twitter { background-position: -60px -40px; width: 16px; height: 16px}
-.plurk { background-position: 0 -60px; width: 16px; height: 16px}
-.facebook { background-position: -20px -60px; width: 16px; height: 16px}
-.funp { background-position: -40px -60px; width: 16px; height: 16px}
+.google { background-position: -18px 0; width: 16px; height: 16px}
+.yahoo { background-position: -36px 0; width: 16px; height: 16px}
+.openid { background-position: -54px 0; width: 16px; height: 16px}
+.pixnet { background-position: -72px 0; width: 16px; height: 16px}
+.wordpress-com { background-position: 0 -18px; width: 16px; height: 16px}
+.myidtw { background-position: -18px -18px; width: 16px; height: 16px}
+.aim { background-position: -36px -18px; width: 16px; height: 16px}
+.myopenid { background-position: -54px -18px; width: 16px; height: 16px}
+.twitter { background-position: -72px -18px; width: 16px; height: 16px}
+.plurk { background-position: 0 -36px; width: 16px; height: 16px}
+.facebook { background-position: -18px -36px; width: 16px; height: 16px}
+.flickr { background-position: -36px -36px; width: 16px; height: 16px}
+.blogger { background-position: -54px -36px; width: 16px; height: 16px}
+.murmur { background-position: -72px -36px; width: 16px; height: 16px}
 

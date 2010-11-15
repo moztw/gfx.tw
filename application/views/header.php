@@ -76,13 +76,13 @@ if (isset($id)) {
 			<ul id="openid-sp">
 				<li><label><input type="radio" name="username" value="" checked="checked" />(直接輸入)</label></li>
 				<li><label><input type="radio" name="username" value="https://www.google.com/accounts/o8/id"/><span class="sprite google"></span>Google</label></li>
-				<li><label><input type="radio" name="username" value="https://me.yahoo.com"/><span class="sprite yahoo"></span>Yahoo!</label></li>
-				<li><label><input type="radio" name="username" value="openid.aol.com/(username)"/><span class="sprite aim"></span>AIM</label></li>
-				<li><label><input type="radio" name="username" value="(username).livejournal.com"/><span class="sprite livejournal"></span>LiveJournal</label></li>
-				<li><label><input type="radio" name="username" value="(username).myid.tw"/><span class="sprite myidtw"></span>myID.tw</label></li>
-				<li><label><input type="radio" name="username" value="(username).myopenid.com"/><span class="sprite myopenid"></span>myOpenID</label></li>
-				<li><label><input type="radio" name="username" value="profile.typekey.com/(username)"/><span class="sprite typepad"></span>TypePad</label></li>
-				<li><label><input type="radio" name="username" value="(username).wordpress.com"/><span class="sprite wordpress-com"></span>WordPress.com</label></li>
+				<li><label><input type="radio" name="username" value="https://me.yahoo.com/"/><span class="sprite yahoo"></span>Yahoo!奇摩</label></li>
+				<li><label><input type="radio" name="username" value="https://openid.aol.com/"/><span class="sprite aim"></span>AIM</label></li>
+				<li><label><input type="radio" name="username" value="http://www.pixnet.net/"/><span class="sprite pixnet"></span>PIXNET</label></li>
+				<li><label><input type="radio" name="username" value="https://myid.tw/"/><span class="sprite myidtw"></span>myID.tw</label></li>
+				<li><label><input type="radio" name="username" value="https://www.myopenid.com/"/><span class="sprite myopenid"></span>myOpenID</label></li>
+				<li><label><input type="radio" name="username" value="http://www.flickr.com/"/><span class="sprite flickr"></span>Flickr</label></li>
+				<li><label><input type="radio" name="username" value="https://wordpress.com/"/><span class="sprite wordpress-com"></span>WordPress.com</label></li>
 			</ul>
 			<h3>OpenID 是什麼？</h3>
 			<p>OpenID 讓您使用其他網站的帳號登入敝站，避免再次記憶帳號與輸入資料的困擾。</p>
