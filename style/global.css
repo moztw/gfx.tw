@@ -298,7 +298,7 @@ input.openid-identifier {
 }
 
 #window_login.username input.openid-identifier, #window_login.nousername input.openid-identifier {
-	background-color: #cccccc;
+	background-color: #eee;
 }
 
 #openid-username, #openid-nousername {
