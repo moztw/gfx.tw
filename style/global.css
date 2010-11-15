@@ -298,7 +298,7 @@ input.openid-identifier {
 }
 
 #window_login.username input.openid-identifier, #window_login.nousername input.openid-identifier {
-	background-color: #cccccc;
+	background-color: #eee;
 }
 
 #openid-username, #openid-nousername {
@@ -328,6 +328,18 @@ ul#openid-sp li {
 	float: left;
 	width: 33%;
 	margin: 0.2em 0;
+}
+
+ul#openid-sp li label {
+	display: block;
+	width: 100%;
+}
+ul#openid-sp li label:hover {
+	background-color: #ffffe0;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-o-border-radius: 4px;
+	border-radius: 4px;
 }
 
 ul#openid-sp .sprite {
@@ -1424,20 +1436,20 @@ span.title-empty {
 	cursor: move;
 }
 
-.sprite {display: block; background: transparent url('../images/favicons.png?2') no-repeat; text-indent: -10000px; }
+.sprite {display: block; background: transparent url('../images/favicons.png?3') no-repeat; text-indent: -10000px; }
 .gfxtw { background-position: 0 0; width: 16px; height: 16px}
-.google { background-position: -20px 0; width: 16px; height: 16px}
-.yahoo { background-position: -40px 0; width: 16px; height: 16px}
-.openid { background-position: -60px 0; width: 16px; height: 16px}
-.pixnet { background-position: 0 -20px; width: 16px; height: 16px}
-.wordpress-com { background-position: -20px -20px; width: 16px; height: 16px}
-.myidtw { background-position: -40px -20px; width: 16px; height: 16px}
-.aim { background-position: -60px -20px; width: 16px; height: 16px}
-.livejournal { background-position: 0 -40px; width: 16px; height: 16px}
-.myopenid { background-position: -20px -40px; width: 16px; height: 16px}
-.typepad { background-position: -40px -40px; width: 16px; height: 16px}
-.twitter { background-position: -60px -40px; width: 16px; height: 16px}
-.plurk { background-position: 0 -60px; width: 16px; height: 16px}
-.facebook { background-position: -20px -60px; width: 16px; height: 16px}
-.funp { background-position: -40px -60px; width: 16px; height: 16px}
+.google { background-position: -18px 0; width: 16px; height: 16px}
+.yahoo { background-position: -36px 0; width: 16px; height: 16px}
+.openid { background-position: -54px 0; width: 16px; height: 16px}
+.pixnet { background-position: -72px 0; width: 16px; height: 16px}
+.wordpress-com { background-position: 0 -18px; width: 16px; height: 16px}
+.myidtw { background-position: -18px -18px; width: 16px; height: 16px}
+.aim { background-position: -36px -18px; width: 16px; height: 16px}
+.myopenid { background-position: -54px -18px; width: 16px; height: 16px}
+.twitter { background-position: -72px -18px; width: 16px; height: 16px}
+.plurk { background-position: 0 -36px; width: 16px; height: 16px}
+.facebook { background-position: -18px -36px; width: 16px; height: 16px}
+.flickr { background-position: -36px -36px; width: 16px; height: 16px}
+.blogger { background-position: -54px -36px; width: 16px; height: 16px}
+.murmur { background-position: -72px -36px; width: 16px; height: 16px}
 
