@@ -10,3 +10,11 @@ stickerimages/features
 system/cache
 useravatars
 userstickers
+
+# minified js
+js/*.min.js
+
+# google analytics html
+google*.html
+
+
