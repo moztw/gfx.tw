@@ -1,5 +1,8 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
+/* Google Analytics, empty string to disable */
+$config['gfx_gaq'] = "XXXXX";
+
 /* Change this config item to empty array if you don't need site wide message */
 $config['gfx_site_wide_message'] = array(
 	array(
