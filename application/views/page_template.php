@@ -12,6 +12,26 @@ print '<?xml version="1.0" encoding="UTF-8"?>';
 	<link rel="stylesheet" type="text/css" href="<?php print site_url('style/jquery-ui-1.7.custom.css' . $this->config->item('gfx_suffix')) ?>" />
 	<link rel="stylesheet" type="text/css" href="<?php print site_url('style/language-zh-TW.css' . $this->config->item('gfx_suffix')) ?>" />
 {meta}
+<?php 
+$gaq = $this->config->item('gfx_gaq');
+if ($gaq) {
+?>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', '<?php print $gaq ?>']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<?php
+}
+?>
 </head>
 <body>
 {header}
