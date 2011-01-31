@@ -78,7 +78,7 @@ if (isset($id)) {
 				<li><label><input type="radio" name="username" value="https://www.google.com/accounts/o8/id"/><span class="sprite google"></span>Google</label></li>
 				<li><label><input type="radio" name="username" value="https://me.yahoo.com/"/><span class="sprite yahoo"></span>Yahoo!奇摩</label></li>
 				<li><label><input type="radio" name="username" value="https://openid.aol.com/"/><span class="sprite aim"></span>AIM</label></li>
-				<li><label><input type="radio" name="username" value="http://www.pixnet.net/"/><span class="sprite pixnet"></span>PIXNET</label></li>
+				<li><label><input type="radio" name="username" value="https://openid.pixnet.cc/"/><span class="sprite pixnet"></span>PIXNET</label></li>
 				<li><label><input type="radio" name="username" value="https://myid.tw/"/><span class="sprite myidtw"></span>myID.tw</label></li>
 				<li><label><input type="radio" name="username" value="https://www.myopenid.com/"/><span class="sprite myopenid"></span>myOpenID</label></li>
 				<li><label><input type="radio" name="username" value="http://www.flickr.com/"/><span class="sprite flickr"></span>Flickr</label></li>
