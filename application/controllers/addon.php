@@ -14,17 +14,18 @@ class Addon extends Controller {
 		checkAuth(true, false, 'json');
 		$this->load->database();
 		//The user specific want to find the addon by its amo_id
-		if (is_numeric($this->input->post('q')) && $this->input->post('q') !== '0') {
+		if (substr($this->input->post('q'), 0, 1) === '/') {
+			$amo_id = substr($this->input->post('q'), 1);
 			$addons = $this->db->query('SELECT id, title, amo_id, amo_version, url, icon_url, description, fetched '
-			. 'FROM `addons` WHERE `amo_id` = ' . $this->db->escape($this->input->post('q')) . ';');
+			. 'FROM `addons` WHERE `amo_id` = ' . $this->db->escape($amo_id) . ' AND `amo_id` != \'\';');
 			if ($addons->num_rows() === 0) {
 				//Couldn't find it, try to fetch from AMO site
-				$addon = $this->_update_amo_addon($this->input->post('q'), false, true);
+				$addon = $this->_update_amo_addon($amo_id, false, true);
 				if ($addon) {
 					$this->load->view('json.php', array('jsonObj' => 
 						array('addons' => array($addon)))
 					);
-					exit;
+					return;
 				}
 			}
 		} else {
@@ -113,8 +114,7 @@ class Addon extends Controller {
 		}
 	}
 	function _update_amo_addon($amo_id, $id = false, $cleanoutput = true) {
-		if ($amo_id == 0) return false;
-		/* fetch data from AMO */
+		if ($amo_id === 0 || $amo_id === '0') return false;
 		$xml = @file_get_contents($this->config->item('gfx_amo_api_url') . $amo_id);
 		if ($xml && strpos($xml, '<error>') !== false) {
 			return false;
@@ -124,7 +124,7 @@ class Addon extends Controller {
 		$dom->preserveWhiteSpace = false;
 		$A = array(
 			'title' => $doc->getElementsByTagName('name')->item(0)->firstChild->nodeValue, //plain text, proven by amo#36710
-			'amo_id' => $amo_id,
+			'amo_id' => $doc->lastChild->getAttribute('id'),
 			'url' => '',
 			'xpi_url' => $doc->getElementsByTagName('install')->item(0)->firstChild->nodeValue,
 			'xpi_hash' => $doc->getElementsByTagName('install')->item(0)->getAttribute('hash'),
@@ -172,7 +172,9 @@ class Addon extends Controller {
 
 		/* update/insert the record */
 		$this->load->database();
-		if ($id) {
+		$addons = $this->db->query('SELECT id FROM addons WHERE amo_id = ' . $this->db->escape($A['amo_id']));
+		if ($addons->num_rows() === 1) {
+			$id = $addons->row()->id;
 			$this->db->update('addons', $A, array('id' => $id));
 			$A = array_merge(
 				array('id' => $id),
