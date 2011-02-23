@@ -84,8 +84,10 @@ class Addon extends Controller {
 		$this->load->view('json.php', array('jsonObj' => array('addons' => $A)));
 	}
 	function forcefetch() {
-		$amo_id = $this->input->get_post('amo_id');
-		if ($this->input->get_post('sleep')) {
+		parse_str($this->input->server('QUERY_STRING'), $G);
+		$amo_id = $this->input->post('amo_id');
+		if (!$amo_id && isset($G['amo_id'])) $amo_id = $G['amo_id'];
+		if (isset($G['sleep'])) {
 			/* enable sleep to prevent DDoS AMO API */
 			sleep(rand(0, 60));
 		}
@@ -97,15 +99,22 @@ class Addon extends Controller {
 			$this->load->database();
 			$addon = $this->db->query(
 				'SELECT id, amo_id FROM `addons` '
-				. 'WHERE `amo_id` != 0 AND `fetched` < '. max(time()-$this->config->item('gfx_amo_fetch_older_than_time'), $this->config->item('gfx_amo_fetch_older_than_date')) . ' LIMIT 1;'
+				. 'WHERE `amo_id` != 0 AND UNIX_TIMESTAMP(`fetched`) < '. max(time()-$this->config->item('gfx_amo_fetch_older_than_time'), $this->config->item('gfx_amo_fetch_older_than_date')) . ' ORDER BY RAND() LIMIT 1;'
 			);
 			if ($addon->num_rows() === 1) {
-				$A = $this->_update_amo_addon($addon->row()->amo_id, $addon->row()->id, false);
+				$amo_id = $addon->row()->amo_id;
+				$id = $addon->row()->id;
+				$A = $this->_update_amo_addon($amo_id, $id, false);
 			} else {
 				$A = array();
 			}
 		}
-		$this->load->view('json.php', array('jsonObj' => array('addons' => $A)));
+		if (!$A) {
+			/* fetched failed, output id information */
+			if (isset($id)) $A = array('id' => $id, 'amo_id' => $amo_id);
+			else $A = array('amo_id' => $amo_id);
+		}
+		$this->load->view('json.php', array('jsonObj' => array('addons' => array($A))));
 	}
 	function _update_amo_addon($amo_id, $id = false, $cleanoutput = true) {
 		if ($amo_id === 0 || $amo_id === '0') return false;
