@@ -30,13 +30,10 @@ class Addon extends Controller {
 			}
 		} else {
 			/* since query is only used in editor, we only provide limit information */
-			header('X-Line-No: 26');
 			$addons = $this->db->query('SELECT id, title, amo_id, amo_version, url, icon_url, description, fetched '
 			. 'FROM `addons` WHERE MATCH (`title`,`description`) AGAINST (' . $this->db->escape($this->input->post('q')) . ') ORDER BY `title` ASC;');
 			/* fulltest search doesn't give good result sometimes, so we trun to LIKE if none is found */
-			header('X-Trac: ' . strlen(trim($this->input->post('q'))));
 			if ($addons->num_rows() === 0 && strlen(trim($this->input->post('q'))) >= 3) {
-				header('X-Line-No: 30');
 				$addons = $this->db->query('SELECT id, title, amo_id, amo_version, url, icon_url, description, fetched '
 				. 'FROM `addons` WHERE `title` LIKE \'%' . $this->db->escape_str(trim($this->input->post('q'))) . '%\' ORDER BY `title` ASC;');
 			}
