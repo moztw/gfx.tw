@@ -127,9 +127,9 @@ class Addon extends Controller {
 		$dom->preserveWhiteSpace = false;
 
 		$type_id = $doc->getElementsByTagName('type')->item(0)->getAttribute('id');
-		if ($type_id !== '1' && $type_id !== '2') {
-			/* Not an extension but a Presonas, search engine, etc.
-			 * we exclude these because they need different Javascript API to install, and they simply are not "addons" by def */
+		if ($type_id !== '1' && $type_id !== '2' && $type_id !== '3') {
+			/* Not an extension, nor theme, nor dictionary file.
+			 * we exclude other stuff like search engine or personas because they need different Javascript API to install, and they simply are not "addons" by def */
 
 			return false;
 		}
