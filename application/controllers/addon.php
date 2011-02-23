@@ -125,8 +125,12 @@ class Addon extends Controller {
 		$doc = new DOMDocument();
 		$doc->loadXML($xml);
 		$dom->preserveWhiteSpace = false;
-		if ($doc->getElementsByTagName('type')->item(0)->getAttribute('id') !== '1') {
-			/* Not an extension but a Theme, Presonas, etc. */
+
+		$type_id = $doc->getElementsByTagName('type')->item(0)->getAttribute('id');
+		if ($type_id !== '1' && $type_id !== '2') {
+			/* Not an extension but a Presonas, search engine, etc.
+			 * we exclude these because they need different Javascript API to install, and they simply are not "addons" by def */
+
 			return false;
 		}
 		$app_ids = $doc->getElementsByTagName('application_id');
