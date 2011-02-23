@@ -109,12 +109,21 @@ class Addon extends Controller {
 				$A = array();
 			}
 		}
+
 		if (!$A) {
-			/* fetched failed, output id information */
-			if (isset($id)) $A = array('id' => $id, 'amo_id' => $amo_id);
-			else $A = array('amo_id' => $amo_id);
+			/* fetch failed, output id information */
+			$jsonObj = array(
+				'addons' => array(),
+				'fetchfailed' => array()
+			);
+			if (isset($amo_id)) $jsonObj['fetchfailed']['amo_id'] = $amo_id;
+			if (isset($id)) $jsonObj['fetchfailed']['id'] = $id;
+		} else {
+			$jsonObj = array(
+				'addons' => $A
+			);
 		}
-		$this->load->view('json.php', array('jsonObj' => array('addons' => array($A))));
+		$this->load->view('json.php', array('jsonObj' => $jsonObj));
 	}
 	function _update_amo_addon($amo_id, $id = false, $cleanoutput = true) {
 		if ($amo_id === 0 || $amo_id === '0') return false;
@@ -146,6 +155,7 @@ class Addon extends Controller {
 		$A = array(
 			'title' => $doc->getElementsByTagName('name')->item(0)->firstChild->nodeValue, //plain text, proven by amo#36710
 			'amo_id' => $doc->lastChild->getAttribute('id'),
+			//'amo_removed' => 'N',
 			'url' => $doc->getElementsByTagName('learnmore')->item(0)->firstChild->nodeValue,
 			'xpi_url' => ($installable)?$doc->getElementsByTagName('install')->item(0)->firstChild->nodeValue:'',
 			'xpi_hash' => ($installable)?$doc->getElementsByTagName('install')->item(0)->getAttribute('hash'):'',
@@ -161,8 +171,27 @@ class Addon extends Controller {
 			'os_5' => 'N',
 			'fetched' => date('Y-m-d H:m:s')
 		);
-		if ($doc->getElementsByTagName('status')->item(0)->getAttribute('id') !== '4') {
-			$A['available'] = 'N';	
+		$status = $doc->getElementsByTagName('status')->item(0)->getAttribute('id');
+		if ($status !== '4' && $status !== '8') {
+			/* Not Reviewed nor Preliminarily Reviewed, could be 404 at AMO even if status == 10 */
+			$A['available'] = 'N';
+			if ($status !== '10') {
+				// must be 404 at AMO
+				// $A['amo_removed'] = 'Y';
+				$homepage = $doc->getElementsByTagName('homepage')->item(0);
+				if ($homepage->childNodes->length !== 0) {
+					$A['url'] = $homepage->firstChild->nodeValue;
+				/*} else {
+					// TBD: an special value indicates no URL available.
+				 */}
+			}/* else {
+				// TBD: test if AMO still hosts the page, if not:
+				$A['amo_removed'] = 'Y';
+			} */
+		}
+		if ($doc->getElementsByTagName('eula')->item(0)->childNodes->length !== 0) {
+			/* Comes with an EULA */
+			$A['available'] = 'N';
 		}
 		if (strpos($doc->getElementsByTagName('icon')->item(0)->firstChild->nodeValue, 'default_icon') === false) {
 			$A['icon_url'] = $doc->getElementsByTagName('icon')->item(0)->firstChild->nodeValue;
