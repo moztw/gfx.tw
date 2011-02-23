@@ -116,6 +116,19 @@ class Addon extends Controller {
 		$doc = new DOMDocument();
 		$doc->loadXML($xml);
 		$dom->preserveWhiteSpace = false;
+		if ($doc->getElementsByTagName('type')->item(0)->getAttribute('id') !== '1') {
+			/* Not an extension but a Theme, Presonas, etc. */
+			return false;
+		}
+		$app_ids = $doc->getElementsByTagName('application_id');
+		$is_for_fx = false;
+		for($i = 0; $i < $app_ids->length; $i++) {
+			if ($app_ids->item($i)->firstChild->nodeValue === '1') {
+				$is_for_fx = true;
+				break;
+			}
+		}
+		if (!$is_for_fx) return false;
 		$A = array(
 			'title' => $doc->getElementsByTagName('name')->item(0)->firstChild->nodeValue, //plain text, proven by amo#36710
 			'amo_id' => $doc->lastChild->getAttribute('id'),
