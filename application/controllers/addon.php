@@ -43,7 +43,7 @@ class Addon extends Controller {
 		}
 		$A = array();
 		foreach ($addons->result_array() as $addon) {
-			if ($addon['amo_id']) $addon['url'] = $this->config->item('gfx_amo_url') . $addon['amo_id'];
+			if ($addon['amo_id'] && !$addon['url']) $addon['url'] = $this->config->item('gfx_amo_url') . $addon['amo_id'];
 			$A[] = $addon;
 		}
 		//Pick one of the addons found and send to to re-fetch if it's too old
@@ -81,7 +81,7 @@ class Addon extends Controller {
 			. 'GROUP BY t2.addon_id ORDER BY COUNT(t2.id) DESC, t1.title ASC LIMIT 15;');
 		$A = array();
 		foreach ($addons->result_array() as $addon) {
-			if ($addon['amo_id']) $addon['url'] = $this->config->item('gfx_amo_url') . $addon['amo_id'];
+			if ($addon['amo_id'] && !$addon['url']) $addon['url'] = $this->config->item('gfx_amo_url') . $addon['amo_id'];
 			$A[] = $addon;
 		}
 		//Pick one of the addons found and send to to re-fetch if it's too old
@@ -134,7 +134,7 @@ class Addon extends Controller {
 		$A = array(
 			'title' => $doc->getElementsByTagName('name')->item(0)->firstChild->nodeValue, //plain text, proven by amo#36710
 			'amo_id' => $doc->lastChild->getAttribute('id'),
-			'url' => '',
+			'url' => $doc->getElementsByTagName('learnmore')->item(0)->firstChild->nodeValue,
 			'xpi_url' => $doc->getElementsByTagName('install')->item(0)->firstChild->nodeValue,
 			'xpi_hash' => $doc->getElementsByTagName('install')->item(0)->getAttribute('hash'),
 			'amo_version' => $doc->getElementsByTagName('version')->item(0)->firstChild->nodeValue,
@@ -204,7 +204,6 @@ class Addon extends Controller {
 		}
 		if ($cleanoutput) {
 			/* clean up if asked for clean output */
-			$A['url'] = $this->config->item('gfx_amo_url') . $A['amo_id'];
 			unset($A['xpi_url']);
 			unset($A['available']);
 			unset($A['os_0']);
