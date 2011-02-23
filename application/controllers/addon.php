@@ -46,18 +46,6 @@ class Addon extends Controller {
 			if ($addon['amo_id'] && !$addon['url']) $addon['url'] = $this->config->item('gfx_amo_url') . $addon['amo_id'];
 			$A[] = $addon;
 		}
-		//Pick one of the addons found and send to to re-fetch if it's too old
-		//addon picked by amo_id query will always be checked for age of the fetched data
-		$r = array_rand($A);
-		if (
-			count($A) !== 0 &&
-			isset($A[$r]['amo_id']) &&
-			$A[$r]['amo_id'] !== 0 &&
-			strtotime($A[$r]['fetched']) < max(time()-$this->config->item('gfx_amo_fetch_older_than_time'), $this->config->item('gfx_amo_fetch_older_than_date'))
-			) {
-			$addon = $this->_update_amo_addon($A[$r]['amo_id'], $A[$r]['id'], true);
-			if ($addon) $A[$r] = $addon;
-		}
 		$this->load->view('json.php', array('jsonObj' => array('addons' => $A)));
 	}
 	function suggest() {
