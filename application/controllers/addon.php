@@ -172,9 +172,15 @@ class Addon extends Controller {
 
 		/* update/insert the record */
 		$this->load->database();
-		$addons = $this->db->query('SELECT id FROM addons WHERE amo_id = ' . $this->db->escape($A['amo_id']));
-		if ($addons->num_rows() === 1) {
-			$id = $addons->row()->id;
+		if (!$id) {
+			/* check against database for id,
+			 make sure we don't add the same addon twice */
+			$addons = $this->db->query('SELECT id FROM addons WHERE amo_id = ' . $this->db->escape($A['amo_id']));
+			if ($addons->num_rows() === 1) {
+				$id = $addons->row()->id;
+			}
+		}
+		if ($id) {
 			$this->db->update('addons', $A, array('id' => $id));
 			$A = array_merge(
 				array('id' => $id),
