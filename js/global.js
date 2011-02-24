@@ -546,7 +546,7 @@ var gfx = {
 					os = '2';
 					break;
 			}
-			$('.addon .install').each(
+			$('.addon .install:not(.disabled)').each(
 				function () {
 					var o = $(this);
 					if (os !== 'Z') {
