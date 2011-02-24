@@ -75,8 +75,8 @@ print $this->db->query('SELECT COUNT(`id`) AS count FROM `users` WHERE `login` L
 print $this->db->query('SELECT COUNT(`id`) AS count FROM `users` WHERE `login` LIKE \'%aol.com%\';')->row()->count;
 ?>
 </li>
-			<li>LiveJournal：<?php 
-print $this->db->query('SELECT COUNT(`id`) AS count FROM `users` WHERE `login` LIKE \'%livejournal.com%\';')->row()->count;
+			<li>PIXNET: <?php
+print $this->db->query('SELECT COUNT(`id`) AS count FROM `users` WHERE `login` LIKE \'%pixnet.cc%\';')->row()->count;
 ?>
 </li>
 			<li>myID.tw：<?php 
@@ -87,12 +87,20 @@ print $this->db->query('SELECT COUNT(`id`) AS count FROM `users` WHERE `login` L
 print $this->db->query('SELECT COUNT(`id`) AS count FROM `users` WHERE `login` LIKE \'%myopenid.com%\';')->row()->count;
 ?>
 </li>
-			<li>TypePad：<?php 
-print $this->db->query('SELECT COUNT(`id`) AS count FROM `users` WHERE `login` LIKE \'%typekey.com%\';')->row()->count;
+			<li>Flickr：<?php 
+print $this->db->query('SELECT COUNT(`id`) AS count FROM `users` WHERE `login` LIKE \'%flickr.com%\';')->row()->count;
 ?>
 </li>
 			<li>WordPress.com：<?php 
 print $this->db->query('SELECT COUNT(`id`) AS count FROM `users` WHERE `login` LIKE \'%wordpress.com%\';')->row()->count;
+?>
+</li>
+			<li>LiveJournal：<?php 
+print $this->db->query('SELECT COUNT(`id`) AS count FROM `users` WHERE `login` LIKE \'%livejournal.com%\';')->row()->count;
+?>
+</li>
+			<li>TypePad：<?php 
+print $this->db->query('SELECT COUNT(`id`) AS count FROM `users` WHERE `login` LIKE \'%typekey.com%\';')->row()->count;
 ?>
 </li>
 		</ul>
