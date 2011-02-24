@@ -104,7 +104,7 @@ function addon($addon) {
 	if (!$icon_url) $icon_url = site_url('images/addon_default_icon.png');
 	/* if it's an AMO addon */
 	if ($amo_id) {
-		$url = $CI->config->item('gfx_amo_url') . $amo_id;
+		if (!$url) $url = $CI->config->item('gfx_amo_url') . $amo_id;
 		if (!$xpi_url) $xpi_url = $CI->config->item('gfx_amo_xpi_url') . $amo_id;
 	} elseif ($available === 'Y' && !$xpi_url) {
 		/* not a AMO addon and marked available BUT without an xpi url => don't show */
