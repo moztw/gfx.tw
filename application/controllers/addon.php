@@ -55,7 +55,7 @@ class Addon extends Controller {
 		$A = $this->cache->get($this->input->post('g') ,'addons-suggest');
 		if ($A) {
 			$this->load->view('json.php', array('jsonObj' => array('addons' => $A)));
-			exit();
+			return;
 		}
 
 		$this->load->database();

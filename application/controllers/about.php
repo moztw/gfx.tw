@@ -17,12 +17,12 @@ class About extends Controller {
 				show_404();
 			}
 			header('Location: ' . site_url('about/' . $query->row()->name));
-			exit();
+			return;
 		}
 		
 		$this->load->library('cache');
 		$this->load->helper('gfx');
-		checkETag($name, 'about');
+		if (checkETag($name, 'about')) return;
 		$data = $this->cache->get($name, 'about');
 
 		if (!$data) {
@@ -88,7 +88,7 @@ class About extends Controller {
 		$this->load->helper('gfx');
 		if (!checkAuth(true, true, 'flashdata')) {
 			header('Location: ' . site_url('about'));
-			exit();
+			return;
 		}
 		$this->load->database();
 		$this->db->delete('aboutpages', array('id' => $this->input->post('id')));

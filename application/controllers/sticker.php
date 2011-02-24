@@ -9,7 +9,7 @@ class Sticker extends Controller {
 		$this->load->helper('gfx');
 		if (!checkAuth(false, false, 'flashdata')) {
 			header('Location: ' . base_url());
-			exit();
+			return;
 		}
 		$user = $this->db->query('SELECT * FROM users WHERE `id` = ' . $this->session->userdata('id') . ' LIMIT 1');
 		if ($user->num_rows() === 0) {
@@ -17,7 +17,7 @@ class Sticker extends Controller {
 			session_data_unset(false);
 			flashdata_message('no_such_user');
 			header('Location: ' . base_url());
-			exit();
+			return;
 		}
 		$U = $user->row_array();
 		$user->free_result();
@@ -32,7 +32,7 @@ class Sticker extends Controller {
 		if ($U['ready'] !== 'Y') {
 			flashdata_message('sticker_nopage');
 			header('Location: ' . site_url('editor'));
-			exit();
+			return;
 		}
 		$data = array(
 			'meta' => $this->load->view('sticker/meta.php', $U, true),

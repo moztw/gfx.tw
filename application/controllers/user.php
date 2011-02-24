@@ -16,12 +16,12 @@ class User extends Controller {
 			header('Content-Type: text/plain');
 			//print 'You should find the location of xrds doc in the header. I could place a <meta> tag here but I am lazy and you are dumb.';
 			//TBD: <meta http-equiv="X-XRDS-Location" content=""/>
-			exit();
+			return;
 		}
 
 		$this->load->library('cache');
 		$this->load->helper('gfx');
-		checkETag($name, 'user');
+		if (checkETag($name, 'user')) return;
 		$data = $this->cache->get(strtolower($name), 'user');
 
 		if (!$data) {
@@ -85,7 +85,7 @@ class User extends Controller {
 		//name caps check
                 if (isset($data['name']) && $data['name'] !== $name) {
 			header('Location: ' . site_url($data['name']));
-			exit;
+			return;
 		}
 
 		if ($this->session->userdata('admin') !== 'Y') {
@@ -120,7 +120,7 @@ class User extends Controller {
 		} else {
 			/* is not logged in; flashdata error already injected at last elseif */
 			header('Location: ' . base_url());
-			exit();
+			return;
 		}
 		/* Check whether user exists and his/her name */
 		$this->load->database();
@@ -128,7 +128,7 @@ class User extends Controller {
 		if ($data->num_rows() === 0) {
 			flashdata_message('no_such_user');
 			header('Location: ' . base_url());
-			exit();
+			return;
 		}
 		/* Actual Deletion */
 		$this->db->delete('users', array('id' => $id));
