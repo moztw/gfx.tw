@@ -10,7 +10,7 @@ class Editor extends Controller {
 		$this->load->helper('gfx');
 		if (!checkAuth(false, false, 'flashdata')) {
 			header('Location: ' . base_url());
-			exit();
+			return;
 		}
 
 		$this->load->helper('form');
@@ -20,7 +20,7 @@ class Editor extends Controller {
 			session_data_unset(false);
 			flashdata_message('no_such_user');
 			header('Location: ' . base_url());
-			exit();
+			return;
 		}
 		$U = $user->row_array();
 		$user->free_result();
@@ -76,7 +76,7 @@ class Editor extends Controller {
 	}
 	function save() {
 		$this->load->helper('gfx');
-		checkAuth(true, false, 'json');
+		if (!checkAuth(true, false, 'json')) return;
 
 		if ($this->input->post('name') === false) {
 			json_message('EDITOR_NAME_EMPTY');

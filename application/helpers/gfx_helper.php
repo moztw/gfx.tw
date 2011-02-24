@@ -15,8 +15,9 @@ function checkETag($cache_id, $cache_group) {
 		)
 	) {
 		header("HTTP/1.1 304 Not Modified");
-		exit();
+		return true;
 	}
+	return false;
 }
 
 function checkAuth($checkOrigin = false, $checkAdmin = false, $errorType = '') {

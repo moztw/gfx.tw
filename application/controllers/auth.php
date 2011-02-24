@@ -11,7 +11,7 @@ class Auth extends Controller {
 	function login() {
 		if (!$this->input->post('openid-identifier')) {
 			header('Location: ' . base_url());
-			exit();
+			return;
 		}
 		$this->config->load('openid');
 
@@ -97,7 +97,7 @@ class Auth extends Controller {
 					$this->load->config('gfx');
 					if ($this->config->item('gfx_require_pre_authorization')) {
 						header('Location: ' . site_url('about/closetest?claimed_id=' . urlencode($open_id)));
-						exit();
+						return;
 					}
 					/* Create new user */
 					flashdata_message('auth_login_new', 'highlight', 'info');
@@ -174,7 +174,7 @@ class Auth extends Controller {
 		$this->load->helper('gfx');
 		if (!checkAuth(true, false, 'flashdata')) {
 			header('Location: ' . base_url());
-			exit();
+			return;
 		}
 		session_data_unset();
 		header('Location: ' . base_url());
@@ -189,13 +189,13 @@ class Auth extends Controller {
 		$this->load->helper('gfx');
 		if (!checkAuth(true, true, 'flashdata')) {
 			header('Location: ' . base_url());
-			exit();
+			return;
 		}
 		$user = $this->db->get_where('users', array('id' => $this->input->post('id')));
 		if ($user->num_rows() === 0) {
 			flashdata_message('no_such_user');
 			header('Location: ' . base_url());
-			exit();
+			return;
 		}
 		session_data_set(
 			array(
@@ -214,7 +214,7 @@ class Auth extends Controller {
 		if (!valid_email($this->input->post('email'))) {
 			flashdata_message('openid_query_processed', 'highlight', 'info');
 			header('Location: ' . site_url('about/faq'));
-			exit();
+			return;
 		}
 		$this->load->database();
 		$acs = $this->db->query('SELECT `login`, `name` FROM `users` WHERE `email` = ' . $this->db->escape($this->input->post('email')) . ';');

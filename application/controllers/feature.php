@@ -27,7 +27,7 @@ class Feature extends Controller {
 				header('Location: ' . site_url('feature/' . $query->row()->name));
 				break;
 			}
-			exit();
+			return;
 		}
 		$this->load->library('cache');
 		switch ($type) {
@@ -41,7 +41,7 @@ class Feature extends Controller {
 				)
 			) {
 				header("HTTP/1.1 304 Not Modified");
-				exit();
+				return;
 			}
 
 			$data = $this->cache->get($id, 'feature-inframe');
@@ -64,7 +64,7 @@ class Feature extends Controller {
 			break;
 			default:
 			$this->load->helper('gfx');
-			checkETag($id, 'feature');
+			if (checkETag($id, 'feature')) return;
 			$data = $this->cache->get($id, 'feature');
 
 			if (!$data) {
@@ -99,7 +99,7 @@ class Feature extends Controller {
 	function update() {
 		$this->load->config('gfx');
 		$this->load->helper('gfx');
-		checkAuth(true, true, 'json');
+		if (!checkAuth(true, true, 'json')) return;
 		/* Feature name cannot collide function name */
 		if (in_array($this->input->post('name'), array('update', 'delete'))) {
 			json_message('error_feature_name');
