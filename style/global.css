@@ -909,23 +909,23 @@ span.title-empty {
 #groups .group:first-child {
 	-moz-border-radius-topleft: 6px;
 	-moz-border-radius-topright: 6px;
-	-webkit-top-left-border-radius: 6px;
-	-webkit-top-right-border-radius: 6px;
-	-o-top-left-border-radius: 6px;
-	-o-top-right-border-radius: 6px;
-	top-left-border-radius: 6px;
-	top-right-border-radius: 6px;
+	-webkit-border-top-left-radius: 6px;
+	-webkit-border-top-right-radius: 6px;
+	-o-border-top-left-radius: 6px;
+	-o-border-top-right-radius: 6px;
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
 }
 
 #groups .group:last-child {
 	-moz-border-radius-bottomleft: 6px;
 	-moz-border-radius-bottomright: 6px;
-	-webkit-bottom-left-border-radius: 6px;
-	-webkit-bottom-right-border-radius: 6px;
-	-o-bottom-left-border-radius: 6px;
-	-o-bottom-right-border-radius: 6px;
-	bottom-left-border-radius: 6px;
-	bottom-right-border-radius: 6px;
+	-webkit-border-bottom-left-radius: 6px;
+	-webkit-border-bottom-right-radius: 6px;
+	-o-border-bottom-left-radius: 6px;
+	-o-border-bottom-right-radius: 6px;
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
 }
 
 #groups .not-selected {
