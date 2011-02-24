@@ -51,7 +51,7 @@ class About extends Controller {
 	function update() {
 		$this->load->config('gfx');
 		$this->load->helper('gfx');
-		checkAuth(true, true, 'json');
+		if (!checkAuth(true, true, 'json')) return;
 		/* About name cannot collide function name */
 		if (in_array($this->input->post('name'), array('update', 'delete'))) {
 			json_message('error_about_name');

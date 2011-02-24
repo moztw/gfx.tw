@@ -156,7 +156,7 @@ class User extends Controller {
 	function update() {
 		$this->load->config('gfx');
 		$this->load->helper('gfx');
-		checkAuth(true, true, 'json');
+		if (!checkAuth(true, true, 'json')) return;
 
 		/* Check whether login already used */
 		$data = $this->db->query('SELECT `login` FROM `users` WHERE `id` != ' . $this->input->post('id')

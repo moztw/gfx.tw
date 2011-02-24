@@ -76,7 +76,7 @@ class Editor extends Controller {
 	}
 	function save() {
 		$this->load->helper('gfx');
-		checkAuth(true, false, 'json');
+		if (!checkAuth(true, false, 'json')) return;
 
 		if ($this->input->post('name') === false) {
 			json_message('EDITOR_NAME_EMPTY');

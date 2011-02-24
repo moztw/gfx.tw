@@ -11,7 +11,7 @@ class Addon extends Controller {
 		show_404();
 	}
 	function query() {
-		checkAuth(true, false, 'json');
+		if (!checkAuth(true, false, 'json')) return;
 		$this->load->database();
 		//The user specific want to find the addon by its amo_id
 		if (substr($this->input->post('q'), 0, 1) === '/') {
@@ -46,7 +46,7 @@ class Addon extends Controller {
 		$this->load->view('json.php', array('jsonObj' => array('addons' => $A)));
 	}
 	function suggest() {
-		checkAuth(true, false, 'json');
+		if (!checkAuth(true, false, 'json')) return;
 		if (!is_numeric($this->input->post('g'))) {
 			json_message('group_not_number');
 			return;
@@ -92,7 +92,7 @@ class Addon extends Controller {
 			sleep(rand(0, 60));
 		}
 		if ($amo_id) {
-			checkAuth(true, true, 'json');
+			if (!checkAuth(true, true, 'json')) return;
 			/* _update_amo_addon will check database id for us */
 			$A = $this->_update_amo_addon($amo_id, false, false);
 		} else {
