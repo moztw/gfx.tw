@@ -1371,6 +1371,8 @@ span.title-empty {
 #info_form input, #info_form textarea, #admin_form input, #admin_form textarea {
 	width: 75%;
 	float: right; clear: right;
+	-moz-appearance: textfield;
+	-webkit-appearance: textfield;
 }
 
 #info_form input[type="checkbox"], #admin_form input[type="checkbox"] {
