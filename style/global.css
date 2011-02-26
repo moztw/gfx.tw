@@ -575,6 +575,8 @@ span.title-empty {
 #titleblock .desc textarea {
 	width: 100%;
 	height: 4.2em;
+	-webkit-appearance: textfield;
+	-moz-appearance: textfield;
 }
 
 #titleblock .desc textarea.empty {
