@@ -120,7 +120,7 @@ gfx.page = {
 						url: './addon/query',
 						data: {	
 							'token' : $('#token').val(),
-							'q' : $('#addon_query').val().replace(/^https:\/\/addons.mozilla.org\/[\w\-]{2,5}\/firefox\/addon\/([\w\-]+)\/?$/, '/$1')
+							'q' : $('#addon_query').val().replace(/^https:\/\/addons.mozilla.org\/[\w\-]{2,5}\/firefox\/addon\/([\w\-]+)\/?$/, '/$1').replace(/^(\d+)$/, '/$1')
 						},
 						success: function (result, status) {
 							$('#addon_query').focus();
