@@ -128,7 +128,7 @@ class Addon extends Controller {
 	function _update_amo_addon($amo_id, $id = false, $cleanoutput = true) {
 		if ($amo_id === 0 || $amo_id === '0') return false;
 		$xml = @file_get_contents($this->config->item('gfx_amo_api_url') . $amo_id);
-		if ($xml && strpos($xml, '<error>') !== false) {
+		if (!$xml || strpos($xml, '<error>') !== false) {
 			return false;
 		}
 		$doc = new DOMDocument();
