@@ -1,5 +1,82 @@
 /*global window, document, $, T, gfx */
 
+/* placeholder text for input, textarea */
+(function ($) {
+	$.fn.placeholder = function (options) {
+		var settings = {
+			emptyClassName: 'empty',
+			placeholderText: '',
+			follower: null,
+			addWhiteSpace: false,
+			followerEmptyClassName: 'empty',
+			followerPlaceholderText: ''
+		};
+		if (options) $.extend(settings, options);
+
+		var addWhiteSpace = function (str) {
+			if (!settings.addWhiteSpace) return str;
+
+			/* Add space before/after for a non-CJK title;
+			don't do it case-by-case coz browser white-space processing will reduce the space when applicatable */
+			singleWidthReg = /^[\u0020-\u1fff\uff61-\uff9f]$/;
+			if (singleWidthReg.test(str.substr(0, 1))) str = ' ' + str;
+			if (singleWidthReg.test(str.substr(-1, 1))) str += ' ';
+
+			return str;
+		}
+
+		var setFollower = function (isEmpty) {
+			if (!settings.follower) return;
+			if (!isEmpty) {
+				settings.follower
+				.removeClass(settings.followerEmptyClassName)
+				.val(this.value)
+				.text(addWhiteSpace(this.value));
+			} else {
+				settings.follower
+				.addClass(settings.followerEmptyClassName)
+				.val(settings.followerPlaceholderText)
+				.text(settings.followerPlaceholderText);
+			}
+		};
+
+		this.each(
+			function (i, el) {
+				var $el = $(el);
+				var isEmpty = ($.trim(el.value) === '' || el.value === settings.placeholderText);
+				var html5PlaceholderSupport = ('placeholder' in el);
+				if (html5PlaceholderSupport) {
+					$el.attr('placeholder', settings.placeholderText);
+				}
+				$el.bind(
+					'blur',
+					function () {
+						var isEmpty = ($.trim(this.value) === '');
+						$el.toggleClass(settings.emptyClassName, isEmpty);
+						if (!html5PlaceholderSupport && isEmpty) {
+							$el.val(settings.placeholderText);
+						}
+						setFollower.call(this, isEmpty);
+						if (settings.blur) settings.blur.call(this, isEmpty);
+					}
+				).bind(
+					'focus paste drop',
+					function () {
+						if (!html5PlaceholderSupport && el.value === settings.placeholderText) {
+							// FIXME: ppl who use placeholderText as content
+							el.value = '';
+						}
+						$el.removeClass(settings.emptyClass);
+					}
+				).toggleClass(settings.emptyClassName, isEmpty);
+				if (!html5PlaceholderSupport && isEmpty) el.value = settings.placeholderText;
+				setFollower.call(this, isEmpty);
+			}
+		);
+		return this;
+	};
+})(jQuery);
+
 gfx.page = {
 	'bind' : {
 		'click' : {
@@ -446,82 +523,6 @@ gfx.page = {
 		};
 
 		$('#title-name-edit > input, #addon_query').attr('autocomplete','off');
-
-		{	/* placeholder text for input, textarea */
-			$.fn.placeholder = function (options) {
-				var settings = {
-					emptyClassName: 'empty',
-					placeholderText: '',
-					follower: null,
-					addWhiteSpace: false,
-					followerEmptyClassName: 'empty',
-					followerPlaceholderText: ''
-				};
-				if (options) $.extend(settings, options);
-
-				var addWhiteSpace = function (str) {
-					if (!settings.addWhiteSpace) return str;
-
-					/* Add space before/after for a non-CJK title;
-					don't do it case-by-case coz browser white-space processing will reduce the space when applicatable */
-					singleWidthReg = /^[\u0020-\u1fff\uff61-\uff9f]$/;
-					if (singleWidthReg.test(str.substr(0, 1))) str = ' ' + str;
-					if (singleWidthReg.test(str.substr(-1, 1))) str += ' ';
-
-					return str;
-				}
-
-				var setFollower = function (isEmpty) {
-					if (!settings.follower) return;
-					if (!isEmpty) {
-						settings.follower
-						.removeClass(settings.followerEmptyClassName)
-						.val(this.value)
-						.text(addWhiteSpace(this.value));
-					} else {
-						settings.follower
-						.addClass(settings.followerEmptyClassName)
-						.val(settings.followerPlaceholderText)
-						.text(settings.followerPlaceholderText);
-					}
-				};
-
-				this.each(
-					function (i, el) {
-						var $el = $(el);
-						var isEmpty = ($.trim(el.value) === '' || el.value === settings.placeholderText);
-						var html5PlaceholderSupport = ('placeholder' in el);
-						if (html5PlaceholderSupport) {
-							$el.attr('placeholder', settings.placeholderText);
-						}
-						$el.bind(
-							'blur',
-							function () {
-								var isEmpty = ($.trim(this.value) === '');
-								$el.toggleClass(settings.emptyClassName, isEmpty);
-								if (!html5PlaceholderSupport && isEmpty) {
-									$el.val(settings.placeholderText);
-								}
-								setFollower.call(this, isEmpty);
-								if (settings.blur) settings.blur.call(this, isEmpty);
-							}
-						).bind(
-							'focus paste drop',
-							function () {
-								if (!html5PlaceholderSupport && el.value === settings.placeholderText) {
-									// FIXME: ppl who use placeholderText as content
-									el.value = '';
-								}
-								$el.removeClass(settings.emptyClass);
-							}
-						).toggleClass(settings.emptyClassName, isEmpty);
-						if (!html5PlaceholderSupport && isEmpty) el.value = settings.placeholderText;
-						setFollower.call(this, isEmpty);
-					}
-				);
-				return this;
-			};
-		}
 
 		$('#recommendation-edit > textarea').placeholder(
 			{
