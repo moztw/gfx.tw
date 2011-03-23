@@ -42,6 +42,13 @@ class User extends Controller {
 				show_404();
 			}
 			$U = $user->row_array();
+
+			/* Instead of evaluate space before/after case by case
+			we add the space and rely on Browser's white-space processing */
+			mb_internal_encoding('UTF-8');
+			if (mb_strwidth(mb_substr($U['title'], 0, 1)) === 1) $U['title'] = ' ' . $U['title'];
+			if (mb_strwidth(mb_substr($U['title'], -1, 1)) === 1) $U['title'] .= ' ';
+
 			$user->free_result();
 			$F = array();
 			for ($i = 0; $i < 3; $i++) {

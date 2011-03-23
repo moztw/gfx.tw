@@ -14,7 +14,7 @@ $avatar = avatarURL($avatar, $email, $login);
 		</h1>
 		<div class="download">
 			<p class="link"><a href="/download">免費下載</a></p>
-			<p class="version">3.6 系列最新版</p>
+			<p class="version">4.0 系列最新版</p>
 		</div>
 		<p class="count"><?php print htmlspecialchars($title) ?>已經推薦<?php print $count ?>人使用了！</p>
 		<p class="desc">您的網際生活將因 Firefox 更加豐富有趣！Firefox 有許多特色，協助您完成工作、找到資訊。正因為它如此實用，<strong><?php print htmlspecialchars($title) ?></strong>願意推薦您<strong>改用 Firefox</strong>！以下是<strong><?php print htmlspecialchars($title) ?></strong>最喜歡 Firefox 的三大特點：</p>
@@ -191,6 +191,6 @@ foreach ($groups as $group) {
 	</div>
 	</div>
 	<div id="window_extinstall" class="window" title="正在安裝...">
-		<p><strong>請點選右上角出現的「允許」按鈕，允許敝站為您安裝附加元件。</strong></p>
+		<p><strong>請點選上方出現的「允許」按鈕，允許敝站為您安裝附加元件。</strong></p>
 		<p>根據您所勾選的元件數量，Firefox 可能需要一些時間確認檔案後才會出現「軟體安裝」通知。</p>
 	</div>

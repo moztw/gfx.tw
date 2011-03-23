@@ -451,6 +451,7 @@ span.title-empty {
         height: 72px; width: 72px;
         overflow: hidden; 
 	cursor: pointer;
+	text-align: center;
 }
 
 #titleblock #title-avatar {
@@ -1065,7 +1066,7 @@ span.title-empty {
 }
 
 .detailed .addon span {
-	padding-left: 50px;
+	padding-left: 52px;
 	margin-bottom: 5px;
 }
 
@@ -1097,7 +1098,7 @@ span.title-empty {
 
 .detailed .addon .desc {
 	display: block;
-	padding-left: 50px;
+	padding-left: 52px;
 	line-height: 125%;
 }
 
@@ -1370,6 +1371,8 @@ span.title-empty {
 #info_form input, #info_form textarea, #admin_form input, #admin_form textarea {
 	width: 75%;
 	float: right; clear: right;
+	-moz-appearance: textfield;
+	-webkit-appearance: textfield;
 }
 
 #info_form input[type="checkbox"], #admin_form input[type="checkbox"] {

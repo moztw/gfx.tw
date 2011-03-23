@@ -78,7 +78,13 @@ gfx.page = {
 			'#title-name-edit input' : function () {
 				if (this.value !== '') {
 					$('#title-name').text(this.value); /* .css('display', null); */
-					$('.title-placeholder').removeClass('title-empty').text(this.value);
+					var displayTitle = this.value,
+					/* Add space before/after for a non-CJK title;
+					don't do it case-by-case coz browser white-space processing will reduce the space when applicatable */
+					singleWidthReg = /^[\u0020-\u1fff\uff61-\uff9f]$/;
+					if (singleWidthReg.test(displayTitle.substr(0, 1))) displayTitle = ' ' + displayTitle;
+					if (singleWidthReg.test(displayTitle.substr(-1, 1))) displayTitle += ' ';
+					$('.title-placeholder').removeClass('title-empty').text(displayTitle);
 					/* $(this).css('display', null); */
 					gfx.page.infoChanged = true;
 					gfx.page.blinkBar();
@@ -114,7 +120,7 @@ gfx.page = {
 						url: './addon/query',
 						data: {	
 							'token' : $('#token').val(),
-							'q' : $('#addon_query').val().replace(/^https:\/\/addons.mozilla.org\/[\w\-]{2,5}\/firefox\/addon\/([\w\-]+)\/?$/, '/$1')
+							'q' : $('#addon_query').val().replace(/^https:\/\/addons.mozilla.org\/[\w\-]{2,5}\/firefox\/addon\/([\w\-]+)\/?$/, '/$1').replace(/^(\d+)$/, '/$1')
 						},
 						success: function (result, status) {
 							$('#addon_query').focus();
