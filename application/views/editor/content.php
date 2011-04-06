@@ -57,7 +57,7 @@ print urlencode(site_url('PLACEHOLDER')); /* MURMUR doesn't parse meta */
 		</form>
 		<div class="download">
 			<p class="link"><a href="/download">免費下載</a></p>
-			<p class="version">3.6 系列最新版</p>
+			<p class="version">4.0 系列最新版</p>
 		</div>
 		<p class="count">{您的推薦指數會在這裡出現}</p>
 		<p class="desc">您的網際生活將因 Firefox 更加豐富有趣！Firefox 有許多特色，協助您完成工作、找到資訊。正因為它如此實用，<strong class="title-placeholder">{您的名字}</strong>願意推薦您<strong>改用 Firefox</strong>！以下是<strong class="title-placeholder">{您的名字}</strong>最喜歡 Firefox 的三大特點：</p>
