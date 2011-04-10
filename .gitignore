@@ -1,5 +1,6 @@
 # htaccess
 .htaccess
+.htpasswd
 
 # Untrack config
 application/config/database.php
