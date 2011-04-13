@@ -23,7 +23,7 @@ class User extends Controller {
 		$this->load->helper('gfx');
 		if (checkETag($name, 'user')) return;
 		$data = $this->cache->get(strtolower($name), 'user');
-
+		$data = null; // no cache
 		if (!$data) {
 			$data = array();
 			$this->load->config('gfx');
@@ -58,15 +58,18 @@ class User extends Controller {
 				$feature->free_result();
 			}
 			unset($feature);
+
 			$addons = $this->db->query('SELECT t1.*, t2.group_id FROM addons t1, u2a t2 '
 			. 'WHERE t2.addon_id = t1.id AND t2.user_id = ' . $U['id'] . ' ORDER BY t2.order ASC;');
 			$A = array();
 			foreach ($addons->result_array() as $addon) {
 				if (!isset($A[$addon['group_id']])) $A[$addon['group_id']] = array();
-				$A[$addon['group_id']][] = $addon;
+				//$A[$addon['group_id']][] = $addon;
+				$A['all'][] = $addon;
 			}
 			$addons->free_result();
 			unset($addons, $addon);
+			/*
 			$groups = $this->db->query('SELECT t1.id, t1.name, t1.title, t1.description FROM groups t1, u2g t2 ' 
 			. 'WHERE t2.group_id = t1.id AND t2.user_id = ' . $U['id'] . ' ORDER BY t2.order ASC;');
 			$G = array();
@@ -76,6 +79,14 @@ class User extends Controller {
 			}
 			$groups->free_result();
 			unset($groups, $group);
+			*/
+			
+			// TODO:: load 'all' group from database;
+			$G[] = array('id'=>'all', 'name'=>'all', 'title'=>'推薦', 'description'=> '推薦給使用者的附加元件 ');
+
+
+			
+			
 			$this->load->_ci_cached_vars = array(); //Clean up cached vars
 			$data['name'] = $U['name'];
 			$data['meta'] = $this->load->view('user/meta.php', $U, true);
