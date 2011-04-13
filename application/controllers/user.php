@@ -65,7 +65,7 @@ class User extends Controller {
 			foreach ($addons->result_array() as $addon) {
 				if (!isset($A[$addon['group_id']])) $A[$addon['group_id']] = array();
 				//$A[$addon['group_id']][] = $addon;
-				$A['all'][] = $addon;
+				$A[1][] = $addon;
 			}
 			$addons->free_result();
 			unset($addons, $addon);
@@ -82,8 +82,14 @@ class User extends Controller {
 			*/
 			
 			// TODO:: load 'all' group from database;
-			$G[] = array('id'=>'all', 'name'=>'all', 'title'=>'推薦', 'description'=> '推薦給使用者的附加元件 ');
-
+			$groups = $this->db->query('SELECT t1.id, t1.name, t1.title, t1.description FROM groups t1 WHERE t1.id = 1;');
+			$G = array();
+			foreach ($groups->result_array() as $group) {
+				if (!isset($A[$group['id']])) $A[$group['id']] = array();
+				$G[] = $group;
+			}
+			$groups->free_result();
+			unset($groups, $group);
 
 			
 			
