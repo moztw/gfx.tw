@@ -23,7 +23,7 @@ class User extends Controller {
 		$this->load->helper('gfx');
 		if (checkETag($name, 'user')) return;
 		$data = $this->cache->get(strtolower($name), 'user');
-		$data = null; // no cache
+		//$data = null; // no cache
 		if (!$data) {
 			$data = array();
 			$this->load->config('gfx');
@@ -81,7 +81,6 @@ class User extends Controller {
 			unset($groups, $group);
 			*/
 			
-			// TODO:: load 'all' group from database;
 			$groups = $this->db->query('SELECT t1.id, t1.name, t1.title, t1.description FROM groups t1 WHERE t1.id = 1;');
 			$G = array();
 			foreach ($groups->result_array() as $group) {
