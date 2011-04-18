@@ -10,6 +10,7 @@ class User extends Controller {
 		$this->view($this->config->item('gfx_home_user'));
 	}
 	function view($name = '') {
+		
 		/* xrds doc request, usually done by OpenID 2.0 op who checks "Relay Party" */
 		if (isset($_SERVER['HTTP_ACCEPT']) && strpos($_SERVER['HTTP_ACCEPT'], 'application/xrds+xml') !== false) {
 			header('X-XRDS-Location: ' . site_url('auth/xrds'));
@@ -18,13 +19,16 @@ class User extends Controller {
 			//TBD: <meta http-equiv="X-XRDS-Location" content=""/>
 			return;
 		}
-
+		
 		$this->load->library('cache');
 		$this->load->helper('gfx');
 		if (checkETag($name, 'user')) return;
+		
 		$data = $this->cache->get(strtolower($name), 'user');
 		//$data = null; // no cache
+		
 		if (!$data) {
+			
 			$data = array();
 			$this->load->config('gfx');
 			if (!preg_match('/^[a-zA-Z0-9_\-]+$/', $name)
@@ -59,17 +63,7 @@ class User extends Controller {
 			}
 			unset($feature);
 
-			$addons = $this->db->query('SELECT t1.*, t2.group_id FROM addons t1, u2a t2 '
-			. 'WHERE t2.addon_id = t1.id AND t2.user_id = ' . $U['id'] . ' ORDER BY t2.order ASC;');
-			$A = array();
-			foreach ($addons->result_array() as $addon) {
-				if (!isset($A[$addon['group_id']])) $A[$addon['group_id']] = array();
-				//$A[$addon['group_id']][] = $addon;
-				$A[1][] = $addon;
-			}
-			$addons->free_result();
-			unset($addons, $addon);
-			/*
+			// get groups to see if user has more than one group.
 			$groups = $this->db->query('SELECT t1.id, t1.name, t1.title, t1.description FROM groups t1, u2g t2 ' 
 			. 'WHERE t2.group_id = t1.id AND t2.user_id = ' . $U['id'] . ' ORDER BY t2.order ASC;');
 			$G = array();
@@ -79,19 +73,39 @@ class User extends Controller {
 			}
 			$groups->free_result();
 			unset($groups, $group);
-			*/
 			
-			$groups = $this->db->query('SELECT t1.id, t1.name, t1.title, t1.description FROM groups t1 WHERE t1.id = 1;');
-			$G = array();
-			foreach ($groups->result_array() as $group) {
-				if (!isset($A[$group['id']])) $A[$group['id']] = array();
-				$G[] = $group;
+			if(sizeof($G) > 1) {
+				// more than one group -> old layout
+				$addons = $this->db->query('SELECT t1.*, t2.group_id FROM addons t1, u2a t2 '
+				. 'WHERE t2.addon_id = t1.id AND t2.user_id = ' . $U['id'] . ' ORDER BY t2.order ASC;');
+				$A = array();
+				foreach ($addons->result_array() as $addon) {
+					if (!isset($A[$addon['group_id']])) $A[$addon['group_id']] = array();
+					$A[$addon['group_id']][] = $addon;
+				}
+				$addons->free_result();
+				unset($addons, $addon);
+			} else {
+				// only one group -> new layout
+				$groups = $this->db->query('SELECT t1.id, t1.name, t1.title, t1.description FROM groups t1 WHERE t1.id = 1;');
+				$G = array();
+				foreach ($groups->result_array() as $group) {
+					if (!isset($A[$group['id']])) $A[$group['id']] = array();
+					$G[] = $group;
+				}
+				$groups->free_result();
+				unset($groups, $group);
+				
+				$addons = $this->db->query('SELECT t1.*, t2.group_id FROM addons t1, u2a t2 '
+				. 'WHERE t2.addon_id = t1.id AND t2.user_id = ' . $U['id'] . ' ORDER BY t2.order ASC;');
+				$A = array();
+				foreach ($addons->result_array() as $addon) {
+					if (!isset($A[$addon['group_id']])) $A[$addon['group_id']] = array();
+					$A[1][] = $addon;
+				}
+				$addons->free_result();
+				unset($addons, $addon);
 			}
-			$groups->free_result();
-			unset($groups, $group);
-
-			
-			
 			$this->load->_ci_cached_vars = array(); //Clean up cached vars
 			$data['name'] = $U['name'];
 			$data['meta'] = $this->load->view('user/meta.php', $U, true);

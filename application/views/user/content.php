@@ -178,7 +178,7 @@ function group($group, $addons) {
 <?php
 }
 foreach ($groups as $group) {
-	group($group, $addons[$group['id']]);
+	if(isset($addons[$group['id']]) && sizeof($addons[$group['id']]) > 0) group($group, $addons[$group['id']]);
 }
 ?>
 	</div>
