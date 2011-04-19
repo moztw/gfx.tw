@@ -1,5 +1,4 @@
 <?php
-
 class User extends Controller {
 	function User() {
 		parent::Controller();
