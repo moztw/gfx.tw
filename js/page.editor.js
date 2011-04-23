@@ -41,8 +41,7 @@ gfx.page = {
 				gfx.page.groupChanged = true;
 				gfx.page.blinkBar();
 			},
-			'#groups .group-add-addon a' : function () {
-				gfx.page.currentGroup = this.parentNode.parentNode.id.substr(2);
+			'.group-add-addon a' : function () {
 				gfx.openDialog('addons');				
 				return false;
 			},
@@ -288,8 +287,7 @@ gfx.page = {
 					{
 						url: './addon/suggest',
 						data: {
-							'token' : $('#token').val(),
-							'g' : gfx.page.currentGroup
+							'token' : $('#token').val()
 						},
 						/* don't show progress window  */
 						beforeSend : function (xhr) { },
@@ -390,7 +388,7 @@ gfx.page = {
 		this.dialog.addons.buttons[T.BUTTONS.ADDON_ADD_OK] = function () {
 			$('#addon_query_result .add-addon input:checked').each(
 				function () {
-					$('#g_' + gfx.page.currentGroup + ' + div.group-addons').append(
+					$('div.group-addons').append(
 						new gfx.page.Addon($(this).data('addon'), false, true)
 					).sortable('refresh');
 				}
@@ -585,17 +583,6 @@ gfx.page = {
 				},
 				out : function () {
 					$(this).css('opacity', 0.5);
-				}
-			}
-		);
-		$('#groups').sortable(
-			{
-				handle: '.group-title',
-				containment: 'document',
-				revert: 250,
-				update: function () {
-					gfx.page.groupChanged = true;
-					gfx.page.blinkBar();
 				}
 			}
 		);
@@ -819,13 +806,8 @@ gfx.page = {
 			gfx.alert('EDITOR_FEATURE_COUNT');
 			return;
 		}
-		var g = $('.group-title input:checked');
-		if (!g.length) {
-			gfx.alert('EDITOR_GROUP_EMPTY');
-			return;
-		}
 		var flag = false;
-		g.parent().next('.group-addons').each(
+		$('.group-addons').each(
 			function () {
 				if (!$(this).children().length) {
 					gfx.alert('EDITOR_ADDON_EMPTY');
@@ -857,18 +839,12 @@ gfx.page = {
 				}
 			);
 		}
-		if (gfx.page.groupChanged) {
-			g.each(
-				function (i) {
-					d['groups[' + (i+1) + ']'] = $(this).parent().attr('id').substr(2);
-				}
-			);
-		}
+		d['groups[1]'] = 1;
 		if (gfx.page.addonChanged) {
 			$('#groups .addon').each(
 				function (i) {
 					d['addons[' + (i+1) + '][id]'] = this.id.substr(2);
-					d['addons[' + (i+1) + '][group]'] = $(this).parent().prev().attr('id').substr(2);
+					d['addons[' + (i+1) + '][group]'] = '1';
 				}
 			);
 		}
