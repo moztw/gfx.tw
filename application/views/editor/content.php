@@ -48,19 +48,26 @@ print urlencode(site_url('PLACEHOLDER')); /* MURMUR doesn't parse meta */
 			<h1>
 				<input type="text" id="title-avatar-textarea" />
 				<span id="title-avatar" class="editable" title="選擇個人圖示"><img src="<?php print $avatar ?>" alt="[個人小圖示]" /></span>
-				<span id="title-name" class="editable"><?php print htmlspecialchars($title) ?></span>
 				<span id="title-name-edit"><?php print form_input('title', $title); ?></span>
 				<span id="title-1">推薦您改用</span>
 				<span id="title-2">Firefox</span>
 				<span id="title-3">看網頁！</span>
 			</h1>
 		</form>
-		<div class="download">
-			<p class="link"><a href="/download">免費下載</a></p>
-			<p class="version">4.0 系列最新版</p>
-		</div>
-		<p class="count">{您的推薦指數會在這裡出現}</p>
-		<p class="desc">您的網際生活將因 Firefox 更加豐富有趣！Firefox 有許多特色，協助您完成工作、找到資訊。正因為它如此實用，<strong class="title-placeholder">{您的名字}</strong>願意推薦您<strong>改用 Firefox</strong>！以下是<strong class="title-placeholder">{您的名字}</strong>最喜歡 Firefox 的三大特點：</p>
+		<form id="recommendation-form" action="#">
+			<div class="download">
+				<p class="link"><a href="/download">免費下載</a></p>
+				<p class="version">4.0 系列最新版</p>
+			</div>
+			<p class="count">{您的推薦指數會在這裡出現}</p>
+			<div class="desc">
+				<p>您的網際生活將因 Firefox 更加豐富有趣！Firefox 有許多特色，協助您完成工作、找到資訊。正因為它如此實用，<strong class="title-placeholder">{您的名字}</strong>願意推薦您<strong>改用 Firefox</strong>！</p>
+				<p id="recommendation-edit"><textarea cols="80" rows="1"><?php if ($recommendation !== '') print htmlspecialchars($recommendation) ?></textarea></p>
+				<p>以下是<strong class="title-placeholder">{您的名字}</strong>最喜歡 Firefox 的三大特點：</p>
+			</div>
+		</form>
+	</div>
+	<div id="recommendationblock">
 	</div>
 	<div id="window_avatar" class="window" title="選擇個人圖示">
 		<div id="dropzone">&nbsp;</div>
@@ -207,9 +214,10 @@ for ($i = 0; $i < 3; $i++) {
 	</div>
 	<div id="groups-title">
 		<h2><span class="title-placeholder">{您的名字}</span>推薦的附加元件</h2>
-		<p>請在下方選擇符合您想要推薦的附加元件類別，並為其加入您推薦的附加元件：</p>
+		<p class="group-add-addon"><a href="#" title="新增附加元件到您的列表"><span class="ui-icon ui-icon-circle-plus">&nbsp;</span>新增元件</a></p>
+		<p>請加入您推薦的附加元件，前三名會被特別標記：</p>
 	</div>
-	<div id="groups" class="sortable">
+	<div id="groups" class="sortable no-groups show-all">
 <?php
 /* put it into a function scope */
 function addon($addon) {
@@ -232,9 +240,6 @@ function group($group, $addons) {
 		<div class="group" id="<?php print $name ?>">
 			<div class="group-title<?php print (isset($user_id))?'':' not-selected'; ?>" id="g_<?php print $id ?>">
 				<input type="checkbox" <?php print (isset($user_id))?'checked="checked"':''; ?>/>
-				<h3><?php print htmlspecialchars($title) ?></h3>
-				<p class="group-add-addon"><a href="#" title="在此屬性下新增附加元件"><span class="ui-icon ui-icon-circle-plus">&nbsp;</span>新增元件</a></p>
-				<p><?php print htmlspecialchars($description) ?></p>
 			</div>
 			<div class="group-addons">
 <?php

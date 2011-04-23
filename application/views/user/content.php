@@ -3,6 +3,8 @@ $this->load->config('gfx');
 $this->load->helper('gfx');
 $avatar = avatarURL($avatar, $email, $login);
 
+$nogroups = (sizeof($addons) === 1);
+
 ?>
 	<div id="titleblock">
 		<h1>
@@ -17,7 +19,13 @@ $avatar = avatarURL($avatar, $email, $login);
 			<p class="version">4.0 系列最新版</p>
 		</div>
 		<p class="count"><?php print htmlspecialchars($title) ?>已經推薦<?php print $count ?>人使用了！</p>
-		<p class="desc">您的網際生活將因 Firefox 更加豐富有趣！Firefox 有許多特色，協助您完成工作、找到資訊。正因為它如此實用，<strong><?php print htmlspecialchars($title) ?></strong>願意推薦您<strong>改用 Firefox</strong>！以下是<strong><?php print htmlspecialchars($title) ?></strong>最喜歡 Firefox 的三大特點：</p>
+		<div class="desc">
+			<p>您的網際生活將因 Firefox 更加豐富有趣！Firefox 有許多特色，協助您完成工作、找到資訊。正因為它如此實用，<strong><?php print htmlspecialchars($title) ?></strong>願意推薦您<strong>改用 Firefox</strong>！</p>
+<?php if ($recommendation !== '') { ?>
+			<p><?php print htmlspecialchars($recommendation) ?></p>
+<?php } ?>
+			<p>以下是<strong><?php print htmlspecialchars($title) ?></strong>最喜歡 Firefox 的三大特點：</p>
+		</div>
 	</div>
 	<div id="window_download" class="window" title="正在啟動下載...">
 		<h2>感謝您下載 Firefox！</h2>
@@ -93,11 +101,14 @@ print urlencode(site_url($name)); /* MURMUR doesn't parse meta */
 		<p>Firefox 瀏覽器提供使用者上網所需的基本功能；除此之外，全球開發者更設計了各式各樣的附加元件，提供使用者自行增加牠的功能。這些附加元件大多與 Firefox 完美結合，讓您藉由這些有創意的附加元件，自訂您專屬的「火狐」！</p>
 		<p>以下是<?php print htmlspecialchars($title) ?>所推薦的附加元件：</p>
 		<p id="groups-show-detail"><input type="checkbox" id="groups-show-detail-box" checked="checked" /> <label for="groups-show-detail-box">顯示套件說明</label></p>
+<?php if ($nogroups) { ?>
+		<p id="show-all-addons"><label><input type="checkbox" /> 顯示所有套件</label></p>
+<?php } ?>
 	</div>
-	<div id="groups" class="detailed">
+	<div id="groups" class="detailed<?php if ($nogroups) print ' no-groups' ?>">
 <?php
 /* put it into a function scope */
-function addon($addon) {
+function addon($addon, $rank) {
 	$CI =& get_instance();
 	extract($addon);
 	/* if there is no icon, insert the default one*/
@@ -111,7 +122,7 @@ function addon($addon) {
 		return;
 	}
 ?>
-		<div class="addon">
+		<div class="addon rank-<?php print $rank ?><?php if ($rank < 3) print ' top-3'; ?>">
 <?php
 	if ($available === 'Y') { ?>
 		<p class="install<?php
@@ -166,8 +177,10 @@ function group($group, $addons) {
 ?>
 			<div class="group-addons">
 <?php
+		$i = 0;
 		foreach ($addons as $addon) {
-			if ($addon) addon($addon);
+			if ($addon) addon($addon, $i);
+			$i++;
 		}
 ?>
 			</div>
@@ -178,7 +191,7 @@ function group($group, $addons) {
 <?php
 }
 foreach ($groups as $group) {
-	group($group, $addons[$group['id']]);
+	if(isset($addons[$group['id']]) && sizeof($addons[$group['id']]) > 0) group($group, $addons[$group['id']]);
 }
 ?>
 	</div>

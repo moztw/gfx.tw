@@ -436,20 +436,22 @@ span.title-empty {
 }
 
 #titleblock {
-	background: transparent url('../images/titleblock.png') center top no-repeat;
-	height: 308px;
+	background: transparent url('../images/userpage-block-bg.png') center top repeat-y;
 	position: relative;
 }
 #titleblock h1 {
+	background: transparent url('../images/titleblock.png') center top no-repeat;
+	height: 308px;
 	font-size: 1em;
+	padding: 0; margin: 0 0 -101px 0;
 }
 
 #titleblock #title-avatar-textarea {
-        position: absolute;
+	position: absolute;
 	margin: 0; padding: 0;
-        top: 44px; left: 264px;
-        height: 72px; width: 72px;
-        overflow: hidden; 
+	top: 44px; left: 264px;
+	height: 72px; width: 72px;
+	overflow: hidden; 
 	cursor: pointer;
 	text-align: center;
 }
@@ -492,13 +494,8 @@ span.title-empty {
 	top: 50px;
 }
 
-#titleblock #title-name.bright {
-	background-color: #ccffff;
-}
-
 #titleblock #title-name-edit input {
 	top: 44px;
-	display: none;
 }
 #titleblock #title-name-edit input.empty {
 	color: #cccccc;
@@ -571,10 +568,26 @@ span.title-empty {
 }
 
 #titleblock .desc {
-	position: absolute;
-	top: 209px; left: 268px;
-	height: 75px; width: 540px;
+	margin: 0; padding: 0 0 0 268px;
+	width: 540px;
 }
+
+#titleblock .desc textarea {
+	width: 100%;
+	height: 4.2em;
+	-webkit-appearance: textfield;
+	-moz-appearance: textfield;
+}
+
+#titleblock .desc textarea.empty {
+	color: #999;
+	height: 1.2em;
+}
+
+#titleblock .desc p {
+	margin: 0; padding: 0.5em 0;
+}
+
 #features {
 	width: 900px; height: 272px; margin: 0; padding: 10px 0;
 	background: transparent url('../images/userpage-block-bg.png') center top repeat-y;
@@ -857,7 +870,8 @@ span.title-empty {
 	background-color: #ffffcc;
 }
 
-#groups-show-detail {
+#groups-show-detail,
+#show-all-addons {
 	float: right;
 	margin: 0.2em 1em;
 }
@@ -933,6 +947,10 @@ span.title-empty {
 	color: #999999;
 }
 
+#groups.no-groups .group .group-title {
+	display: none;
+}
+
 #groups .group .group-title {
 	padding: 3px;
 }
@@ -952,17 +970,16 @@ span.title-empty {
 	margin: 0; padding: 0;
 }
 
-#groups .group p.group-add-addon {
+#groups-title p.group-add-addon {
 	float: right; 
-	margin: 1px;
-	font-size: 0.82em;
+	margin: 0.5em 1.5em 0;
 }
-#groups .group p.group-add-addon a {
+#groups-title p.group-add-addon a {
 	color: #000000;
 	text-decoration: none;
 }
 
-#groups .group p.group-add-addon span.ui-icon {
+#groups-title p.group-add-addon span.ui-icon {
 	float: left;
 }
 
@@ -1011,6 +1028,35 @@ span.title-empty {
 	-o-border-radius: 6px;
 	border-radius: 6px;
 }
+
+#groups.no-groups .addon {
+	display: none;
+}
+
+#groups.show-all .addon,
+#groups.no-groups .top-3 {
+	display: block!important;
+}
+#groups.no-groups .top-3,
+#groups.no-groups .addon:nth-child(1), /* editor */
+#groups.no-groups .addon:nth-child(2),
+#groups.no-groups .addon:nth-child(3) {
+	background: #fff url('../images/star-icon.gif') right 22px no-repeat;
+}
+/*
+#groups.no-groups .addon span {
+	color: #666;
+}
+#groups.no-groups .top-3 span {
+	color: #000!important;
+}
+*/
+/*
+#groups.no-groups .rank-4 {
+	margin-top: 16px;
+}
+*/
+
 .addon {
 	margin: 1px 0;
 	padding: 8px 0;
@@ -1099,6 +1145,7 @@ span.title-empty {
 .detailed .addon .desc {
 	display: block;
 	padding-left: 52px;
+	padding-right: 20px;
 	line-height: 125%;
 }
 

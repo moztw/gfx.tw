@@ -47,12 +47,8 @@ class Addon extends Controller {
 	}
 	function suggest() {
 		if (!checkAuth(true, false, 'json')) return;
-		if (!is_numeric($this->input->post('g'))) {
-			json_message('group_not_number');
-			return;
-		}
 		$this->load->library('cache');
-		$A = $this->cache->get($this->input->post('g') ,'addons-suggest');
+		$A = $this->cache->get(0 ,'addons-suggest');
 		if ($A) {
 			$this->load->view('json.php', array('jsonObj' => array('addons' => $A)));
 			return;
@@ -62,25 +58,14 @@ class Addon extends Controller {
 		/* since suggest is only used in editor, we only provide limit information */
 		$addons = $this->db->query('SELECT t1.id, t1.title, t1.amo_id, t1.amo_version, t1.url, t1.icon_url, t1.description, fetched '
 			. 'FROM addons t1, u2a t2 '
-			. 'WHERE t2.group_id =  ' . $this->db->escape($this->input->post('g')) . ' AND t1.id = t2.addon_id '
+			. 'WHERE t1.id = t2.addon_id '
 			. 'GROUP BY t2.addon_id ORDER BY COUNT(t2.id) DESC, t1.title ASC LIMIT 15;');
 		$A = array();
 		foreach ($addons->result_array() as $addon) {
 			if ($addon['amo_id'] && !$addon['url']) $addon['url'] = $this->config->item('gfx_amo_url') . $addon['amo_id'];
 			$A[] = $addon;
 		}
-		//Pick one of the addons found and send to to re-fetch if it's too old
-		$r = array_rand($A);
-		if (
-			count($A) !== 0 &&
-			isset($A[$r]['amo_id']) &&
-			$A[$r]['amo_id'] !== 0 &&
-			strtotime($A[$r]['fetched']) < max(time()-$this->config->item('gfx_amo_fetch_older_than_time'), $this->config->item('gfx_amo_fetch_older_than_date'))
-			) {
-			$addon = $this->_update_amo_addon($A[$r]['amo_id'], $A[$r]['id'], true);
-			if ($addon) $A[$r] = $addon;
-		}
-		$this->cache->save($this->input->post('g') ,$A ,'addons-suggest', 300);
+		$this->cache->save(0 ,$A ,'addons-suggest', 300);
 		$this->load->view('json.php', array('jsonObj' => array('addons' => $A)));
 	}
 	function forcefetch() {

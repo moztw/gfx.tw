@@ -43,17 +43,22 @@ class Editor extends Controller {
 		$A = array();
 		foreach ($addons->result_array() as $addon) {
 			if (!isset($A[$addon['group_id']])) $A[$addon['group_id']] = array();
-			$A[$addon['group_id']][] = $addon;
+			//$A[$addon['group_id']][] = $addon;
+			$A[1][] = $addon;
 		}
 		unset($addons, $addon);
+		$groups = $this->db->query('SELECT t1.id, t1.name, t1.title, t1.description FROM groups t1 WHERE t1.id = 1;');
+		/*
 		$groups = $this->db->query(
 			'SELECT t1.id, t1.name, t1.title, t1.description, G.user_id, G.order FROM groups t1 '
 			. 'LEFT OUTER JOIN '
 			. '( SELECT S.id, K.user_id, K.order FROM groups AS S, u2g AS K ' 
 			. 'WHERE S.id = K.group_id AND K.user_id = ' . $this->session->userdata('id') . ') AS G '
 			. 'ON t1.id = G.id ORDER BY G.user_id DESC, G.order ASC, t1.order ASC;');
+		*/
 		$G = array();
 		foreach ($groups->result_array() as $group) {
+			$group['user_id'] = $this->session->userdata('id');
 			$G[] = $group;
 			if (!isset($A[$group['id']])) $A[$group['id']] = array();
 		}
@@ -91,6 +96,10 @@ class Editor extends Controller {
 			$data['title'] = $this->input->post('title');
 		}
 
+		if ($this->input->post('recommendation')) {
+			$data['recommendation'] = $this->input->post('recommendation');
+		}
+		
 		if ($this->input->post('ready')) {
 			$data['ready'] = $this->input->post('ready');
 		}

@@ -20,7 +20,7 @@ class Api extends Controller {
 					break;
 				}
 				$this->load->database();
-				$user = $this->db->query('SELECT login, id, name, email, title, avatar, bio, web, blog, forum_id, forum_username, feature_0, feature_1, feature_2, count '
+				$user = $this->db->query('SELECT login, id, name, email, title, avatar, bio, web, blog, recommendation, forum_id, forum_username, feature_0, feature_1, feature_2, count '
 				. 'FROM users WHERE `ready` = \'Y\' AND `name` = ' . $this->db->escape($var) . ' LIMIT 1');
 				if ($user->num_rows() === 0) {
 					$jsonObj['error'] = 'No such user.';
