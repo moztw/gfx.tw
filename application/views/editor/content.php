@@ -214,9 +214,10 @@ for ($i = 0; $i < 3; $i++) {
 	</div>
 	<div id="groups-title">
 		<h2><span class="title-placeholder">{您的名字}</span>推薦的附加元件</h2>
-		<p>請在下方選擇符合您想要推薦的附加元件類別，並為其加入您推薦的附加元件：</p>
+		<p class="group-add-addon"><a href="#" title="新增附加元件到您的列表"><span class="ui-icon ui-icon-circle-plus">&nbsp;</span>新增元件</a></p>
+		<p>請加入您推薦的附加元件，前三名會被特別標記：</p>
 	</div>
-	<div id="groups" class="sortable">
+	<div id="groups" class="sortable no-groups show-all">
 <?php
 /* put it into a function scope */
 function addon($addon) {
@@ -239,9 +240,6 @@ function group($group, $addons) {
 		<div class="group" id="<?php print $name ?>">
 			<div class="group-title<?php print (isset($user_id))?'':' not-selected'; ?>" id="g_<?php print $id ?>">
 				<input type="checkbox" <?php print (isset($user_id))?'checked="checked"':''; ?>/>
-				<h3><?php print htmlspecialchars($title) ?></h3>
-				<p class="group-add-addon"><a href="#" title="在此屬性下新增附加元件"><span class="ui-icon ui-icon-circle-plus">&nbsp;</span>新增元件</a></p>
-				<p><?php print htmlspecialchars($description) ?></p>
 			</div>
 			<div class="group-addons">
 <?php

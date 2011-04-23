@@ -34,8 +34,7 @@ var T = {
 		EDITOR_FEATURE_COUNT: '請選三個你推薦別人使用 Firefox 的理由，三個就對了！',
 		EDITOR_FEATURE_ERROR: '推薦功能不是數字。',
 		EDITOR_GROUP_ERROR: '附加元件分類不是數字。',
-		EDITOR_GROUP_EMPTY: '必須要選擇一個以上的附加元件分類。',
-		EDITOR_ADDON_EMPTY: '您並沒有在選擇的某個分類內新增附加元件。',
+		EDITOR_ADDON_EMPTY: '您並沒有新增附加元件。',
 		EDITOR_ADDON_ERROR: '附加元件不是數字。',
 		EDITOR_AVATAR_WRONG_FILE_TYPE: '上傳的不是圖檔，無法使用。',
 		EDITOR_AVATAR_SIZE_TOO_LARGE: '上傳的檔案長寬太大了，請換小一點的圖片。'
@@ -54,7 +53,7 @@ var T = {
 		ADDON_ADD: '新增',
 		ADDON_ADD_CANT_DUP: '無法重複新增',
 		ADDON_DEL: '刪除',
-		ADDON_SUGGEST_LIST: '或是從下面選擇最多人在此屬性推薦的附加元件 ...',
+		ADDON_SUGGEST_LIST: '或是從下面選擇最多人推薦的附加元件 ...',
 		ADDON_SEARCH_RESULT: '搜尋結果：',
 		PUSH_MINE: '我推薦大家使用 Firefox ',
 		ADMIN_DELETEUSER_CONFIRM: '確定要刪除這個帳號？',

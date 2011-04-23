@@ -121,7 +121,6 @@ $(function () {
 			}
 		}
 	);
-	
 	var h = window.location.hash.substr(1);
 	if (h && $('#window_' + h).length) {
 		gfx.openDialog(h);
@@ -244,6 +243,9 @@ var gfx = {
 					} else {
 						$('#groups').removeClass('detailed');
 					}
+				},
+				'#show-all-addons input' : function () {
+					$('#groups').toggleClass('show-all',this.checked);
 				},
 				'.download a' : function () {
 					gfx.openDialog('download');

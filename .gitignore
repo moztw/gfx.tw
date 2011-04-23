@@ -1,9 +1,11 @@
 # htaccess
 .htaccess
+.htpasswd
 
 # Untrack config
 application/config/database.php
 application/config/gfx.php
+system/logs/*
 
 # Untrack var files
 stickerimages/features
