@@ -48,19 +48,26 @@ print urlencode(site_url('PLACEHOLDER')); /* MURMUR doesn't parse meta */
 			<h1>
 				<input type="text" id="title-avatar-textarea" />
 				<span id="title-avatar" class="editable" title="選擇個人圖示"><img src="<?php print $avatar ?>" alt="[個人小圖示]" /></span>
-				<span id="title-name" class="editable"><?php print htmlspecialchars($title) ?></span>
 				<span id="title-name-edit"><?php print form_input('title', $title); ?></span>
 				<span id="title-1">推薦您改用</span>
 				<span id="title-2">Firefox</span>
 				<span id="title-3">看網頁！</span>
 			</h1>
 		</form>
-		<div class="download">
-			<p class="link"><a href="/download">免費下載</a></p>
-			<p class="version">4.0 系列最新版</p>
-		</div>
-		<p class="count">{您的推薦指數會在這裡出現}</p>
-		<p class="desc">您的網際生活將因 Firefox 更加豐富有趣！Firefox 有許多特色，協助您完成工作、找到資訊。正因為它如此實用，<strong class="title-placeholder">{您的名字}</strong>願意推薦您<strong>改用 Firefox</strong>！以下是<strong class="title-placeholder">{您的名字}</strong>最喜歡 Firefox 的三大特點：</p>
+		<form id="recommendation-form" action="#">
+			<div class="download">
+				<p class="link"><a href="/download">免費下載</a></p>
+				<p class="version">4.0 系列最新版</p>
+			</div>
+			<p class="count">{您的推薦指數會在這裡出現}</p>
+			<div class="desc">
+				<p>您的網際生活將因 Firefox 更加豐富有趣！Firefox 有許多特色，協助您完成工作、找到資訊。正因為它如此實用，<strong class="title-placeholder">{您的名字}</strong>願意推薦您<strong>改用 Firefox</strong>！</p>
+				<p id="recommendation-edit"><textarea cols="80" rows="1"><?php if ($recommendation !== '') print htmlspecialchars($recommendation) ?></textarea></p>
+				<p>以下是<strong class="title-placeholder">{您的名字}</strong>最喜歡 Firefox 的三大特點：</p>
+			</div>
+		</form>
+	</div>
+	<div id="recommendationblock">
 	</div>
 	<div id="window_avatar" class="window" title="選擇個人圖示">
 		<div id="dropzone">&nbsp;</div>

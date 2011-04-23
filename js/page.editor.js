@@ -1,5 +1,82 @@
 /*global window, document, $, T, gfx */
 
+/* placeholder text for input, textarea */
+(function ($) {
+	$.fn.placeholder = function (options) {
+		var settings = {
+			emptyClassName: 'empty',
+			placeholderText: '',
+			follower: null,
+			addWhiteSpace: false,
+			followerEmptyClassName: 'empty',
+			followerPlaceholderText: ''
+		};
+		if (options) $.extend(settings, options);
+
+		var addWhiteSpace = function (str) {
+			if (!settings.addWhiteSpace) return str;
+
+			/* Add space before/after for a non-CJK title;
+			don't do it case-by-case coz browser white-space processing will reduce the space when applicatable */
+			singleWidthReg = /^[\u0020-\u1fff\uff61-\uff9f]$/;
+			if (singleWidthReg.test(str.substr(0, 1))) str = ' ' + str;
+			if (singleWidthReg.test(str.substr(-1, 1))) str += ' ';
+
+			return str;
+		}
+
+		var setFollower = function (isEmpty) {
+			if (!settings.follower) return;
+			if (!isEmpty) {
+				settings.follower
+				.removeClass(settings.followerEmptyClassName)
+				.val(this.value)
+				.text(addWhiteSpace(this.value));
+			} else {
+				settings.follower
+				.addClass(settings.followerEmptyClassName)
+				.val(settings.followerPlaceholderText)
+				.text(settings.followerPlaceholderText);
+			}
+		};
+
+		this.each(
+			function (i, el) {
+				var $el = $(el);
+				var isEmpty = ($.trim(el.value) === '' || el.value === settings.placeholderText);
+				var html5PlaceholderSupport = ('placeholder' in el);
+				if (html5PlaceholderSupport) {
+					$el.attr('placeholder', settings.placeholderText);
+				}
+				$el.bind(
+					'blur',
+					function () {
+						var isEmpty = ($.trim(this.value) === '');
+						$el.toggleClass(settings.emptyClassName, isEmpty);
+						if (!html5PlaceholderSupport && isEmpty) {
+							$el.val(settings.placeholderText);
+						}
+						setFollower.call(this, isEmpty);
+						if (settings.blur) settings.blur.call(this, isEmpty);
+					}
+				).bind(
+					'focus paste drop',
+					function () {
+						if (!html5PlaceholderSupport && el.value === settings.placeholderText) {
+							// FIXME: ppl who use placeholderText as content
+							el.value = '';
+						}
+						$el.removeClass(settings.emptyClass);
+					}
+				).toggleClass(settings.emptyClassName, isEmpty);
+				if (!html5PlaceholderSupport && isEmpty) el.value = settings.placeholderText;
+				setFollower.call(this, isEmpty);
+			}
+		);
+		return this;
+	};
+})(jQuery);
+
 gfx.page = {
 	'bind' : {
 		'click' : {
@@ -9,13 +86,6 @@ gfx.page = {
 			},
 			'#save_page' : function () {
 				gfx.page.savePage();
-			},
-			'#title-name' : function () {
-				var t = $(this);
-				t.css('display', 'none');
-				$('#title-name-edit input')
-				.css('display', 'block')
-				.val(t.text()).focus();
 			},
 			'#featureselection-clear button:only-child' : function () {
 				$('#features .feature').attr('id', null).addClass('box');
@@ -67,47 +137,9 @@ gfx.page = {
 				return false;
 			}
 		},
-		'focus' : {
-			'#title-name-edit input' : function () {
-				if ($(this).hasClass('empty')) {
-					$(this).removeClass('empty').val('');
-				}
-			}
-		},
-		'blur' : {
-			'#title-name-edit input' : function () {
-				if (this.value !== '') {
-					$('#title-name').text(this.value); /* .css('display', null); */
-					var displayTitle = this.value,
-					/* Add space before/after for a non-CJK title;
-					don't do it case-by-case coz browser white-space processing will reduce the space when applicatable */
-					singleWidthReg = /^[\u0020-\u1fff\uff61-\uff9f]$/;
-					if (singleWidthReg.test(displayTitle.substr(0, 1))) displayTitle = ' ' + displayTitle;
-					if (singleWidthReg.test(displayTitle.substr(-1, 1))) displayTitle += ' ';
-					$('.title-placeholder').removeClass('title-empty').text(displayTitle);
-					/* $(this).css('display', null); */
-					gfx.page.infoChanged = true;
-					gfx.page.blinkBar();
-				} else {
-					$('#title-name').text(this.value);
-					$('.title-placeholder').addClass('title-empty').text(T.UI.TITLE_PLACEHOLDER);
-					$(this).addClass('empty').val(T.UI.EMPTY_TITLE);
-				}
-			}
-		},
 		'change' : {
 			'#avatar_fileupload input' : function () {
 				gfx.page.uploadFile(this.files);
-			}
-		},
-		'mouseover' : {
-			'#title-name.editable' : function () {
-				$(this).addClass('bright');
-			}
-		},
-		'mouseout' : {
-			'#title-name.editable' : function () {
-				$(this).removeClass('bright');
 			}
 		},
 		'submit' : {
@@ -490,16 +522,37 @@ gfx.page = {
 			}
 		};
 
-		$('#title-name, #addon_query').attr('autocomplete','off');
+		$('#title-name-edit > input, #addon_query').attr('autocomplete','off');
 
-		$('#title-name').css('display', 'none');
-		if ($('#title-name').text() === '') {
-			$('#title-name-edit input').css('display', 'block').addClass('empty').val(T.UI.EMPTY_TITLE);
-			$('.title-placeholder').addClass('title-empty').text(T.UI.TITLE_PLACEHOLDER);
-		} else {
-			$('#title-name-edit input').css('display', 'block').removeClass('empty').val($('#title-name').text());
-			$('.title-placeholder').text($('#title-name').text());
-		}
+		$('#recommendation-edit > textarea').placeholder(
+			{
+				placeholderText: T.UI.EMPTY_RECOMMENDATION,
+				blur: function (isEmpty) {
+					if (!isEmpty) {
+						this.value = this.value.replace(/\n+/g, ' ');
+					}
+					gfx.page.infoChanged = true;
+					gfx.page.blinkBar();
+				}
+			}
+		);
+		
+		$('#title-name-edit > input').placeholder(
+			{
+				placeholderText: T.UI.EMPTY_TITLE,
+				follower: $('.title-placeholder'),
+				addWhiteSpace: true,
+				followerPlaceholderText: T.UI.TITLE_PLACEHOLDER,
+				followerEmptyClassName: 'title-empty',
+				blur: function (isEmpty) {
+					if (!isEmpty) {
+						gfx.page.infoChanged = true;
+						gfx.page.blinkBar();
+					}
+				}
+			}
+		);
+		
 		$('#groups input').each(
 			function (i) {
 				$(this).parent().toggleClass('not-selected', !this.checked);
@@ -766,7 +819,7 @@ gfx.page = {
 						break;
 						case 18:
 						gfx.alert(T.FILEUPLOAD.SECURITY, 'FILEUPLOAD_SECURITY');
-						break;
+		break;
 						case 20: //User Abort
 						break;
 					}
@@ -807,8 +860,9 @@ gfx.page = {
 		//Gather data
 		var d = {
 			'token' : $('#token').val(),
-			'title' : $('#title-name').text(),
+			'title' : (!$('#title-name-edit > input').hasClass('empty'))?$('#title-name-edit > input').val():'',
 			'name' : $('#info_name').val() || $('#name').val(),
+			'recommendation' : (!$('#recommendation-edit > textarea').hasClass('empty'))?$('#recommendation-edit > textarea').val():'',
 			'ready' : 'Y' /* indicate all informations checks out and the page is available to everyone */
 		};
 		//check for errors round 1

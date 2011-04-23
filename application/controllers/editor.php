@@ -91,6 +91,10 @@ class Editor extends Controller {
 			$data['title'] = $this->input->post('title');
 		}
 
+		if ($this->input->post('recommendation')) {
+			$data['recommendation'] = $this->input->post('recommendation');
+		}
+		
 		if ($this->input->post('ready')) {
 			$data['ready'] = $this->input->post('ready');
 		}

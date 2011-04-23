@@ -17,7 +17,13 @@ $avatar = avatarURL($avatar, $email, $login);
 			<p class="version">4.0 系列最新版</p>
 		</div>
 		<p class="count"><?php print htmlspecialchars($title) ?>已經推薦<?php print $count ?>人使用了！</p>
-		<p class="desc">您的網際生活將因 Firefox 更加豐富有趣！Firefox 有許多特色，協助您完成工作、找到資訊。正因為它如此實用，<strong><?php print htmlspecialchars($title) ?></strong>願意推薦您<strong>改用 Firefox</strong>！以下是<strong><?php print htmlspecialchars($title) ?></strong>最喜歡 Firefox 的三大特點：</p>
+		<div class="desc">
+			<p>您的網際生活將因 Firefox 更加豐富有趣！Firefox 有許多特色，協助您完成工作、找到資訊。正因為它如此實用，<strong><?php print htmlspecialchars($title) ?></strong>願意推薦您<strong>改用 Firefox</strong>！</p>
+<?php if ($recommendation !== '') { ?>
+			<p><?php print htmlspecialchars($recommendation) ?></p>
+<?php } ?>
+			<p>以下是<strong><?php print htmlspecialchars($title) ?></strong>最喜歡 Firefox 的三大特點：</p>
+		</div>
 	</div>
 	<div id="window_download" class="window" title="正在啟動下載...">
 		<h2>感謝您下載 Firefox！</h2>
