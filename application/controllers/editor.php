@@ -204,28 +204,15 @@ class Editor extends Controller {
 
 		if ($data) $this->db->update('users', $data, array('id' => $this->session->userdata('id')));
 
-		if ($this->input->post('groups')) {
-			$query = $this->db->query('SELECT `id` FROM `u2g` WHERE `user_id` = ' . $this->session->userdata('id') . ' ORDER BY `order` ASC;');
-			$i = 0;
-			foreach ($this->input->post('groups') as $g) { // don't care about the keys
-				if (!is_numeric($g)) {
-					json_message('EDITOR_GROUP_ERROR');
-					return;
-				}
-				if ($i < $query->num_rows()) {
-					$row = $query->row_array($i);
-					$this->db->update('u2g', array('group_id' => $g, 'order' => $i+1), array('id' => $row['id']));
-				} else {
-					$this->db->insert('u2g', array('group_id' => $g, 'order' => $i+1, 'user_id' => $this->session->userdata('id')));
-				}
-				$i++;
+		$query = $this->db->query('SELECT `id` FROM `u2g` WHERE `user_id` = ' . $this->session->userdata('id') . ' ORDER BY `order` ASC;');
+		$row = $query->row_array(0);
+		$this->db->update('u2g', array('group_id' => 1, 'order' => 1), array('id' => $row['id']));
+		$i = 1;
+		while ($i < $query->num_rows()) {
+			if ($row = $query->row_array($i)) {
+				$this->db->delete('u2g', array('id' => $row['id']));
 			}
-			while ($i < $query->num_rows()) {
-				if ($row = $query->row_array($i)) {
-					$this->db->delete('u2g', array('id' => $row['id']));
-				}
-				$i++;
-			}
+			$i++;
 		}
 		if ($this->input->post('addons')) {
 			$query = $this->db->query('SELECT `id` FROM `u2a` WHERE `user_id` = ' . $this->session->userdata('id') . ' ORDER BY `order` ASC;');
