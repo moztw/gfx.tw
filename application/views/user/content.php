@@ -16,7 +16,7 @@ $nogroups = (sizeof($addons) === 1);
 		</h1>
 		<div class="download">
 			<p class="link"><a href="/download">免費下載</a></p>
-			<p class="version">4.0 系列最新版</p>
+			<p class="version">最新版 Firefox</p>
 		</div>
 		<p class="count"><?php print htmlspecialchars($title) ?>已經推薦<?php print $count ?>人使用了！</p>
 		<div class="desc">
