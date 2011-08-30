@@ -57,7 +57,7 @@ print urlencode(site_url('PLACEHOLDER')); /* MURMUR doesn't parse meta */
 		<form id="recommendation-form" action="#">
 			<div class="download">
 				<p class="link"><a href="/download">免費下載</a></p>
-				<p class="version">4.0 系列最新版</p>
+				<p class="version">最新版 Firefox</p>
 			</div>
 			<p class="count">{您的推薦指數會在這裡出現}</p>
 			<div class="desc">
