@@ -3,6 +3,7 @@
 /.htpasswd
 
 # Untrack config
+/define.php
 /application/config/database.php
 /application/config/gfx.php
 /system/logs/*
