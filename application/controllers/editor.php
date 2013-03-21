@@ -67,7 +67,7 @@ class Editor extends Controller {
 		$data = array(
 			'meta' => $this->load->view('editor/meta.php', $U, true),
 			'content' => $this->load->view('editor/content.php', array_merge($U, array('allfeatures' => $F, 'allgroups' => $G, 'addons' => $A)), true),
-			'script' => '	<script type="text/javascript" src="./js/page.editor.js' . $this->config->item('gfx_suffix') . '" charset="UTF-8"></script>',
+			'script' => '	<script type="text/javascript" src="./js/page.editor' . JS_SUFFIX . $this->config->item('gfx_suffix') . '" charset="UTF-8"></script>',
 			'db' => 'content '
 		);
 

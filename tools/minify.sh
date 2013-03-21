@@ -16,12 +16,5 @@ do
 
 	echo Minify $JS ...
 	$(dirname $0)/closure-complier.pl < $1/js/$JS > $1/js/$JSMIN;
-	
-	echo Edit all links to $JS ...
-	for HTML in `grep -rl $JS $1 | grep -v /js/minify.txt | grep -v \.git | grep -v \.svn | grep -v \.hg | grep -v system/cache`
-	do
-		echo '    Processing '$HTML ...
-		eval 'sed -i -e "s/js\/'$JS'/js\/'$JSMIN'/g" '$HTML;
-	done
 done
 exit 0;

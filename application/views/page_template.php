@@ -51,7 +51,7 @@ if ($gaq) {
 	<script type="text/javascript" src="<?php print site_url('js/jquery-1.3.2.min.js' . $this->config->item('gfx_suffix')) ?>"></script>
 	<script type="text/javascript" src="<?php print site_url('js/jquery-ui.custom.min.js' . $this->config->item('gfx_suffix')) ?>"></script>
 	<script type="text/javascript" src="<?php print site_url('js/text-zh-TW.js' . $this->config->item('gfx_suffix')) ?>" charset="UTF-8"></script>
-	<script type="text/javascript" src="<?php print site_url('js/global.js' . $this->config->item('gfx_suffix')) ?>" charset="UTF-8"></script>
+	<script type="text/javascript" src="<?php print site_url('js/global' . JS_SUFFIX . $this->config->item('gfx_suffix')) ?>" charset="UTF-8"></script>
 {script}
 {admin}
 	<!-- <?php print 'Elapsed Time: ' . $this->benchmark->elapsed_time() . ', Memory usage: ' . $this->benchmark->memory_usage(); ?>, from DB: {db} -->
