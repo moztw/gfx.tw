@@ -1,4 +1,7 @@
 <?php
+
+require_once('./define.php');
+
 /*
 |---------------------------------------------------------------
 | PHP ERROR REPORTING LEVEL
@@ -15,7 +18,11 @@
  Production Value: 0
 
 */
-        error_reporting(E_ALL | E_STRICT);
+	if (PRODUCTION) {
+		error_reporting(0);
+	} else {
+		error_reporting(E_ALL | E_STRICT);
+	}
 
 /*
 |---------------------------------------------------------------

@@ -41,7 +41,7 @@ $config['index_page'] = "";
 | 'ORIG_PATH_INFO'	Uses the ORIG_PATH_INFO
 |
 */
-$config['uri_protocol']	= "REDIRECT_URL";
+$config['uri_protocol']	= URI_PROTOCOL;
 
 /*
 |--------------------------------------------------------------------------
@@ -217,7 +217,7 @@ $config['cache_path'] = '';
 | enabled you MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = "l6OW7px3CtIMsoy9SQbG";
+$config['encryption_key'] = ENCRYPTION_KEY;
 
 /*
 |--------------------------------------------------------------------------
@@ -308,7 +308,7 @@ $config['time_reference'] = 'local';
 | in your view files.  Options are TRUE or FALSE (boolean)
 |
 */
-$config['rewrite_short_tags'] = FALSE;
+$config['rewrite_short_tags'] = TRUE;
 
 
 

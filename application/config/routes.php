@@ -35,13 +35,18 @@
 |
 | This route lets you set a "secret" word that will trigger the
 | scaffolding feature for added security. Note: Scaffolding must be
-| enabled in the controller in which you intend to use it.   The reserved 
+| enabled in the controller in which you intend to use it.   The reserved
 | routes must come before any wildcard or regular expression routes.
 |
 */
 
 $route['default_controller'] = "user";
-$route['scaffolding_trigger'] = "scaffolding"; # Change this to empty string on Production site
+
+if (PRODUCTION) {
+	$route['scaffolding_trigger'] = ""; # Change this to empty string on Production site
+} else {
+	$route['scaffolding_trigger'] = "scaffolding"; # Change this to empty string on Production site
+}
 
 /* We must explicitly define all routes here because the last route will overwrite them all */
 
