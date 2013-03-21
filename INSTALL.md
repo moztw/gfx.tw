@@ -17,6 +17,7 @@
 ## Install
 
 1. Check out code
+2. Run `git submodule init && git submodule update` to check out `php-openid` library.
 2. Create configuration files
     * `./define.php`
     * `./application/config/database.php`

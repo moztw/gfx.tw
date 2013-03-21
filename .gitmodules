@@ -1,0 +1,3 @@
+[submodule "application/libraries/php-openid"]
+	path = application/libraries/php-openid
+	url = git://github.com/openid/php-openid.git

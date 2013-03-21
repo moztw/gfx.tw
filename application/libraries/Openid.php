@@ -41,7 +41,9 @@ class Openid{
 
     function _doIncludes()
     {
-    set_include_path(dirname(__FILE__) . PATH_SEPARATOR . get_include_path());
+    set_include_path(
+        dirname(__FILE__) . DIRECTORY_SEPARATOR . 'php-openid' . PATH_SEPARATOR .
+        get_include_path());
 
     require_once "Auth/OpenID/Consumer.php";
     require_once "Auth/OpenID/FileStore.php";
