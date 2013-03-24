@@ -143,6 +143,7 @@ CREATE TABLE `users` (
   `blog_rss` varchar(1024) NOT NULL,
   `forum_id` bigint(20) NOT NULL,
   `forum_username` varchar(48) NOT NULL,
+  `ready` varchar(4) NOT NULL,
   `count` bigint(20) unsigned NOT NULL default '1',
   `visited` bigint(20) unsigned NOT NULL,
   `modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
