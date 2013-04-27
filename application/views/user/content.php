@@ -60,8 +60,8 @@ foreach ($features as $feature) {
 /* Facebook fetches sticker image and description from <head> */
 print urlencode(site_url($name));
 ?>"><span class="sprite facebook"></span>Facebook</a></li>
-			<li><a class="newwindow" title="噗到 Plurk" href="http://plurk.com/?status=<?php 
-print urlencode('推薦您和' . htmlspecialchars($title) . '一起抓火狐，使用 Firefox 逛網頁！ ' 
+			<li><a class="newwindow" title="噗到 Plurk" href="http://plurk.com/?status=<?php
+print urlencode('推薦您和' . htmlspecialchars($title) . '一起抓火狐，使用 Firefox 逛網頁！ '
 	. site_url(
 		'/userstickers/' . dechex(intval($id) >> 12) . '/' . dechex(intval($id & (pow(2,12)-1)))
 	)
@@ -72,9 +72,6 @@ print urlencode('推薦您和' . htmlspecialchars($title) . '一起抓火狐，�
 			<li><a class="newwindow" title="推到 Twitter" href="https://twitter.com/home/?status=<?php
 print urlencode('推薦您和' . htmlspecialchars($title) . '一起抓火狐，使用 Firefox 逛網頁！ ' . site_url($name));
 ?>"><span class="sprite twitter"></span>Twitter</a></li>
-			<li><a class="newwindow" title="哞到 MURMUR" href="http://murmur.tw/?sharelink=<?
-print urlencode(site_url($name)); /* MURMUR doesn't parse meta */
-?>"><span class="sprite murmur"></span>MURMUR</a></li>
 		</ul>
 	</div>
 	<div id="middleblock">
@@ -149,7 +146,7 @@ function addon($addon, $rank) {
 ?>">
 			<input type="checkbox" disabled="disabled" id="install-<?php print $id ?>" /><label for="install-<?php print $id ?>">請至附加元件網站安裝</label>
 		</p>
-<?php 
+<?php
 	}
 ?>
 			<p><a href="<?php print htmlspecialchars($url); ?>"><img src="<? print htmlspecialchars($icon_url) ?>" alt="" /><span title="<?php print htmlspecialchars($title . ' ' . $amo_version); ?>"><?php print htmlspecialchars($title); ?></span></a></p>

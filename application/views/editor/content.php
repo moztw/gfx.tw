@@ -37,9 +37,6 @@ print urlencode('來跟我一起抓火狐，使用 Firefox 逛網頁！ '
 				<li><a class="newwindow" title="推到 Twitter" href="https://twitter.com/home/?status=<?php
 print urlencode('來跟我一起抓火狐，使用 Firefox 逛網頁！ ' . site_url('PLACEHOLDER'));
 ?>"><span class="sprite twitter"></span>Twitter</a></li>
-				<li><a class="newwindow" title="哞到 MURMUR" href="http://murmur.tw/?sharelink=<?
-print urlencode(site_url('PLACEHOLDER')); /* MURMUR doesn't parse meta */
-?>"><span class="sprite murmur"></span>MURMUR</a></li>
 			</ul>
 		</div>
 	</div>
