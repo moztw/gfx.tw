@@ -106,21 +106,12 @@ if (preg_match('/myid\.tw\/$/', $login)) { ?>
 		<div class="avatar_selection">
 			<div id="avatar_myidtw" class="avatar_icon">
 				<img src="<?php print 'http://myid.tw/plugin/gethead?name=' . urlencode($login) . '&amp;type=s&amp;mode=302'; ?>" alt="MyID.tw 個人圖像" />
-
-<?php
-} else { ?>
-		<div class="avatar_selection disabled">
-			<div id="avatar_myidtw" class="avatar_icon">
-				<img src="./images/avatar-default.gif" alt="MyID.tw 個人圖像" />
-
-
-<?php
-} ?>
 			</div>
 			<p class="avatar_desc">MyID.tw 個人圖像</p>
 			<p>使用您在 <a href="https://myid.tw/" id="link-myidtw" class="newwindow">MyID.tw</a> 上傳的個人圖像當作圖示。</p>
-			<p id="avatar_disabled_desc_myidtw" class="avatar_disabled_desc">僅供 MyID.tw 使用者使用</p>
 		</div>
+<?php
+} ?>
 	</div>
 	<div id="window_download" class="window" title="正在啟動下載...">
 		<h2>感謝您下載 Firefox！</h2>
