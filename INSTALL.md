@@ -9,10 +9,10 @@
   * You Must turn on `ft_min_word_len=1` in order to search Chinese characters.
   To do so, drop this file as `/etc/mysql/conf.d/fulltext.cnf`
 
-		[mysqld]
+            [mysqld]
     
-		# enable chinese search
-		ft_min_word_len =1
+            # enable chinese search
+            ft_min_word_len =1
 
 ## Install
 
@@ -61,7 +61,6 @@ it's not pratical to preapre concentrate all locale to a huge table, nor possibl
 
 1. If your protect your setup with HTTP password (which may be set in `.htaccess`),
    the following will break:
-   * Avatar upload (due to inability of Flash plugin to share session with the browser)
    * OpenID 2.0 xrds authorization (the one that suppress Yahoo! login warning)
 2. Login into https OpenIDs will fail if your php-curl unable to get local issuer certificate.
    You can try to verify that by wget the same https url, wget will complain the same thing.
