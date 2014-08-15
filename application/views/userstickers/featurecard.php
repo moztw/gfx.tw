@@ -85,7 +85,7 @@ function feature($feature) {
 ?>
 		<li><?php print htmlspecialchars($title) ?></li>
 
-<?
+<?php
 }
 
 foreach ($features as $feature) {

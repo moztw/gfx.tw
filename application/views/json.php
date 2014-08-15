@@ -1,4 +1,4 @@
-<?
+<?php
 header('Content-Type: text/javascript');
 if (isset($jsonpCallback)) {
 	if (!preg_match('/^[a-zA-Z0-9_]+$/', $jsonpCallback)) {
