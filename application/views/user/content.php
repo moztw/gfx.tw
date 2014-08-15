@@ -149,7 +149,7 @@ function addon($addon, $rank) {
 <?php
 	}
 ?>
-			<p><a href="<?php print htmlspecialchars($url); ?>"><img src="<? print htmlspecialchars($icon_url) ?>" alt="" /><span title="<?php print htmlspecialchars($title . ' ' . $amo_version); ?>"><?php print htmlspecialchars($title); ?></span></a></p>
+			<p><a href="<?php print htmlspecialchars($url); ?>"><img src="<?php print htmlspecialchars($icon_url) ?>" alt="" /><span title="<?php print htmlspecialchars($title . ' ' . $amo_version); ?>"><?php print htmlspecialchars($title); ?></span></a></p>
 <?php
 	if (isset($description)) {
 ?>

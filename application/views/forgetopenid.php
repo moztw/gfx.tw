@@ -18,7 +18,7 @@ We downgrade ourselves to send only HTML fragment instead of standard HTML doc a
 <?php
 		if (isset($L['name'])) { 
 ?>
-		<li>推薦頁網址：<a href="<? print site_url($L['name']); ?>"><? print site_url($L['name']); ?></a>
+		<li>推薦頁網址：<a href="<?php print site_url($L['name']); ?>"><?php print site_url($L['name']); ?></a>
 <?php
 		} else {
 ?>

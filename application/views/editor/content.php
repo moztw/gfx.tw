@@ -217,7 +217,7 @@ function addon($addon) {
 ?>
 		<div class="addon" id="a_<?php print $id ?>">
 			<p class="del-addon ui-icon ui-icon-close" title="刪除">刪除</p>
-			<p><a href="<?php print htmlspecialchars($url); ?>"><img src="<? print htmlspecialchars($icon_url) ?>" alt="" /><span><?php print htmlspecialchars($title); ?></span></a></p>
+			<p><a href="<?php print htmlspecialchars($url); ?>"><img src="<?php print htmlspecialchars($icon_url) ?>" alt="" /><span><?php print htmlspecialchars($title); ?></span></a></p>
 		</div>
 <?php
 }
