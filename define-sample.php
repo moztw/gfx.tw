@@ -9,3 +9,5 @@ define("JS_SUFFIX", ".js");
 // local changes in the repo.
 define("URI_PROTOCOL", "REDIRECT_URL");
 define("ENCRYPTION_KEY", "");
+
+?>
