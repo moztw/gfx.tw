@@ -8,7 +8,7 @@ Users are invited be log-in with OpenID, a decentralized log-in system, and make
 
 ## Installation
 
-Refer too [INSTALL doc](./INSTALL.md) for detail. You should be able to run your own instance in your own language.
+Refer to [INSTALL doc](./INSTALL.md) for detail. You should be able to run your own instance in your own language.
 
 ## Contributors
 
