@@ -812,12 +812,10 @@ var gfx = {
 	},
 	'tracker' : function (category, action, optional_label, optional_value) {
 		try {
-			_gaq.push(['_trackEvent', category, action, optional_label, optional_value]);
-			//pageTracker._trackEvent(category, action, optional_label, optional_value);
+      ga('send', 'event', category, action, optional_label, optional_value);
 		} catch (e) {}
 		try {
 			console.log('tracker', category, action, optional_label, optional_value);
 		} catch (e) {}
 	}
 };
-
