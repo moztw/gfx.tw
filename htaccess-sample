@@ -12,10 +12,10 @@ RewriteEngine On
 # Don't do it the other way around coz lots of POST will get redirected.
 RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
-		RewriteRule ^(.*)/$ http://%{HTTP_HOST}/$1 [R,L]
+		RewriteRule ^(.*)/$ https://%{HTTP_HOST}/$1 [R,L]
 
 # Redirect userstickers directory index to sticker page
-RewriteRule ^userstickers/$ http://%{HTTP_HOST}/sticker [R,L]
+RewriteRule ^userstickers/$ https://%{HTTP_HOST}/sticker [R,L]
 
 # Rewrite anything else that doesn't exist to index.php
 RewriteCond %{REQUEST_FILENAME} !-f

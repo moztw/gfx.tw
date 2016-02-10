@@ -45,8 +45,8 @@ if ($gaq) {
 {/messages}
 {content}
 	<div id="footer">
-		<p>版權所有 &copy; gfx.tw | <a href="<?php print site_url('/about') ?>">關於我們</a> | <a href="<?php print site_url('/about/legal') ?>">使用條款</a> | <a href="<?php print site_url('/about/faq') ?>">常見問題</a> | <a href="http://moztw.org/" id="link-moztw">MozTW，台灣 Mozilla 社群 <img src="http://www.moztw.org/images/moztw_80x15.png" alt="MozTW" /></a></p>
-		<p>Not affiliated with Mozilla. Firefox and the Firefox logos are trademarks of the <a href="http://www.mozilla.org/" id="link-mozilla">Mozilla Fundation</a>.</p>
+		<p>版權所有 &copy; gfx.tw | <a href="<?php print site_url('/about') ?>">關於我們</a> | <a href="<?php print site_url('/about/legal') ?>">使用條款</a> | <a href="<?php print site_url('/about/faq') ?>">常見問題</a> | <a href="https://moztw.org/" id="link-moztw">MozTW，台灣 Mozilla 社群 <img src="https://moztw.org/images/moztw_80x15.png" alt="MozTW" /></a></p>
+		<p>Not affiliated with Mozilla. Firefox and the Firefox logos are trademarks of the <a href="https://www.mozilla.org/" id="link-mozilla">Mozilla Fundation</a>.</p>
 	</div>
 	<script type="text/javascript" src="<?php print site_url('js/jquery-1.3.2.min.js' . $this->config->item('gfx_suffix')) ?>"></script>
 	<script type="text/javascript" src="<?php print site_url('js/jquery-ui.custom.min.js' . $this->config->item('gfx_suffix')) ?>"></script>

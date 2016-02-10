@@ -95,10 +95,10 @@ if ($email) {
 }
 ?>
 			<div id="avatar_gravatar" class="avatar_icon">
-				<img src="<?php print 'http://www.gravatar.com/avatar/' . md5($email) . '?s=60&amp;r=g&amp;d=wavatar'; ?>" alt="Gravatar" />
+				<img src="<?php print 'https://www.gravatar.com/avatar/' . md5($email) . '?s=60&amp;r=g&amp;d=wavatar'; ?>" alt="Gravatar" />
 			</div>
 			<p class="avatar_desc"> Gravatar 頭像</p>
-			<p>使用 <a href="http://www.gravatar.com/" id="link-gravatar" class="newwindow">Gravatar</a> 上的個人圖示或是 E-mail 雜湊圖片。</p>
+			<p>使用 <a href="https://www.gravatar.com/" id="link-gravatar" class="newwindow">Gravatar</a> 上的個人圖示或是 E-mail 雜湊圖片。</p>
 			<p id="avatar_disabled_desc_gravatar" class="avatar_disabled_desc">請先<a href="#" id="change-email">輸入 E-mail</a></p>
 		</div>
 <?php
@@ -184,7 +184,7 @@ for ($i = 0; $i < 3; $i++) {
 			<p><label for="info_web">個人首頁：</label> <?php print form_input(array('id' =>'info_web', 'value' => $web)); ?></p>
 			<p><label for="info_blog">部落格：</label> <?php print form_input(array('id' =>'info_blog', 'value' => $blog)); ?></p>
 			<p><label for="info_password">討論區 ID 認證：</label> <?php print form_password(array('id' =>'info_forum', 'value' => ($forum_id && $forum_username)?'(keep-the-forum-username)':'')); ?>
-			<span class="form-desc"><a href="http://forum.moztw.org/gfxcode.php" id="forum_auth">按此處</a>取得認證碼；不想顯示請清除認證碼。</span>
+			<span class="form-desc"><a href="https://forum.moztw.org/gfxcode.php" id="forum_auth">按此處</a>取得認證碼；不想顯示請清除認證碼。</span>
 			<span class="form-desc" id="forum_auth_iframe">&nbsp;</span></p>
 			<p><label for="info_bio">一行自介：</label>
 				<textarea id="info_bio"><?php print htmlspecialchars($bio) ?></textarea>

@@ -40,7 +40,7 @@ $config['gfx_downloadurl'] = 'http://download.mozilla.org/?product=firefox-lates
 
 /* Where user will be redirect to if Javascript and User-agent both failed to detect os */
 /* TBD: instead redirect to another webpage,show up a dialog and ask for the os from user? */
-$config['gfx_downloadfallback'] = 'http://moztw.org/firefox/';
+$config['gfx_downloadfallback'] = 'https://moztw.org/firefox/';
 
 /* API fetch method */
 $config['gfx_amo_api_url'] = 'https://services.addons.mozilla.org/zh-TW/firefox/api/1.5/addon/';
