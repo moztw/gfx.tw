@@ -985,7 +985,7 @@ gfx.page = {
 						$(document.createElement('img')).attr(
 							{
 								'src' : d.icon_url || 'images/addon_default_icon.png',
-								'alt' : ''
+								'alt' : d.title
 							}
 						)
 					).append(
