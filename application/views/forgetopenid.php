@@ -14,8 +14,6 @@ We downgrade ourselves to send only HTML fragment instead of standard HTML doc a
 	<ol>
 <?php
 	foreach ($logins as $L) {
-?>
-<?php
 		if (isset($L['name'])) { 
 ?>
 		<li>推薦頁網址：<a href="<?php print site_url($L['name']); ?>"><?php print site_url($L['name']); ?></a>
@@ -31,8 +29,7 @@ We downgrade ourselves to send only HTML fragment instead of standard HTML doc a
 				<li><form action="<?php print site_url('auth/login'); ?>" method="post">
 					<input type="hidden" name="openid-identifier" value="<?php print htmlspecialchars($L['login']); ?>" />
 					<input type="submit" value="直接登入" />
-				</form></li><?php
-?>
+				</form></li>
 			</ul>
 		</li>
 <?php
