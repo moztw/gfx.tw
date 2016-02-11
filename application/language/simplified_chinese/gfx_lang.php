@@ -27,6 +27,6 @@ $lang['gfx_message_about_deleted'] = "网站简介页面已删除。";
 $lang['gfx_message_about_updated'] = "网站简介页面已更新，重新载入之后才能看到结果。";
 
 $lang['gfx_message_openid_query_processed'] = '已处理您的查询要求，请检查您的信箱。因为隐私权的考量，我们无法在此处告诉您是否有送出信件，请见谅。';
-$lang['gfx_email_subject_forgetopenid'] = '=?UTF-8?B?5L6G6Ieq5oqT54Gr54uQ57ay56uZ55qEIE9wZW5JRCDmn6XoqaI=?='; /* 来自抓火狐网站的 OpenID 查询 */
+$lang['gfx_email_subject_forgetopenid'] = '来自抓火狐网站的 OpenID 查询';
 
 ?>
