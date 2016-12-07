@@ -52,7 +52,7 @@ if (isset($id)) {
 		</ul>
 	</div>
 	<div id="newcomer-intro" class="ui-widget message no-auto">
-		<div class="ui-widget-content ui-corner-all"> 
+		<div class="ui-widget-content ui-corner-all">
 			<p><a href="#" class="ui-icon ui-icon-circle-close ui-corner-all">
 			</a><span class="ui-corner-all ui-state-default" id="newcomer-intro-login">立即加入，免註冊！</span>
 「抓火狐」是屬於您的 Firefox 推廣平台。</p>
@@ -67,9 +67,9 @@ if (isset($id)) {
 		</div>
 	</div>
 	<div id="window_login" class="window" title="登入">
-		<form action="<?php print site_url('auth/login'); ?>" method="post">
+		<form onsubmit="return false;" action="<?php print site_url('auth/login'); ?>" method="post">
 			<p><label for="openid-identifier">選擇您的 OpenID 帳號，或直接輸入網址：</label>
-			<input type="text" name="openid-identifier" id="openid-identifier" class="openid-identifier" value="" /> <input type="submit" value="登入" />
+			<input type="text" name="openid-identifier" id="openid-identifier" class="openid-identifier" value="" /> <input disabled type="submit" value="登入" />
 			<span id="openid-username">使用者名稱：<input type="text" size="12" /></span>
 			<span id="openid-nousername">點選「登入」按鈕開始登入。</span>
 			</p>

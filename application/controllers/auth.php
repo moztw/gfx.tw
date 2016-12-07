@@ -9,6 +9,11 @@ class Auth extends Controller {
 		$this->login();
 	}
 	function login() {
+		// Intentionally break the login function
+		header('Location: ' . base_url());
+		return;
+		//
+
 		if (!$this->input->post('openid-identifier')) {
 			header('Location: ' . base_url());
 			return;
@@ -238,7 +243,7 @@ class Auth extends Controller {
 					unset($U['name']);
 				}
 				$data['logins'][] = $U;
-			}	
+			}
 			$this->email->message(
 				$this->load->view(
 					'forgetopenid.php',
@@ -255,4 +260,4 @@ class Auth extends Controller {
 }
 
 /* End of file auth.php */
-/* Location: ./system/applications/controller/auth.php */ 
+/* Location: ./system/applications/controller/auth.php */
