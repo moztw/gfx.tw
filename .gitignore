@@ -1,21 +1,5 @@
 # htaccess
-/.htaccess
 /.htpasswd
-
-# Untrack config
-/define.php
-/application/config/database.php
-/application/config/gfx.php
-/system/logs/*
-
-# Untrack var files
-/stickerimages/features
-/system/cache
-/useravatars
-/userstickers
-
-# minified js
-/js/*.min.js
 
 # google analytics html
 /google*.html

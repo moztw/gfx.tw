@@ -1,6 +1,0 @@
-admin.about.js
-admin.editor.js
-admin.feature.js
-admin.user.js
-global.js
-page.editor.js

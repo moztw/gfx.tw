@@ -1,0 +1,5 @@
+RewriteEngine On
+
+RewriteRule ^userstickers/(.*)/featurecard.html https://%{HTTP_HOST}/stickers/ [R,L]
+RewriteRule ^userstickers/(.*)/(.+)$ https://%{HTTP_HOST}/stickers/$2 [R,L]
+RewriteRule . https://moztw.org/ [R,L]

@@ -1,7 +1,1 @@
-User-agent: *
-Disallow: /images/
-Disallow: /js/
-Disallow: /useravatars/
 
-# Feature page is not implemented in any way, for years.
-Disallow: /feature
